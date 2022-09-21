@@ -1,14 +1,13 @@
-import React from 'react';
-
 import './App.css';
-import Groups from './Containers/Gropus';
+import TableListing from './Components/Table/tableListing';
+import Groups from './Containers/Groups';
+import UserListing from './Containers/Users';
 
 function App() {
   return (
     <div className="App">
-hi
-<Groups/>
-
+      {/* <Groups/> */}
+      <UserListing />
     </div>
   );
 }
