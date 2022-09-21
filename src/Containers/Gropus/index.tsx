@@ -22,7 +22,6 @@ const Groups: React.FC = () => {
           <DeleteIcon />
         </IconButton>
       </Tooltip>
-      <UserDetails />
     </div>
   );
 };
