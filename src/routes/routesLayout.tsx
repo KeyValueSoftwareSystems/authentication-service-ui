@@ -1,15 +1,15 @@
 import React, { Suspense, lazy } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 import NotFound from "../components/NotFound";
-import HomePage from "../container/Home";
+import HomePage from "../containers/Home";
 
 
 import { RoutePaths } from "./routePaths";
-const Login = lazy(() => import("../container/Auth/login"));
-const Users = lazy(() => import("../container/Users"));
-const Groups = lazy(() => import("../container/Groups"));
-const Roles = lazy(() => import("../container/Roles"));
-const Permissions = lazy(() => import("../container/Permissions"));
+const Login = lazy(() => import("../containers/Auth/login"));
+const Users = lazy(() => import("../containers/Users"));
+const Groups = lazy(() => import("../containers/Groups"));
+const Roles = lazy(() => import("../containers/Roles"));
+const Permissions = lazy(() => import("../containers/Permissions"));
 
 const RoutesLayout: React.FC = () => {
   // const navigate = useNavigate();
