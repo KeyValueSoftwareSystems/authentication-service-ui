@@ -23,7 +23,7 @@ const Login: React.FC = () => {
   console.log(data);
   return (
     <div>
-      Login Page
+      Login Page UI
       <Button
         variant="contained"
         onClick={() => {
