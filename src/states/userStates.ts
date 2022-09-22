@@ -6,4 +6,9 @@ import { atom } from "recoil";
     default : [],
   });
 
+  export const tableListAtom=atom({
+    key:"TableList",
+    default : [],
+  });
+
   
