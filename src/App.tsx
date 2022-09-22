@@ -1,14 +1,15 @@
+import { HashRouter as Router } from 'react-router-dom';
 import './App.css';
-import TableListing from './Components/Table/tableListing';
-import Groups from './Containers/Groups';
-import UserListing from './Containers/Users';
+import RoutesLayout from './routes/routesLayout';
 
 function App() {
   return (
-    <div className="App">
-      {/* <Groups/> */}
-      <UserListing />
-    </div>
+    // <ThemeProvider theme={theme}>
+        <Router>
+          <RoutesLayout />
+        </Router>
+    // </ThemeProvider>
+
   );
 }
 

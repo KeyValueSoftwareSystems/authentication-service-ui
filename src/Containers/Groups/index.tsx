@@ -1,17 +1,17 @@
 import React from "react";
 import Button from "@mui/material/Button";
 import { useRecoilState } from "recoil";
-import { companyAtom } from "../../states/users";
+// import { companyAtom } from "../../states/userStates";
 import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 
 const Groups:  React.FC = () => {
-  const [companies, setCompanies] = useRecoilState(companyAtom);
+  // const [companies, setCompanies] = useRecoilState(companyAtom);
 
   return (
     <div>
-      Groups
+      {/* Groups
       <Button variant="contained">Contained</Button>
       {companies.map((c) => (
         <div>{c.companyName}</div>
@@ -20,7 +20,7 @@ const Groups:  React.FC = () => {
       <IconButton>
         <DeleteIcon />
       </IconButton>
-    </Tooltip>
+    </Tooltip> */}
     </div>
   );
 };

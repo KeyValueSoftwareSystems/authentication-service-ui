@@ -1,17 +1,26 @@
-import { Avatar, createTheme, ThemeProvider, Typography } from "@mui/material";
-import { GridColDef, GridSaveAltIcon } from "@mui/x-data-grid";
+
+import React from "react";
+import Button from "@mui/material/Button";
+import { useRecoilState } from "recoil";
+import { tableListAtom, userListAtom } from "../../states/userStates";
+import DeleteIcon from '@mui/icons-material/Delete';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
+import { useQuery } from "@apollo/client";
+import { GET_USERS, GET_USER_GROUPS } from "../../services/queries";
 import TableListing from "../../Components/Table/tableListing";
+import { GridColDef } from "@mui/x-data-grid";
+import { Typography } from "@mui/material";
+import './index.css'
 
-
-const handleEdit=()=>{
-  alert('EDit');
+const handleEdit = () => {
+  alert('Edit');
 }
 
 const columns: GridColDef[] = [
   {
     field: 'user', headerName: 'User', width: 200, headerClassName: 'user-list-header', renderCell: (params) => (
       <div className='user-options'>
-        <Avatar src="dp1.png" />
         <Typography className='user-name'>{params.value.name}</Typography>
       </div>
     )
@@ -26,12 +35,6 @@ const columns: GridColDef[] = [
             {gv}
           </div>
         )}
-
-
-
-
-        {/* {groupvalues[params.value.i][params.value.i]} */}
-
       </div>
 
 
@@ -51,7 +54,7 @@ const columns: GridColDef[] = [
           {params.value.option2}
         </div>
         <div className='option'>
-         {params.value.option3}
+          {params.value.option3}
         </div>
       </div>
     )
@@ -88,14 +91,46 @@ const rows = [
 
 ];
 
+const Users: React.FC = () => {
 
+  const [userList, setUserList] = useRecoilState(userListAtom);
 
-const UserListing = () => {
+  const [tableList, setTableList] = useRecoilState(tableListAtom);
 
+  // eslint - disable - next - line @typescript-eslint / no - unused - vars
+  const { data:data1, loading, refetch } = useQuery(GET_USERS, {
+    onCompleted: (data1) => {
+      setUserList(data1?.getUsers);
+    }
+  });
+
+  const { data:data2 } = useQuery(GET_USER_GROUPS, {
+    onCompleted: (data2) => {data1.map(()=>{
+     
+      setTableList(data2?.getUserGroups)
+    })
+      
+    }
+  })
+  console.log("Table List", tableList);
   return (
     <div>
-      <TableListing rows={rows} columns={columns} text="All Users" buttonlabel="Add User" searchlabel="Search User" />
+      Users
+      <Button variant="contained">Contained</Button>
+
+      {userList.map((user: any, i) => (
+        <div key={i}>{user.firstName}</div>
+      ))}
+      <Tooltip title="Delete">
+        <IconButton>
+          <DeleteIcon />
+        </IconButton>
+      </Tooltip>
+      <div>
+        <TableListing rows={rows} columns={columns} text="All Users" buttonlabel="Add User" searchlabel="Search User" />
+      </div>
     </div>
-  )
-}
-export default UserListing;
+  );
+};
+
+export default Users;
