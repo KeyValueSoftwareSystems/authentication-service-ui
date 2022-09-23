@@ -1,24 +1,11 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import "./index.css";
-import App from "./App";
-import { RecoilRoot } from "recoil";
 import {
   ApolloClient,
   InMemoryCache,
   createHttpLink,
   from,
-  ApolloProvider,
 } from "@apollo/client";
 import { onError } from "@apollo/client/link/error";
-import { setContext } from '@apollo/client/link/context';
-// import client from "./services/apolloClient";
-
-
-
-const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
-);
+import { setContext } from "@apollo/client/link/context";
 
 const link = createHttpLink({
   uri: "http://localhost:4000/auth/api/graphql",
@@ -34,14 +21,14 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
-  const token = localStorage.getItem('access_token');
+  const token = localStorage.getItem("access_token");
   // return the headers to the context so httpLink can read them
   return {
     headers: {
       ...headers,
-      authorization: token ? `Bearer ${token.replaceAll('"', '')}` : "",
-    }
-  }
+      authorization: token ? `Bearer ${token.replaceAll('"', "")}` : "",
+    },
+  };
 });
 
 const client = new ApolloClient({
@@ -49,13 +36,4 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-
-root.render(
-  <React.StrictMode>
-    <ApolloProvider client={client}>
-      <RecoilRoot>
-        <App />
-      </RecoilRoot>
-    </ApolloProvider>
-  </React.StrictMode>
-);
+export default client;
