@@ -1,15 +1,16 @@
 import React from 'react';
+import { HashRouter as Router } from 'react-router-dom';
 
 import './App.css';
-import Groups from './Containers/Gropus';
+import RoutesLayout from './routes/routesLayout';
 
 function App() {
   return (
-    <div className="App">
-hi
-<Groups/>
-
-    </div>
+    // <ThemeProvider theme={theme}>
+        <Router>
+          <RoutesLayout />
+        </Router>
+    // </ThemeProvider>
   );
 }
 
