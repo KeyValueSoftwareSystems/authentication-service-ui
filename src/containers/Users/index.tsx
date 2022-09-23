@@ -22,7 +22,6 @@ const Users: React.FC = () => {
       {userList.map((user: any, i) => (
         <div key={i}>{user.firstName}</div>
       ))}
-      <UserDetails />
     </div>
   );
 };
