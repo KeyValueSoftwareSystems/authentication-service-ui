@@ -6,13 +6,10 @@ import {
   Paper,
   Grid,
   Divider,
-  Avatar,
   Link,
   Button,
   Chip,
 } from "@mui/material";
-
-import { TestProfileImg } from "../../Assets/Images";
 
 const Item = styled(Paper)(() => ({
   backgroundColor: "#fff",
@@ -34,15 +31,12 @@ const Profile = () => {
               alignItems: "center",
             }}
           >
-            <Avatar
-              src={TestProfileImg}
-              sx={{ width: "90%", height: 400, marginBottom: 1 }}
-            />
             <div
               style={{
                 display: "flex",
                 width: "90%",
                 justifyContent: "space-between",
+                marginBottom: 10,
               }}
             >
               <div
@@ -50,41 +44,35 @@ const Profile = () => {
                   display: "flex",
                   flexDirection: "column",
                   alignItems: "flex-start",
+                  overflow: "hidden",
                 }}
               >
                 <div
                   style={{
                     fontSize: "18px",
                     fontWeight: "bold",
+                    width:"fit-content"
                   }}
                 >
                   TestName UMS
                 </div>
-                <Link underline="none" sx={{ fontSize: "14px" }}>
+                <Link underline="none" sx={{ fontSize: "14px", marginTop: 1 }}>
                   @TestTag
                 </Link>
               </div>
-              <Button
-                variant="contained"
-                sx={{
-                  width: "50px",
-                  height: "25px",
-                  fontSize: "10px",
-                  borderRadius: "20px",
-                }}
-              >
-                Contact
-              </Button>
             </div>
             <Divider flexItem />
             <div
               style={{
                 display: "flex",
+                flexDirection: "column",
                 alignItems: "flex-start",
                 width: "90%",
+                marginTop: 10,
               }}
             >
-              <div>Based in</div>
+              <div>Contact No:</div>
+              <div>8921379205</div>
             </div>
           </Item>
         </Grid>
@@ -97,42 +85,49 @@ const Profile = () => {
                 flexDirection: "column",
                 alignItems: "flex-start",
                 marginLeft: 10,
+                marginBottom: 4,
               }}
             >
               <div>Roles</div>
               <div style={{ margin: "6px 0px 6px 2px" }}>
                 {testRoles.map((role, index) => (
-                  <Chip label={role} sx={{ marginRight: 2 }} />
+                  <Chip label={role} sx={{ marginRight: 2 }} color="primary" />
                 ))}
               </div>
             </div>
+            <Divider flexItem />
             <div
               style={{
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "flex-start",
                 marginLeft: 10,
+                marginTop: 4,
+                marginBottom: 4,
               }}
             >
               <div>Role Groups</div>
               <div style={{ margin: "6px 0px 6px 2px" }}>
                 {testRoles.map((role, index) => (
-                  <Chip label={role} sx={{ marginRight: 2 }} />
+                  <Chip label={role} sx={{ marginRight: 2 }} color="primary" />
                 ))}
               </div>
             </div>
+            <Divider flexItem />
             <div
               style={{
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "flex-start",
                 marginLeft: 10,
+                marginTop: 4,
+                marginBottom: 4,
               }}
             >
               <div>Permissions</div>
               <div style={{ margin: "6px 0px 6px 2px" }}>
                 {testRoles.map((role, index) => (
-                  <Chip label={role} sx={{ marginRight: 2 }} />
+                  <Chip label={role} sx={{ marginRight: 2 }} color="primary" />
                 ))}
               </div>
             </div>

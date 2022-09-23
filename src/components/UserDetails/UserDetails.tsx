@@ -36,17 +36,23 @@ const UserDetails = () => {
   };
 
   return (
-    <Box sx={{ width: "50%", background: "#fff" }}>
+    <Box
+      sx={{
+        width: "50%",
+        background: "#fff",
+        borderBottom: 1,
+        borderColor: "divider",
+        boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
+      }}
+    >
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs value={value} onChange={handleChange}>
           <Tab label="Profile" />
-          <Tab label="Activity" />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
         <Profile />
       </TabPanel>
-      <TabPanel value={value} index={1}></TabPanel>
     </Box>
   );
 };
