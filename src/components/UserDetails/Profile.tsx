@@ -9,7 +9,6 @@ import {
   Grid,
   Divider,
   Link,
-  Button,
   Chip,
 } from "@mui/material";
 
@@ -29,10 +28,9 @@ const Profile = () => {
   const [userGroups, setUserGroups] = useState<Group[]>();
 
   const { data, loading, refetch } = useQuery(GET_USER, {
+    //Replace with userId
     variables: { id: "324a43e0-e919-4394-b171-a8a2e3c72807" },
     onCompleted: (data) => {
-      console.log("user", data);
-
       setUser(data?.getUser);
     },
   });
@@ -42,14 +40,18 @@ const Profile = () => {
     loading: groupsLoading,
     refetch: groupsRefetch,
   } = useQuery(GET_USER_GROUPS, {
+    //Replace with userId
     variables: { id: "324a43e0-e919-4394-b171-a8a2e3c72807" },
     onCompleted: (data) => {
-      console.log("usergroup", data);
       setUserGroups(data?.getUserGroups);
     },
   });
 
-  const testRoles = ["admin", "test", "dev"];
+  const testRoles = [
+    "admin",
+    "test",
+    "dev",
+  ];
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -68,6 +70,7 @@ const Profile = () => {
                 display: "flex",
                 width: "90%",
                 justifyContent: "space-between",
+                marginBottom: 10,
               }}
             >
               <div
@@ -81,6 +84,7 @@ const Profile = () => {
                   style={{
                     fontSize: "18px",
                     fontWeight: "bold",
+                    width: "fit-content",
                   }}
                 >
                   {`${user?.firstName}
@@ -91,27 +95,19 @@ const Profile = () => {
                   {user?.email}
                 </Link>
               </div>
-              <Button
-                variant="contained"
-                sx={{
-                  width: "50px",
-                  height: "25px",
-                  fontSize: "10px",
-                  borderRadius: "20px",
-                }}
-              >
-                Contact
-              </Button>
             </div>
             <Divider flexItem />
             <div
               style={{
                 display: "flex",
+                flexDirection: "column",
                 alignItems: "flex-start",
                 width: "90%",
+                marginTop: 10,
               }}
             >
-              <div>Based in</div>
+              <div>Contact No:</div>
+              <div>{user?.phone}</div>
             </div>
           </Item>
         </Grid>
@@ -124,36 +120,53 @@ const Profile = () => {
                 flexDirection: "column",
                 alignItems: "flex-start",
                 marginLeft: 10,
+                marginBottom: 4,
               }}
             >
               <div>Roles</div>
               <div style={{ margin: "6px 0px 6px 2px" }}>
                 {testRoles.map((role, index) => (
-                  <Chip label={role} sx={{ marginRight: 2 }} key={index} />
+                  <Chip
+                    label={role}
+                    sx={{ marginRight: 2, marginBottom: 1 }}
+                    key={index}
+                    color="primary"
+                  />
                 ))}
               </div>
             </div>
+            <Divider flexItem />
             <div
               style={{
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "flex-start",
                 marginLeft: 10,
+                marginTop: 4,
+                marginBottom: 4,
               }}
             >
               <div>Role Groups</div>
               <div style={{ margin: "6px 0px 6px 2px" }}>
                 {testRoles.map((role, index) => (
-                  <Chip label={role} sx={{ marginRight: 2 }} key={index} />
+                  <Chip
+                    label={role}
+                    sx={{ marginRight: 2, marginBottom: 1 }}
+                    key={index}
+                    color="primary"
+                  />
                 ))}
               </div>
             </div>
+            <Divider flexItem />
             <div
               style={{
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "flex-start",
                 marginLeft: 10,
+                marginTop: 4,
+                marginBottom: 4,
               }}
             >
               <div>Permissions</div>
@@ -161,8 +174,9 @@ const Profile = () => {
                 {userGroups?.map((group, index) => (
                   <Chip
                     label={group?.name}
-                    sx={{ marginRight: 2 }}
+                    sx={{ marginRight: 2, marginBottom: 1 }}
                     key={index}
+                    color="primary"
                   />
                 ))}
               </div>

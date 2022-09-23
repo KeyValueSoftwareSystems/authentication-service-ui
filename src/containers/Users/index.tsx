@@ -4,7 +4,7 @@ import { useQuery } from "@apollo/client";
 
 import { userListAtom } from "../../states/userStates";
 import { GET_USERS } from "./services/queries";
-import UserDetails from "../../Components/UserDetails/UserDetails";
+import UserDetails from "../../components/UserDetails/UserDetails";
 
 const Users: React.FC = () => {
   const [userList, setUserList] = useRecoilState(userListAtom);
