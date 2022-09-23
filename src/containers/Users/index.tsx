@@ -4,6 +4,7 @@ import { useQuery } from "@apollo/client";
 
 import { userListAtom } from "../../states/userStates";
 import { GET_USERS } from "./services/queries";
+import UserDetails from "../../Components/UserDetails/UserDetails";
 
 const Users: React.FC = () => {
   const [userList, setUserList] = useRecoilState(userListAtom);
@@ -21,6 +22,7 @@ const Users: React.FC = () => {
       {userList.map((user: any, i) => (
         <div key={i}>{user.firstName}</div>
       ))}
+      <UserDetails />
     </div>
   );
 };
