@@ -7,3 +7,10 @@ passwordLogin ( $input : UserPasswordLoginInput!) {
     accessToken
   }
 }`
+
+export const GET_USER_GROUPS=gql`mutation($id:ID!){    
+  getUserGroups(id: $id){
+    id
+    name
+  }
+}`;

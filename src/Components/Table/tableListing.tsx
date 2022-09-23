@@ -1,10 +1,9 @@
 
-import { AppBar, Button, createMuiTheme, IconButton, InputBase, makeStyles, Toolbar, Typography } from '@mui/material';
-import { createTheme } from '@mui/system';
-import { DataGrid, GridColDef, GridColumns, GridMenuIcon, GridRowsProp, GridSearchIcon, GridValidRowModel } from '@mui/x-data-grid';
+import {  Button,  InputBase } from '@mui/material';
+import { DataGrid, GridColumns, GridRowsProp, GridSearchIcon } from '@mui/x-data-grid';
 import "./tableListing.css";
 import SortIcon from '@mui/icons-material/Sort';
-import { FC, useState } from 'react';
+import { FC } from 'react';
 
 interface TableProps {
   rows: GridRowsProp;
@@ -19,7 +18,7 @@ const TableListing: FC<TableProps> = ({ rows, columns, text, buttonlabel, search
 
 
   return (
-    
+
     <div className='table-component'>
       <div className='table-tool-bar'>
         <legend className='legend-title'>{text}</legend>
@@ -45,79 +44,33 @@ const TableListing: FC<TableProps> = ({ rows, columns, text, buttonlabel, search
             </div>
           </div>
           <div className='button'>
-          <Button variant="outlined" sx={{
-            boxShadow: 1,
-            border: 1,
-            borderBlockColor: 'grey',
-            color: '#636363',
-            borderRadius: 10,
-            height: 40,
-            marginTop: '11px',
-            marginRight: '17px',
+            <Button variant="outlined" sx={{
+              boxShadow: 1,
+              border: 1,
+              borderBlockColor: 'grey',
+              color: '#636363',
+              borderRadius: 10,
+              height: 40,
+              marginTop: '11px',
+              marginRight: '17px',
 
-          }}>{buttonlabel}</Button>
+            }}>{buttonlabel}</Button>
           </div>
 
         </div>
       </div>
 
-      {/* <AppBar position="static" sx={{ width: '53%', marginTop: '20px', marginRight: '20px', marginLeft: '20px', backgroundColor: 'white', }}>
-        <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1, color: 'black', fontWeight: 'bolder' }}>
-            {text}
-          </Typography>
-          <IconButton
-            size="large"
-            edge="start"
-            aria-label="menu"
-            sx={{ mr: 2, color: '#4a4a4a6e' }}
-          >
-          <SortIcon sx={{ color: 'grey', }} />
-          </IconButton>
-          <Typography component="div" sx={{ flexGrow: 1, color: 'black', fontWeight: 'lighter' }}>
-            Sort
-          </Typography>
-          <InputBase placeholder={searchlabel}
-            sx={{
-              borderRadius: 5,
-              bgcolor: '#f4f8fb',
-              paddingLeft: 2,
-              fontSize: 13,
-              width:'30%',
-              height:'40px',
-            }} />
-          <IconButton
-            size="large"
-            edge="start"
-            aria-label="menu"
-            sx={{ mr: 2, color: '#4a4a4a6e' }}
-          >
-            <GridSearchIcon />
-          </IconButton>
-          <Button variant="outlined" sx={{
-            boxShadow: 1,
-            border: 1,
-            borderBlockColor: 'grey',
-            color: '#636363',
-            borderRadius: 10,
-            height: 40,
-            marginTop: '2px',
-            marginRight: '17px',
 
-          }}>{buttonlabel}</Button>
-        </Toolbar>
-      </AppBar> */}
 
       <div className='table-listing-users' style={{ height: 650, width: '60%' }}>
         <DataGrid
           rows={rows}
           columns={columns}
-          pageSize={10}
-          rowsPerPageOptions={[10]}
-          checkboxSelection />
+      
+          />
       </div>
-      </div>
-    
+    </div>
+
   );
 }
 export default TableListing;
