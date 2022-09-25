@@ -66,7 +66,6 @@ const Users: React.FC = () => {
   });
 
   let newUserList = userList.slice();
-  console.log("newUserList", newUserList);
   return (
     <div>
       <div>
@@ -84,9 +83,7 @@ const Users: React.FC = () => {
 
 const ShowGroupList = (props: any) => {
   const { row } = props;
-  console.log("rows=", row)
   const [groupList, setGroupList] = React.useState([]);
-
   const { data } = useQuery(GET_USER_GROUPS, {
     variables: {
       id: row.id,
@@ -95,7 +92,6 @@ const ShowGroupList = (props: any) => {
       setGroupList(data?.getUserGroups);
     },
   });
-  console.log("groupList", groupList)
   return <>{groupList?.map((group: any) => <span className="groupsvalue"> {group?.name} </span>)}</>;
 };
 
