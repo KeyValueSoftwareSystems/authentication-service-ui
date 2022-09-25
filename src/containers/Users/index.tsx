@@ -11,6 +11,9 @@ import TableListing from "../../Components/Table/tableListing";
 import { GridActionsCellItem, GridColumns,  GridRowModes, GridRowModesModel,  GridRowsProp } from "@mui/x-data-grid";
 import './index.css'
 import EditIcon from '@mui/icons-material/Edit';
+import { GET_USER_GROUPS } from "./services/queries";
+
+
 
 const groupvalues = [
   ['aaa', 'bbb'],
@@ -46,10 +49,10 @@ const Users: React.FC = () => {
 
   const columns: GridColumns = [
     {
-      field: 'firstName', headerName: 'User', width: 230, headerClassName: 'user-list-header',
+      field: 'firstName', headerName: 'User', width: 300, headerClassName: 'user-list-header',
     },
     {
-      field: 'groups', headerName: 'Member Of', headerClassName: 'user-list-header', width: 635,
+      field: 'groups', headerName: 'Member Of', headerClassName: 'user-list-header', width: 570,
     
     },  
     {
@@ -92,7 +95,7 @@ const Users: React.FC = () => {
 
   console.log("hi", userList);
 
-
+  
 
 
   useEffect(() => {
