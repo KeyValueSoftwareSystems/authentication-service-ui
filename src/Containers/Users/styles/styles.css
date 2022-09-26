@@ -13,15 +13,11 @@
 }
 
 #form-row{
-    /* display:flex;
-    width:100%; */
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     align-content: flex-start;
-    /* padding: 5px 5px 5px 5px ; */
     margin-top:10px;
     margin-bottom:20px;
-    /* width:calc(100%-400px); */
 }
 
 #phone{
@@ -36,7 +32,6 @@
     font-size: 16px;
     height: 45px;
     background: none;
-    color: rgba(0,0,0,.6392156863);
     border: 1px solid #dfdfdf;
     box-sizing: border-box;
     border-radius: 6px;

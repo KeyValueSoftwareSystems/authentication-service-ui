@@ -20,7 +20,7 @@ const Login: React.FC = () => {
       navigate('/home/users')
     }
   }, [data, navigate]);
-  console.log(data);
+
   return (
     <div>
       Login Page UI
