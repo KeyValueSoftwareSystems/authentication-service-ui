@@ -8,6 +8,34 @@ import {
 import "./styles.css";
 import SortIcon from "@mui/icons-material/Sort";
 import { FC } from "react";
+import { Box, withStyles } from "@material-ui/core";
+
+const StyledDataGrid = withStyles({
+  root: {
+    "& .MuiDataGrid-renderingZone": {
+      maxHeight: "none !important"
+    },
+    "& .MuiDataGrid-cell": {
+      lineHeight: "unset !important",
+      maxHeight: "none !important",
+      whiteSpace: "normal",
+      flexWrap:"wrap !important",
+      
+    },
+    "& .MuiDataGrid-row": {
+      maxHeight: "none !important",
+      padding:"3px",
+    },
+    "& .MuiDataGrid-cell--withRenderer MuiDataGrid-cell MuiDataGrid-cell--textLeft":{
+      maxHeight: "none !important",
+      
+    },
+
+    "& .MuiDataGrid-root":{
+      borderRadius:"0px 0px 5px 5px !important"
+    }
+  }
+})(DataGrid);
 
 interface TableProps {
   rows: GridRowsProp;
@@ -75,7 +103,9 @@ const TableListing: FC<TableProps> = ({
         className="table-listing-users"
         style={{ height: 650, width: "100%" }}
       >
-        <DataGrid rows={rows} columns={columns} style={{ borderRadius: 0 }} />
+        <StyledDataGrid rows={rows} columns={columns} style={{ 
+          textOverflow: "ellipsis"          
+        }} />
       </div>
     </div>
   );

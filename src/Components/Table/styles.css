@@ -9,7 +9,7 @@
   font-size: larger;
 }
 
-.table-listing-users {
+.table-listing-users {  
   margin: "0 20px 20px 20px";
 }
 
@@ -23,6 +23,7 @@
   border-bottom: none;
   height: 65px;
   box-sizing: border-box;
+  border-radius: 5px 5px;
 }
 
 .sort-search-button {
@@ -58,7 +59,7 @@
   align-items: center;
   font-weight: bolder;
   font-size: larger;
-  margin-left: 16px;
+  margin-left: 10px;
 }
 
 .sort-icon {

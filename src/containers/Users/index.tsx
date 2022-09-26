@@ -2,15 +2,24 @@ import React from "react";
 import { useRecoilState } from "recoil";
 import { tableListAtom, userListAtom } from "../../states/userStates";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import EditIcon from "@mui/icons-material/Edit";
 import { GridActionsCellItem, GridColumns } from "@mui/x-data-grid";
 
 import { GET_USERS, GET_USER_GROUPS } from "./services/queries";
 import "./styles.css";
-import TableListing from "../../components/Table";
+import TableListing from "../../Components/Table";
+import { DELETE_USER } from "./services/mutations";
+import { Tooltip } from "@mui/material";
+
+
 
 const Users: React.FC = () => {
+  const [deleteUser, { data: data2 }] = useMutation(DELETE_USER,{
+    refetchQueries: [{ query: GET_USERS }]
+  });
+
+ 
   const [userList, setUserList] = useRecoilState(userListAtom);
   // const [tableList, setTableList] = useRecoilState(tableListAtom);
 
@@ -40,22 +49,38 @@ const Users: React.FC = () => {
       field: "actions",
       type: "actions",
       headerName: "Actions",
+      headerClassName: "user-list-header",
       flex: 0.5,
       cellClassName: "actions",
       headerAlign: "center",
       getActions: ({ id }) => {
         return [
-          <GridActionsCellItem
-            icon={<EditIcon />}
-            label="Edit"
-            className="textPrimary"
-            color="inherit"
-          />,
-          <GridActionsCellItem
-            icon={<DeleteIcon />}
-            label="Delete"
-            color="inherit"
-          />,
+          <Tooltip title="Edit" arrow>
+            <GridActionsCellItem
+              icon={<EditIcon />}
+              label="Edit"
+              className="textPrimary"
+              color="inherit"
+            />
+          </Tooltip>
+          ,
+          <Tooltip title="Delete" arrow>
+            <GridActionsCellItem
+              icon={<DeleteIcon />}
+              label="Delete"
+              color="inherit"
+              onClick={() => {
+                
+                deleteUser({
+                  variables: {
+                    id: id,
+                  },
+                }
+                )
+              }}
+            />
+          </Tooltip>
+          ,
         ];
       },
     },
@@ -89,8 +114,9 @@ const ShowGroupList = (props: any) => {
 
   return (
     <>
+      
       {groupList?.map((group: any) => (
-        <span className="groups" key={group.id}>
+        <span className="groupsvalue" key={group.id}>
           {" "}
           {group?.name}{" "}
         </span>
