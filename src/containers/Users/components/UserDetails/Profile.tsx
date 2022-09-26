@@ -10,13 +10,16 @@ import {
   Divider,
   Link,
   Chip,
+  List,
+  ListItem,
 } from "@mui/material";
 
 import {
   GET_USER,
   GET_USER_GROUPS,
-} from "../../containers/Users/services/queries";
-import { User, Group } from "../../types/user";
+  GET_USER_PERMISSIONS,
+} from "../../services/queries";
+import { User, Group, Permission } from "../../../../types/user";
 
 const Item = styled(Paper)(() => ({
   backgroundColor: "#fff",
@@ -26,6 +29,7 @@ const Item = styled(Paper)(() => ({
 const Profile = () => {
   const [user, setUser] = useState<User>();
   const [userGroups, setUserGroups] = useState<Group[]>();
+  const [userPermissions, setUserPermissions] = useState<Permission[]>();
 
   const { data, loading, refetch } = useQuery(GET_USER, {
     //Replace with userId
@@ -47,11 +51,19 @@ const Profile = () => {
     },
   });
 
-  const testRoles = [
-    "admin",
-    "test",
-    "dev",
-  ];
+  const {
+    data: permissionsData,
+    loading: permissionsLoading,
+    refetch: permissionsRefetch,
+  } = useQuery(GET_USER_PERMISSIONS, {
+    //Replace with userId
+    variables: { id: "324a43e0-e919-4394-b171-a8a2e3c72807" },
+    onCompleted: (data) => {
+      setUserPermissions(data?.getUserPermissions);
+    },
+  });
+
+  const testRoles = ["admin", "test", "dev"];
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -148,9 +160,9 @@ const Profile = () => {
             >
               <div>Role Groups</div>
               <div style={{ margin: "6px 0px 6px 2px" }}>
-                {testRoles.map((role, index) => (
+                {userGroups?.map((group, index) => (
                   <Chip
-                    label={role}
+                    label={group?.name}
                     sx={{ marginRight: 2, marginBottom: 1 }}
                     key={index}
                     color="primary"
@@ -171,14 +183,18 @@ const Profile = () => {
             >
               <div>Permissions</div>
               <div style={{ margin: "6px 0px 6px 2px" }}>
-                {userGroups?.map((group, index) => (
-                  <Chip
-                    label={group?.name}
-                    sx={{ marginRight: 2, marginBottom: 1 }}
-                    key={index}
-                    color="primary"
-                  />
-                ))}
+                <List sx={{ listStyleType: "disc", paddingLeft: 2 }}>
+                  {userPermissions?.map((permission, index) => (
+                    <ListItem
+                      sx={{
+                        display: "list-item",
+                      }}
+                      key={index}
+                    >
+                      {permission?.name}
+                    </ListItem>
+                  ))}
+                </List>
               </div>
             </div>
           </Item>
