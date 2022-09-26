@@ -5,6 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 import FormInputText from "../../components/InputText";
 import { LoginSchema } from "./authSchema";
+import { LOGO_URL } from "../../config";
 import "./styles.css";
  
 type Props = {
@@ -27,7 +28,7 @@ const PasswordLogin: React.FC<Props> = ({onSubmitForm}) => {
   
       <div className="containerLogin">
         <div className="logo">
-          <img alt="logo" src={"assets/kv-logo.png"} />
+          <img alt="logo" src={LOGO_URL} />
         </div>
         <FormProvider {...methods}>
           <form onSubmit={handleSubmit(onSubmitForm)}>

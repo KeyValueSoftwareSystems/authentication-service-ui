@@ -5,7 +5,7 @@ import { useMutation } from "@apollo/client";
 import { LOGIN } from "./services/mutations";
 import CustomerAuth from "../../services/auth";
 import "./styles.css";
-import PasswordLogin from "./PasswordLogin";
+import PasswordLogin from "./passwordLogin";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
