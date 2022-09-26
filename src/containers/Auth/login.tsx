@@ -5,7 +5,7 @@ import { useMutation } from "@apollo/client";
 import { LOGIN } from "./services/mutations";
 import CustomerAuth from "../../services/auth";
 import "./styles.css";
-import PasswordLogin from "./passwordLogin";
+import LoginPassword from "./loginPassword";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -33,7 +33,7 @@ const Login: React.FC = () => {
 
   return (
     <div className="container">
-      <PasswordLogin onSubmitForm={onSubmitForm} />
+      <LoginPassword onSubmitForm={onSubmitForm} />
     </div>
   );
 };

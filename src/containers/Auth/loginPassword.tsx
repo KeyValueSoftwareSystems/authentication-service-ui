@@ -11,7 +11,7 @@ import "./styles.css";
 type Props = {
     onSubmitForm: (data:any) => void;
 }
-const PasswordLogin: React.FC<Props> = ({onSubmitForm}) => {
+const LoginPassword: React.FC<Props> = ({onSubmitForm}) => {
 
   const initialValues = {
     username: "",
@@ -58,4 +58,4 @@ const PasswordLogin: React.FC<Props> = ({onSubmitForm}) => {
   );
 };
 
-export default PasswordLogin;
+export default LoginPassword;
