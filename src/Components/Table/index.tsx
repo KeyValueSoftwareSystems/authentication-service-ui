@@ -68,7 +68,7 @@ const TableListing: FC<TableProps> = ({
               <GridSearchIcon style={{ color: "#4a4a4a6e" }} />
             </div>
           </div>
-          <div className="button">
+          <div className="tool-bar-button">
             <Button
               variant="outlined"
               sx={{
