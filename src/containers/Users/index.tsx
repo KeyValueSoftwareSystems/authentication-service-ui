@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useRecoilState } from "recoil";
-import { tableListAtom, userListAtom } from "../../states/userStates";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useMutation, useQuery } from "@apollo/client";
 import EditIcon from "@mui/icons-material/Edit";
@@ -11,6 +10,7 @@ import "./styles.css";
 import TableListing from "../../Components/Table";
 import { DELETE_USER } from "./services/mutations";
 import { Tooltip } from "@mui/material";
+import { userListAtom } from "../../states/userStates";
 
 
 
