@@ -1,15 +1,15 @@
 import React, { Suspense, lazy } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
-import NotFound from "../Components/NotFound";
-import HomePage from "../Containers/Home";
-
 
 import { RoutePaths } from "./routePaths";
-const Login = lazy(() => import("../Containers/Auth/login"));
-const Users = lazy(() => import("../Containers/Users"));
-const Groups = lazy(() => import("../Containers/Groups"));
-const Roles = lazy(() => import("../Containers/Roles"));
-const Permissions = lazy(() => import("../Containers/Permissions"));
+
+const NotFound = lazy(() => import( "../components/NotFound"));
+const HomePage= lazy(() => import("../containers/Home"));
+const Login = lazy(() => import("../containers/Auth/login"));
+const Users = lazy(() => import("../containers/Users"));
+const Groups = lazy(() => import("../containers/Groups"));
+const Roles = lazy(() => import("../containers/Roles"));
+const Permissions = lazy(() => import("../containers/Permissions"));
 
 const RoutesLayout: React.FC = () => {
   // const navigate = useNavigate();
@@ -27,8 +27,9 @@ const RoutesLayout: React.FC = () => {
           element={<Login type={LoginType.SignUp} />}
         /> */}
         <Route path="/home/users/:id" element={<Users/>}></Route>
-        <Route path="/home/*" element={<HomePage/>}>
-          <Route path={RoutePaths.users} element={<Users/>} />
+
+        <Route path="/home/*" element={<HomePage />}>
+          <Route path={RoutePaths.users} element={<Users />} />
           <Route path={RoutePaths.groups} element={<Groups />} />
           {/* <Route
               path="/user/:id"

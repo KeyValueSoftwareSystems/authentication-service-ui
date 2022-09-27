@@ -2,7 +2,8 @@ import React, { useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import Button from "@mui/material/Button";
 import { useMutation } from "@apollo/client";
-import { LOGIN } from "../../services/mutations";
+
+import { LOGIN } from "./services/mutations";
 import CustomerAuth from "../../services/auth";
 
 const Login: React.FC = () => {
@@ -19,8 +20,8 @@ const Login: React.FC = () => {
       });
       navigate('/home/users')
     }
-  }, [data, navigate]);
-
+  }, [data]);
+ 
   return (
     <div>
       Login Page UI

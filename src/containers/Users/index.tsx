@@ -13,8 +13,6 @@ const Users: React.FC = () => {
 
   const [userList, setUserList] = useRecoilState(userListAtom);
 
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { data, loading, refetch } = useQuery(GET_USERS, {
     onCompleted: (data) => {
       setUserList(data?.getUsers);
@@ -23,19 +21,6 @@ const Users: React.FC = () => {
 
   return (
     <div>
-      {/* <div>
-        Users
-        <Button variant="contained">Contained</Button>
-
-        {userList.map((user: any, i:any) => (
-          <div key={i}>{user.firstName}</div>
-        ))}
-        <Tooltip title="Delete">
-          <IconButton>
-            <DeleteIcon />
-          </IconButton>
-        </Tooltip>
-      </div> */}
       <UserForm />
     </div>
   );

@@ -13,6 +13,7 @@ const HomePage = () => {
 
         </ul>
       </nav>
+
       {CustomerAuth?.isAuthenticated ? <Outlet /> : <Navigate replace to='/login'/>}
     </>
   )
