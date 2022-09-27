@@ -48,13 +48,13 @@ const UserForm: React.FC = () => {
             }
         )
     }
+    console.log(user);
 
-    const [createUser] = useMutation(CREATE_USER);
+    const [createUser,{data,loading,error}] = useMutation(CREATE_USER);
     const [updateUser] = useMutation(UPDATE_USER);
-    const [updateUserGroups,{data,loading,error}]= useMutation(UPDATE_USER_GROUPS);
+    const [updateUserGroups]= useMutation(UPDATE_USER_GROUPS);
     if (loading) console.log('Submitting...') 
     if (error) console.log(`Submission error! ${error.message}`);
-    if(data)  console.log(data);
 
     useQuery(GET_USER, {
         variables: { id },
@@ -90,14 +90,13 @@ const UserForm: React.FC = () => {
         updateUserGroups(
             {
                 variables: {
-                    id:id,
+                    id:data?.passwordSignup.id,
                     input: {
                         groups:userGroupsID,
                     }
                 }
             }
         )        
-        navigate('/home');
     }
 
     const handleUpdate = () => {

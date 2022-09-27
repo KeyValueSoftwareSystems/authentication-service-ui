@@ -8,7 +8,7 @@ passwordSignup ( $input : UserPasswordSignupInput!) {
     phone,
     firstName,
     middleName,
-    lastName
+    lastName,
   }
 }`
 
