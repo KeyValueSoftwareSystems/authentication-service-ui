@@ -1,19 +1,18 @@
 import { Button, InputBase } from "@mui/material";
 import {
   DataGrid,
-  GridColumns,
-  GridRowsProp,
   GridSearchIcon,
 } from "@mui/x-data-grid";
 import "./styles.css";
 import SortIcon from "@mui/icons-material/Sort";
 import { FC } from "react";
-import { Box, withStyles } from "@material-ui/core";
+import { withStyles } from "@material-ui/core";
+import { TableProps } from "./types";
 
 const StyledDataGrid = withStyles({
   root: {
     "& .MuiDataGrid-renderingZone": {
-      maxHeight: "none !important"
+      maxHeight: "none !important",
     },
     "& .MuiDataGrid-cell": {
       lineHeight: "unset !important",
@@ -31,19 +30,9 @@ const StyledDataGrid = withStyles({
       
     },
 
-    "& .MuiDataGrid-root":{
-      borderRadius:"0px 0px 5px 5px !important"
-    }
   }
 })(DataGrid);
 
-interface TableProps {
-  rows: GridRowsProp;
-  columns: GridColumns;
-  buttonlabel: string;
-  text: string;
-  searchlabel: string;
-}
 
 const TableListing: FC<TableProps> = ({
   rows,
@@ -104,7 +93,7 @@ const TableListing: FC<TableProps> = ({
         style={{ height: 650, width: "100%" }}
       >
         <StyledDataGrid rows={rows} columns={columns} style={{ 
-          textOverflow: "ellipsis"          
+          textOverflow: "ellipsis", borderRadius: "0px 0px 5px 5px"        
         }} />
       </div>
     </div>

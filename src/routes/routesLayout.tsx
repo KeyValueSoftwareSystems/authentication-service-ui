@@ -1,11 +1,11 @@
 import React, { Suspense, lazy } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
+import Groups from "../containers/Groups";
 import { RoutePaths } from "./routePaths";
 const NotFound = lazy(() => import( "../components/NotFound"));
 const HomePage= lazy(() => import("../containers/Home"));
 const Login = lazy(() => import("../containers/Auth/login"));
 const Users = lazy(() => import("../containers/Users"));
-const Groups = lazy(() => import("../containers/Groups"));
 const Roles = lazy(() => import("../containers/Roles"));
 const Permissions = lazy(() => import("../containers/Permissions"));
 

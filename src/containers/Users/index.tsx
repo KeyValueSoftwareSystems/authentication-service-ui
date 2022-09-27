@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { tableListAtom, userListAtom } from "../../states/userStates";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -117,8 +117,7 @@ const ShowGroupList = (props: any) => {
       
       {groupList?.map((group: any) => (
         <span className="groupsvalue" key={group.id}>
-          {" "}
-          {group?.name}{" "}
+          {group?.name}
         </span>
       ))}
     </>

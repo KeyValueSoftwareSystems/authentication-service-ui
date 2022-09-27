@@ -12,5 +12,14 @@ import { atom } from "recoil";
     default : [],
   });
 
+  // export const groupListAtom = atom ({
+  //   key: "GroupList",
+  //   default : [],
+  // });
+
+  export const roleListAtom = atom ({
+    key: "RoleList",
+    default : [],
+  });
 
   
