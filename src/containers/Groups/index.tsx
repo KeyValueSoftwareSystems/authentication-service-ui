@@ -1,4 +1,5 @@
 import React from "react";
+import GroupDetails from "./groupDetails";
 
 
 const Groups:  React.FC = () => {
@@ -6,7 +7,7 @@ const Groups:  React.FC = () => {
 
   return (
     <div>
-      Groups
+      <GroupDetails/>
     </div>
   );
 };

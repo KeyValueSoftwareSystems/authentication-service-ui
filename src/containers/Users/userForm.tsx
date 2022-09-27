@@ -27,7 +27,7 @@ const UserForm: React.FC = () => {
     useQuery(GET_USER_GROUPS, {
         variables: { id },
         onCompleted: (data) => {
-            data?.getUserGroups.map((item: any) => setUserGroup([...userGroupList, item.id]));
+            data?.getUserGroups.map((item:any) => setUserGroup([...userGroupList, item.id]));
         }
     });
 
@@ -38,7 +38,7 @@ const UserForm: React.FC = () => {
     });
 
     const currentIDs: string[] = [];
-    userGroupList.map((item) => currentIDs.push(item));
+    userGroupList.map((item:any) => currentIDs.push(item));
 
     const setTitle = () => {
         if (id) {
@@ -85,6 +85,7 @@ const UserForm: React.FC = () => {
         email: user.email,
         password: user.password,
     }
+
     const initial = () => {
         if (id) {
             return initialUpdateValues;

@@ -26,11 +26,13 @@ const RoutesLayout: React.FC = () => {
           path={RoutePaths.signup}
           element={<Login type={LoginType.SignUp} />}
         /> */}
-        <Route path="/home/users/:id" element={<Users/>}></Route>
+        
 
         <Route path="/home/*" element={<HomePage />}>
           <Route path={RoutePaths.users} element={<Users />} />
-          <Route path={RoutePaths.groups} element={<Groups />} />
+          <Route path="users/:id" element={<Users/>}></Route>
+          <Route path={RoutePaths.groups} element={<Groups />} />\
+          <Route path="groups/:id" element={<Groups/>}></Route>
           {/* <Route
               path="/user/:id"
               element={<UserDetails />}

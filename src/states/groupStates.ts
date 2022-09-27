@@ -13,6 +13,13 @@ export const groupListAtom = atom ({
     default : [""],
   });
 
+  export const groupDetailsAtom = atom ({
+    key:"GroupDetails",
+    default:{
+        id:"",
+        name:""}
+  })
+
   
 
 

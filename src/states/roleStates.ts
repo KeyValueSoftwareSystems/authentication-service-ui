@@ -5,3 +5,11 @@ export const RolesListAtom = atom ({
     default : [],
   });
 
+export const GroupRolesAtom= atom ({
+  key: "GroupRoles",
+  default : [{
+    id:"",
+    name:""
+  }],
+});
+
