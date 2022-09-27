@@ -12,6 +12,7 @@ export const userListAtom = atom ({
       "middleName": "",
       "lastName": "",
       "email": "",
-      "phone": ""
+      "phone": "",
+      "password":""
   },
   });

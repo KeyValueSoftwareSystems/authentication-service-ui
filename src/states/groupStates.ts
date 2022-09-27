@@ -13,20 +13,6 @@ export const groupListAtom = atom ({
     default : [""],
   });
 
-  export const currentUserGroups = atom({
-    key:"currentGroups",
-    default: [
-      { id:"",
-        name:""
-      }
-    ]
-  });
-
-  export const currentGroupSelector = selector({
-    key:"setCurrentGroups",
-    get: ({get}) => {
-      }
-    }
-  )
+  
 
 

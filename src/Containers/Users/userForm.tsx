@@ -82,10 +82,22 @@ const UserForm: React.FC = () => {
                         lastName: user.lastName,
                         phone: user.phone,
                         email: user.email,
+                        password: user.password
                     }
                 }
             }
         )
+        updateUserGroups(
+            {
+                variables: {
+                    id:id,
+                    input: {
+                        groups:userGroupsID,
+                    }
+                }
+            }
+        )        
+        navigate('/home');
     }
 
     const handleUpdate = () => {
@@ -142,6 +154,7 @@ const UserForm: React.FC = () => {
                     <div id="form-row">
                         <Input id="fields" onChange={(event) => { onChange("phone", event.target.value) }} value={user.phone} placeholder="Mobile Number" />
                         <Input id="fields" onChange={(event) => { onChange("email", event.target.value) }} value={user.email} placeholder="Email*" />
+                        <Input id="fields" onChange={(event) => { onChange("password", event.target.value) }} value={user.password} placeholder="Password*" />
                     </div>
                 </div>
             </Form>
