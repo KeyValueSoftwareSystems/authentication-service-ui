@@ -67,76 +67,34 @@ const Profile = () => {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <Grid container spacing={2} sx={{ justifyContent: "space-between" }}>
-        <Grid item xs={4}>
-          <Item
-            elevation={0}
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
-            <div
-              style={{
-                display: "flex",
-                width: "90%",
-                justifyContent: "space-between",
-                marginBottom: 10,
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "flex-start",
-                }}
-              >
-                <div
-                  style={{
-                    fontSize: "18px",
-                    fontWeight: "bold",
-                    width: "fit-content",
-                  }}
-                >
+      <Grid container spacing={2} className="grid">
+        <Grid item sm={12} md={4}>
+          <Item elevation={0} className="grid-item1">
+            <div className="box1">
+              <div className="box2">
+                <div className="name">
                   {`${user?.firstName}
                    ${user?.middleName || ""} 
                   ${user?.lastName || ""}`}
                 </div>
-                <Link underline="none" sx={{ fontSize: "14px" }}>
+                <Link underline="none" className="link">
                   {user?.email}
                 </Link>
               </div>
             </div>
             <Divider flexItem />
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "flex-start",
-                width: "90%",
-                marginTop: 10,
-              }}
-            >
+            <div className="contact">
               <div>Contact No:</div>
               <div>{user?.phone}</div>
             </div>
           </Item>
         </Grid>
         <Divider orientation="vertical" flexItem light />
-        <Grid item xs={7}>
-          <Item sx={{ display: "flex", flexDirection: "column" }} elevation={0}>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "flex-start",
-                marginLeft: 10,
-                marginBottom: 4,
-              }}
-            >
+        <Grid item sm={10} md={7}>
+          <Item className="grid-item2" elevation={0}>
+            <div className="roles">
               <div>Roles</div>
-              <div style={{ margin: "6px 0px 6px 2px" }}>
+              <div className="items">
                 {testRoles.map((role, index) => (
                   <Chip
                     label={role}
@@ -148,18 +106,9 @@ const Profile = () => {
               </div>
             </div>
             <Divider flexItem />
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "flex-start",
-                marginLeft: 10,
-                marginTop: 4,
-                marginBottom: 4,
-              }}
-            >
+            <div className="group-permissions">
               <div>Role Groups</div>
-              <div style={{ margin: "6px 0px 6px 2px" }}>
+              <div className="items">
                 {userGroups?.map((group, index) => (
                   <Chip
                     label={group?.name}
@@ -171,18 +120,9 @@ const Profile = () => {
               </div>
             </div>
             <Divider flexItem />
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "flex-start",
-                marginLeft: 10,
-                marginTop: 4,
-                marginBottom: 4,
-              }}
-            >
+            <div className="group-permissions">
               <div>Permissions</div>
-              <div style={{ margin: "6px 0px 6px 2px" }}>
+              <div className="items">
                 <List sx={{ listStyleType: "disc", paddingLeft: 2 }}>
                   {userPermissions?.map((permission, index) => (
                     <ListItem
