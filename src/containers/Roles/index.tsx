@@ -27,7 +27,7 @@ const Roles: React.FC = () => {
     {
       field: "name",
       headerName: "Role",
-      width: 1485,
+      width: 900,
       headerClassName: "user-list-header",
       headerAlign: "left",
     },
