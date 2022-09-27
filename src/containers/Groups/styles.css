@@ -15,8 +15,7 @@
 #rolesandpermissions{
     margin-top: 20px;
     display: flex;
-   justify-content: flex-start;
-
+    justify-content: flex-start;
 }
 
 #roles{
@@ -24,5 +23,19 @@
 }
 
 #item{
-    padding: 5px 5px 5px 5px;
+    padding: 0px 5px 5px 5px;
+    padding:  4px 6px;
+    margin: 0 6px 6px 0;
+    background-color:#03AEEE; ;
+    border-radius: 6px;
+    font-size: 14px;
+    line-height: 18px;
+    color: white;
+}
+
+#item-list{
+    flex-wrap: wrap;
+    display: flex;
+    margin-top: 10px;
+    align-items: center;
 }

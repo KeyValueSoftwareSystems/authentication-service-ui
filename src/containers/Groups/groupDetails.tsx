@@ -1,4 +1,5 @@
 import { useQuery } from '@apollo/client';
+import { Box } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { groupDetailsAtom } from '../../states/groupStates';
@@ -45,25 +46,25 @@ return(
         <div id="rolesandpermissions">
             <div id="roles">
             <legend id="bold"> Group Roles </legend>
-                <ul>
-            {roles.map((item)=> <li id="item">
+                <div id="item-list">
+            {roles.map((item)=> <div id="item">
                 <div>
                     {item.name}
                 </div>
-                </li>  )
+                </div>  )
             }
-                </ul>
+                </div>
             </div>
             <div id="roles">
             <legend id="bold"> Group Permissions </legend>
-                <ul>
-            {permissions.map((item)=> <li id="item">
+                <div id="item-list">
+            {permissions.map((item)=> <div id="item">
                 <div>
                     {item.name}
                 </div>
-                </li>  )
+                </div>  )
             }
-                </ul>
+                </div>
             </div>
         </div>
     </div>
