@@ -1,5 +1,5 @@
 import React from "react";
-import GroupDetails from "./groupDetails";
+import GroupDetails from "./GroupDetails";
 
 
 const Groups:  React.FC = () => {

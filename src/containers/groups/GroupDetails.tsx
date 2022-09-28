@@ -1,10 +1,9 @@
 import { useQuery } from '@apollo/client';
-import { Box } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import { groupDetailsAtom } from '../../states/groupStates';
-import { GroupPermissionsAtom } from '../../states/permissionsStates';
-import { GroupRolesAtom } from '../../states/roleStates';
+import { groupDetailsAtom } from '../../states/GroupStates';
+import { GroupPermissionsAtom } from '../../states/PermissionsStates';
+import { GroupRolesAtom } from '../../states/RoleStates';
 import { GET_GROUP_DETAILS, GET_GROUP_PERMISSIONS, GET_GROUP_ROLES } from './services/queries';
 import './styles.css'
 

@@ -10,7 +10,13 @@ export interface FormInputProps {
   defaultValue?: string | number;
 }
 
-const FormInputText = ({ name, label, type, className, defaultValue }: FormInputProps) => {
+const FormInputText = ({
+  name,
+  label,
+  type,
+  className,
+  defaultValue,
+}: FormInputProps) => {
   const { control } = useFormContext();
 
   return (
@@ -32,7 +38,6 @@ const FormInputText = ({ name, label, type, className, defaultValue }: FormInput
           label={label}
           variant="outlined"
           className={className}
-          // defaultValue={defaultValue}
         />
       )}
     />

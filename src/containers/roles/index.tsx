@@ -1,9 +1,10 @@
 import React from 'react';
+import RoleDetails from './RoleDetails';
 
 const Roles = () => {
     return (
         <div>
-        Hi roles
+        <RoleDetails/>
         </div>
     );
 };

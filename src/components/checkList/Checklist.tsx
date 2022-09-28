@@ -1,6 +1,8 @@
+import { CheckBox } from "@mui/icons-material";
+import { Checkbox, checkboxClasses, withStyles } from "@mui/material";
 import { FC } from "react";
 import { RecoilState, useRecoilState } from "recoil";
-import "./checklist.css";
+import "./Checklist.css";
 
 interface ChecklistProps {
   name: String;
@@ -17,22 +19,21 @@ export const ChecklistComponent: FC<ChecklistProps> = ({
 }) => {
   const [atomKey, setState] = useRecoilState(atomName);
 
-  const removeGroup = (item: string) => {
+  const removeItem = (item: string) => {
     const itemIndex = atomKey.findIndex((e: any) => e === item);
     setState([...atomKey.slice(0, itemIndex), ...atomKey.slice(itemIndex + 1)]);
   };
 
-  const handleChange = (event: any, item: any) => {
-    if (event.target.checked && !currentIDs.includes(item.id)) {
+  const handleChange = (event: any,item: any) => {
+    if (event.target.checked) {
       if (atomKey[0] === "") {
         setState([item.id]);
       } else {
         setState([...atomKey, item.id]);
       }
     } else {
-      removeGroup(item.id);
+      removeItem(item.id);
     }
-    console.log(atomKey);
   };
 
   const isChecked = (id: string) => {
@@ -46,22 +47,21 @@ export const ChecklistComponent: FC<ChecklistProps> = ({
   return (
     <div id="add-groups">
       <div id="titleChecklist"> {name} </div>
-      {mapList.map((item: any) => {
-        return (
-          <div id="checkbox">
-            
+      <div id="component">
+        {mapList.map((item: any) => {
+          return (
+            <div id="checkbox" key={item.id}>
               <input
                 type="checkbox"
                 key={item.id}
                 defaultChecked={isChecked(item.id)}
-                onChange={(event: any) => handleChange(event, item)}
+                onChange={(event: any) => handleChange(event,item)}
               />
-              <span className="checklistLabel">
-              {item.name}
-            </span>
-          </div>
-        );
-      })}
+              <span className="checklistLabel">{item.name}</span>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };

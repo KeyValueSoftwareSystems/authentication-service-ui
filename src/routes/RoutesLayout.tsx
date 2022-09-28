@@ -1,15 +1,15 @@
 import React, { Suspense, lazy } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 
-import { RoutePaths } from "./routePaths";
+import { RoutePaths } from "./RoutePaths";
 
 const NotFound = lazy(() => import( "../components/NotFound"));
-const HomePage= lazy(() => import("../containers/Home"));
-const Login = lazy(() => import("../containers/Auth/login"));
-const Users = lazy(() => import("../containers/Users"));
-const Groups = lazy(() => import("../containers/Groups"));
-const Roles = lazy(() => import("../containers/Roles"));
-const Permissions = lazy(() => import("../containers/Permissions"));
+const HomePage= lazy(() => import("../containers/home"));
+const Login = lazy(() => import("../containers/auth/Login"));
+const Users = lazy(() => import("../containers/users"));
+const Groups = lazy(() => import("../containers/groups"));
+const Roles = lazy(() => import("../containers/roles"));
+const Permissions = lazy(() => import("../containers/permissions"));
 
 const RoutesLayout: React.FC = () => {
   // const navigate = useNavigate();
@@ -22,23 +22,14 @@ const RoutesLayout: React.FC = () => {
           element={<Navigate replace to={RoutePaths.login} />}
         />
         <Route path={RoutePaths.login} element={<Login />} />
-        {/* <Route
-          path={RoutePaths.signup}
-          element={<Login type={LoginType.SignUp} />}
-        /> */}
         
-
-        <Route path="/home/*" element={<HomePage />}>
+         <Route path="/home/*" element={<HomePage />}>
           <Route path={RoutePaths.users} element={<Users />} />
           <Route path="users/:id" element={<Users/>}></Route>
           <Route path={RoutePaths.groups} element={<Groups />} />\
           <Route path="groups/:id" element={<Groups/>}></Route>
-          {/* <Route
-              path="/user/:id"
-              element={<UserDetails />}
-            /> */}
-
           <Route path={RoutePaths.roles} element={<Roles />} />
+          <Route path="roles/:id" element={<Roles/>}></Route>
           <Route path={RoutePaths.permissions} element={<Permissions />} />
           <Route path="*" element={<NotFound />} />
         </Route>
