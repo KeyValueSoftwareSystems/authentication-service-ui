@@ -1,4 +1,3 @@
-import React from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { TextField } from "@mui/material";
 
@@ -8,9 +7,10 @@ export interface FormInputProps {
   type: string;
   setValue?: any;
   className?: any;
+  defaultValue?: string | number;
 }
 
-const FormInputText = ({ name, label, type, className }: FormInputProps) => {
+const FormInputText = ({ name, label, type, className, defaultValue }: FormInputProps) => {
   const { control } = useFormContext();
 
   return (
@@ -32,6 +32,7 @@ const FormInputText = ({ name, label, type, className }: FormInputProps) => {
           label={label}
           variant="outlined"
           className={className}
+          // defaultValue={defaultValue}
         />
       )}
     />

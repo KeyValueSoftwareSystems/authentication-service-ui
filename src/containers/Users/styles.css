@@ -1,0 +1,93 @@
+#title{
+    display:flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    align-items: center;
+    font-size: 18px;
+}
+
+#add-cancel{
+    display:flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+#fixed {
+    border-bottom: 1px solid rgba(0,0,0,.1);
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+}
+#form-row{
+    display: flex;
+    align-content: flex-start;
+    margin-top:10px;
+    margin-bottom:20px;
+}
+
+#phone{
+    display:flex;
+    flex-direction: row;
+    flex-wrap: nowrap;   
+}
+
+.fields{
+    border-radius: 6px !important;
+    margin-right: 30px !important;
+}
+
+#code{
+    margin-right:10px; 
+    height: 45px;
+    width:50px;
+}
+
+#cancel{
+    margin-top:2px;
+    margin-right:5px;
+    color:gray;
+}
+
+#form{
+    border: 5px;
+    padding:10px 10px 10px 10px;
+}
+
+#arrowicon{
+    width:20px;
+    height:15px;
+    margin-right:5px;
+}
+
+#back-page{
+    display: flex;
+    flex-direction: row;
+    color:gray;
+    margin-bottom:3px;
+    font-size: small;
+}
+
+#inputs{
+    margin-left:0px;
+}
+
+
+#add{
+    border-radius: 40%;
+    height:40px;
+    width:60px;
+    background-color: white;
+    border-color: rgb(23, 119, 240); 
+    color: rgb(23, 119, 240);
+}
+
+#legend{
+    font-weight: bold;
+}
+
+#page{
+    padding:15px;
+}
+
+#bold{
+    font-weight: bold;
+}

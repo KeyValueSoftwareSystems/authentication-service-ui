@@ -26,6 +26,7 @@ const RoutesLayout: React.FC = () => {
           path={RoutePaths.signup}
           element={<Login type={LoginType.SignUp} />}
         /> */}
+        <Route path="/home/users/:id" element={<Users/>}></Route>
 
         <Route path="/home/*" element={<HomePage />}>
           <Route path={RoutePaths.users} element={<Users />} />
