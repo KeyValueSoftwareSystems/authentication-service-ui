@@ -53,6 +53,6 @@
     ]
   },
   "devDependencies": {
-    "@types/muicss": "^0.9.4"
+    "yup": "^0.32.11"
   }
 }

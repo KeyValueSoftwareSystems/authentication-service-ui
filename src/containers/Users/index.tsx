@@ -7,21 +7,23 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import { useQuery } from "@apollo/client";
 import { GET_USERS } from "../../services/queries";
-import UserForm from "./userForm";
+import AddEditUser from "./addEditUser";
+// import UserFormOld from "./addEditUser";
 
 const Users: React.FC = () => {
 
-  const [userList, setUserList] = useRecoilState(userListAtom);
+  // const [userList, setUserList] = useRecoilState(userListAtom);
 
-  const { data, loading, refetch } = useQuery(GET_USERS, {
-    onCompleted: (data) => {
-      setUserList(data?.getUsers);
-    }
-  });
+  // const { data, loading, refetch } = useQuery(GET_USERS, {
+  //   onCompleted: (data) => {
+  //     setUserList(data?.getUsers);
+  //   }
+  // });
 
   return (
     <div>
-      <UserForm />
+      <AddEditUser />
+      {/* <UserFormOld /> */}
     </div>
   );
 };
