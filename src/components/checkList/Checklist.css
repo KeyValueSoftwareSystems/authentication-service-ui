@@ -4,7 +4,7 @@
   border-radius: 10px;
   padding: 20px 20px 20px 16px;
   margin-top: 20px;
-  width: 30%;
+  width: 95%;
 }
 
 #checkbox input:checked ~ #checkbox {
@@ -21,4 +21,9 @@
 }
 .checklistLabel {
   margin-left: 10px;
+}
+
+#component{
+    overflow-y: scroll;
+    width: 40%;
 }

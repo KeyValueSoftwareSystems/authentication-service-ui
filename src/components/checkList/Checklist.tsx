@@ -1,5 +1,5 @@
 import { CheckBox } from "@mui/icons-material";
-import { checkboxClasses, withStyles } from "@mui/material";
+import { Checkbox, checkboxClasses, withStyles } from "@mui/material";
 import { FC } from "react";
 import { RecoilState, useRecoilState } from "recoil";
 import "./Checklist.css";
@@ -24,7 +24,7 @@ export const ChecklistComponent: FC<ChecklistProps> = ({
     setState([...atomKey.slice(0, itemIndex), ...atomKey.slice(itemIndex + 1)]);
   };
 
-  const handleChange = (event: any, item: any) => {
+  const handleChange = (event: any,item: any) => {
     if (event.target.checked) {
       if (atomKey[0] === "") {
         setState([item.id]);
@@ -47,19 +47,21 @@ export const ChecklistComponent: FC<ChecklistProps> = ({
   return (
     <div id="add-groups">
       <div id="titleChecklist"> {name} </div>
-      {mapList.map((item: any) => {
-        return (
-          <div id="checkbox" key={item.id}>
-            <input
-              type="checkbox"
-              key={item.id}
-              defaultChecked={isChecked(item.id)}
-              onChange={(event: any) => handleChange(event, item)}
-            />
-            <span className="checklistLabel">{item.name}</span>
-          </div>
-        );
-      })}
+      <div id="component">
+        {mapList.map((item: any) => {
+          return (
+            <div id="checkbox" key={item.id}>
+              <input
+                type="checkbox"
+                key={item.id}
+                defaultChecked={isChecked(item.id)}
+                onChange={(event: any) => handleChange(event,item)}
+              />
+              <span className="checklistLabel">{item.name}</span>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };
