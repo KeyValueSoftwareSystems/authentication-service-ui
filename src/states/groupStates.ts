@@ -1,7 +1,6 @@
-import { atom } from "recoil";
+ import { atom } from "recoil";
 
-export const groupListAtom = atom ({
-
+ export const groupListAtom = atom ({
     key: "GroupList",
     default : [],
   });

@@ -1,16 +1,14 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useRecoilState } from "recoil";
-import { groupListAtom} from "../../states/groupStates";
-import DeleteIcon from "@mui/icons-material/Delete";
 import { useMutation, useQuery } from "@apollo/client";
-import EditIcon from "@mui/icons-material/Edit";
-import { GridActionsCellItem, GridColumns } from "@mui/x-data-grid";
-import "./styles.css";
-import TableListing from "../../Components/Table";
-import { Tooltip } from "@mui/material";
+import { GridColumns } from "@mui/x-data-grid";
+import { Chip } from "@mui/material";
+
+import "./styles.css"
 import { DELETE_GROUPS } from "./services/mutations";
 import { GET_GROUPS, GET_GROUP_ROLES } from "./services/queries";
-
+import TableList from "../../components/table";
+import { groupListAtom } from "../../states/groupStates";
 
 
 const Groups: React.FC = () => {
@@ -44,56 +42,19 @@ const Groups: React.FC = () => {
       renderCell: (params) => <ShowRoleList {...params} />,
       headerAlign: "center",
     },
-    {
-      field: "actions",
-      type: "actions",
-      headerName: "Actions",
-      headerClassName: "user-list-header",
-      flex: 0.5,
-      cellClassName: "actions",
-      headerAlign: "center",
-      width:100,
-      getActions: ({ id }) => {
-        return [
-          <Tooltip title="Edit" arrow>
-            <GridActionsCellItem
-              icon={<EditIcon />}
-              label="Edit"
-              className="textPrimary"
-              color="inherit"
-            />
-          </Tooltip>
-          ,
-          <Tooltip title="Delete" arrow>
-            <GridActionsCellItem
-              icon={<DeleteIcon />}
-              label="Delete"
-              color="inherit"
-              onClick={() => {
-
-                deleteGroup({
-                  variables: {
-                    id: id,
-                  },
-                }
-                )
-              }}
-            />
-          </Tooltip>
-          ,
-        ];
-      },
-    },
+    
   ];
 
   return (
     <>
-      <TableListing
+      <TableList
         rows={groupList}
         columns={columns}
         text="All Groups"
         buttonlabel="Add Group"
         searchlabel="Search Group"
+        deleteMutation={DELETE_GROUPS}
+        refetchQuery={GET_GROUPS}
       />
     </>
   );
@@ -101,7 +62,6 @@ const Groups: React.FC = () => {
 const ShowRoleList = (props: any) => {
   const { row } = props;
   const [roleList, setRoleList] = React.useState([]);
-
   const { data } = useQuery(GET_GROUP_ROLES, {
     variables: {
       id: row.id,
@@ -112,16 +72,12 @@ const ShowRoleList = (props: any) => {
   });
 
   return (
-    <>
-      
+    <>      
       {roleList?.map((role: any) => (
-        <span className="rolesvalue" key={role.id}>
-          {role?.name}
-        </span>
+        <Chip label={role?.name} key={role.id} />          
       ))}
     </>
   );
 };
-
 
 export default Groups;
