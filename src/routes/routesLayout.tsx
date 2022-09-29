@@ -29,6 +29,7 @@ const RoutesLayout: React.FC = () => {
 
         <Route path="/home/*" element={<HomePage />}>
           <Route path={RoutePaths.users} element={<Users />} />
+          <Route path="users/:id" element={<Users/>}></Route>
           <Route path={RoutePaths.groups} element={<Groups />} />
           {/* <Route
               path="/user/:id"
