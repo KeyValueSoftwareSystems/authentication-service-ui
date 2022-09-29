@@ -23,7 +23,17 @@
   margin-left: 10px;
 }
 
-#component{
-    overflow-y: scroll;
-    width: 40%;
+#component {
+  overflow-y: scroll;
+  width: 40%;
+}
+
+#titlebar{
+    display: flex;
+}
+
+#selectall{
+    margin-left:10px;
+    font-size: 14px;
+    color:grey
 }

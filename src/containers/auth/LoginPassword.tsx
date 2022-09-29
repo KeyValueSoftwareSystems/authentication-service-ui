@@ -4,7 +4,7 @@ import { useForm, FormProvider } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import FormInputText from "../../components/input-text";
-import { LoginSchema } from "./AuthSchema";
+import { LoginSchema } from "./authSchema";
 import { LOGO_URL } from "../../config";
 import "./styles.css";
  

@@ -6,17 +6,17 @@ import { useForm, FormProvider } from "react-hook-form";
 import { Button } from "@mui/material";
 import { useMutation, useQuery } from "@apollo/client";
 import { useRecoilState, useSetRecoilState, useRecoilValue } from "recoil";
-import { userAtom } from "../../states/UserStates";
+import { userAtom } from "../../states/userStates";
 import {
   CREATE_USER,
   UPDATE_USER,
   UPDATE_USER_GROUPS,
 } from "./services/mutations";
 import { GET_GROUPS, GET_USER, GET_USER_GROUPS } from "./services/queries";
-import { groupListAtom, userGroupsAtom } from "../../states/GroupStates";
+import { groupListAtom, userGroupsAtom } from "../../states/groupStates";
 import { ChecklistComponent } from "../../components/checkList/Checklist";
 import FormInputText from "../../components/input-text";
-import { UserformSchema } from "./UserSchema";
+import { UserformSchema } from "./userSchema";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 const AddEditUser: React.FC = () => {

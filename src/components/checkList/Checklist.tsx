@@ -1,6 +1,6 @@
 import { CheckBox } from "@mui/icons-material";
 import { Checkbox, checkboxClasses, withStyles } from "@mui/material";
-import { FC } from "react";
+import { FC, useState } from "react";
 import { RecoilState, useRecoilState } from "recoil";
 import "./Checklist.css";
 
@@ -24,7 +24,7 @@ export const ChecklistComponent: FC<ChecklistProps> = ({
     setState([...atomKey.slice(0, itemIndex), ...atomKey.slice(itemIndex + 1)]);
   };
 
-  const handleChange = (event: any,item: any) => {
+  const handleChange = (event: any, item: any) => {
     if (event.target.checked) {
       if (atomKey[0] === "") {
         setState([item.id]);
@@ -36,26 +36,46 @@ export const ChecklistComponent: FC<ChecklistProps> = ({
     }
   };
 
+  // let select=true;
+
   const isChecked = (id: string) => {
     if (currentIDs.includes(id)) {
-      return true;
+      return true
+      // select=true;
     } else {
       return false;
+      // select=false;
     }
   };
 
+
+  // const handleSelectAll =(event:any) =>{
+  //   if(event.target.checked)
+  //   {
+  //     select = true;
+  //     console.log(select)
+  //   }
+  // }
+
   return (
     <div id="add-groups">
-      <div id="titleChecklist"> {name} </div>
+      <div id="titlebar">
+        <div id="titleChecklist"> {name} </div>
+        {/* <div id="selectall">
+          <input type="checkbox" onChange={(event:any) => handleSelectAll(event)} />
+          <span> Select All</span>
+        </div> */}
+      </div>
       <div id="component">
         {mapList.map((item: any) => {
+           isChecked(item.id)
           return (
             <div id="checkbox" key={item.id}>
               <input
                 type="checkbox"
-                key={item.id}
+                key={item.id}                
                 defaultChecked={isChecked(item.id)}
-                onChange={(event: any) => handleChange(event,item)}
+                onChange={(event: any) => handleChange(event, item)}
               />
               <span className="checklistLabel">{item.name}</span>
             </div>
