@@ -12,7 +12,7 @@ import {
   Divider,
 } from "@mui/material";
 import { useState } from "react";
-import { GET_ROLE_PERMISSIONS } from "../../../Roles/services/queries"; 
+import { GET_ROLE_PERMISSIONS } from "../../../Roles/services/queries";
 import "./styles.css";
 
 interface TabPanelProps {
