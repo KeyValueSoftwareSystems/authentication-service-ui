@@ -93,3 +93,8 @@
     font-size: 14px;
     color: rgba(47,47,47,.6);
 }
+
+.header{
+    padding-left: 4px;
+    font-weight: 600;
+}

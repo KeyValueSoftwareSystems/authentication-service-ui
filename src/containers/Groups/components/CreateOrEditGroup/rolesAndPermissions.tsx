@@ -1,10 +1,15 @@
-import { List, ListItem, Grid, Paper, Checkbox } from "@mui/material";
+import { useQuery } from "@apollo/client";
+import { List, ListItem, Grid, Paper, Checkbox, Divider } from "@mui/material";
 
 const RolesAndPermissions = () => {
+
   return (
     <Grid container spacing={1}>
       <Grid item xs={5}>
-        <List style={{ maxHeight: "400px", overflow: "auto" }} >
+        <div>
+          <div className="header">Roles</div>
+        </div>
+        <List style={{ maxHeight: "400px", overflow: "auto" }}>
           <ListItem>
             <Paper className="roles">
               <Checkbox />
@@ -21,6 +26,10 @@ const RolesAndPermissions = () => {
             </Paper>
           </ListItem>
         </List>
+      </Grid>
+      <Divider orientation="vertical" flexItem sx={{ marginLeft: 2 }} />
+      <Grid item xs={5}>
+        <div className="header">Permissions summary of selected roles</div>
       </Grid>
     </Grid>
   );
