@@ -1,16 +1,14 @@
 import React from "react";
 import { useRecoilState } from "recoil";
-import DeleteIcon from "@mui/icons-material/Delete";
 import { useMutation, useQuery } from "@apollo/client";
-import EditIcon from "@mui/icons-material/Edit";
-import { GridActionsCellItem, GridColumns } from "@mui/x-data-grid";
+import { GridColumns } from "@mui/x-data-grid";
 
 import { GET_USERS, GET_USER_GROUPS } from "./services/queries";
 import "./styles.css";
-import TableListing from "../../Components/Table";
 import { DELETE_USER } from "./services/mutations";
-import { Tooltip } from "@mui/material";
 import { userListAtom } from "../../states/userStates";
+import TableList from "../../components/table/Table";
+import Tag from "../../components/tag/Tag";
 
 
 
@@ -21,7 +19,6 @@ const Users: React.FC = () => {
 
  
   const [userList, setUserList] = useRecoilState(userListAtom);
-  // const [tableList, setTableList] = useRecoilState(tableListAtom);
 
   const { data } = useQuery(GET_USERS, {
     onCompleted: (data) => {
@@ -45,55 +42,18 @@ const Users: React.FC = () => {
       renderCell: (params) => <ShowGroupList {...params} />,
       headerAlign: "center",
     },
-    {
-      field: "actions",
-      type: "actions",
-      headerName: "Actions",
-      headerClassName: "user-list-header",
-      flex: 0.5,
-      cellClassName: "actions",
-      headerAlign: "center",
-      getActions: ({ id }) => {
-        return [
-          <Tooltip title="Edit" arrow>
-            <GridActionsCellItem
-              icon={<EditIcon />}
-              label="Edit"
-              className="textPrimary"
-              color="inherit"
-            />
-          </Tooltip>
-          ,
-          <Tooltip title="Delete" arrow>
-            <GridActionsCellItem
-              icon={<DeleteIcon />}
-              label="Delete"
-              color="inherit"
-              onClick={() => {
-                
-                deleteUser({
-                  variables: {
-                    id: id,
-                  },
-                }
-                )
-              }}
-            />
-          </Tooltip>
-          ,
-        ];
-      },
-    },
   ];
 
   return (
     <>
-      <TableListing
+      <TableList
         rows={userList}
         columns={columns}
         text="All Users"
         buttonlabel="Add User"
         searchlabel="Search User"
+        deleteMutation={DELETE_USER}
+        refetchQuery={GET_USERS}
       />
     </>
   );
@@ -113,12 +73,9 @@ const ShowGroupList = (props: any) => {
   });
 
   return (
-    <>
-      
+    <>      
       {groupList?.map((group: any) => (
-        <span className="groupsvalue" key={group.id}>
-          {group?.name}
-        </span>
+        <Tag text={group?.name} />
       ))}
     </>
   );

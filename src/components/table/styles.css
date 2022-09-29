@@ -1,0 +1,18 @@
+.user-options {
+  display: flex;
+  align-items: center;
+  font-size: larger;
+}
+
+.table-listing-items {
+  margin: "0 20px 20px 20px";
+}
+
+.table-component {
+  margin: 10px;
+}
+
+.table-tool-bar {
+  width: 100%;
+  margin-right: 20px;
+}

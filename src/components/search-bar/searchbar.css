@@ -1,0 +1,17 @@
+
+.search {
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin-right: 33px;
+  }
+  
+  .search-icon {
+    z-index: 9;
+    position: absolute;
+    right: 10px;
+  }
+  
+  .search-bar {
+    z-index: 8;
+  }
