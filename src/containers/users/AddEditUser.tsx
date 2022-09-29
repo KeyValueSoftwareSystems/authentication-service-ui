@@ -16,7 +16,7 @@ import { GET_GROUPS, GET_USER, GET_USER_GROUPS } from "./services/queries";
 import { groupListAtom, userGroupsAtom } from "../../states/groupStates";
 import { ChecklistComponent } from "../../components/checkList/Checklist";
 import FormInputText from "../../components/input-text";
-import { UserformSchema } from "./UserSchema";
+import { UserformSchema } from "./userSchema";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 const AddEditUser: React.FC = () => {
@@ -122,7 +122,6 @@ const EditUser = () => {
         },
       },
     });
-    // console.log(userGroupsID);
     updateUserGroups({
       variables: {
         id: id,
