@@ -36,6 +36,28 @@ const theme = createTheme({
         }
       },
     },
+    MuiDataGrid: {
+      styleOverrides: {
+        root: {
+          "& .MuiDataGrid-renderingZone": {
+            maxHeight: "none !important",
+          },
+          "& .MuiDataGrid-cell": {
+            lineHeight: "unset !important",
+            maxHeight: "none !important",
+            whiteSpace: "normal",
+            flexWrap:"wrap !important",
+          },
+          "& .MuiDataGrid-row": {
+            maxHeight: "none !important",
+            padding:"3px",
+          },
+          "& .MuiDataGrid-cell--withRenderer MuiDataGrid-cell MuiDataGrid-cell--textLeft":{
+            maxHeight: "none !important",
+          },
+        }
+      }
+    }    
   },
 });
 export default theme;

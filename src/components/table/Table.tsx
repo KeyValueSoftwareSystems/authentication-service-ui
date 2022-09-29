@@ -2,7 +2,6 @@ import {
   DataGrid, GridActionsCellItem, GridColumns,
 } from "@mui/x-data-grid";
 import { FC } from "react";
-import { withStyles } from "@material-ui/core";
 import { Tooltip } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
@@ -11,30 +10,6 @@ import { useMutation } from "@apollo/client";
 import { TableProps } from "./types";
 import TableToolBar from "../table-tool-bar/TableToolBar";
 import "./styles.css";
-
-const StyledDataGrid = withStyles({
-  root: {
-    "& .MuiDataGrid-renderingZone": {
-      maxHeight: "none !important",
-    },
-    "& .MuiDataGrid-cell": {
-      lineHeight: "unset !important",
-      maxHeight: "none !important",
-      whiteSpace: "normal",
-      flexWrap:"wrap !important",
-      
-    },
-    "& .MuiDataGrid-row": {
-      maxHeight: "none !important",
-      padding:"3px",
-    },
-    "& .MuiDataGrid-cell--withRenderer MuiDataGrid-cell MuiDataGrid-cell--textLeft":{
-      maxHeight: "none !important",
-      
-    },
-
-  }
-})(DataGrid);
 
 const TableList: FC<TableProps> = ({
   rows,
@@ -101,7 +76,7 @@ const TableList: FC<TableProps> = ({
         className="table-listing-items"
         style={{ height: 650, width: "100%" }}
       >
-        <StyledDataGrid rows={rows} columns={columns3} style={{ 
+        <DataGrid rows={rows} columns={columns3} style={{ 
           textOverflow: "ellipsis", borderRadius: "0px 0px 5px 5px"        
         }} />
       </div>
