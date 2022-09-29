@@ -1,9 +1,10 @@
 import { Button } from "@mui/material";
 import { FC } from "react"
+
 import Sort from "../sort/Sort";
 import { TableToolBarProps } from "./types";
 import './tabletoolbar.css'
-import SearchBar1 from "../search-bar/SearchBar";
+import SearchBar from "../search-bar/SearchBar";
 
 const TableToolBar: FC<TableToolBarProps> = ({
     text,
@@ -18,22 +19,11 @@ const TableToolBar: FC<TableToolBarProps> = ({
                     <Sort />
                 </div>
                 <div className="search">
-                    <SearchBar1 searchlabel={searchlabel} />
+                    <SearchBar searchlabel={searchlabel} />
                 </div>
                 <div className="tool-bar-button">
                     <Button
-                        variant="outlined"
-                        sx={{
-                            boxShadow: 1,
-                            border: 1,
-                            borderBlockColor: "grey",
-                            color: "#636363",
-                            borderRadius: 10,
-                            height: 40,
-                            marginTop: "11px",
-                            marginRight: "17px",
-                        }}
-                    >
+                        variant="outlined"                    >
                         {buttonlabel}
                     </Button>
                 </div>

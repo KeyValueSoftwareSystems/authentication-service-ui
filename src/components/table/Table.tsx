@@ -1,15 +1,16 @@
 import {
   DataGrid, GridActionsCellItem, GridColumns,
 } from "@mui/x-data-grid";
-import "./styles.css";
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import { withStyles } from "@material-ui/core";
-import { TableProps } from "./types";
-import TableToolBar from "../table-tool-bar/TableToolBar";
 import { Tooltip } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { useMutation } from "@apollo/client";
+
+import { TableProps } from "./types";
+import TableToolBar from "../table-tool-bar/TableToolBar";
+import "./styles.css";
 
 const StyledDataGrid = withStyles({
   root: {

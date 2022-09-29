@@ -2,13 +2,14 @@ import React from "react";
 import { useRecoilState } from "recoil";
 import { useMutation, useQuery } from "@apollo/client";
 import { GridColumns } from "@mui/x-data-grid";
+import { Chip } from "@mui/material";
 
 import { GET_USERS, GET_USER_GROUPS } from "./services/queries";
 import "./styles.css";
 import { DELETE_USER } from "./services/mutations";
 import { userListAtom } from "../../states/userStates";
 import TableList from "../../components/table/Table";
-import Tag from "../../components/tag/Tag";
+
 
 
 
@@ -75,7 +76,7 @@ const ShowGroupList = (props: any) => {
   return (
     <>      
       {groupList?.map((group: any) => (
-        <Tag text={group?.name} />
+        <Chip label={group?.name} />
       ))}
     </>
   );

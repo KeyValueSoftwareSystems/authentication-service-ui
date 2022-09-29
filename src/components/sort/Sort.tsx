@@ -1,5 +1,6 @@
 import { FC } from "react";
 import SortIcon from "@mui/icons-material/Sort";
+
 import './sort.css'
 
 const Sort: FC = () => {
@@ -7,7 +8,7 @@ const Sort: FC = () => {
     return (
         <div className="sort">
             <div className="sort-icon">
-                <SortIcon sx={{ color: "grey" }} />
+                <SortIcon />
             </div>
             <div className="sort-text">Sort</div>
         </div>

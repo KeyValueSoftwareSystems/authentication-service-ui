@@ -24,6 +24,10 @@
     margin-left: 10px;
 }
 
+.tool-bar-button{
+    margin-top: 11px;
+}
+
 @media screen and (max-width: 1103px) {
     div.search {
         display: none;
