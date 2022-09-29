@@ -33,48 +33,48 @@ export const ChecklistComponent: FC<ChecklistProps> = ({
       }
     } else {
       removeItem(item.id);
+      currentIDs = currentIDs.filter((id) => item.id != id);
     }
   };
 
-  // let select=true;
+  const [checkAll, setChecked] = useState(false);
 
   const isChecked = (id: string) => {
     if (currentIDs.includes(id)) {
-      return true
-      // select=true;
+      return true;
     } else {
       return false;
-      // select=false;
     }
   };
 
-
-  // const handleSelectAll =(event:any) =>{
-  //   if(event.target.checked)
-  //   {
-  //     select = true;
-  //     console.log(select)
-  //   }
-  // }
+  const handleSelectAll = (event: any) => {
+    if (event.target.checked) {
+      setChecked(true);
+    } else {
+      setChecked(false);
+    }
+  };
 
   return (
     <div id="add-groups">
       <div id="titlebar">
         <div id="titleChecklist"> {name} </div>
-        {/* <div id="selectall">
-          <input type="checkbox" onChange={(event:any) => handleSelectAll(event)} />
+        <div id="selectall">
+          <input
+            type="checkbox"
+            onChange={(event: any) => handleSelectAll(event)}
+          />
           <span> Select All</span>
-        </div> */}
+        </div>
       </div>
       <div id="component">
         {mapList.map((item: any) => {
-           isChecked(item.id)
           return (
             <div id="checkbox" key={item.id}>
               <input
                 type="checkbox"
-                key={item.id}                
-                defaultChecked={isChecked(item.id)}
+                key={item.id}
+                checked={checkAll || isChecked(item.id)}
                 onChange={(event: any) => handleChange(event, item)}
               />
               <span className="checklistLabel">{item.name}</span>
