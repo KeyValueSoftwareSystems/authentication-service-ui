@@ -1,5 +1,3 @@
-import { CheckBox } from "@mui/icons-material";
-import { Checkbox, checkboxClasses, withStyles } from "@mui/material";
 import { FC } from "react";
 import { RecoilState, useRecoilState } from "recoil";
 import "./Checklist.css";

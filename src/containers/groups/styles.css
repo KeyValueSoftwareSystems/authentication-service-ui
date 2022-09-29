@@ -23,14 +23,9 @@
 }
 
 #item{
-    padding: 0px 5px 5px 5px;
-    padding:  4px 6px;
-    margin: 0 6px 6px 0;
     background-color:#03AEEE; ;
-    border-radius: 6px;
-    font-size: 14px;
-    line-height: 18px;
     color: white;
+    margin: 0px 1px 1px 0px;
 }
 
 #item-list{

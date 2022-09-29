@@ -6,14 +6,14 @@ import { useForm, FormProvider } from "react-hook-form";
 import { Button } from "@mui/material";
 import { useMutation, useQuery } from "@apollo/client";
 import { useRecoilState, useSetRecoilState, useRecoilValue } from "recoil";
-import { userAtom } from "../../states/UserStates";
+import { userAtom } from "../../states/userStates";
 import {
   CREATE_USER,
   UPDATE_USER,
   UPDATE_USER_GROUPS,
 } from "./services/mutations";
 import { GET_GROUPS, GET_USER, GET_USER_GROUPS } from "./services/queries";
-import { groupListAtom, userGroupsAtom } from "../../states/GroupStates";
+import { groupListAtom, userGroupsAtom } from "../../states/groupStates";
 import { ChecklistComponent } from "../../components/checkList/Checklist";
 import FormInputText from "../../components/input-text";
 import { UserformSchema } from "./UserSchema";
@@ -26,7 +26,7 @@ const AddEditUser: React.FC = () => {
   const userGroupList = useRecoilValue(userGroupsAtom);
 
   const currentIDs: string[] = [];
-  userGroupList.map((item) => currentIDs.push(item));
+  userGroupList.map((item:any) => currentIDs.push(item));
 
   useQuery(GET_GROUPS, {
     onCompleted: (data) => {
