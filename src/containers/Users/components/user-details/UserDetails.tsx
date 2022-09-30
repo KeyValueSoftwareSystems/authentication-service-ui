@@ -1,8 +1,9 @@
 import { useState, FC } from "react";
 
+import { Tabs, Tab, Box, Typography } from "@mui/material";
+
 import "./styles.css";
 
-import { Tabs, Tab, Box, Typography } from "@mui/material";
 import Profile from "./Profile";
 
 interface TabPanelProps {
