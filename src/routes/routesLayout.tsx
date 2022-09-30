@@ -4,12 +4,12 @@ import { Route, Routes, Navigate } from "react-router-dom";
 import { RoutePaths } from "./routePaths";
 
 const NotFound = lazy(() => import( "../components/NotFound"));
-const HomePage= lazy(() => import("../containers/Home"));
-const Login = lazy(() => import("../containers/Auth/login"));
-const Users = lazy(() => import("../containers/Users"));
-const Groups = lazy(() => import("../containers/Groups"));
-const Roles = lazy(() => import("../containers/Roles"));
-const Permissions = lazy(() => import("../containers/Permissions"));
+const HomePage= lazy(() => import("../containers/home"));
+const Login = lazy(() => import("../containers/auth/login"));
+const Users = lazy(() => import("../containers/users"));
+const Groups = lazy(() => import("../containers/groups"));
+const Roles = lazy(() => import("../containers/roles"));
+const Permissions = lazy(() => import("../containers/permissions"));
 
 const RoutesLayout: React.FC = () => {
   // const navigate = useNavigate();
