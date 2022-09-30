@@ -9,7 +9,7 @@ const Login = lazy(() => import("../containers/Auth/login"));
 const Users = lazy(() => import("../containers/Users"));
 const Groups = lazy(() => import("../containers/Groups"));
 const Roles = lazy(() => import("../containers/Roles"));
-const Permissions = lazy(() => import("../containers/Permissions"));
+const Permissions = lazy(() => import("../containers/permissions"));
 
 const RoutesLayout: React.FC = () => {
   // const navigate = useNavigate();

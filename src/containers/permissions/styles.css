@@ -1,0 +1,9 @@
+.permission-list{
+    display: flex;
+    flex-direction: column;
+}
+
+.permissions{
+    width: 20%;
+    margin-bottom: 10px;
+}
