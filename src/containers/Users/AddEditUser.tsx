@@ -14,7 +14,7 @@ import {
 } from "./services/mutations";
 import { GET_GROUPS, GET_USER, GET_USER_GROUPS } from "./services/queries";
 import { groupListAtom, userGroupsAtom } from "../../states/groupStates";
-import { UserformSchema } from "./userSchema";
+import { AddUserformSchema, EditUserformSchema } from "./userSchema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ChecklistComponent } from "../../components/checklist/checkList";
 import FormInputText from "../../components/InputText";
@@ -84,7 +84,7 @@ const CreateUser = () => {
   };
 
   return (
-    <FormComponent createUser={onCreateUser} initialValues={initialValues} />
+    <FormComponent createUser={onCreateUser} initialValues={initialValues} UserformSchema={AddUserformSchema}/>
   );
 };
 
@@ -149,6 +149,7 @@ const EditUser = () => {
           isEdit
           updateUser={onUpdateUser}
           initialValues={initialValues}
+          UserformSchema={EditUserformSchema}
         />
       )}
     </>
@@ -157,7 +158,7 @@ const EditUser = () => {
 
 const FormComponent = (props: any) => {
   const { id } = useParams();
-  const { isEdit, updateUser, createUser, initialValues } = props;
+  const { isEdit, updateUser, createUser, initialValues, UserformSchema } = props;
 
   const methods = useForm({
     defaultValues: initialValues,

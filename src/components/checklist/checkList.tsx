@@ -1,4 +1,5 @@
 import { FC, useState } from "react";
+import { useParams } from "react-router-dom";
 import { RecoilState, useRecoilState } from "recoil";
 import "./checklist.css";
 
@@ -22,17 +23,23 @@ export const ChecklistComponent: FC<ChecklistProps> = ({
     setState([...atomKey.slice(0, itemIndex), ...atomKey.slice(itemIndex + 1)]);
   };
 
+  const {id} =useParams();
+  
+
   const handleChange = (event: any, item: any) => {
     if (event.target.checked) {
-      if (atomKey[0] === "") {
-        setState([item.id]);
-      } else {
-        setState([...atomKey, item.id]);
+      if (!currentIDs.includes(item.id)) {
+        if (atomKey[0] === "") {
+          setState([item.id]);
+        } else {
+          setState([...atomKey, item.id]);
+        }
       }
-    } else {
-      removeItem(item.id);
-      currentIDs = currentIDs.filter((id) => item.id !== id);
-    }
+      } else {
+        removeItem(item.id);
+        currentIDs = currentIDs.filter((id) => item.id !== id);
+      }
+
   };
 
   const [checkAll, setChecked] = useState(false);
@@ -51,6 +58,7 @@ export const ChecklistComponent: FC<ChecklistProps> = ({
     } else {
       setChecked(false);
     }
+    mapList.map((item:any)=>handleChange(event,item));
   };
 
   return (
@@ -72,7 +80,7 @@ export const ChecklistComponent: FC<ChecklistProps> = ({
               <input
                 type="checkbox"
                 key={item.id}
-                checked={checkAll || isChecked(item.id)}
+                defaultChecked={id? (checkAll || isChecked(item.id)): checkAll}
                 onChange={(event: any) => handleChange(event, item)}
               />
               <span className="checklistLabel">{item.name}</span>
