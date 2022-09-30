@@ -1,5 +1,3 @@
-
-import { keyboard } from "@testing-library/user-event/dist/keyboard";
 import { atom } from "recoil";
 
 export const groupListAtom = atom({

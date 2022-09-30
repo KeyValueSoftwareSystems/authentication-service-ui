@@ -1,5 +1,3 @@
-
-
 import React, { useEffect } from "react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import "./styles.css";
@@ -16,7 +14,6 @@ import {
 } from "./services/mutations";
 import { GET_GROUPS, GET_USER, GET_USER_GROUPS } from "./services/queries";
 import { groupListAtom, userGroupsAtom } from "../../states/groupStates";
-
 import { UserformSchema } from "./userSchema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ChecklistComponent } from "../../components/checklist/checkList";
@@ -53,7 +50,7 @@ const AddEditUser: React.FC = () => {
 const CreateUser = () => {
   const userGroupList = useRecoilValue(userGroupsAtom);
 
-  const [createUser, { data, loading, error }] = useMutation(CREATE_USER);
+  const [createUser, { data }] = useMutation(CREATE_USER);
   const [updateUserGroups] = useMutation(UPDATE_USER_GROUPS);
 
   const onCreateUser = (inputs: any) => {
@@ -75,7 +72,7 @@ const CreateUser = () => {
         },
       });
     }
-  }, [data]);
+  }, [data,updateUserGroups,userGroupList]);
 
   const initialValues = {
     firstName: "",
@@ -125,7 +122,7 @@ const EditUser = () => {
         },
       },
     });
-    // console.log(userGroupsID);
+
     updateUserGroups({
       variables: {
         id: id,
@@ -179,7 +176,7 @@ const FormComponent = (props: any) => {
   const onSubmitForm = (inputs: any) => {
     isEdit ? updateUser(inputs) : createUser(inputs);
   };
-  const navigate = useNavigate();
+
   const getType = () => {
     if (id) return "hidden";
     else return "text";
@@ -207,7 +204,6 @@ const FormComponent = (props: any) => {
                 </Button>
               </div>
             </div>
-            {/* <hr /> */}
           </div>
           <div id="inputs">
             <div id="form-row">
@@ -216,7 +212,6 @@ const FormComponent = (props: any) => {
                 label="First name*"
                 type="text"
                 className="fields"
-                // defaultValue={initialValues?.firstName}
               />
               <FormInputText
                 name="middleName"

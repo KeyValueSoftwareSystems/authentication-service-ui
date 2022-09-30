@@ -1,5 +1,3 @@
-import { CheckBox } from "@mui/icons-material";
-import { Checkbox, checkboxClasses, withStyles } from "@mui/material";
 import { FC, useState } from "react";
 import { RecoilState, useRecoilState } from "recoil";
 import "./checklist.css";
@@ -33,7 +31,7 @@ export const ChecklistComponent: FC<ChecklistProps> = ({
       }
     } else {
       removeItem(item.id);
-      currentIDs = currentIDs.filter((id) => item.id != id);
+      currentIDs = currentIDs.filter((id) => item.id !== id);
     }
   };
 
