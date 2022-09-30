@@ -17,7 +17,7 @@ const SearchBar: FC<SearchBarProps> = ({
                 />
             </div>
             <div className="search-icon">
-                <GridSearchIcon style={{ color: "#4a4a4a6e" }} />
+                <GridSearchIcon />
             </div>
         </div>
 

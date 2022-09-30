@@ -14,14 +14,14 @@ import TableList from "../../components/table/Table";
 
 
 const Users: React.FC = () => {
-  const [deleteUser, { data: data2 }] = useMutation(DELETE_USER,{
+  useMutation(DELETE_USER,{
     refetchQueries: [{ query: GET_USERS }]
   });
 
  
   const [userList, setUserList] = useRecoilState(userListAtom);
 
-  const { data } = useQuery(GET_USERS, {
+  useQuery(GET_USERS, {
     onCompleted: (data) => {
       setUserList(data?.getUsers);
     },
@@ -64,7 +64,7 @@ const ShowGroupList = (props: any) => {
   const { row } = props;
   const [groupList, setGroupList] = React.useState([]);
 
-  const { data } = useQuery(GET_USER_GROUPS, {
+  useQuery(GET_USER_GROUPS, {
     variables: {
       id: row.id,
     },
@@ -76,7 +76,7 @@ const ShowGroupList = (props: any) => {
   return (
     <>      
       {groupList?.map((group: any) => (
-        <Chip label={group?.name} />
+        <Chip label={group?.name} key={group?.id}/>
       ))}
     </>
   );

@@ -20,12 +20,12 @@ const TableList: FC<TableProps> = ({
   deleteMutation,
   refetchQuery,
 }) => {
-  const [deleteItem, { data: data2 }] = useMutation(deleteMutation,{
+  const [deleteItem] = useMutation(deleteMutation,{
     refetchQueries: [{ query: refetchQuery }]
   });
   
-  //
-  const columns2: GridColumns = [{
+  
+  const action_column: GridColumns = [{
     field: "actions",
     type: "actions",
     headerName: "Actions",
@@ -65,7 +65,7 @@ const TableList: FC<TableProps> = ({
     },
   },];
 
-  const columns3=[...columns,...columns2]
+  const final_columns=[...columns,...action_column]
  
   return (
     <div className="table-component">
@@ -76,7 +76,7 @@ const TableList: FC<TableProps> = ({
         className="table-listing-items"
         style={{ height: 650, width: "100%" }}
       >
-        <DataGrid rows={rows} columns={columns3} style={{ 
+        <DataGrid rows={rows} columns={final_columns} style={{ 
           textOverflow: "ellipsis", borderRadius: "0px 0px 5px 5px"        
         }} />
       </div>
