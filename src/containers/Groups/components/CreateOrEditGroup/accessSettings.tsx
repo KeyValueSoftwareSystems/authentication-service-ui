@@ -12,7 +12,12 @@ import {
   Divider,
 } from "@mui/material";
 import { useState } from "react";
-import { GET_ROLE_PERMISSIONS } from "../../../Roles/services/queries";
+import { ChecklistComponent } from "../../../../components/checklist/checkList";
+import { Role } from "../../../../types/role";
+import {
+  GET_ROLES,
+  GET_ROLE_PERMISSIONS,
+} from "../../../Roles/services/queries";
 import "./styles.css";
 
 interface TabPanelProps {
@@ -43,6 +48,7 @@ function TabPanel(props: TabPanelProps) {
 
 const AccessSettings = () => {
   const [value, setValue] = useState(0);
+  const [roles, setRoles] = useState<Role[]>([]);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -54,6 +60,14 @@ const AccessSettings = () => {
       console.log(data?.getRolePermissions);
     },
   });
+
+  const { data: roleData } = useQuery(GET_ROLES, {
+    onCompleted: (data) => {
+      console.log("roles", data?.getRoles);
+    },
+  });
+
+  const onChange = () => {};
 
   return (
     <div className="access-settings">
@@ -70,23 +84,11 @@ const AccessSettings = () => {
               <div>
                 <div className="header">Roles</div>
               </div>
-              <List style={{ maxHeight: "400px", overflow: "auto" }}>
-                <ListItem>
-                  <Paper className="roles">
-                    <Checkbox />
-                    <div className="role">
-                      <div className="role-name">Academy Manager</div>
-                      <div className="role-description">
-                        This groups is for managing the academy. The users in
-                        this group will have access to all academy features
-                        including Academy Admin and Surge Live. Users in this
-                        groups are the point of contacts for any academy related
-                        queries and this is a Test group.
-                      </div>
-                    </div>
-                  </Paper>
-                </ListItem>
-              </List>
+              <ChecklistComponent
+                mapList={roleData?.getRoles}
+                name="Select roles"
+                onChange={onChange}
+              />
             </Grid>
             <Divider orientation="vertical" flexItem sx={{ marginLeft: 2 }} />
             <Grid item xs={5}>
