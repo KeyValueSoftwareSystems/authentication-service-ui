@@ -50,7 +50,6 @@ const theme = createTheme({
           },
           "& .MuiDataGrid-row": {
             maxHeight: "none !important",
-            padding:"3px",
           },
           "& .MuiDataGrid-cell--withRenderer MuiDataGrid-cell MuiDataGrid-cell--textLeft":{
             maxHeight: "none !important",

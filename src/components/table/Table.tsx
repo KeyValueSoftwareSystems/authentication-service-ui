@@ -9,7 +9,7 @@ import { useMutation } from "@apollo/client";
 
 import { TableProps } from "./types";
 import TableToolBar from "../table-tool-bar/TableToolBar";
-import "./styles.css";
+import "./table.css";
 
 const TableList: FC<TableProps> = ({
   rows,

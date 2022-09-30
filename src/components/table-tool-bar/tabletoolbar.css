@@ -10,6 +10,7 @@
 
 .sort-search-button {
     display: flex;
+    margin-right: 20px;
 }
 
 .sort {
