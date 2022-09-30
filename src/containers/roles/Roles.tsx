@@ -3,7 +3,7 @@ import { useRecoilState } from "recoil";
 import { useMutation, useQuery } from "@apollo/client";
 import {GridColumns } from "@mui/x-data-grid";
 
-import "./styles.css";
+import "./roles.css";
 import { GET_ROLES } from "./services/queries";
 import { DELETE_ROLE } from "./services/mutations";
 import { RolesListAtom } from "../../states/roleStates";
@@ -12,11 +12,11 @@ import TableList from "../../components/table";
 
 
 const Roles: React.FC = () => {
-  const [deleteRole, { data: data2 }] = useMutation(DELETE_ROLE,{
+    useMutation(DELETE_ROLE,{
     refetchQueries: [{ query: GET_ROLES }]
   }); 
   const [roleList, setRoleList] = useRecoilState(RolesListAtom);
-  const { data } = useQuery(GET_ROLES, {
+  useQuery(GET_ROLES, {
     onCompleted: (data) => {
       setRoleList(data?.getRoles);
     },

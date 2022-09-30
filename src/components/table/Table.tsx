@@ -69,15 +69,14 @@ const TableList: FC<TableProps> = ({
  
   return (
     <div className="table-component">
-      <div className="table-tool-bar">
+      <div className="table-tool-bar" style={{border: "none"}}>
        <TableToolBar text={text} buttonlabel={buttonlabel} searchlabel={searchlabel} />
       </div>
       <div
         className="table-listing-items"
-        style={{ height: 650, width: "100%" }}
       >
         <DataGrid rows={rows} columns={final_columns} style={{ 
-          textOverflow: "ellipsis", borderRadius: "0px 0px 5px 5px"        
+             borderRadius: "0px 0px 5px 5px"   
         }} />
       </div>
     </div>

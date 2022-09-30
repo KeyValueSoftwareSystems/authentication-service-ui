@@ -47,6 +47,7 @@ const theme = createTheme({
             maxHeight: "none !important",
             whiteSpace: "normal",
             flexWrap:"wrap !important",
+            textOverflow: "ellipsis",   
           },
           "& .MuiDataGrid-row": {
             maxHeight: "none !important",
