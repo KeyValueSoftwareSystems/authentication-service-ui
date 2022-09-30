@@ -1,13 +1,14 @@
 import React from "react";
-import AddEditUser from "./AddEditUser";
+import { useParams } from "react-router-dom";
+import AddUser from "./AddUser";
+import EditUser from "./EditUser";
 
 
 const Users: React.FC = () => {
-  return (
-    <div>
-      <AddEditUser />
-    </div>
-  );
+  const{id}=useParams();
+  return(
+  id? <EditUser/> : <AddUser/>
+  )
 };
 
 export default Users;

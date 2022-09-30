@@ -16,15 +16,13 @@ export const ChecklistComponent: FC<ChecklistProps> = ({
   atomName,
   currentIDs,
 }) => {
+
   const [atomKey, setState] = useRecoilState(atomName);
 
   const removeItem = (item: string) => {
     const itemIndex = atomKey.findIndex((e: any) => e === item);
     setState([...atomKey.slice(0, itemIndex), ...atomKey.slice(itemIndex + 1)]);
   };
-
-  const {id} =useParams();
-  
 
   const handleChange = (event: any, item: any) => {
     if (event.target.checked) {
@@ -42,10 +40,12 @@ export const ChecklistComponent: FC<ChecklistProps> = ({
 
   };
 
+  const {id}=useParams();
   const [checkAll, setChecked] = useState(false);
 
   const isChecked = (id: string) => {
     if (currentIDs.includes(id)) {
+      console.log("true")
       return true;
     } else {
       return false;
@@ -80,7 +80,7 @@ export const ChecklistComponent: FC<ChecklistProps> = ({
               <input
                 type="checkbox"
                 key={item.id}
-                defaultChecked={id? (checkAll || isChecked(item.id)): checkAll}
+                checked={isChecked(item.id)||checkAll}
                 onChange={(event: any) => handleChange(event, item)}
               />
               <span className="checklistLabel">{item.name}</span>
