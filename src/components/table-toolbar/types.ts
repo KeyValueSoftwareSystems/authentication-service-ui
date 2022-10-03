@@ -1,5 +1,5 @@
 export interface TableToolBarProps {
-    buttonLabel: string;
-    text: string;
-    searchLabel: string;
-  }
+  buttonLabel: string;
+  text: string;
+  searchLabel: string;
+}
