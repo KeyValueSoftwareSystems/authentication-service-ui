@@ -37,8 +37,8 @@ const Roles: React.FC = () => {
         rows={roleList}
         columns={columns}
         text="All Roles"
-        buttonlabel="Add Role"
-        searchlabel="Search Role"
+        buttonLabel="Add Role"
+        searchLabel="Search Role"
         deleteMutation={DELETE_ROLE}
         refetchQuery={GET_ROLES}
       />

@@ -51,8 +51,8 @@ const Users: React.FC = () => {
         rows={userList}
         columns={columns}
         text="All Users"
-        buttonlabel="Add User"
-        searchlabel="Search User"
+        buttonLabel="Add User"
+        searchLabel="Search User"
         deleteMutation={DELETE_USER}
         refetchQuery={GET_USERS}
       />

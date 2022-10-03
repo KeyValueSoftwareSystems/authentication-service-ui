@@ -3,11 +3,6 @@
   font-size: 16px !important;
 }
 
-.user-list-header {
-  font-size: 16px;
-  font-weight: bolder !important;
-}
-
 .groups {
   display: flex;
   flex-wrap: wrap;

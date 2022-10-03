@@ -1,3 +1,3 @@
 import TableList from "./Table";
 
-export default TableList
+export default TableList;

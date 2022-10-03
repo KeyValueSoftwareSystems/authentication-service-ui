@@ -1,3 +1,3 @@
-export interface SearchBarProps{
-    searchlabel: string;
+export interface SearchBarProps {
+  searchLabel: string;
 }

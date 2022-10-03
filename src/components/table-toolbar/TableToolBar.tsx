@@ -8,23 +8,23 @@ import SearchBar from "../search-bar/SearchBar";
 
 const TableToolBar: FC<TableToolBarProps> = ({
     text,
-    searchlabel,
-    buttonlabel,
+    searchLabel,
+    buttonLabel,
 }) => {
     return (
-        <div className="table-tool-bar">
+        <div className="table-toolbar">
             <legend className="legend-title">{text}</legend>
             <div className="sort-search-button">
                 <div className="sort">
                     <Sort />
                 </div>
                 <div className="search">
-                    <SearchBar searchlabel={searchlabel} />
+                    <SearchBar searchLabel={searchLabel} />
                 </div>
-                <div className="tool-bar-button">
+                <div className="toolbar-button">
                     <Button
                         variant="outlined"                    >
-                        {buttonlabel}
+                        {buttonLabel}
                     </Button>
                 </div>
             </div>

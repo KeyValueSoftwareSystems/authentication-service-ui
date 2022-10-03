@@ -7,13 +7,13 @@ import './searchbar.css';
 
 
 const SearchBar: FC<SearchBarProps> = ({
-    searchlabel,
+    searchLabel,
 }) => {
     return (
         <div className="search">
             <div className="search-bar">
                 <InputBase
-                    placeholder={searchlabel}                    
+                    placeholder={searchLabel}                    
                 />
             </div>
             <div className="search-icon">
