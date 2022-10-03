@@ -34,7 +34,7 @@ const RoleDetails: React.FC = () => {
           <legend id="bold"> Role Permissions </legend>
           <div id="item-list">
             {permissions.map((item) => (
-              <Chip id="item" label={item.name} />
+              <Chip id="item" key={item.id} label={item.name} />
             ))}
           </div>
         </div>

@@ -47,7 +47,7 @@ const GroupDetails: React.FC = () => {
           <legend id="bold"> Group Roles </legend>
           <div id="item-list">
             {roles.map((item) => (
-              <Chip id="item" label={item.name} />
+              <Chip id="item" key={item.id} label={item.name} />
             ))}
           </div>
         </div>
@@ -55,7 +55,7 @@ const GroupDetails: React.FC = () => {
           <legend id="bold"> Group Permissions </legend>
           <div id="item-list">
             {permissions.map((item) => (
-              <Chip id="item" label={item.name} />
+              <Chip id="item" key={item.id} label={item.name} />
             ))}
           </div>
         </div>
