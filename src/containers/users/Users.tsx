@@ -10,15 +10,11 @@ import { DELETE_USER } from "./services/mutations";
 import { userListAtom } from "../../states/userStates";
 import TableList from "../../components/table/Table";
 
-
-
-
 const Users: React.FC = () => {
-  useMutation(DELETE_USER,{
-    refetchQueries: [{ query: GET_USERS }]
+  useMutation(DELETE_USER, {
+    refetchQueries: [{ query: GET_USERS }],
   });
 
- 
   const [userList, setUserList] = useRecoilState(userListAtom);
 
   useQuery(GET_USERS, {
@@ -74,9 +70,9 @@ const ShowGroupList = (props: any) => {
   });
 
   return (
-    <>      
+    <>
       {groupList?.map((group: any) => (
-        <Chip label={group?.name} key={group?.id}/>
+        <Chip label={group?.name} key={group?.id} />
       ))}
     </>
   );

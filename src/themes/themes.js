@@ -3,7 +3,7 @@ const theme = createTheme({
   palette: {
     primary: {
       main: "#039BE5",
-      dark: "#01579B"
+      dark: "#01579B",
     },
     secondary: {
       main: "#FAFAFA",
@@ -20,20 +20,20 @@ const theme = createTheme({
         outlined: {
           boxShadow: 1,
           borderRadius: 20,
-          border: '1px solid #636363',
+          border: "1px solid #636363",
           color: "#636363",
-          '&:hover': {
-            border: '1px solid #039BE5',
-            color: "#039BE5"
-          }
+          "&:hover": {
+            border: "1px solid #039BE5",
+            color: "#039BE5",
+          },
         },
         text: {
           color: "#636363",
-          '&:hover': {
+          "&:hover": {
             color: "#D32F2F",
-            backgroundColor: 'transparent',
-          }
-        }
+            backgroundColor: "transparent",
+          },
+        },
       },
     },
     MuiDataGrid: {
@@ -46,18 +46,19 @@ const theme = createTheme({
             lineHeight: "unset !important",
             maxHeight: "none !important",
             whiteSpace: "normal",
-            flexWrap:"wrap !important",
-            textOverflow: "ellipsis",   
+            flexWrap: "wrap !important",
+            textOverflow: "ellipsis",
           },
           "& .MuiDataGrid-row": {
             maxHeight: "none !important",
           },
-          "& .MuiDataGrid-cell--withRenderer MuiDataGrid-cell MuiDataGrid-cell--textLeft":{
-            maxHeight: "none !important",
-          },
-        }
-      }
-    }    
+          "& .MuiDataGrid-cell--withRenderer MuiDataGrid-cell MuiDataGrid-cell--textLeft":
+            {
+              maxHeight: "none !important",
+            },
+        },
+      },
+    },
   },
 });
 export default theme;

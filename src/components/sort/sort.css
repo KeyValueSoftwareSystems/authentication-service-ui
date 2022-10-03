@@ -1,10 +1,9 @@
 .sort {
-    display: flex;
-    align-items: center;
-  }
+  display: flex;
+  align-items: center;
+}
 
-  .sort-icon{
-    margin-top: 4px;
-    margin-right: 4px;
-  }
-  
+.sort-icon {
+  margin-top: 4px;
+  margin-right: 4px;
+}
