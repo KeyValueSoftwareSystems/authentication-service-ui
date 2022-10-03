@@ -3,12 +3,12 @@ import { Route, Routes, Navigate } from "react-router-dom";
 
 import { RoutePaths } from "./routePaths";
 
-const NotFound = lazy(() => import( "../components/NotFound"));
-const HomePage= lazy(() => import("../containers/Home"));
+const NotFound = lazy(() => import("../components/NotFound"));
+const HomePage = lazy(() => import("../containers/Home"));
 const Login = lazy(() => import("../containers/Auth/login"));
 const Users = lazy(() => import("../containers/users"));
-const Groups = lazy(() => import("../containers/Groups"));
-const Roles = lazy(() => import("../containers/Roles"));
+const Groups = lazy(() => import("../containers/groups"));
+const Roles = lazy(() => import("../containers/roles"));
 const Permissions = lazy(() => import("../containers/Permissions"));
 
 const RoutesLayout: React.FC = () => {
@@ -29,13 +29,14 @@ const RoutesLayout: React.FC = () => {
 
         <Route path="/home/*" element={<HomePage />}>
           <Route path={RoutePaths.users} element={<Users />} />
-          <Route path={RoutePaths.groups} element={<Groups />} />
+          <Route path={RoutePaths.groups} element={<Groups />} />\
+          <Route path="groups/:id" element={<Groups />}></Route>
           {/* <Route
               path="/user/:id"
               element={<UserDetails />}
             /> */}
-
           <Route path={RoutePaths.roles} element={<Roles />} />
+          <Route path="roles/:id" element={<Roles />}></Route>
           <Route path={RoutePaths.permissions} element={<Permissions />} />
           <Route path="*" element={<NotFound />} />
         </Route>
