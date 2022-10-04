@@ -1,14 +1,14 @@
 .container{
     display: flex;
     flex-direction: column;
-    width: 80%;
-    padding: 5px 10px 5px 10px;
+    padding: 5px 0px 5px 0px;
     box-shadow: aliceblue;
 }
 
 .box{
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
 }
 
 .box1{
@@ -17,7 +17,6 @@
 }
 
 .box2{
-    margin-right: 5px;
     justify-content: center;
     align-items: center;
 }
@@ -26,14 +25,14 @@
     display: flex;
     align-items: center;
     font-size: x-small;
-    padding: 5px 0px 5px 5px;
+    padding: 5px 0px 5px 0px;
     color: rgba(47,47,47,.6);
 }
 
 .create-group{
     font-size: large;
     font-weight: 500;
-    padding: 5px 0px 10px 10px
+    padding: 5px 0px 10px 0px
 }
 
 
@@ -50,7 +49,6 @@
 .form{
     display: flex;
     flex-direction: column;
-    padding-left: 15px;
     margin-bottom: 20px;
 }
 
@@ -61,6 +59,7 @@
 }
 
 .access-settings{
+    width: 80%;
     font-size: large;
     padding: 10px 0px 10px 15px;
     font-weight: 500;

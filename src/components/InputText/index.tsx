@@ -8,7 +8,7 @@ export interface FormInputProps {
   type: string;
   setValue?: any;
   className?: any;
-  inputHeight?: number;
+  defaultText?: string;
 }
 
 const FormInputText = ({
@@ -16,7 +16,7 @@ const FormInputText = ({
   label,
   type,
   className,
-  inputHeight,
+  defaultText,
 }: FormInputProps) => {
   const { control } = useFormContext();
 
@@ -40,7 +40,7 @@ const FormInputText = ({
           variant="outlined"
           className={className}
           required
-          inputProps={{ sx: { height: inputHeight } }}
+          defaultValue={defaultText}
         />
       )}
     />

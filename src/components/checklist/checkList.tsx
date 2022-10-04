@@ -1,5 +1,3 @@
-import { CheckBox } from "@mui/icons-material";
-import { Checkbox, checkboxClasses, withStyles } from "@mui/material";
 import { FC, useState } from "react";
 import "./checklist.css";
 interface ChecklistProps {
@@ -22,7 +20,7 @@ export const ChecklistComponent: FC<ChecklistProps> = ({
       return false;
     }
   };
-  console.log(currentIDs);
+
   const handleSelectAll = (event: any) => {
     if (event.target.checked) {
       setChecked(true);
@@ -43,13 +41,13 @@ export const ChecklistComponent: FC<ChecklistProps> = ({
         </div>
       </div>
       <div id="component">
-        {mapList.map((item: any) => {
+        {mapList?.map((item: any) => {
           return (
             <div id="checkbox" key={item.id}>
               <input
                 type="checkbox"
                 key={item.id}
-                checked={checkAll || isChecked(item.id)}
+               /*  checked={checkAll || isChecked(item.id)} */
                 defaultChecked={isChecked(item.id)}
                 onChange={(e) => onChange(e, item)}
               />

@@ -1,11 +1,11 @@
 import React from "react";
-import CreateOrEditGroup from "./components/CreateOrEditGroup/createOrEditGroup";
+import AccessSettings from "./components/CreateOrEditGroup";
 
 const Groups: React.FC = () => {
   return (
     <div>
       Groups
-      <CreateOrEditGroup />
+      <AccessSettings />
     </div>
   );
 };
