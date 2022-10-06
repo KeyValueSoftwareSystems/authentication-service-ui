@@ -75,7 +75,7 @@ const TableList: FC<TableProps> = ({
         <DataGrid
           rows={rows}
           columns={final_columns}
-          style={{
+          sx={{
             borderRadius: "0px 0px 5px 5px",
           }}
         />
