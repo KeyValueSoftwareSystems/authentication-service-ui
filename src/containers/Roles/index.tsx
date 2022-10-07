@@ -1,11 +1,12 @@
-import React from 'react';
+import React from "react";
+import CreateOrEditRole from "./components/create-edit/CreateOrEditRole";
 
 const Roles = () => {
-    return (
-        <div>
-        Hi roles
-        </div>
-    );
+  return (
+    <div>
+      <CreateOrEditRole />
+    </div>
+  );
 };
 
 export default Roles;
