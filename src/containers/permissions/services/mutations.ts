@@ -9,10 +9,19 @@ export const DELETE_PERMISSION = gql`
 `;
 
 export const UPDATE_PERMISSION=gql`
-mutation ($id:ID!
-  $input:UpdatePermissionInput!
-  ){
-  updatePermission(id:$id input:$input){
+mutation
+updatePermission ( $id: ID!, $input : UpdatePermissionInput!) {
+  updatePermission (id:$id, input: $input)  {
+  id,
+  name
+}
+}
+`
+
+export const CREATE_PERMISSION=gql`
+mutation
+createPermission($input:NewPermissionInput!){
+  createPermission(input:$input){
     id
     name
   }

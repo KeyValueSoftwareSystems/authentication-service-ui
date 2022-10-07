@@ -2,36 +2,40 @@ import { FC, useState } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-interface EditableProps {
-  text: string;
+import './editablelistitem.css'
+
+interface EditableListItemProps {
   type: string;
   placeholder: string;
   children: any;
   deleteItem:any
   item:any
 }
-const Editable:FC<EditableProps> = ({ text, type, placeholder, children,deleteItem,item, ...props }) => {
+const EditableListItem:FC<EditableListItemProps> = ({ type, placeholder, children,deleteItem,item, ...props }) => {
   
   const [isEditing, setEditing] = useState(false);
 
   
   const handleKeyDown = (event:any, type:any) => {
-    
+    if (event.key === "Escape") {
+      setEditing(false)
+    }
   };
 
   return (
     <section {...props}>
       {isEditing ? (
         <div
-          onBlur={() => setEditing(false)}
           onKeyDown={(e) => handleKeyDown(e, type)}
         >
           {children}
         </div>
       ) : (
-        <div>
+        <div className="permission-edit-delete">
           <span>{placeholder}</span>
-          <div className="icons"><EditIcon sx={{marginRight:"1px"}} onClick={() => setEditing(true)}/><DeleteIcon  onClick={() => {
+          <div className="icons">
+            <EditIcon sx={{marginRight:"1px"}} onClick={() => setEditing(true)}/>
+            <DeleteIcon  onClick={() => {
                 deleteItem({
                   variables: {
                     id: item?.id,
@@ -45,4 +49,4 @@ const Editable:FC<EditableProps> = ({ text, type, placeholder, children,deleteIt
   );
 };
 
-export default Editable;
+export default EditableListItem;

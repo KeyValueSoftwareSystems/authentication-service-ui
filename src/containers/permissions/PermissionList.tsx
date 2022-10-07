@@ -1,16 +1,22 @@
 import { useMutation, useQuery } from "@apollo/client";
 import { useRecoilState } from "recoil";
+import { useState } from "react";
+import { Button } from "@mui/material";
 
-
-import TableToolBar from "../../components/table-toolbar";
 import { permissionsListAtom } from "../../states/permissionsStates";
-import { DELETE_PERMISSION, UPDATE_PERMISSION } from "./services/mutations";
+import {
+  CREATE_PERMISSION,
+  DELETE_PERMISSION,
+  UPDATE_PERMISSION,
+} from "./services/mutations";
 import { GET_PERMISSIONS } from "./services/queries";
 import "./permissionlist.css";
-import { useState } from "react";
-import Editable from "../../components/inline-edit/InlineEdit";
-import Try from "../../components/try";
-
+import "../../components/table-toolbar/tabletoolbar.css";
+import SearchBar from "../../components/search-bar";
+import Sort from "../../components/sort";
+import EditableListItem from "../../components/EditableListItem/EditableListItem";
+import InlineEdit from "../../components/InlineEdit/InlineEdit";
+import { inlineEditAtom } from "../../states/inlineEdit";
 
 const PermissionList: React.FC = () => {
   const [deletePermission] = useMutation(DELETE_PERMISSION, {
@@ -23,30 +29,74 @@ const PermissionList: React.FC = () => {
       setPermissionList(data?.getPermissions);
     },
   });
-  const [updatePermission]=useMutation(UPDATE_PERMISSION, {refetchQueries: [{ query: GET_PERMISSIONS }]})
+  const [updatePermission] = useMutation(UPDATE_PERMISSION, {
+    refetchQueries: [{ query: GET_PERMISSIONS }],
+  });
+  const [createNewPermission] = useMutation(CREATE_PERMISSION, {
+    refetchQueries: [{ query: GET_PERMISSIONS }],
+  });
+  const [bool, setBool] = useState(false);
+  const createPermission = () => {
+    setBool(true);
+    setAddState(true);
+  };
+  const [addState, setAddState] = useRecoilState(inlineEditAtom);
   return (
     <>
-      <TableToolBar
-        text="All Permissions"
-        searchLabel="Search Permissions"
-        buttonLabel="Add Permission"
-      />
+      <div className="table-toolbar">
+        <legend className="legend-title">All Permissions</legend>
+        <div className="sort-search-button">
+          <div className="sort">
+            <Sort />
+          </div>
+          <div className="search">
+            <SearchBar searchLabel="Search Permission" />
+          </div>
+          <div className="toolbar-button">
+            <Button variant="outlined" onClick={createPermission}>
+              Add
+            </Button>
+          </div>
+        </div>
+      </div>
       <ul className="permission-list">
         {permissionList?.map((permission: any) => (
           <>
             <li className="list-elements">
-              <Editable
+              <EditableListItem
                 type="input"
                 deleteItem={deletePermission}
                 item={permission}
-                text="hi"
                 placeholder={permission?.name}
               >
-              <Try placeholder={permission?.name} api={updatePermission} id={permission?.id}/>
-              </Editable>
+                <InlineEdit
+                  placeholder={permission?.name}
+                  api={updatePermission}
+                  id={permission?.id}
+                  bool
+                  action="edit"
+                />
+              </EditableListItem>
             </li>
           </>
         ))}
+        <li className="list-elements">
+          {bool ? (
+            <>
+              <InlineEdit
+                placeholder="Enter new permission"
+                api={createNewPermission}
+                id=""
+                bool={bool}
+                action="add"
+              />
+            </>
+          ) : (
+            <>
+              <div></div>
+            </>
+          )}
+        </li>
       </ul>
     </>
   );
