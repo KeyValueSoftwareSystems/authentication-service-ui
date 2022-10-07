@@ -10,7 +10,7 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { UserPermissionsAtom } from "../../states/permissionsStates";
 import { GET_GROUP_PERMISSIONS } from "../groups/services/queries";
 import { useLazyQuery } from "@apollo/client";
-import { ChecklistComponent } from "../../components/checklist/checkList";
+import { ChecklistComponent } from "../../components/checklist/CheckList";
 
 const UserForm = (props: any) => {
   const {
@@ -26,6 +26,8 @@ const UserForm = (props: any) => {
   const setUserGroups = useSetRecoilState(userGroupsAtom);
   const [UserPermissions, setUserPermissions] =
     useRecoilState(UserPermissionsAtom);
+  const groups: string[] = [];
+  groupList.map((item) => groups.push(item.id));
 
   const methods = useForm({
     defaultValues: initialValues,
@@ -46,7 +48,7 @@ const UserForm = (props: any) => {
   };
 
   const [getData] = useLazyQuery(GET_GROUP_PERMISSIONS);
-  
+
   const removeItem = (item: string) => {
     const itemIndex = userGroups.findIndex((e: any) => e === item);
     setUserGroups([
@@ -58,16 +60,15 @@ const UserForm = (props: any) => {
     );
 
     setUserPermissions([
-      ...UserPermissions.slice(0, itemIndex),
-      ...UserPermissions.slice(itemIndex + 1),
+      ...UserPermissions.slice(0, permission_index),
+      ...UserPermissions.slice(permission_index + 1),
     ]);
   };
 
   const addGroupPermissions = (permissions: any, item: string) => {
     if (UserPermissions[0]?.groupId === "") {
       setUserPermissions([{ groupId: item, permissions: permissions }]);
-    } else 
-    if (
+    } else if (
       UserPermissions.map((item: any) => item.groupId).includes(item) === false
     ) {
       setUserPermissions([
@@ -75,12 +76,12 @@ const UserForm = (props: any) => {
         { groupId: item, permissions: permissions },
       ]);
     }
-  }
+  };
 
   const handleChange = (event: any, item: any) => {
     if (event.target.checked) {
-      if(!userGroups.map((item)=>item).includes(item.id))
-      setUserGroups([...userGroups, item.id]);
+      if (!userGroups.map((item) => item).includes(item.id))
+        setUserGroups([...userGroups, item.id]);
       getData({
         variables: { id: item.id },
         onCompleted: (data) => {
@@ -92,9 +93,6 @@ const UserForm = (props: any) => {
     }
   };
 
-  const groups: string[] = [];
-  groupList.map((item) => groups.push(item.id));
-
   const onSelectAll = (event: any) => {
     if (event.target.checked) setUserGroups(groups);
     else setUserGroups([]);
@@ -104,7 +102,6 @@ const UserForm = (props: any) => {
     <div id="page">
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(onSubmitForm)}>
-
           <div id="fixed">
             <div id="back-page">
               <ArrowBackIcon id="arrowicon" />
@@ -173,7 +170,6 @@ const UserForm = (props: any) => {
         </form>
       </FormProvider>
       <div id="groups-permissions">
-
         <ChecklistComponent
           name="Select Groups"
           mapList={groupList}
@@ -196,7 +192,6 @@ const UserForm = (props: any) => {
             })}
           </div>
         </div>
-
       </div>
     </div>
   );
