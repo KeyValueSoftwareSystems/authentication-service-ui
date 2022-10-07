@@ -27,3 +27,16 @@ export const  GET_USER_PERMISSIONS = gql`
     }
   }
 `;
+
+export const GET_USER = gql`
+  query getUser($id: ID!) {
+    getUser(id: $id) {
+      id
+      email
+      phone
+      firstName
+      middleName
+      lastName
+    }
+  }
+`;
