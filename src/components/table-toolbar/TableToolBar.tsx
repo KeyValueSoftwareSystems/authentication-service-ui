@@ -11,7 +11,7 @@ const TableToolBar: FC<TableToolBarProps> = ({
   text,
   searchLabel,
   buttonLabel,
-  onClick,
+  onAdd,
 }) => {
   const navigate = useNavigate();
 
@@ -29,7 +29,7 @@ const TableToolBar: FC<TableToolBarProps> = ({
           <Button
             variant="outlined"
             onClick={() => {
-              navigate(`${onClick}`);
+              onAdd()
             }}
           >
             {buttonLabel}

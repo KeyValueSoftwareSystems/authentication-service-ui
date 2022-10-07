@@ -14,7 +14,8 @@ const TableList: FC<TableProps> = ({
   rows,
   columns,
   text,
-  onClick,
+  onAdd,
+  onEdit,
   buttonLabel,
   searchLabel,
   deleteMutation,
@@ -41,7 +42,7 @@ const TableList: FC<TableProps> = ({
               icon={
                 <EditIcon
                   onClick={() => {
-                    navigate(`${onClick}/${id}`);
+                    onEdit(id)
                   }}
                 />
               }
@@ -78,7 +79,7 @@ const TableList: FC<TableProps> = ({
           text={text}
           buttonLabel={buttonLabel}
           searchLabel={searchLabel}
-          onClick={onClick}
+          onAdd={onAdd}
         />
       </div>
       <div className="table-listing-items">

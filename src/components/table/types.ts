@@ -6,7 +6,8 @@ export interface TableProps {
   columns: GridColumns;
   buttonLabel: string;
   text: string;
-  onClick?: any;
+  onAdd?: any;
+  onEdit?:any;
   searchLabel: string;
   deleteMutation: DocumentNode;
   refetchQuery: DocumentNode;

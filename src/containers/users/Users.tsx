@@ -9,6 +9,7 @@ import "./styles.css";
 import { DELETE_USER } from "./services/mutations";
 import { userListAtom } from "../../states/userStates";
 import TableList from "../../components/table/Table";
+import { useNavigate } from "react-router-dom";
 
 const Users: React.FC = () => {
   useMutation(DELETE_USER, {
@@ -16,12 +17,21 @@ const Users: React.FC = () => {
   });
 
   const [userList, setUserList] = useRecoilState(userListAtom);
-
+  const navigate=useNavigate();
   useQuery(GET_USERS, {
     onCompleted: (data) => {
       setUserList(data?.getUsers);
     },
   });
+
+  const onEdit:any=((id:any)=>{
+    navigate(`/home/users/add/${id}`)
+  })
+
+  const onAdd:any=(()=>{
+    navigate(`/home/users/add`)
+  })
+
 
   const columns: GridColumns = [
     {
@@ -47,7 +57,8 @@ const Users: React.FC = () => {
         rows={userList}
         columns={columns}
         text="All Users"
-        onClick="/home/users/add"
+        onAdd={onAdd}
+        onEdit={onEdit}
         buttonLabel="Add User"
         searchLabel="Search User"
         deleteMutation={DELETE_USER}
