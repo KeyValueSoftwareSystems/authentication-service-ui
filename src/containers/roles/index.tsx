@@ -1,12 +1,3 @@
-import React from "react";
-import RoleDetails from "./RoleDetails";
-
-const Roles = () => {
-  return (
-    <div>
-      <RoleDetails />
-    </div>
-  );
-};
+import Roles from "./Roles";
 
 export default Roles;
