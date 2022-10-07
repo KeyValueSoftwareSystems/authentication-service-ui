@@ -1,5 +1,7 @@
 import React, { Suspense, lazy } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
+import AddUser from "../containers/users/AddUser";
+import EditUser from "../containers/users/EditUser";
 
 import { RoutePaths } from "./routePaths";
 
@@ -28,7 +30,9 @@ const RoutesLayout: React.FC = () => {
         /> */}
 
         <Route path="/home/*" element={<HomePage />}>
-          <Route path={RoutePaths.users} element={<Users />} />
+          <Route path={RoutePaths.users} element={<Users/>} />
+          <Route path="users/add" element={<AddUser/>} />
+          <Route path="users/add/:id" element={<EditUser/>} />
           <Route path={RoutePaths.groups} element={<Groups />} />
           {/* <Route
               path="/user/:id"

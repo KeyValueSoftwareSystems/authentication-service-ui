@@ -23,6 +23,11 @@ const Users: React.FC = () => {
     },
   });
 
+  // const onA = (()=>{
+  //     navigate(`/home/users/add`);
+
+  // })
+
   const columns: GridColumns = [
     {
       field: "firstName",
@@ -47,6 +52,7 @@ const Users: React.FC = () => {
         rows={userList}
         columns={columns}
         text="All Users"
+        onClick="/home/users/add"
         buttonLabel="Add User"
         searchLabel="Search User"
         deleteMutation={DELETE_USER}

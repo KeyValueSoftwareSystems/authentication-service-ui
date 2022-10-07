@@ -8,11 +8,13 @@ import { useMutation } from "@apollo/client";
 import { TableProps } from "./types";
 import TableToolBar from "../table-toolbar/TableToolBar";
 import "./table.css";
+import { useNavigate } from "react-router-dom";
 
 const TableList: FC<TableProps> = ({
   rows,
   columns,
   text,
+  onClick,
   buttonLabel,
   searchLabel,
   deleteMutation,
@@ -21,6 +23,7 @@ const TableList: FC<TableProps> = ({
   const [deleteItem] = useMutation(deleteMutation, {
     refetchQueries: [{ query: refetchQuery }],
   });
+  const navigate = useNavigate();
 
   const action_column: GridColumns = [
     {
@@ -35,7 +38,9 @@ const TableList: FC<TableProps> = ({
         return [
           <Tooltip title="Edit" arrow>
             <GridActionsCellItem
-              icon={<EditIcon />}
+              icon={<EditIcon onClick={() => {
+                navigate(`${onClick}/${id}`);
+              }}/>}
               label="Edit"
               className="textPrimary"
               color="inherit"
@@ -69,6 +74,7 @@ const TableList: FC<TableProps> = ({
           text={text}
           buttonLabel={buttonLabel}
           searchLabel={searchLabel}
+          onClick={onClick}
         />
       </div>
       <div className="table-listing-items">
