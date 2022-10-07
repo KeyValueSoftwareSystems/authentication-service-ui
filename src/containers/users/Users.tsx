@@ -23,11 +23,6 @@ const Users: React.FC = () => {
     },
   });
 
-  // const onA = (()=>{
-  //     navigate(`/home/users/add`);
-
-  // })
-
   const columns: GridColumns = [
     {
       field: "firstName",

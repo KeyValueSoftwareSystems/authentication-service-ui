@@ -17,7 +17,6 @@ export const ChecklistComponent: FC<ChecklistProps> = ({
   onSelectAll,
 }) => {
 
-  // console.log(currentIDs)
   const isChecked = (id: string) => {
     if (currentIDs.map((item: any) => item).includes(id)) {
       return true;
