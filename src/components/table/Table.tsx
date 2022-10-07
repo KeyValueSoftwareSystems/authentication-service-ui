@@ -38,9 +38,13 @@ const TableList: FC<TableProps> = ({
         return [
           <Tooltip title="Edit" arrow>
             <GridActionsCellItem
-              icon={<EditIcon onClick={() => {
-                navigate(`${onClick}/${id}`);
-              }}/>}
+              icon={
+                <EditIcon
+                  onClick={() => {
+                    navigate(`${onClick}/${id}`);
+                  }}
+                />
+              }
               label="Edit"
               className="textPrimary"
               color="inherit"

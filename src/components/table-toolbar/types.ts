@@ -2,5 +2,5 @@ export interface TableToolBarProps {
   buttonLabel: string;
   text: string;
   searchLabel: string;
-  onClick:any
+  onClick: any;
 }
