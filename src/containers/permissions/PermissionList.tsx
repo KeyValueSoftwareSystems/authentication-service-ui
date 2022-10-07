@@ -1,0 +1,104 @@
+import { useMutation, useQuery } from "@apollo/client";
+import { useRecoilState } from "recoil";
+import { useState } from "react";
+import { Button } from "@mui/material";
+
+import { permissionsListAtom } from "../../states/permissionsStates";
+import {
+  CREATE_PERMISSION,
+  DELETE_PERMISSION,
+  UPDATE_PERMISSION,
+} from "./services/mutations";
+import { GET_PERMISSIONS } from "./services/queries";
+import "./permissionlist.css";
+import "../../components/table-toolbar/tabletoolbar.css";
+import SearchBar from "../../components/search-bar";
+import Sort from "../../components/sort";
+import EditableListItem from "../../components/EditableListItem/EditableListItem";
+import InlineEdit from "../../components/InlineEdit/InlineEdit";
+import { inlineEditAtom } from "../../states/inlineEdit";
+
+const PermissionList: React.FC = () => {
+  const [deletePermission] = useMutation(DELETE_PERMISSION, {
+    refetchQueries: [{ query: GET_PERMISSIONS }],
+  });
+  const [permissionList, setPermissionList] =
+    useRecoilState(permissionsListAtom);
+  useQuery(GET_PERMISSIONS, {
+    onCompleted: (data) => {
+      setPermissionList(data?.getPermissions);
+    },
+  });
+  const [updatePermission] = useMutation(UPDATE_PERMISSION, {
+    refetchQueries: [{ query: GET_PERMISSIONS }],
+  });
+  const [createNewPermission] = useMutation(CREATE_PERMISSION, {
+    refetchQueries: [{ query: GET_PERMISSIONS }],
+  });
+  const [bool, setBool] = useState(false);
+  const createPermission = () => {
+    setBool(true);
+    setAddState(true);
+  };
+  const [addState, setAddState] = useRecoilState(inlineEditAtom);
+  return (
+    <>
+      <div className="table-toolbar">
+        <legend className="legend-title">All Permissions</legend>
+        <div className="sort-search-button">
+          <div className="sort">
+            <Sort />
+          </div>
+          <div className="search">
+            <SearchBar searchLabel="Search Permission" />
+          </div>
+          <div className="toolbar-button">
+            <Button variant="outlined" onClick={createPermission}>
+              Add
+            </Button>
+          </div>
+        </div>
+      </div>
+      <ul className="permission-list">
+        {permissionList?.map((permission: any) => (
+          <>
+            <li className="list-elements">
+              <EditableListItem
+                type="input"
+                deleteItem={deletePermission}
+                item={permission}
+                placeholder={permission?.name}
+              >
+                <InlineEdit
+                  placeholder={permission?.name}
+                  api={updatePermission}
+                  id={permission?.id}
+                  bool
+                  action="edit"
+                />
+              </EditableListItem>
+            </li>
+          </>
+        ))}
+        <li className="list-elements">
+          {bool ? (
+            <>
+              <InlineEdit
+                placeholder="Enter new permission"
+                api={createNewPermission}
+                id=""
+                bool={bool}
+                action="add"
+              />
+            </>
+          ) : (
+            <>
+              <div></div>
+            </>
+          )}
+        </li>
+      </ul>
+    </>
+  );
+};
+export default PermissionList;
