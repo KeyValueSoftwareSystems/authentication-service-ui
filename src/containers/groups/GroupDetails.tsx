@@ -6,7 +6,7 @@ import { groupDetailsAtom } from "../../states/groupStates";
 import { GroupPermissionsAtom } from "../../states/permissionsStates";
 import { GroupRolesAtom } from "../../states/roleStates";
 import {
-  GET_GROUP_DETAILS,
+  GET_GROUP,
   GET_GROUP_PERMISSIONS,
   GET_GROUP_ROLES,
 } from "./services/queries";
@@ -18,7 +18,7 @@ const GroupDetails: React.FC = () => {
   const [roles, setRoles] = useRecoilState(GroupRolesAtom);
   const [permissions, setPermissions] = useRecoilState(GroupPermissionsAtom);
 
-  useQuery(GET_GROUP_DETAILS, {
+  useQuery(GET_GROUP, {
     variables: { id },
     onCompleted: (data) => {
       setGroup(data?.getGroup);

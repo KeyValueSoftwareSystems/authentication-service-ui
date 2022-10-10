@@ -18,7 +18,7 @@ export const GET_GROUP_PERMISSIONS = gql`
   }
 `;
 
-export const GET_GROUP_DETAILS = gql`
+export const GET_GROUP = gql`
   query getGroup($id: ID!) {
     getGroup(id: $id) {
       id
