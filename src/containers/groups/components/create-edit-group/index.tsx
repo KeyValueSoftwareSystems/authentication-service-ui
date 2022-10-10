@@ -20,7 +20,7 @@ import {
 import {
   GET_ROLES,
   GET_ROLE_PERMISSIONS,
-} from "../../../Roles/services/queries";
+} from "../../../roles/services/queries";
 import {
   CREATE_GROUP,
   UPDATE_GROUP,

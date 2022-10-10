@@ -10,6 +10,7 @@ export const GET_USERS = gql`
   }
 `;
 
+
 export const GET_USER = gql`
   query getUser($id: ID!) {
     getUser(id: $id) {
@@ -24,7 +25,7 @@ export const GET_USER = gql`
 `;
 
 export const GET_USER_GROUPS = gql`
-  query getUserGroups($id: ID!) {
+  query ($id: ID!) {
     getUserGroups(id: $id) {
       id
       name
