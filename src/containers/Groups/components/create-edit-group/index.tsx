@@ -1,4 +1,11 @@
+import { useEffect, useState } from "react";
+
+import { useParams } from "react-router-dom";
+
 import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
+
+import "./styles.css";
+
 import {
   Box,
   Tab,
@@ -9,10 +16,7 @@ import {
   List,
   ListItem,
 } from "@mui/material";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { ChecklistComponent } from "../../../../components/checklist/checkList";
-import { getUniquePermissions } from "../../../../utils/permissions";
+
 import {
   GET_ROLES,
   GET_ROLE_PERMISSIONS,
@@ -24,8 +28,11 @@ import {
   UPDATE_GROUP_ROLES,
 } from "../../services/mutations";
 import { GET_GROUP_ROLES } from "../../services/queries";
-import CreateOrEditGroup from "./createOrEditGroup";
-import "./styles.css";
+
+import { getUniquePermissions } from "../../../../utils/permissions";
+
+import GroupForm from "./GroupForm";
+import { ChecklistComponent } from "../../../../components/checklist/checkList";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -53,10 +60,11 @@ function TabPanel(props: TabPanelProps) {
   );
 }
 
-const AccessSettings = () => {
+const CreateOrEditGroup = () => {
   const [value, setValue] = useState(0);
   const [roles, setRoles] = useState<string[]>([]);
   const [permissions, setPermissions] = useState<any[]>([]);
+  const [allRoles, setAllRoles] = useState<string[]>([]);
 
   const [updateGroup] = useMutation(UPDATE_GROUP);
   const [createGroup, { data: createGroupData }] = useMutation(CREATE_GROUP);
@@ -73,7 +81,10 @@ const AccessSettings = () => {
     useLazyQuery(GET_ROLE_PERMISSIONS);
 
   const { data: roleData } = useQuery(GET_ROLES, {
-    onCompleted: (data) => {},
+    onCompleted: (data) => {
+      const roleIds = data?.getRoles.map((role: any) => role.id);
+      setAllRoles([...roleIds]);
+    },
   });
 
   const { data: groupRoles, loading: groupRolesloading } = useQuery(
@@ -82,8 +93,8 @@ const AccessSettings = () => {
       skip: !id,
       variables: { id: id },
       onCompleted: (data) => {
-        const roleIds = data?.getGroupRoles?.map((item: any) => item.id);
-        setRoles([...roles, ...roleIds]);
+        const groupRoleIds = data?.getGroupRoles?.map((item: any) => item.id);
+        setRoles([...roles, ...groupRoleIds]);
       },
     }
   );
@@ -99,9 +110,14 @@ const AccessSettings = () => {
       ...permissions.slice(permissionIndex + 1),
     ]);
   };
-  const onChange = (event: any, item: any) => {
-    console.log("event", event.target.checked);
+
+  const onChange = (event: any, item?: any) => {
+    const value = event.target.value;
     if (event.target.checked) {
+      if (value === "all") {
+        setRoles(allRoles);
+        return;
+      }
       getData({
         variables: { id: item.id },
         fetchPolicy: "no-cache",
@@ -118,6 +134,10 @@ const AccessSettings = () => {
         setRoles([...roles, item.id]);
       }
     } else {
+      if (value === "all") {
+        setRoles([]);
+        return;
+      }
       removeItem(item.id);
     }
   };
@@ -173,9 +193,33 @@ const AccessSettings = () => {
     });
   };
 
+  // useEffect(() => {
+  //   if (permissions.length != roles.length)
+  //     roles.map((role) => {
+  //       getData({
+  //         variables: { id: role },
+  //         onCompleted: (data) => {
+  //           if (permissions[0]?.roleId === "") {
+  //             setPermissions([
+  //               { roleId: role, permissions: data?.getRolePermissions },
+  //             ]);
+  //           } else if (
+  //             permissions.map((item: any) => item.roleId).includes(role) ===
+  //             false
+  //           ) {
+  //             setPermissions([
+  //               ...permissions,
+  //               { roleId: role, permissions: data?.getRolePermissions },
+  //             ]);
+  //           }
+  //         },
+  //       });
+  //     });
+  // }, [roles]);
+
   return (
     <div className="access-settings">
-      <CreateOrEditGroup createGroup={onCreateGroup} editGroup={onEditGroup} />
+      <GroupForm createGroup={onCreateGroup} editGroup={onEditGroup} />
       <div>Access Settings and Users</div>
       <div>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -192,7 +236,7 @@ const AccessSettings = () => {
               {!groupRolesloading && (
                 <ChecklistComponent
                   mapList={roleData?.getRoles}
-                  currentIDs={roles}
+                  currentCheckedItems={roles}
                   name="Select roles"
                   onChange={onChange}
                 />
@@ -225,4 +269,4 @@ const AccessSettings = () => {
   );
 };
 
-export default AccessSettings;
+export default CreateOrEditGroup;

@@ -11,15 +11,12 @@ import { GET_GROUP } from "../../services/queries";
 import { FC, useState } from "react";
 import { Group } from "../../../../types/group";
 
-interface CreateOrEditGroupProps {
+interface GroupFormProps {
   createGroup: (inputs: any) => void;
   editGroup: (inputs: any) => void;
 }
 
-const CreateOrEditGroup: FC<CreateOrEditGroupProps> = ({
-  createGroup,
-  editGroup,
-}) => {
+const GroupForm: FC<GroupFormProps> = ({ createGroup, editGroup }) => {
   const { id } = useParams();
   const [group, setGroup] = useState<Group>();
 
@@ -58,7 +55,7 @@ const CreateOrEditGroup: FC<CreateOrEditGroupProps> = ({
               <Button variant="text" className="button">
                 Cancel
               </Button>
-              <Button variant="outlined" className="button" type="submit" >
+              <Button variant="outlined" className="button" type="submit">
                 {id ? "Update Group" : "Create Group"}
               </Button>
             </Stack>
@@ -82,4 +79,4 @@ const CreateOrEditGroup: FC<CreateOrEditGroupProps> = ({
   );
 };
 
-export default CreateOrEditGroup;
+export default GroupForm;

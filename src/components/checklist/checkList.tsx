@@ -1,42 +1,27 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import "./checklist.css";
 interface ChecklistProps {
   name: String;
   mapList: any;
-  currentIDs?: string[];
-  onChange: (event: any, item: any) => void;
+  currentCheckedItems?: string[];
+  onChange: (event: any, item?: any) => void;
 }
 export const ChecklistComponent: FC<ChecklistProps> = ({
   mapList,
   name,
-  currentIDs = [],
+  currentCheckedItems = [],
   onChange,
 }) => {
-  const [checkAll, setChecked] = useState(false);
   const isChecked = (id: string) => {
-    if (currentIDs.includes(id)) {
-      return true;
-    } else {
-      return false;
-    }
+    return currentCheckedItems.includes(id);
   };
 
-  const handleSelectAll = (event: any) => {
-    if (event.target.checked) {
-      setChecked(true);
-    } else {
-      setChecked(false);
-    }
-  };
   return (
     <div id="add-groups">
       <div id="titlebar">
         <div id="titleChecklist"> {name} </div>
         <div id="selectall">
-          <input
-            type="checkbox"
-            onChange={(event: any) => handleSelectAll(event)}
-          />
+          <input type="checkbox" value={"all"} onChange={(e) => onChange(e)} />
           <span> Select All</span>
         </div>
       </div>
@@ -47,8 +32,7 @@ export const ChecklistComponent: FC<ChecklistProps> = ({
               <input
                 type="checkbox"
                 key={item.id}
-               /*  checked={checkAll || isChecked(item.id)} */
-                defaultChecked={isChecked(item.id)}
+                checked={isChecked(item.id)}
                 onChange={(e) => onChange(e, item)}
               />
               <span className="checklistLabel">{item.name}</span>

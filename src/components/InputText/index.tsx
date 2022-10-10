@@ -39,7 +39,6 @@ const FormInputText = ({
           label={label}
           variant="outlined"
           className={className}
-          required
           defaultValue={defaultText}
         />
       )}
