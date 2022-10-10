@@ -12,5 +12,13 @@ export const groupListAtom = atom({
 
 export const userGroupsAtom = atom({
   key: "userGroupList",
-  default: <string[]>([])
+  default: <string[]>[],
+});
+
+export const groupDetailsAtom = atom({
+  key: "GroupDetails",
+  default: {
+    id: "",
+    name: "",
+  },
 });
