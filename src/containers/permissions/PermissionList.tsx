@@ -14,9 +14,9 @@ import "./permissionlist.css";
 import "../../components/table-toolbar/tabletoolbar.css";
 import SearchBar from "../../components/search-bar";
 import Sort from "../../components/sort";
-import EditableListItem from "../../components/EditableListItem/EditableListItem";
-import InlineEdit from "../../components/InlineEdit/InlineEdit";
-import { inlineEditAtom } from "../../states/inlineEdit";
+import EditableListItem from "../../components/editable-list-item/EditableListItem";
+import InlineEdit from "../../components/inline-edit/InlineEdit";
+import { inlineAddAtom } from "../../states/inlineEdit";
 
 const PermissionList: React.FC = () => {
   const [deletePermission] = useMutation(DELETE_PERMISSION, {
@@ -35,12 +35,12 @@ const PermissionList: React.FC = () => {
   const [createNewPermission] = useMutation(CREATE_PERMISSION, {
     refetchQueries: [{ query: GET_PERMISSIONS }],
   });
-  const [bool, setBool] = useState(false);
+  const [checkAdd, setcheckAdd] = useState(false);
   const createPermission = () => {
-    setBool(true);
+    setcheckAdd(true);
     setAddState(true);
   };
-  const [addState, setAddState] = useRecoilState(inlineEditAtom);
+  const [addState, setAddState] = useRecoilState(inlineAddAtom);
   return (
     <>
       <div className="table-toolbar">
@@ -73,7 +73,7 @@ const PermissionList: React.FC = () => {
                   placeholder={permission?.name}
                   api={updatePermission}
                   id={permission?.id}
-                  bool
+                  checkAdd
                   action="edit"
                 />
               </EditableListItem>
@@ -81,13 +81,13 @@ const PermissionList: React.FC = () => {
           </>
         ))}
         <li className="list-elements">
-          {bool ? (
+          {checkAdd ? (
             <>
               <InlineEdit
                 placeholder="Enter new permission"
                 api={createNewPermission}
                 id=""
-                bool={bool}
+                checkAdd={checkAdd}
                 action="add"
               />
             </>
