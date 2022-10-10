@@ -38,9 +38,7 @@ const PermissionList: React.FC = () => {
   const [checkAdd, setcheckAdd] = useState(false);
   const createPermission = () => {
     setcheckAdd(true);
-    setAddState(true);
   };
-  const [addState, setAddState] = useRecoilState(inlineAddAtom);
   return (
     <>
       <div className="table-toolbar">
