@@ -7,7 +7,7 @@ const NotFound = lazy(() => import( "../components/NotFound"));
 const HomePage= lazy(() => import("../containers/Home"));
 const Login = lazy(() => import("../containers/Auth/login"));
 const Users = lazy(() => import("../containers/users"));
-const Groups = lazy(() => import("../containers/Groups"));
+const Groups = lazy(() => import("../containers/groups"));
 const Roles = lazy(() => import("../containers/Roles"));
 const Permissions = lazy(() => import("../containers/Permissions"));
 
