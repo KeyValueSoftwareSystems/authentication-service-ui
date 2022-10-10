@@ -2,19 +2,22 @@ import React from "react";
 import { useRecoilState } from "recoil";
 import { useMutation, useQuery } from "@apollo/client";
 import { GridColumns } from "@mui/x-data-grid";
-import { Chip } from "@mui/material";
 
 import "./groups.css";
 import { DELETE_GROUPS } from "./services/mutations";
 import { GET_GROUPS, GET_GROUP_ROLES } from "./services/queries";
 import TableList from "../../components/table";
 import { groupListAtom } from "../../states/groupStates";
+import TableChipElement from "../../components/table-chip-element";
 
 const Groups: React.FC = () => {
   useMutation(DELETE_GROUPS, {
     refetchQueries: [{ query: GET_GROUPS }],
   });
-
+  const setRoleList = (data: any) => {
+    setGroupRoleList(data?.getGroupRoles);
+  };
+  const [groupRoleList, setGroupRoleList] = React.useState([]);
   const [groupList, setGroupList] = useRecoilState(groupListAtom);
 
   useQuery(GET_GROUPS, {
@@ -36,7 +39,14 @@ const Groups: React.FC = () => {
       headerName: "Roles",
       headerClassName: "user-list-header",
       flex: 1,
-      renderCell: (params) => <ShowRoleList {...params} />,
+      renderCell: (params) => (
+        <TableChipElement
+          props={params}
+          query={GET_GROUP_ROLES}
+          itemList={groupRoleList}
+          setItemList={setRoleList}
+        />
+      ),
       headerAlign: "center",
     },
   ];
@@ -55,25 +65,4 @@ const Groups: React.FC = () => {
     </>
   );
 };
-const ShowRoleList = (props: any) => {
-  const { row } = props;
-  const [roleList, setRoleList] = React.useState([]);
-  useQuery(GET_GROUP_ROLES, {
-    variables: {
-      id: row.id,
-    },
-    onCompleted: (data) => {
-      setRoleList(data?.getGroupRoles);
-    },
-  });
-
-  return (
-    <>
-      {roleList?.map((role: any) => (
-        <Chip label={role?.name} key={role.id} />
-      ))}
-    </>
-  );
-};
-
 export default Groups;
