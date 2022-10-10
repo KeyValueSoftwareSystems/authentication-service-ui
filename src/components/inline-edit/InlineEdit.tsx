@@ -22,7 +22,7 @@ const InlineEdit: FC<InlineEditProps> = ({
   const [newvalue, setnewvalue] = useState();
   const [addState, setAddState] = useRecoilState(inlineAddAtom);
   const [editState, setEditState] = useRecoilState(inlineEditAtom);
-  const savePermission = () => {
+  const saveAddPermission = () => {
     api({
       variables: {
         id,
@@ -33,7 +33,21 @@ const InlineEdit: FC<InlineEditProps> = ({
     });
     checkAdd = false;
     setAddState(false);
+  };
+  const saveEditPermission = () => {
+    api({
+      variables: {
+        id,
+        input: {
+          name: newvalue,
+        },
+      },
+    });
+    checkAdd = false;
     setEditState(false);
+    setTimeout(() => {
+      window.location.reload();
+    }, 100);
   };
   const handleChange = (event: any) => {
     setnewvalue(event.target.value);
@@ -54,7 +68,7 @@ const InlineEdit: FC<InlineEditProps> = ({
             onChange={handleChange}
             onKeyDown={(e) => handleKeyDown(e)}
           />
-          <div className="check-icon" onClick={savePermission}>
+          <div className="check-icon" onClick={saveAddPermission}>
             <CheckIcon />
           </div>
         </div>
@@ -69,7 +83,7 @@ const InlineEdit: FC<InlineEditProps> = ({
           className="permissions"
           onChange={handleChange}
         />
-        <div className="check-icon" onClick={savePermission}>
+        <div className="check-icon" onClick={saveEditPermission}>
           <CheckIcon />
         </div>
       </div>

@@ -20,7 +20,6 @@ const EditableListItem: FC<EditableListItemProps> = ({
   ...props
 }) => {
   const [isEditing, setEditing] = useState(false);
-
   const handleKeyDown = (event: any, type: any) => {
     if (event.key === "Escape") {
       setEditing(false);
