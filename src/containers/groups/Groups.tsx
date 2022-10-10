@@ -14,10 +14,6 @@ const Groups: React.FC = () => {
   useMutation(DELETE_GROUPS, {
     refetchQueries: [{ query: GET_GROUPS }],
   });
-  const setRoleList = (data: any) => {
-    setGroupRoleList(data?.getGroupRoles);
-  };
-  const [groupRoleList, setGroupRoleList] = React.useState([]);
   const [groupList, setGroupList] = useRecoilState(groupListAtom);
 
   useQuery(GET_GROUPS, {
@@ -43,8 +39,7 @@ const Groups: React.FC = () => {
         <TableChipElement
           props={params}
           query={GET_GROUP_ROLES}
-          itemList={groupRoleList}
-          setItemList={setRoleList}
+          element="group"
         />
       ),
       headerAlign: "center",

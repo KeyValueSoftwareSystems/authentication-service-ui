@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { useMutation, useQuery } from "@apollo/client";
 import { GridColumns } from "@mui/x-data-grid";
@@ -9,6 +9,7 @@ import { DELETE_USER } from "./services/mutations";
 import { userListAtom } from "../../states/userStates";
 import TableList from "../../components/table/Table";
 import TableChipElement from "../../components/table-chip-element";
+import { Chip } from "@mui/material";
 
 const Users: React.FC = () => {
   useMutation(DELETE_USER, {
@@ -22,10 +23,6 @@ const Users: React.FC = () => {
       setUserList(data?.getUsers);
     },
   });
-  const setGroupList = (data: any) => {
-    setUserGroupList(data?.getUserGroups);
-  };
-  const [userGroupList, setUserGroupList] = React.useState([]);
   const columns: GridColumns = [
     {
       field: "firstName",
@@ -42,15 +39,13 @@ const Users: React.FC = () => {
       renderCell: (params) => (
         <TableChipElement
           props={params}
+          element="user"
           query={GET_USER_GROUPS}
-          itemList={userGroupList}
-          setItemList={setGroupList}
         />
       ),
       headerAlign: "center",
     },
   ];
-
   return (
     <>
       <TableList

@@ -1,28 +1,31 @@
 import { DocumentNode, useQuery } from "@apollo/client";
 import { Chip } from "@mui/material";
-import { FC } from "react";
+import React, { FC } from "react";
 
 interface TableChipElementProps {
   props: any;
   query: DocumentNode;
-  itemList: any;
-  setItemList: any;
+  element: string;
 }
 
 const TableChipElement: FC<TableChipElementProps> = ({
   props,
   query,
-  itemList,
-  setItemList,
+  element,
 }) => {
   const { row } = props;
+  const [itemList, setItemList] = React.useState([]);
 
   useQuery(query, {
     variables: {
       id: row.id,
     },
     onCompleted: (data) => {
-      setItemList(data);
+      if (element === "user") {
+        setItemList(data?.getUserGroups);
+      } else if (element === "group") {
+        setItemList(data?.getGroupRoles);
+      }
     },
   });
 
