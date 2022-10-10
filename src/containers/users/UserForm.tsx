@@ -1,6 +1,6 @@
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import "./styles.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm, FormProvider } from "react-hook-form";
 import { Button, Chip } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -21,6 +21,8 @@ const UserForm = (props: any) => {
     userformSchema,
     currentGroupIDs,
   } = props;
+
+  const navigate=useNavigate();
   const groupList = useRecoilValue(groupListAtom);
   const userGroups = useRecoilValue(userGroupsAtom);
   const setUserGroups = useSetRecoilState(userGroupsAtom);
@@ -104,7 +106,9 @@ const UserForm = (props: any) => {
         <form onSubmit={handleSubmit(onSubmitForm)}>
           <div id="fixed">
             <div id="back-page">
-              <ArrowBackIcon id="arrowicon" />
+              <ArrowBackIcon id="arrowicon" onClick={() => {
+                    navigate('/home/users');
+                  }}/>
               Users
             </div>
 

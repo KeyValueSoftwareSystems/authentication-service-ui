@@ -3,7 +3,7 @@ import * as yup from "yup";
 const AddUserformSchema = yup.object({
   firstName: yup.string().required("First name can not be empty"),
   middleName: yup.string().matches(/^[A-Za-z]+$/, "Must be a name"),
-  lastName: yup.string(),
+  lastName: yup.string().matches(/^[A-Za-z]+$/, "Must be a name"),
   email: yup.string().email("Invalid email").required("Email can not be empty"),
   password: yup.string().required("Password can not be empty"),
   phone: yup.number().min(10),
