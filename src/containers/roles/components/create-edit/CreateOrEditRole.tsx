@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { ChecklistComponent } from "../../../../components/checklist/checkList";
 import { NewRole } from "../../../../types/role";
-import { GET_PERMISSIONS } from "../../../Permissions/services/queries";
+import { GET_PERMISSIONS } from "../../../permissions/services/queries";
 import {
   CREATE_ROLE,
   UPDATE_ROLE,

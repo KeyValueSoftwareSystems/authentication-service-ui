@@ -8,6 +8,16 @@ export const GET_ROLES = gql`
     }
   }
 `;
+
+export const GET_ROLE_DETAILS = gql`
+  query getRole($id: ID!) {
+    getRole(id: $id) {
+      id
+      name
+    }
+  }
+`;
+
 export const GET_GROUP_ROLES = gql`
   query ($id: ID!) {
     getGroupRoles(id: $id) {
