@@ -3,7 +3,7 @@ import { FC, useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, Divider, Stack } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { FormProvider, useForm } from "react-hook-form";
+import { FieldValues, FormProvider, useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 
@@ -14,8 +14,8 @@ import { Group } from "../../../../types/group";
 import FormInputText from "../../../../components/inputText";
 
 interface GroupFormProps {
-  createGroup: (inputs: any) => void;
-  editGroup: (inputs: any) => void;
+  createGroup: (inputs: FieldValues) => void;
+  editGroup: (inputs: FieldValues) => void;
 }
 
 const GroupForm: FC<GroupFormProps> = ({ createGroup, editGroup }) => {
@@ -35,7 +35,9 @@ const GroupForm: FC<GroupFormProps> = ({ createGroup, editGroup }) => {
   });
   const { handleSubmit } = methods;
 
-  const onSubmitForm = (input: any) => {
+  const onSubmitForm = (input: FieldValues) => {
+    console.log(input);
+
     id ? editGroup(input) : createGroup(input);
   };
 

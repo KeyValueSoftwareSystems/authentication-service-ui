@@ -34,6 +34,7 @@ import { ChecklistComponent } from "../../../../components/checklist/checkList";
 import { Permission, RolePermissionsDetails } from "../../../../types/permission";
 import { Role } from "../../../../types/role";
 import { NewEntity } from "../../../../types/generic";
+import { FieldValue, FieldValues } from "react-hook-form";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -151,7 +152,7 @@ const CreateOrEditGroup = () => {
     }
   };
 
-  const onCreateGroup = (inputs: NewEntity) => {
+  const onCreateGroup = (inputs: FieldValues) => {
     console.log(inputs);
 
     createGroup({
@@ -179,7 +180,7 @@ const CreateOrEditGroup = () => {
     }
   }, [createGroupData]);
 
-  const onEditGroup = (inputs: NewEntity) => {
+  const onEditGroup = (inputs: FieldValues) => {
     updateGroup({
       variables: {
         id: id,
