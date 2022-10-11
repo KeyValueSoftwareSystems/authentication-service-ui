@@ -3,6 +3,8 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 import "./editablelistitem.css";
+import { useRecoilState } from "recoil";
+import { inlineEditAtom } from "../../states/inlineEdit";
 
 interface EditableListItemProps {
   type: string;
@@ -20,6 +22,7 @@ const EditableListItem: FC<EditableListItemProps> = ({
   ...props
 }) => {
   const [isEditing, setEditing] = useState(false);
+  const [editState, setEditState] = useRecoilState(inlineEditAtom);
   const handleKeyDown = (event: any, type: any) => {
     if (event.key === "Escape") {
       setEditing(false);
@@ -42,7 +45,8 @@ const EditableListItem: FC<EditableListItemProps> = ({
           <div className="icons">
             <EditIcon
               sx={{ marginRight: "1px" }}
-              onClick={() => setEditing(true)}
+              onClick={() => {setEditing(true);
+              setEditState(true);}}
             />
             <DeleteIcon onClick={() => handleDelete()} />
           </div>

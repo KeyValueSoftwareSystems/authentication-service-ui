@@ -9,9 +9,8 @@ interface InlineEditProps {
   placeholder: string;
   api: any;
   id: any;
-  action: string;
 }
-const InlineEdit: FC<InlineEditProps> = ({ placeholder, api, id, action }) => {
+const InlineEdit: FC<InlineEditProps> = ({ placeholder, api, id }) => {
   const [newvalue, setnewvalue] = useState();
   const [addState, setAddState] = useRecoilState(inlineAddAtom);
   const [editState, setEditState] = useRecoilState(inlineEditAtom);
@@ -36,9 +35,9 @@ const InlineEdit: FC<InlineEditProps> = ({ placeholder, api, id, action }) => {
       },
     });
     setEditState(false);
-    setTimeout(() => {
-      window.location.reload();
-    }, 100);
+    // setTimeout(() => {
+    //   window.location.reload();
+    // }, 100);
   };
   const handleChange = (event: any) => {
     setnewvalue(event.target.value);
@@ -48,7 +47,7 @@ const InlineEdit: FC<InlineEditProps> = ({ placeholder, api, id, action }) => {
       setAddState(false);
     }
   };
-  return action === "add" ? (
+  return  (
     addState ? (
       <div className="edit-elements">
         <input
@@ -62,10 +61,8 @@ const InlineEdit: FC<InlineEditProps> = ({ placeholder, api, id, action }) => {
           <CheckIcon />
         </div>
       </div>
-    ) : (
-      <></>
-    )
-  ) : editState ? (
+    ) 
+  : (editState ? (
     <div className="edit-elements">
       <input
         type="text"
@@ -79,6 +76,7 @@ const InlineEdit: FC<InlineEditProps> = ({ placeholder, api, id, action }) => {
     </div>
   ) : (
     <></>
-  );
+  ))
+  )
 };
 export default InlineEdit;

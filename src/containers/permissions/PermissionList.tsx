@@ -30,9 +30,6 @@ const PermissionList: React.FC = () => {
   });
   const [updatePermission] = useMutation(UPDATE_PERMISSION, {
     refetchQueries: [{ query: GET_PERMISSIONS }],
-    onCompleted: (data) => {
-      setPermissionList(data?.getPermissions);
-    },
   });
   const [createNewPermission] = useMutation(CREATE_PERMISSION, {
     refetchQueries: [{ query: GET_PERMISSIONS }],
@@ -73,7 +70,6 @@ const PermissionList: React.FC = () => {
                   placeholder={permission?.name}
                   api={updatePermission}
                   id={permission?.id}
-                  action="edit"
                 />
               </EditableListItem>
             </li>
@@ -86,7 +82,6 @@ const PermissionList: React.FC = () => {
                 placeholder="Enter new permission"
                 api={createNewPermission}
                 id=""
-                action="add"
               />
             </>
           ) : (
