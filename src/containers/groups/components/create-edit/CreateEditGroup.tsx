@@ -1,19 +1,10 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { useParams } from "react-router-dom";
 import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
+import { FieldValues } from "react-hook-form";
 
-import {
-  Box,
-  Tab,
-  Tabs,
-  Typography,
-  Grid,
-  Divider,
-  List,
-  ListItem,
-  Chip,
-} from "@mui/material";
+import { Box, Tab, Tabs, Typography, Grid, Divider, Chip } from "@mui/material";
 
 import {
   GET_ROLES,
@@ -31,10 +22,11 @@ import GroupForm from "./GroupForm";
 import { GET_GROUP_ROLES } from "../../services/queries";
 import { getUniquePermissions } from "../../../../utils/permissions";
 import { ChecklistComponent } from "../../../../components/checklist/checkList";
-import { Permission, RolePermissionsDetails } from "../../../../types/permission";
+import {
+  Permission,
+  RolePermissionsDetails,
+} from "../../../../types/permission";
 import { Role } from "../../../../types/role";
-import { NewEntity } from "../../../../types/generic";
-import { FieldValue, FieldValues } from "react-hook-form";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -259,13 +251,15 @@ const CreateOrEditGroup = () => {
               </div>
               <div className="chips">
                 {permissions?.map((permission, index) =>
-                  permission?.rolePermissions?.map((item: Permission, index: number) => (
-                    <Chip
-                      label={item.name}
-                      key={index}
-                      sx={{ marginRight: 2, marginBottom: 1 }}
-                    />
-                  ))
+                  permission?.rolePermissions?.map(
+                    (item: Permission, index: number) => (
+                      <Chip
+                        label={item.name}
+                        key={index}
+                        sx={{ marginRight: 2, marginBottom: 1 }}
+                      />
+                    )
+                  )
                 )}
               </div>
             </Grid>
