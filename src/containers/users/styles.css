@@ -153,3 +153,10 @@
   color: #007aff;
   margin: 5px 5px 5px 5px;
 }
+
+#permission-list {
+  flex-wrap: wrap;
+  display: flex;
+  margin-top: 20px;
+  align-items: center;
+}

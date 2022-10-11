@@ -8,9 +8,10 @@ import FormInputText from "../../components/InputText";
 import { groupListAtom, userGroupsAtom } from "../../states/groupStates";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { UserPermissionsAtom } from "../../states/permissionsStates";
-import { GET_GROUP_PERMISSIONS } from "../groups/services/queries";
+import { GET_GROUP, GET_GROUP_PERMISSIONS } from "../groups/services/queries";
 import { useLazyQuery } from "@apollo/client";
 import { ChecklistComponent } from "../../components/checklist/CheckList";
+import { useEffect, useState } from "react";
 
 const UserForm = (props: any) => {
   const {
@@ -22,7 +23,7 @@ const UserForm = (props: any) => {
     currentGroupIDs,
   } = props;
 
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const groupList = useRecoilValue(groupListAtom);
   const userGroups = useRecoilValue(userGroupsAtom);
   const setUserGroups = useSetRecoilState(userGroupsAtom);
@@ -38,18 +39,12 @@ const UserForm = (props: any) => {
 
   const { handleSubmit } = methods;
 
-  const getTitle = () => {
-    return isEdit ? "Modify User" : "Add User";
-  };
-  const getButtonLabel = () => {
-    return isEdit ? "Update" : "Add";
-  };
-
   const onSubmitForm = (inputs: any) => {
     isEdit ? updateUser(inputs) : createUser(inputs);
   };
 
   const [getData] = useLazyQuery(GET_GROUP_PERMISSIONS);
+  const [getGroup] = useLazyQuery(GET_GROUP);
 
   const removeItem = (item: string) => {
     const itemIndex = userGroups.findIndex((e: any) => e === item);
@@ -106,22 +101,25 @@ const UserForm = (props: any) => {
         <form onSubmit={handleSubmit(onSubmitForm)}>
           <div id="fixed">
             <div id="back-page">
-              <ArrowBackIcon id="arrowicon" onClick={() => {
-                    navigate('/home/users');
-                  }}/>
+              <ArrowBackIcon
+                id="arrowicon"
+                onClick={() => {
+                  navigate("/home/users");
+                }}
+              />
               Users
             </div>
 
             <div id="title">
-              <legend id="bold">{getTitle()}</legend>
+              <legend id="bold">{isEdit ? "Modify user" : "Add user"}</legend>
               <div id="add-cancel">
                 <Button id="cancel">
-                  <Link id="cancel" to="/home">
+                  <Link id="cancel" to="/home/users">
                     Cancel
                   </Link>
                 </Button>
                 <Button id="add" type="submit">
-                  {getButtonLabel()}
+                  {isEdit ? "Update" : "Add"}
                 </Button>
               </div>
             </div>
@@ -183,8 +181,10 @@ const UserForm = (props: any) => {
         />
 
         <div id="add-items">
-          <div> Permissions </div>
-          <div id="item-list">
+          <div id="permission-header">
+            <div> Overall Permissions </div>
+          </div>
+          <div id="permission-list">
             {UserPermissions.map((permission: any) => {
               return (
                 <div key={permission.groupId}>
