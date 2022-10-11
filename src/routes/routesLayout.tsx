@@ -6,12 +6,12 @@ import RoleDetails from "../containers/roles/RoleDetails";
 import { RoutePaths } from "./routePaths";
 
 const NotFound = lazy(() => import("../components/NotFound"));
-const HomePage = lazy(() => import("../containers/home"));
-const Login = lazy(() => import("../containers/auth/login"));
+const HomePage = lazy(() => import("../containers/home-1"));
+const Login = lazy(() => import("../containers/auth-1/login"));
 const Users = lazy(() => import("../containers/users"));
 const Groups = lazy(() => import("../containers/groups"));
 const Roles = lazy(() => import("../containers/roles"));
-const Permissions = lazy(() => import("../containers/permissions"));
+const Permissions = lazy(() => import("../containers/permissions-1"));
 
 const RoutesLayout: React.FC = () => {
   // const navigate = useNavigate();
