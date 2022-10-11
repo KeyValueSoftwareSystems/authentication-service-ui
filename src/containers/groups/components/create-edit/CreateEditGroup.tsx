@@ -1,10 +1,7 @@
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 
 import { useParams } from "react-router-dom";
-
 import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
-
-import "./styles.css";
 
 import {
   Box,
@@ -15,6 +12,7 @@ import {
   Divider,
   List,
   ListItem,
+  Chip,
 } from "@mui/material";
 
 import {
@@ -27,12 +25,15 @@ import {
   UPDATE_GROUP_PERMISSIONS,
   UPDATE_GROUP_ROLES,
 } from "../../services/mutations";
-import { GET_GROUP_ROLES } from "../../services/queries";
 
-import { getUniquePermissions } from "../../../../utils/permissions";
-
+import "./styles.css";
 import GroupForm from "./GroupForm";
+import { GET_GROUP_ROLES } from "../../services/queries";
+import { getUniquePermissions } from "../../../../utils/permissions";
 import { ChecklistComponent } from "../../../../components/checklist/checkList";
+import { Permission, RolePermissionsDetails } from "../../../../types/permission";
+import { Role } from "../../../../types/role";
+import { NewEntity } from "../../../../types/generic";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -63,7 +64,7 @@ function TabPanel(props: TabPanelProps) {
 const CreateOrEditGroup = () => {
   const [value, setValue] = useState(0);
   const [roles, setRoles] = useState<string[]>([]);
-  const [permissions, setPermissions] = useState<any[]>([]);
+  const [permissions, setPermissions] = useState<RolePermissionsDetails[]>([]);
   const [allRoles, setAllRoles] = useState<string[]>([]);
 
   const [updateGroup] = useMutation(UPDATE_GROUP);
@@ -82,7 +83,7 @@ const CreateOrEditGroup = () => {
 
   const { data: roleData } = useQuery(GET_ROLES, {
     onCompleted: (data) => {
-      const roleIds = data?.getRoles.map((role: any) => role.id);
+      const roleIds = data?.getRoles.map((role: Role) => role.id);
       setAllRoles([...roleIds]);
     },
   });
@@ -93,17 +94,17 @@ const CreateOrEditGroup = () => {
       skip: !id,
       variables: { id: id },
       onCompleted: (data) => {
-        const groupRoleIds = data?.getGroupRoles?.map((item: any) => item.id);
+        const groupRoleIds = data?.getGroupRoles?.map((item: Role) => item.id);
         setRoles([...roles, ...groupRoleIds]);
       },
     }
   );
 
   const removeItem = (item: string) => {
-    const itemIndex = roles.findIndex((e: any) => e === item);
+    const itemIndex = roles.findIndex((e: string) => e === item);
     setRoles([...roles.slice(0, itemIndex), ...roles.slice(itemIndex + 1)]);
     const permissionIndex = permissions.findIndex(
-      (e: any) => e.roleId === item
+      (e: RolePermissionsDetails) => e.roleId === item
     );
     setPermissions([
       ...permissions.slice(0, permissionIndex),
@@ -111,40 +112,48 @@ const CreateOrEditGroup = () => {
     ]);
   };
 
-  const onChange = (event: any, item?: any) => {
+  const onChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    item?: Role
+  ) => {
     const value = event.target.value;
+    console.log(item);
+
     if (event.target.checked) {
       if (value === "all") {
         setRoles(allRoles);
         return;
       }
       getData({
-        variables: { id: item.id },
+        variables: { id: item?.id },
         fetchPolicy: "no-cache",
         onCompleted: (data) => {
           setPermissions([
             ...permissions,
-            { roleId: item.id, permissions: data?.getRolePermissions },
+            {
+              roleId: item?.id as string,
+              rolePermissions: data?.getRolePermissions,
+            },
           ]);
         },
       });
       if (roles[0] === null) {
-        setRoles([item.id]);
+        setRoles([item?.id as string]);
       } else {
-        setRoles([...roles, item.id]);
+        setRoles([...roles, item?.id as string]);
       }
     } else {
       if (value === "all") {
         setRoles([]);
         return;
       }
-      removeItem(item.id);
+      removeItem(item?.id as string);
     }
   };
-  console.log("permissions", permissions);
-  console.log("roles", roles);
 
-  const onCreateGroup = (inputs: any) => {
+  const onCreateGroup = (inputs: NewEntity) => {
+    console.log(inputs);
+
     createGroup({
       variables: {
         input: inputs,
@@ -170,7 +179,7 @@ const CreateOrEditGroup = () => {
     }
   }, [createGroupData]);
 
-  const onEditGroup = (inputs: any) => {
+  const onEditGroup = (inputs: NewEntity) => {
     updateGroup({
       variables: {
         id: id,
@@ -243,24 +252,21 @@ const CreateOrEditGroup = () => {
               )}
             </Grid>
             <Divider orientation="vertical" flexItem sx={{ marginLeft: 2 }} />
-            <Grid item xs={10} lg={5} sx={{ paddingLeft: 5 }}>
+            <Grid item xs={10} lg={6} sx={{ paddingLeft: 5 }}>
               <div className="header">
                 Permissions summary of selected roles
               </div>
-              <List sx={{ listStyleType: "disc", paddingLeft: 5 }}>
+              <div className="chips">
                 {permissions?.map((permission, index) =>
-                  permission?.permissions?.map((item: any, index: any) => (
-                    <ListItem
+                  permission?.rolePermissions?.map((item: Permission, index: number) => (
+                    <Chip
+                      label={item.name}
                       key={index}
-                      sx={{
-                        display: "list-item",
-                      }}
-                    >
-                      {item.name}
-                    </ListItem>
+                      sx={{ marginRight: 2, marginBottom: 1 }}
+                    />
                   ))
                 )}
-              </List>
+              </div>
             </Grid>
           </Grid>
         </TabPanel>

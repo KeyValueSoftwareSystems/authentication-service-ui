@@ -1,15 +1,17 @@
+import { FC, useState } from "react";
+
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, Divider, Stack } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { FormProvider, useForm } from "react-hook-form";
-import FormInputText from "../../../../components/InputText";
-import "./styles.css";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
+
+import "./styles.css";
 import { GroupFormSchema } from "../../groupSchema";
 import { GET_GROUP } from "../../services/queries";
-import { FC, useState } from "react";
 import { Group } from "../../../../types/group";
+import FormInputText from "../../../../components/inputText";
 
 interface GroupFormProps {
   createGroup: (inputs: any) => void;
