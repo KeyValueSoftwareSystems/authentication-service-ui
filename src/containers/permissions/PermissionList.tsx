@@ -31,13 +31,16 @@ const PermissionList: React.FC = () => {
   });
   const [updatePermission] = useMutation(UPDATE_PERMISSION, {
     refetchQueries: [{ query: GET_PERMISSIONS }],
+    onCompleted:(data) =>{
+      setPermissionList(data?.getPermissions);
+    }
   });
   const [createNewPermission] = useMutation(CREATE_PERMISSION, {
     refetchQueries: [{ query: GET_PERMISSIONS }],
   });
-  const [checkAdd, setcheckAdd] = useState(false);
+  const [addState, setAddState] = useRecoilState(inlineAddAtom);
   const createPermission = () => {
-    setcheckAdd(true);
+    setAddState(true);
   };
   return (
     <>
@@ -58,7 +61,8 @@ const PermissionList: React.FC = () => {
         </div>
       </div>
       <ul className="permission-list">
-        {permissionList?.map((permission: any) => (
+        {
+        permissionList?.map((permission: any) => (
           <>
             <li className="list-elements">
               <EditableListItem
@@ -71,7 +75,6 @@ const PermissionList: React.FC = () => {
                   placeholder={permission?.name}
                   api={updatePermission}
                   id={permission?.id}
-                  checkAdd
                   action="edit"
                 />
               </EditableListItem>
@@ -79,13 +82,12 @@ const PermissionList: React.FC = () => {
           </>
         ))}
         <li className="list-elements">
-          {checkAdd ? (
+          {addState ? (
             <>
               <InlineEdit
                 placeholder="Enter new permission"
                 api={createNewPermission}
                 id=""
-                checkAdd={checkAdd}
                 action="add"
               />
             </>

@@ -9,14 +9,12 @@ interface InlineEditProps {
   placeholder: string;
   api: any;
   id: any;
-  checkAdd: boolean;
   action: string;
 }
 const InlineEdit: FC<InlineEditProps> = ({
   placeholder,
   api,
   id,
-  checkAdd,
   action,
 }) => {
   const [newvalue, setnewvalue] = useState();
@@ -31,7 +29,6 @@ const InlineEdit: FC<InlineEditProps> = ({
         },
       },
     });
-    checkAdd = false;
     setAddState(false);
   };
   const saveEditPermission = () => {
@@ -43,11 +40,10 @@ const InlineEdit: FC<InlineEditProps> = ({
         },
       },
     });
-    checkAdd = false;
     setEditState(false);
-    setTimeout(() => {
-      window.location.reload();
-    }, 100);
+    // setTimeout(() => {
+    //   window.location.reload();
+    // }, 100);
   };
   const handleChange = (event: any) => {
     setnewvalue(event.target.value);
@@ -57,7 +53,7 @@ const InlineEdit: FC<InlineEditProps> = ({
       setAddState(false);
     }
   };
-  return checkAdd ? (
+  return (
     action === "add" ? (
       addState ? (
         <div className="edit-elements">
@@ -90,8 +86,6 @@ const InlineEdit: FC<InlineEditProps> = ({
     ) : (
       <></>
     )
-  ) : (
-    <></>
-  );
+  ) 
 };
 export default InlineEdit;
