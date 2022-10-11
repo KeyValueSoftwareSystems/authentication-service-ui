@@ -7,5 +7,5 @@ export const inlineEditAtom = atom({
 
 export const inlineAddAtom = atom({
   key: "InlineAdd",
-  default: true,
+  default: false,
 });
