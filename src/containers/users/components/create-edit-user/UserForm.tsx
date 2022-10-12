@@ -44,7 +44,6 @@ const UserForm = (props: any) => {
   };
 
   const [getData] = useLazyQuery(GET_GROUP_PERMISSIONS);
-  const [getGroup] = useLazyQuery(GET_GROUP);
 
   const removeItem = (item: string) => {
     const itemIndex = userGroups.findIndex((e: any) => e === item);
@@ -90,10 +89,6 @@ const UserForm = (props: any) => {
     }
   };
 
-  const onSelectAll = (event: any) => {
-    if (event.target.checked) setUserGroups(groups);
-    else setUserGroups([]);
-  };
 
   return (
     <div id="page">
@@ -175,9 +170,8 @@ const UserForm = (props: any) => {
         <ChecklistComponent
           name="Select Groups"
           mapList={groupList}
-          currentIDs={currentGroupIDs}
+          currentCheckedItems={currentGroupIDs}
           onChange={handleChange}
-          onSelectAll={onSelectAll}
         />
 
         <div id="add-items">
