@@ -49,7 +49,7 @@ const Users: React.FC = () => {
   };
 
   return (
-    <div style={{ width: "100%" }}>
+    <>
       <TableList
         rows={userList}
         columns={columns}
@@ -60,7 +60,7 @@ const Users: React.FC = () => {
         refetchQuery={GET_USERS}
         handleRowClick={onUserClick}
       />
-    </div>
+    </>
   );
 };
 

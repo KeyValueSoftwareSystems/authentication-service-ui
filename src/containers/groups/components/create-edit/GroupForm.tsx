@@ -55,14 +55,14 @@ const GroupForm: FC<GroupFormProps> = ({ createGroup, editGroup }) => {
                 {id ? "Edit Group" : "Create Group"}
               </div>
             </div>
-            <Stack className="box2" spacing={2} direction="row">
+            <div className="box3" >
               <Button variant="text" className="button">
                 Cancel
               </Button>
               <Button variant="outlined" className="button" type="submit">
                 {id ? "Update Group" : "Create Group"}
               </Button>
-            </Stack>
+            </div>
           </div>
           <Divider />
           {!loading && (

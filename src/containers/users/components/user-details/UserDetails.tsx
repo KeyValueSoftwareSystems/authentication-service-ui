@@ -49,20 +49,22 @@ const UserDetails = () => {
   };
 
   return (
-    <div className="user-details">
-      <div className="back-arrow" onClick={onClick}>
-        <ArrowBackIcon />
-      </div>
-      <Box className="tabs">
-        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-          <Tabs value={value} onChange={handleChange}>
-            <Tab label="User Details" />
-          </Tabs>
+    <div className="cntr">
+      <div className="user-details">
+        <div className="back-arrow" onClick={onClick}>
+          <ArrowBackIcon />
+        </div>
+        <Box className="tabs">
+          <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+            <Tabs value={value} onChange={handleChange}>
+              <Tab label="User Details" />
+            </Tabs>
+          </Box>
+          <TabPanel value={value} index={0}>
+            <Profile />
+          </TabPanel>
         </Box>
-        <TabPanel value={value} index={0}>
-          <Profile />
-        </TabPanel>
-      </Box>
+      </div>
     </div>
   );
 };
