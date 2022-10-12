@@ -9,9 +9,8 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { UserPermissionsAtom } from "../../../../states/permissionsStates";
 import { GET_GROUP, GET_GROUP_PERMISSIONS } from "../../../groups/services/queries";
 import { useLazyQuery } from "@apollo/client";
-import { ChecklistComponent } from "../../../../components/checklist/CheckList";
-import { useEffect, useState } from "react";
 import FormInputText from "../../../../components/inputText";
+import { ChecklistComponent } from "../../../../components/checklist/CheckList";
 
 const UserForm = (props: any) => {
   const {
@@ -88,11 +87,6 @@ const UserForm = (props: any) => {
     } else {
       removeItem(item.id);
     }
-  };
-
-  const onSelectAll = (event: any) => {
-    if (event.target.checked) setUserGroups(groups);
-    else setUserGroups([]);
   };
 
   return (
@@ -175,9 +169,8 @@ const UserForm = (props: any) => {
         <ChecklistComponent
           name="Select Groups"
           mapList={groupList}
-          currentIDs={currentGroupIDs}
+          currentCheckedItems={currentGroupIDs}
           onChange={handleChange}
-          onSelectAll={onSelectAll}
         />
 
         <div id="add-items">
