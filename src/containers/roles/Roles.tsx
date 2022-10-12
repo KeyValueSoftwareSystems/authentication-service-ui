@@ -30,7 +30,7 @@ const Roles: React.FC = () => {
   ];
 
   return (
-    <>
+    <div style={{ width: "100%" }}>
       <TableList
         rows={roleList}
         columns={columns}
@@ -40,7 +40,7 @@ const Roles: React.FC = () => {
         deleteMutation={DELETE_ROLE}
         refetchQuery={GET_ROLES}
       />
-    </>
+    </div>
   );
 };
 

@@ -1,8 +1,9 @@
 import React from "react";
 import { useRecoilState } from "recoil";
 import { useMutation, useQuery } from "@apollo/client";
-import { GridColumns } from "@mui/x-data-grid";
+import { GridColumns, GridRowParams } from "@mui/x-data-grid";
 import { Chip } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 import { GET_USERS, GET_USER_GROUPS } from "./services/queries";
 import "./styles.css";
@@ -11,6 +12,8 @@ import { userListAtom } from "../../states/userStates";
 import TableList from "../../components/table/Table";
 
 const Users: React.FC = () => {
+  const navigate = useNavigate();
+
   useMutation(DELETE_USER, {
     refetchQueries: [{ query: GET_USERS }],
   });
@@ -41,8 +44,12 @@ const Users: React.FC = () => {
     },
   ];
 
+  const onUserClick = (params: GridRowParams) => {
+    navigate(`./${params.id}`);
+  };
+
   return (
-    <>
+    <div style={{ width: "100%" }}>
       <TableList
         rows={userList}
         columns={columns}
@@ -51,8 +58,9 @@ const Users: React.FC = () => {
         searchLabel="Search User"
         deleteMutation={DELETE_USER}
         refetchQuery={GET_USERS}
+        handleRowClick={onUserClick}
       />
-    </>
+    </div>
   );
 };
 

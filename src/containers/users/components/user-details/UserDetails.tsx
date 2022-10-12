@@ -1,6 +1,8 @@
 import { useState, FC } from "react";
 
 import { Tabs, Tab, Box, Typography } from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { useNavigate } from "react-router-dom";
 
 import "./styles.css";
 
@@ -34,22 +36,34 @@ const TabPanel: FC<TabPanelProps> = (props: TabPanelProps) => {
 
 const UserDetails = () => {
   const [value, setValue] = useState(0);
+  const navigate = useNavigate();
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 
+  const onClick = (e: any) => {
+    console.log("ssffs");
+
+    navigate("/home/users");
+  };
+
   return (
-    <Box className="tabs">
-      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-        <Tabs value={value} onChange={handleChange}>
-          <Tab label="Profile" />
-        </Tabs>
+    <div className="user-details">
+      <div className="back-arrow" onClick={onClick}>
+        <ArrowBackIcon />
+      </div>
+      <Box className="tabs">
+        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+          <Tabs value={value} onChange={handleChange}>
+            <Tab label="User Details" />
+          </Tabs>
+        </Box>
+        <TabPanel value={value} index={0}>
+          <Profile />
+        </TabPanel>
       </Box>
-      <TabPanel value={value} index={0}>
-        <Profile />
-      </TabPanel>
-    </Box>
+    </div>
   );
 };
 

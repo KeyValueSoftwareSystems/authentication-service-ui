@@ -1,17 +1,30 @@
+.user-details{
+    width: 60%;
+    box-shadow: rgb(100 100 111 / 20%) 0px 7px 29px 0px;
+}
+
 .tabs{
-    width: 50%;
     background: #fff;
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.back-arrow{
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  margin-right: 7px;
+  margin-top: 2px;
 }
 
 .name{
-    font-size: 18px;
+    font-size: 20px;
     font-weight: bold;
     width: fit-content;
 }
 
 .link{
     font-size: 14px;
+    word-break: break-word;
+    width: fit-content;
 }
 
 .grid{
@@ -54,20 +67,52 @@
 .roles{
     display: flex;
     flex-direction: column;
+    font-weight: 600;
+    font-size: 18px !important;
     align-items: flex-start;
     margin-left: 10px;
     margin-bottom: 4px;
 }
 
-.group-permissions{
+.user-permissions{
     display: flex;
     flex-direction: column;
+    font-weight: 600;
+    font-size: 18px !important;
     align-items: flex-start;
     margin-left: 10px;
-    margin-top: 4px;
+    margin-top: 6px;
     margin-bottom: 4px;
 }
 
 .items{
     margin: 6px 0px 6px 2px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+   }
+
+.chip{
+    height: 100%;
+    margin-right: 4px;
+    margin-bottom: 8px;
+    background: #F0F8FF !important;
+    font-weight: 400;
+    font-size: 16px !important;
+}
+
+.divider-horizontal{
+    display: none;
+}
+
+
+@media(max-width: 900px){
+    .divider-vertical{
+        display: none;
+    }
+    .divider-horizontal{
+        display: flex;
+    }
 }

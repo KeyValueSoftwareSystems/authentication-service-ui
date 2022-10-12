@@ -46,6 +46,9 @@
   height: calc(-60px + 100vh);
 }
 .outlet {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 80%;
   margin: 20px;
   padding: 20px;
