@@ -6,13 +6,13 @@ import {
   CREATE_USER,
   UPDATE_USER_GROUPS,
   UPDATE_USER_PERMISSIONS,
-} from "./services/mutations";
-import { groupListAtom, userGroupsAtom } from "../../states/groupStates";
+} from "../../services/mutations";
+import { groupListAtom, userGroupsAtom } from "../../../../states/groupStates";
 import "./styles.css";
-import { GET_GROUPS } from "../groups/services/queries";
-import { UserPermissionsAtom } from "../../states/permissionsStates";
+import { GET_GROUPS } from "../../../groups/services/queries";
+import { UserPermissionsAtom } from "../../../../states/permissionsStates";
 import UserForm from "./UserForm";
-import { AddUserformSchema } from "./userSchema";
+import { AddUserformSchema } from "../../userSchema";
 
 const AddUser: React.FC = () => {
   const setGroupList = useSetRecoilState(groupListAtom);

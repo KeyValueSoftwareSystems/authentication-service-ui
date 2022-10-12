@@ -3,18 +3,18 @@ import "./styles.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { userAtom } from "../../states/userStates";
 import {
   UPDATE_USER,
   UPDATE_USER_GROUPS,
   UPDATE_USER_PERMISSIONS,
-} from "./services/mutations";
-import { GET_USER, GET_USER_GROUPS } from "./services/queries";
-import { userGroupsAtom } from "../../states/groupStates";
-import { EditUserformSchema } from "./userSchema";
+} from "../../services/mutations";
+import { GET_USER, GET_USER_GROUPS } from "../../services/queries";
+import { userGroupsAtom } from "../../../../states/groupStates";
+import { EditUserformSchema } from "../../userSchema";
 import UserForm from "./UserForm";
-import { UserPermissionsAtom } from "../../states/permissionsStates";
-import { GET_GROUP_PERMISSIONS } from "../groups/services/queries";
+import { UserPermissionsAtom } from "../../../../states/permissionsStates";
+import { GET_GROUP_PERMISSIONS } from "../../../groups/services/queries";
+import { userAtom } from "../../../../states/userStates";
 
 const EditUser: React.FC = () => {
   const { id } = useParams();

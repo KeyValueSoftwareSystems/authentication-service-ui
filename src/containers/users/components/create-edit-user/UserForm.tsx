@@ -4,14 +4,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm, FormProvider } from "react-hook-form";
 import { Button, Chip } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
-import FormInputText from "../../components/InputText";
-import { groupListAtom, userGroupsAtom } from "../../states/groupStates";
+import { groupListAtom, userGroupsAtom } from "../../../../states/groupStates";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { UserPermissionsAtom } from "../../states/permissionsStates";
-import { GET_GROUP, GET_GROUP_PERMISSIONS } from "../groups/services/queries";
+import { UserPermissionsAtom } from "../../../../states/permissionsStates";
+import { GET_GROUP, GET_GROUP_PERMISSIONS } from "../../../groups/services/queries";
 import { useLazyQuery } from "@apollo/client";
-import { ChecklistComponent } from "../../components/checklist/CheckList";
+import { ChecklistComponent } from "../../../../components/checklist/CheckList";
 import { useEffect, useState } from "react";
+import FormInputText from "../../../../components/inputText";
 
 const UserForm = (props: any) => {
   const {

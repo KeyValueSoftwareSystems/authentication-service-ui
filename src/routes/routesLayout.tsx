@@ -1,6 +1,6 @@
 import React, { Suspense, lazy } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
-import AddUser from "../containers/users/AddUser";
+import AddUser from "../containers/users/components/create-edit-user/AddUser";
 import EditUser from "../containers/users/EditUser";
 import GroupDetails from "../containers/groups/GroupDetails";
 import RoleDetails from "../containers/roles/RoleDetails";
