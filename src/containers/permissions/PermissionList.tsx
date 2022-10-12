@@ -76,7 +76,6 @@ const PermissionList: React.FC = () => {
     createNewPermission({
       variables: {
         input: {
-          id: "ha",
           name: value,
         },
       },
