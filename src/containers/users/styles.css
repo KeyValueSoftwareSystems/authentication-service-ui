@@ -17,3 +17,8 @@
   color: #a4a4a4;
   font-size: 14px !important;
 }
+
+.chips{
+  display: flex;
+  flex-wrap: wrap;
+}
