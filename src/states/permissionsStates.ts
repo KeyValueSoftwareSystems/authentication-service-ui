@@ -1,6 +1,7 @@
 import { atom } from "recoil";
+import {Permission} from "../types/permission";
 
-export const permissionsListAtom = atom({
+export const permissionsListAtom = atom<Permission[]>({
   key: "PermissionsList",
   default: [],
 });
@@ -24,3 +25,5 @@ export const RolePermissionsAtom = atom({
     },
   ],
 });
+
+

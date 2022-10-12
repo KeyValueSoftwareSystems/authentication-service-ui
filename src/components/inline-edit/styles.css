@@ -1,0 +1,31 @@
+.inputChip {
+  border-radius: 15px !important;
+  margin-bottom: 20px;
+  padding: 5px 5px 5px 10px;
+  border: 1px solid #757575;
+  font-size: 16px;
+  width: 200px;
+}
+.disabledStyles {
+  background-color: aliceblue !important;
+}
+
+.iconSpacing {
+  position: relative;
+  right: 70px;
+  top: 5px;
+  visibility: hidden;
+  width: 100px;
+  cursor: pointer;
+}
+
+.editableText:hover .iconSpacing {
+  visibility: visible;
+}
+
+.saveIcon {
+  visibility: visible;
+}
+.editIcon {
+  visibility: hidden;
+}
