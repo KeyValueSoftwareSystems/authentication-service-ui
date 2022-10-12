@@ -1,5 +1,5 @@
 import { atom } from "recoil";
-import {Permission} from "../types/permission";
+import { Permission} from "../types/permission";
 
 export const permissionsListAtom = atom<Permission[]>({
   key: "PermissionsList",
@@ -25,5 +25,3 @@ export const RolePermissionsAtom = atom({
     },
   ],
 });
-
-

@@ -46,7 +46,9 @@ const PermissionList: React.FC = () => {
     },
   });
 
-  const onEditPermission = (value: string | undefined, id: string | undefined) => {
+  const onEditPermission = (value: string | undefined,
+    id: string | undefined
+  ) => {
     updatePermission({
       variables: {
         id,
