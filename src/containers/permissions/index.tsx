@@ -1,12 +1,7 @@
-import React from 'react';
+import React from "react";
 
 const Permissions = () => {
-    return (
-        <div>
-        Hi Permissions
-        </div>
-    );
+  return <div>Hi Permissions</div>;
 };
-
 
 export default Permissions;

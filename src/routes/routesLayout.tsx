@@ -38,7 +38,7 @@ const RoutesLayout: React.FC = () => {
               element={<UserDetails />}
             /> */}
           <Route path={RoutePaths.roles} element={<Roles />} />
-          <Route path="roles/:id" element={<RoleDetails/>}></Route>
+          <Route path="roles/:id" element={<RoleDetails />}></Route>
           <Route path={RoutePaths.permissions} element={<Permissions />} />
           <Route path="*" element={<NotFound />} />
         </Route>
