@@ -256,7 +256,11 @@ const CreateOrEditGroup = () => {
                       <Chip
                         label={item.name}
                         key={index}
-                        sx={{ marginRight: 2, marginBottom: 1 }}
+                        sx={{
+                          marginRight: 2,
+                          marginBottom: 1,
+                          background: "aliceblue",
+                        }}
                       />
                     )
                   )
