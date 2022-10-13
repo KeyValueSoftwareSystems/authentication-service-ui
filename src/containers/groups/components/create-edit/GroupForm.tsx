@@ -1,46 +1,44 @@
 import { FC, useState } from "react";
+
+import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, Divider, Stack } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { FieldValues, FormProvider, useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
-import { FormProvider, useForm } from "react-hook-form";
 import { useQuery } from "@apollo/client";
 
-
 import "./styles.css";
+import { GroupFormSchema } from "../../groupSchema";
+import { GET_GROUP } from "../../services/queries";
+import { Group } from "../../../../types/group";
 import FormInputText from "../../../../components/inputText";
-import { Role } from "../../../../types/role";
-import { GET_ROLE } from "../../services/queries";
 
-interface RoleFormProps {
-  createRole: (inputs: any) => void;
-  editRole: (inputs: any) => void;
+interface GroupFormProps {
+  createGroup: (inputs: FieldValues) => void;
+  editGroup: (inputs: FieldValues) => void;
 }
 
-const RoleForm: FC<RoleFormProps> = ({ createRole, editRole }) => {
+const GroupForm: FC<GroupFormProps> = ({ createGroup, editGroup }) => {
   const { id } = useParams();
-  const [role, setRole] = useState<Role>();
+  const [group, setGroup] = useState<Group>();
 
-  const { loading } = useQuery(GET_ROLE, {
+  const { loading } = useQuery(GET_GROUP, {
     skip: !id,
     variables: { id: id },
     onCompleted: (data) => {
-      setRole(data?.getRole);
+      setGroup(data?.getGroup);
     },
   });
 
-  const initialValues = {
-    name: id ? role?.name : "",
-  };
-
-  console.log(initialValues);
-
   const methods = useForm({
-    defaultValues: initialValues,
+    resolver: yupResolver(GroupFormSchema),
   });
   const { handleSubmit } = methods;
 
-  const onSubmitForm = (input: any) => {
-    id ? editRole(input) : createRole(input);
+  const onSubmitForm = (input: FieldValues) => {
+    console.log(input);
+
+    id ? editGroup(input) : createGroup(input);
   };
 
   return (
@@ -51,10 +49,10 @@ const RoleForm: FC<RoleFormProps> = ({ createRole, editRole }) => {
             <div className="box1">
               <div className="access-setting">
                 <ArrowBackIcon sx={{ height: 15 }} />
-                Roles Listing
+                Access setting
               </div>
-              <div className="create-role">
-                {id ? "Edit Role" : "Create Role"}
+              <div className="create-group">
+                {id ? "Edit Group" : "Create Group"}
               </div>
             </div>
             <Stack className="box2" spacing={2} direction="row">
@@ -62,7 +60,7 @@ const RoleForm: FC<RoleFormProps> = ({ createRole, editRole }) => {
                 Cancel
               </Button>
               <Button variant="outlined" className="button" type="submit">
-                {id ? "Update Role" : "Create Role"}
+                {id ? "Update Group" : "Create Group"}
               </Button>
             </Stack>
           </div>
@@ -71,10 +69,10 @@ const RoleForm: FC<RoleFormProps> = ({ createRole, editRole }) => {
             <>
               <FormInputText
                 name="name"
-                label="Role Name"
+                label="Group Name"
                 type="text"
-                className="role-name"
-                defaultText={role?.name}
+                className="group-name"
+                defaultText={group?.name}
               />
               <Divider sx={{ marginTop: 2 }} />
             </>
@@ -85,4 +83,4 @@ const RoleForm: FC<RoleFormProps> = ({ createRole, editRole }) => {
   );
 };
 
-export default RoleForm;
+export default GroupForm;

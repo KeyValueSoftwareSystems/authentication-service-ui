@@ -108,7 +108,7 @@ const CreateOrEditRole = () => {
             mapList={permissionsData?.getPermissions}
             name="Select Permissions"
             onChange={onChange}
-            currentIDs={rolePermissions}
+            currentCheckedItems={rolePermissions}
           />
         )}
       </div>
