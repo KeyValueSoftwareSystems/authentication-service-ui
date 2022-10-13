@@ -11,6 +11,7 @@ import {
 } from "../../services/queries";
 import { User, Group, Permission } from "../../../../types/user";
 import { useParams } from "react-router-dom";
+import "./styles.css";
 
 const Item = styled(Paper)(() => ({
   backgroundColor: "#fff",
@@ -64,13 +65,21 @@ const Profile = () => {
             </div>
             <Divider flexItem />
             <div className="contact">
-              <div>Contact No:</div>
+              <div style={{ fontWeight: 600 }}>Contact No:</div>
               <div>{user?.phone}</div>
+            </div>
+            <Divider flexItem />
+            <div className="contact">
+              <div style={{ fontWeight: 600 }}>Status:</div>{/* To integrate with status api */}
+              <Chip
+                label={"Active"}
+                sx={{ fontSize: "20px", background: "#D3F4BE" }}
+              />
             </div>
             <Divider
               flexItem
               className="divider-horizontal"
-              sx={{ marginTop: 1}}
+              sx={{ marginTop: 1 }}
             />
           </Item>
         </Grid>
@@ -82,8 +91,8 @@ const Profile = () => {
         />
         <Grid item sm={10} md={7}>
           <Item className="grid-item2" elevation={0}>
-            <div className="roles">
-              <div>Roles</div>
+            <div className="user-groups">
+              <div>Groups</div>
               <div className="items">
                 {userGroups?.map((group, index) => (
                   <Chip label={group?.name} className="chip" key={index} />
