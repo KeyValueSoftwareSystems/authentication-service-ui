@@ -23,7 +23,7 @@ const HomePage = () => {
               <div className="sideBarContainer">
                 <Link to="/home/users" className="text-link">
                   <PeopleAltOutlinedIcon className="icon" />
-                  USERS
+                  Users
                 </Link>
 
                 <Link to="/home/groups" className="text-link">

@@ -1,13 +1,14 @@
 .container {
   display: flex;
   justify-content: space-around;
-  padding-top: 250px;
   height: 100%;
-  /* background-color: aliceblue; */
 }
 
 .containerLogin {
-  width: 25%;
+  width: 75%;
+  margin-top: 275px;
+  margin-left: 300px;
+
 }
 
 .box {
@@ -25,4 +26,16 @@
   display: flex;
   justify-content: space-around;
   margin-bottom: 20px;
+}
+
+.left {
+  width: 800px;
+}
+
+.login-page {
+
+  width: 100%;
+  display: flex; 
+  flex-direction: row; 
+  justify-content: flex-start; 
 }
