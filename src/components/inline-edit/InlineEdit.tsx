@@ -82,7 +82,7 @@ const InlineEdit: React.FC<InlineEditProps> = ({
           className={`${!isDisabled && "editIcon"}`}
         />
         {!isDisabled ? (
-          <CheckIcon className="saveIcon" onMouseDown={onSavePermissionEdit} sx={{color:"#66b137"}}/>
+          <CheckIcon className="saveIcon" onMouseDown={onSavePermissionEdit} sx={{color:"green"}}/>
         ) : (
           <DeleteOutlineOutlinedIcon onClick={onDelete} sx={{ marginRight: "1px" ,
           color:"#eb272785" }} />
