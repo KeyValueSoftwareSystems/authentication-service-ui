@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
-import DoneIcon from "@mui/icons-material/Done";
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import CheckIcon from '@mui/icons-material/Check';
+import { Tooltip } from "@mui/material";
 
 import "./styles.css";
 
@@ -31,18 +32,18 @@ const InlineEdit: React.FC<InlineEditProps> = ({
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) =>
     setEditingValue(event.target.value);
 
-  const onKeyDown = (event: any) => {
+  const onKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter" || event.key === "Escape") {
-      event.target.blur();
+      event.currentTarget.blur();
     }
   };
 
-  const onBlur = (event: any) => {
+  const onBlur = () => {
     setIsDisabled(true);
     setEditingValue(value);
   };
 
-  const onSavePermissionEdit = (e: any) => {
+  const onSavePermissionEdit = (e: React.MouseEvent) => {
     e.preventDefault();
     onSave(editingValue, id);
     setIsDisabled(true);
@@ -58,7 +59,8 @@ const InlineEdit: React.FC<InlineEditProps> = ({
   };
 
   return (
-    <div className="editableText">
+    <div className={`editableText  ${isDisabled && "disabledStyles"}`}>
+      <Tooltip title={editingValue}>
       <input
         type="text"
         aria-label="Field name"
@@ -66,22 +68,24 @@ const InlineEdit: React.FC<InlineEditProps> = ({
         onChange={onChange}
         onKeyDown={onKeyDown}
         onBlur={onBlur}
-        className={`inputChip  ${isDisabled && "disabledStyles"}`}
+        className="inputChip"
         disabled={isDisabled}
         autoFocus={isAdd}
         ref={inputElement}
       />
-
+      </Tooltip>
       <span className="iconSpacing">
-        <EditIcon
-          sx={{ marginRight: "1px" }}
+        <EditOutlinedIcon
+          sx={{ marginRight: "1px" ,
+          color:"#039be5c2" }}
           onClick={onEdit}
           className={`${!isDisabled && "editIcon"}`}
         />
         {!isDisabled ? (
-          <DoneIcon className="saveIcon" onMouseDown={onSavePermissionEdit} />
+          <CheckIcon className="saveIcon" onMouseDown={onSavePermissionEdit} sx={{color:"#66b137"}}/>
         ) : (
-          <DeleteIcon onClick={onDelete} />
+          <DeleteOutlineOutlinedIcon onClick={onDelete} sx={{ marginRight: "1px" ,
+          color:"#eb272785" }} />
         )}
       </span>
     </div>

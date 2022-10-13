@@ -1,18 +1,25 @@
 .inputChip {
-  border-radius: 15px !important;
-  margin-bottom: 20px;
-  padding: 5px 5px 5px 10px;
-  border: 1px solid #757575;
+  border: none;
   font-size: 16px;
   width: 200px;
+  text-overflow: ellipsis;
 }
 .disabledStyles {
   background-color: aliceblue !important;
+  border-radius: 20px !important;
+  margin-bottom: 20px;
+  margin-right: 20px;
+  padding: 0px 10px 7px 10px;
+  border: 1px solid #757575;
+}
+
+input:focus, textarea:focus, select:focus{
+  outline: none;
 }
 
 .iconSpacing {
   position: relative;
-  right: 70px;
+  right: 7px;
   top: 5px;
   visibility: hidden;
   width: 100px;
@@ -28,4 +35,12 @@
 }
 .editIcon {
   visibility: hidden;
+}
+
+.editableText{
+  border-radius: 20px !important;
+  margin-bottom: 20px;
+  margin-right: 20px;
+  padding: 0px 10px 7px 10px;
+  border: 1px solid #757575;
 }
