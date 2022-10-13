@@ -1,33 +1,39 @@
 .table-toolbar {
   border: 1px solid #9d9d9d29;
-  border-bottom: none;
-  height: 65px;
+  height: 75px;
   box-sizing: border-box;
   border-radius: 5px 5px 0px 0px;
   display: flex;
   justify-content: space-between;
+  height: 90px;
+  border-bottom: none;
+
 }
 
-.sort-search-button {
+.search-button {
   display: flex;
   margin-right: 20px;
-}
-
-.sort {
-  margin-right: 35px;
 }
 
 .legend-title {
   display: flex;
   align-items: center;
-  font-weight: bolder;
-  font-size: larger;
-  margin-left: 10px;
+  font-weight: 500;
+  font-size: 22px;
+  margin-left: 17px;
 }
 
 .toolbar-button {
-  margin-top: 11px;
+  display: flex;
+  align-items: center;
+  position: relative;
 }
+
+#add-button {
+  height: 49px;
+  width: 150px;
+}
+
 
 @media screen and (max-width: 1103px) {
   div.search {
