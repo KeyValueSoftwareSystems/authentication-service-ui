@@ -1,5 +1,5 @@
 import { FC } from "react";
-import "./checklist.css";
+import "./styles.css";
 interface ChecklistProps {
   name: String;
   mapList: any;
