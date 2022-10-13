@@ -34,7 +34,6 @@ const EditUser: React.FC = () => {
     variables: { id },
     onCompleted: (data) => {
       data?.getUserGroups.map((item: any) =>{
-          if(!userGroups.map((item)=>item).includes(item.id))
           setUserGroups([...userGroups, item.id]);
       }
       );
@@ -48,13 +47,8 @@ const EditUser: React.FC = () => {
       getData({
         variables: { id: group },
         onCompleted: (data) => {
-          if (userPermissions[0]?.groupId === "") {
-            setUserPermissions([
-              { groupId: group, permissions: data?.getGroupPermissions },
-            ]);
-          } else if (
-            userPermissions.map((item: any) => item.groupId).includes(group) ===
-            false
+         if (
+            !userPermissions.map((item: any) => item.groupId).includes(group)
           ) {
             setUserPermissions([
               ...userPermissions,
@@ -75,8 +69,7 @@ const EditUser: React.FC = () => {
     return uniquePermissions;
   };
 
-  const currentGroupIDs: string[] = [];
-  userGroups.map((item: any) => currentGroupIDs.push(item));
+  const currentGroupIDs: string[] = userGroups;
 
   useQuery(GET_USER, {
     variables: { id },

@@ -43,16 +43,15 @@ const UserForm = (props: any) => {
   };
 
   const [getData] = useLazyQuery(GET_GROUP_PERMISSIONS);
-  const [getGroup] = useLazyQuery(GET_GROUP);
 
-  const removeItem = (item: string) => {
-    const itemIndex = userGroups.findIndex((e: any) => e === item);
+  const removeItem = (group: string) => {
+    const itemIndex = userGroups.findIndex((e: any) => e === group);
     setUserGroups([
       ...userGroups.slice(0, itemIndex),
       ...userGroups.slice(itemIndex + 1),
     ]);
     const permission_index = UserPermissions.findIndex(
-      (e: any) => e.groupId === item
+      (permission: any) => permission.groupId === group
     );
 
     setUserPermissions([
@@ -62,10 +61,8 @@ const UserForm = (props: any) => {
   };
 
   const addGroupPermissions = (permissions: any, item: string) => {
-    if (UserPermissions[0]?.groupId === "") {
-      setUserPermissions([{ groupId: item, permissions: permissions }]);
-    } else if (
-      UserPermissions.map((item: any) => item.groupId).includes(item) === false
+    if (
+      !UserPermissions.map((item: any) => item.groupId).includes(item)
     ) {
       setUserPermissions([
         ...UserPermissions,
@@ -78,6 +75,7 @@ const UserForm = (props: any) => {
     if (event.target.checked) {
       if (!userGroups.map((item) => item).includes(item.id))
         setUserGroups([...userGroups, item.id]);
+
       getData({
         variables: { id: item.id },
         onCompleted: (data) => {
@@ -175,13 +173,13 @@ const UserForm = (props: any) => {
 
         <div id="add-items">
           <div id="permission-header">
-            <div> Overall Permissions </div>
+            <div> Permissions </div>
           </div>
           <div id="permission-list">
-            {UserPermissions.map((permission: any) => {
+            {UserPermissions?.map((permission: any) => {
               return (
                 <div key={permission.groupId}>
-                  {permission.permissions.map((item: any) => {
+                  {permission?.permissions.map((item: any) => {
                     return <Chip id="item" key={item.id} label={item.name} />;
                   })}
                 </div>
