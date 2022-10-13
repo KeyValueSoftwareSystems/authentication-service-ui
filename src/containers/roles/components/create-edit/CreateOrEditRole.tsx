@@ -1,6 +1,8 @@
 import { useMutation, useQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+
+import { GET_ROLE_PERMISSIONS } from "../../services/queries";
 import { ChecklistComponent } from "../../../../components/checklist/checkList";
 import { NewRole } from "../../../../types/role";
 import { GET_PERMISSIONS } from "../../../permissions/services/queries";
@@ -9,7 +11,6 @@ import {
   UPDATE_ROLE,
   UPDATE_ROLE_PERMISSIONS,
 } from "../../services/mutations";
-import { GET_ROLE_PERMISSIONS } from "../../services/queries";
 import RoleForm from "./RoleForm";
 import "./styles.css";
 
@@ -31,19 +32,16 @@ const CreateOrEditRole = () => {
     },
   });
 
-  const { data: rolePermissionsData, loading } = useQuery(
-    GET_ROLE_PERMISSIONS,
-    {
-      skip: !id,
-      variables: { id: id },
-      onCompleted: (data) => {
-        const permissionIds = data?.getRolePermissions?.map(
-          (permission: any) => permission.id
-        );
-        setRolePermissions([...permissionIds]);
-      },
-    }
-  );
+  const { loading } = useQuery(GET_ROLE_PERMISSIONS, {
+    skip: !id,
+    variables: { id: id },
+    onCompleted: (data) => {
+      const permissionIds = data?.getRolePermissions?.map(
+        (permission: any) => permission.id
+      );
+      setRolePermissions([...permissionIds]);
+    },
+  });
 
   const removeItem = (item: string) => {
     const itemIndex = rolePermissions.findIndex((e: string) => e === item);
