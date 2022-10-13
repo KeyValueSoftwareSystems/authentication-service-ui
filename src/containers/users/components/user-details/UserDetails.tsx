@@ -43,8 +43,6 @@ const UserDetails = () => {
   };
 
   const onClick = (e: any) => {
-    console.log("ssffs");
-
     navigate("/home/users");
   };
 
