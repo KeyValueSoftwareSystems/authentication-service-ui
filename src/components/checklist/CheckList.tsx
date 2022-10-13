@@ -17,7 +17,7 @@ export const ChecklistComponent: FC<ChecklistProps> = ({
   };
 
   return (
-    <div id="add-groups">
+    <div id="add-items">
       <div id="titlebar">
         <div id="titleChecklist"> {name} </div>
         <div id="selectall">
