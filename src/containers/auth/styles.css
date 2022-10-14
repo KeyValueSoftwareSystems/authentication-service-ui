@@ -1,14 +1,13 @@
 .container {
+  width:50%;
   display: flex;
   justify-content: space-around;
-  height: 100%;
+
 }
 
 .containerLogin {
-  width: 75%;
+  width: 50%;
   margin-top: 275px;
-  margin-left: 300px;
-
 }
 
 .box {
@@ -29,13 +28,18 @@
 }
 
 .left {
-  width: 800px;
+  width: 50%;
 }
 
 .login-page {
-
   width: 100%;
   display: flex; 
-  flex-direction: row; 
-  justify-content: flex-start; 
+  align-items: flex-start; 
+}
+
+#login-image{
+
+  padding: 10px 10px 0px 10px;
+  width:90%;
+  height: 98vh;
 }
