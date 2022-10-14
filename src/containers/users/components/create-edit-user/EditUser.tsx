@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
-import "./styles.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+
 import {
   UPDATE_USER,
   UPDATE_USER_GROUPS,
@@ -15,6 +15,8 @@ import UserForm from "./UserForm";
 import { UserPermissionsAtom } from "../../../../states/permissionsStates";
 import { GET_GROUP_PERMISSIONS } from "../../../groups/services/queries";
 import { userAtom } from "../../../../states/userStates";
+import { getUniquePermissions } from "../../../../utils/permissions";
+import "./styles.css";
 
 const EditUser: React.FC = () => {
   const { id } = useParams();
@@ -28,48 +30,6 @@ const EditUser: React.FC = () => {
   const [updateUserGroups] = useMutation(UPDATE_USER_GROUPS);
   const [updateUserPermissions] = useMutation(UPDATE_USER_PERMISSIONS);
   const navigate = useNavigate();
-  const uniquePermissions: any = [];
-
-  useQuery(GET_USER_GROUPS, {
-    variables: { id },
-    onCompleted: (data) => {
-      data?.getUserGroups.map((item: any) =>{
-          setUserGroups([...userGroups, item.id]);
-      }
-      );
-    },
-  });
-
-  const [getData] = useLazyQuery(GET_GROUP_PERMISSIONS);
-
-  useEffect(() => {
-    userGroups.map((group) => {
-      getData({
-        variables: { id: group },
-        onCompleted: (data) => {
-         if (
-            !userPermissions.map((item: any) => item.groupId).includes(group)
-          ) {
-            setUserPermissions([
-              ...userPermissions,
-              { groupId: group, permissions: data?.getGroupPermissions },
-            ]);
-          }
-        },
-      });
-    });
-  }, [userGroups]);
-
-  const getUniquePermissions = () => {
-    userPermissions.map((item) =>
-      item.permissions.map((e) => {
-        if (!uniquePermissions.includes(e.id)) uniquePermissions.push(e.id);
-      })
-    );
-    return uniquePermissions;
-  };
-
-  const currentGroupIDs: string[] = userGroups;
 
   useQuery(GET_USER, {
     variables: { id },
@@ -77,6 +37,37 @@ const EditUser: React.FC = () => {
       setUser(data?.getUser);
     },
   });
+
+  useQuery(GET_USER_GROUPS, {
+    variables: { id },
+    onCompleted: (data) => {
+      data?.getUserGroups.forEach((item: any) => {
+        setUserGroups([...userGroups, item.id]); //rename to selectedGroupIds
+      });
+    },
+  });
+
+  const [getData] = useLazyQuery(GET_GROUP_PERMISSIONS);
+
+  useEffect(() => {
+    userGroups.forEach((group) => {
+      getData({
+        variables: { id: group },
+        onCompleted: (data) => {
+          //  if (
+          //     !userPermissions.map((item: any) => item.groupId).includes(group)
+          //   ) {
+          setUserPermissions([
+            ...userPermissions,
+            { groupId: group, permissions: data?.getGroupPermissions },
+          ]);
+          // }
+        },
+      });
+    });
+  }, [userGroups]);
+
+  const currentGroupIDs: string[] = userGroups;
 
   const onUpdateUser = (inputs: any) => {
     updateUser({
@@ -103,7 +94,7 @@ const EditUser: React.FC = () => {
       variables: {
         id: id,
         input: {
-          permissions: getUniquePermissions(),
+          permissions: getUniquePermissions(userPermissions),
         },
       },
     });
@@ -116,7 +107,7 @@ const EditUser: React.FC = () => {
     lastName: user?.lastName,
     phone: user?.phone,
     email: user?.email,
-    password: user?.password,
+    // password: user?.password,
   };
 
   return (

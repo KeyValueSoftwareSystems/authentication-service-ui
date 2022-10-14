@@ -1,3 +1,4 @@
+import React from "react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import "./styles.css";
 import { Link, useNavigate } from "react-router-dom";
@@ -7,7 +8,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { groupListAtom, userGroupsAtom } from "../../../../states/groupStates";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { UserPermissionsAtom } from "../../../../states/permissionsStates";
-import { GET_GROUP, GET_GROUP_PERMISSIONS } from "../../../groups/services/queries";
+import {
+  GET_GROUP_PERMISSIONS,
+} from "../../../groups/services/queries";
 import { useLazyQuery } from "@apollo/client";
 import FormInputText from "../../../../components/inputText";
 import { ChecklistComponent } from "../../../../components/checklist/CheckList";
@@ -26,8 +29,9 @@ const UserForm = (props: any) => {
   const groupList = useRecoilValue(groupListAtom);
   const userGroups = useRecoilValue(userGroupsAtom);
   const setUserGroups = useSetRecoilState(userGroupsAtom);
-  const [UserPermissions, setUserPermissions] =
+  const [userPermissions, setUserPermissions] =
     useRecoilState(UserPermissionsAtom);
+
   const groups: string[] = [];
   groupList.map((item) => groups.push(item.id));
 
@@ -42,48 +46,48 @@ const UserForm = (props: any) => {
     isEdit ? updateUser(inputs) : createUser(inputs);
   };
 
-  const [getData] = useLazyQuery(GET_GROUP_PERMISSIONS);
+  const [getGroupPermissionsData] = useLazyQuery(GET_GROUP_PERMISSIONS);
 
-  const removeItem = (group: string) => {
+  const removeGroup = (group: string) => {
     const itemIndex = userGroups.findIndex((e: any) => e === group);
     setUserGroups([
       ...userGroups.slice(0, itemIndex),
       ...userGroups.slice(itemIndex + 1),
     ]);
-    const permission_index = UserPermissions.findIndex(
+    const permission_index = userPermissions.findIndex(
       (permission: any) => permission.groupId === group
     );
 
     setUserPermissions([
-      ...UserPermissions.slice(0, permission_index),
-      ...UserPermissions.slice(permission_index + 1),
+      ...userPermissions.slice(0, permission_index),
+      ...userPermissions.slice(permission_index + 1),
     ]);
   };
 
   const addGroupPermissions = (permissions: any, item: string) => {
-    if (
-      !UserPermissions.map((item: any) => item.groupId).includes(item)
-    ) {
-      setUserPermissions([
-        ...UserPermissions,
-        { groupId: item, permissions: permissions },
-      ]);
-    }
+    // if (
+    //   !userPermissions.map((item: any) => item.groupId).includes(item)
+    // ) {
+    setUserPermissions([
+      ...userPermissions,
+      { groupId: item, permissions: permissions },
+    ]);
+    // }
   };
 
-  const handleChange = (event: any, item: any) => {
+  const handleChange = (event: any, group: any) => {
     if (event.target.checked) {
-      if (!userGroups.map((item) => item).includes(item.id))
-        setUserGroups([...userGroups, item.id]);
+      // if (!userGroups.map((group) => group).includes(group.id))
+      setUserGroups([...userGroups, group.id]);
 
-      getData({
-        variables: { id: item.id },
+      getGroupPermissionsData({
+        variables: { id: group.id },
         onCompleted: (data) => {
-          addGroupPermissions(data?.getGroupPermissions, item.id);
+          addGroupPermissions(data?.getGroupPermissions, group.id);
         },
       });
     } else {
-      removeItem(item.id);
+      removeGroup(group.id);
     }
   };
 
@@ -176,10 +180,10 @@ const UserForm = (props: any) => {
             <div> Permissions </div>
           </div>
           <div id="permission-list">
-            {UserPermissions?.map((permission: any) => {
+            {userPermissions?.map((group: any) => {
               return (
-                <div key={permission.groupId}>
-                  {permission?.permissions.map((item: any) => {
+                <div key={group.groupId}>
+                  {group?.permissions.map((item: any) => {
                     return <Chip id="item" key={item.id} label={item.name} />;
                   })}
                 </div>

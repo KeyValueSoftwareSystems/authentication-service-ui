@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import { useSetRecoilState, useRecoilValue } from "recoil";
 import { useNavigate } from "react-router-dom";
+
 import {
   CREATE_USER,
   UPDATE_USER_GROUPS,
@@ -13,33 +14,32 @@ import { GET_GROUPS } from "../../../groups/services/queries";
 import { UserPermissionsAtom } from "../../../../states/permissionsStates";
 import UserForm from "./UserForm";
 import { AddUserformSchema } from "../../userSchema";
+import { getUniquePermissions } from "../../../../utils/permissions";
 
 const AddUser: React.FC = () => {
+
+  const navigate = useNavigate();
+
   const setGroupList = useSetRecoilState(groupListAtom);
   const userPermissions = useRecoilValue(UserPermissionsAtom);
   const userGroups = useRecoilValue(userGroupsAtom);
-  const [createUser, { data }] = useMutation(CREATE_USER);
-  const navigate = useNavigate();
+  const [createUser, { error: createUserError, data }] =
+    useMutation(CREATE_USER);
+
+  useEffect(() => {
+    if (data) updateUserInfo();
+  }, [data]);
 
   useQuery(GET_GROUPS, {
     onCompleted: (data) => {
       setGroupList(data?.getGroups);
     },
   });
-
-  const uniquePermissions: any = [];
-
-  const getUniquePermissions = () => {
-    userPermissions.map((item) =>
-      item.permissions.map((e) => {
-        if (!uniquePermissions.includes(e.id)) uniquePermissions.push(e.id);
-      })
-    );
-    return uniquePermissions;
-  };
-
-  const [updateUserGroups] = useMutation(UPDATE_USER_GROUPS);
-  const [updateUserPermissions] = useMutation(UPDATE_USER_PERMISSIONS);
+  const [updateUserGroups, { error: groupUpdateError }] =
+    useMutation(UPDATE_USER_GROUPS);
+  const [updateUserPermissions, { error: permissionUpdateError }] = useMutation(
+    UPDATE_USER_PERMISSIONS
+  );
 
   const onCreateUser = (inputs: any) => {
     createUser({
@@ -47,28 +47,30 @@ const AddUser: React.FC = () => {
         input: inputs,
       },
     });
+  };
 
-    if (data) {
-      updateUserGroups({
-        variables: {
-          id: data?.passwordSignup.id,
-          input: {
-            groups: userGroups,
-          },
+  const updateUserInfo = () => {
+    updateUserGroups({
+      variables: {
+        id: data?.passwordSignup.id,
+        input: {
+          groups: userGroups,
         },
-      });
+      },
+    });
 
-      updateUserPermissions({
-        variables: {
-          id: data?.passwordSignup.id,
-          input: {
-            permissions: getUniquePermissions(),
-          },
+    updateUserPermissions({
+      variables: {
+        id: data?.passwordSignup.id,
+        input: {
+          permissions: getUniquePermissions(userPermissions),
         },
-      });
-    }
-
-    navigate("/home");
+      },
+      onCompleted: () => {
+        if (!createUserError && !groupUpdateError && !permissionUpdateError)
+          navigate("/home/users");
+      },
+    });
   };
 
   const initialValues = {

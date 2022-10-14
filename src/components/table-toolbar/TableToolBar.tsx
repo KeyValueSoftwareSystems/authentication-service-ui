@@ -28,9 +28,9 @@ const TableToolBar: FC<TableToolBarProps> = ({
         <div className="toolbar-button">
           <Button
             variant="outlined"
-            onClick={() => {
-              onAdd()
-            }}
+            onClick={
+              onAdd
+            }
           >
             {buttonLabel}
           </Button>

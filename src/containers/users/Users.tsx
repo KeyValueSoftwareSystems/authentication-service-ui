@@ -15,21 +15,20 @@ const Users: React.FC = () => {
   });
 
   const [userList, setUserList] = useRecoilState(userListAtom);
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   useQuery(GET_USERS, {
     onCompleted: (data) => {
       setUserList(data?.getUsers);
     },
   });
 
-  const onEdit:any=((id:any)=>{
-    navigate(`/home/users/add/${id}`)
-  })
+  const onEdit = (id: any) => {
+    navigate(`/home/users/add/${id}`);
+  };
 
-  const onAdd:any=(()=>{
-    navigate(`/home/users/add`)
-  })
-
+  const onAdd = () => {
+    navigate(`/home/users/add`);
+  };
 
   const columns: GridColumns = [
     {
