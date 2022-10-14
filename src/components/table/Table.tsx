@@ -2,7 +2,7 @@ import { DataGrid, GridActionsCellItem, GridColumns } from "@mui/x-data-grid";
 import { FC } from "react";
 import { Tooltip } from "@mui/material";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { useMutation } from "@apollo/client";
 
 import { TableProps } from "./types";
@@ -33,16 +33,15 @@ const TableList: FC<TableProps> = ({
       headerAlign: "center",
       getActions: ({ id }) => {
         return [
-          <Tooltip title="Edit" arrow>
-            
+          <Tooltip title="Edit" arrow placement="top">
             <GridActionsCellItem
-              icon={<EditOutlinedIcon className="edit"/>}
+              icon={<EditOutlinedIcon className="edit" />}
               label="Edit"
               className="textPrimary"
               color="inherit"
             />
           </Tooltip>,
-          <Tooltip title="Delete" arrow>
+          <Tooltip title="Delete" arrow placement="top">
             <GridActionsCellItem
               icon={<DeleteOutlinedIcon className="delete" />}
               label="Delete"

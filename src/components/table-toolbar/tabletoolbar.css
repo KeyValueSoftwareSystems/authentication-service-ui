@@ -1,18 +1,16 @@
 .table-toolbar {
-  border: 1px solid #9d9d9d29;
-  height: 75px;
+  padding: 20px 0px;
   box-sizing: border-box;
   border-radius: 5px 5px 0px 0px;
   display: flex;
   justify-content: space-between;
   height: 90px;
   border-bottom: none;
-
 }
 
 .search-button {
   display: flex;
-  margin-right: 20px;
+  margin-right: 40px;
 }
 
 .legend-title {
@@ -20,7 +18,7 @@
   align-items: center;
   font-weight: 500;
   font-size: 22px;
-  margin-left: 17px;
+  margin-left: 40px;
 }
 
 .toolbar-button {
@@ -33,7 +31,6 @@
   height: 49px;
   width: 150px;
 }
-
 
 @media screen and (max-width: 1103px) {
   div.search {
