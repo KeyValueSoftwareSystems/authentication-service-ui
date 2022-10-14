@@ -29,7 +29,8 @@ const Users: React.FC = () => {
       headerName: "User",
       width: 300,
       headerClassName: "user-list-header",
-      headerAlign: "left",
+      headerAlign: "center",
+      renderCell: (params) => <GetFullName {...params} />,
     },
     {
       field: "groups",
@@ -72,10 +73,16 @@ const ShowGroupList = (props: any) => {
   return (
     <>
       {groupList?.map((group: any) => (
-        <Chip label={group?.name} key={group?.id} />
+        <Chip label={group?.name} key={group?.id} id="chip" />
       ))}
     </>
   );
+};
+
+const GetFullName = (props: any) => {
+  const { row } = props;
+  let fullName = row.firstName.concat(" ", row.lastName);
+  return <div className="fullname">{fullName}</div>;
 };
 
 export default Users;
