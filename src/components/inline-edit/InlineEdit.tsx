@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import CheckIcon from '@mui/icons-material/Check';
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import CheckIcon from "@mui/icons-material/Check";
 import { Tooltip } from "@mui/material";
 
 import "./styles.css";
@@ -60,32 +60,37 @@ const InlineEdit: React.FC<InlineEditProps> = ({
 
   return (
     <div className={`editableText  ${isDisabled && "disabledStyles"}`}>
-      <Tooltip title={editingValue}>
-      <input
-        type="text"
-        aria-label="Field name"
-        value={editingValue}
-        onChange={onChange}
-        onKeyDown={onKeyDown}
-        onBlur={onBlur}
-        className="inputChip"
-        disabled={isDisabled}
-        autoFocus={isAdd}
-        ref={inputElement}
-      />
+      <Tooltip title={editingValue || ""}>
+        <input
+          type="text"
+          aria-label="Field name"
+          value={editingValue}
+          onChange={onChange}
+          onKeyDown={onKeyDown}
+          onBlur={onBlur}
+          className="inputChip"
+          disabled={isDisabled}
+          autoFocus={isAdd}
+          ref={inputElement}
+        />
       </Tooltip>
       <span className="iconSpacing">
         <EditOutlinedIcon
-          sx={{ marginRight: "1px" ,
-          color:"#039be5c2" }}
+          sx={{ marginRight: "1px", color: "#039be5c2" }}
           onClick={onEdit}
           className={`${!isDisabled && "editIcon"}`}
         />
         {!isDisabled ? (
-          <CheckIcon className="saveIcon" onMouseDown={onSavePermissionEdit} sx={{color:"green"}}/>
+          <CheckIcon
+            className="saveIcon"
+            onMouseDown={onSavePermissionEdit}
+            sx={{ color: "green" }}
+          />
         ) : (
-          <DeleteOutlineOutlinedIcon onClick={onDelete} sx={{ marginRight: "1px" ,
-          color:"#eb272785" }} />
+          <DeleteOutlineOutlinedIcon
+            onClick={onDelete}
+            sx={{ marginRight: "1px", color: "#eb272785" }}
+          />
         )}
       </span>
     </div>

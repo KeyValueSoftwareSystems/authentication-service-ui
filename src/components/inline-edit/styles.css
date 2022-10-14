@@ -3,6 +3,7 @@
   font-size: 16px;
   width: 200px;
   text-overflow: ellipsis;
+  color: #01579b;
 }
 .disabledStyles {
   background-color: aliceblue !important;
@@ -13,7 +14,9 @@
   border: 1px solid #757575;
 }
 
-input:focus, textarea:focus, select:focus{
+input:focus,
+textarea:focus,
+select:focus {
   outline: none;
 }
 
@@ -37,7 +40,7 @@ input:focus, textarea:focus, select:focus{
   visibility: hidden;
 }
 
-.editableText{
+.editableText {
   border-radius: 20px !important;
   margin-bottom: 20px;
   margin-right: 20px;
