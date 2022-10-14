@@ -41,6 +41,12 @@ const Users: React.FC = () => {
     },
   ];
 
+  const onAddUser = () => {
+  };
+
+  const onEditUser = () => {
+  };
+
   return (
     <>
       <TableList
@@ -51,6 +57,8 @@ const Users: React.FC = () => {
         searchLabel="Search User"
         deleteMutation={DELETE_USER}
         refetchQuery={GET_USERS}
+        onAdd={onAddUser}
+        onEdit={onEditUser}
       />
     </>
   );

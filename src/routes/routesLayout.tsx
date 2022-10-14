@@ -1,6 +1,7 @@
 import React, { Suspense, lazy } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 import GroupDetails from "../containers/groups/GroupDetails";
+import CreateOrEditRole from "../containers/roles/components/create-edit/CreateOrEditRole";
 import RoleDetails from "../containers/roles/RoleDetails";
 
 import { RoutePaths } from "./routePaths";
@@ -38,7 +39,9 @@ const RoutesLayout: React.FC = () => {
               element={<UserDetails />}
             /> */}
           <Route path={RoutePaths.roles} element={<Roles />} />
-          <Route path="roles/:id" element={<RoleDetails/>}></Route>
+          <Route path="roles/:id" element={<RoleDetails />}></Route>
+          <Route path="roles/add" element={<CreateOrEditRole />}></Route>
+          <Route path="roles/edit/:id" element={<CreateOrEditRole />}></Route>
           <Route path={RoutePaths.permissions} element={<Permissions />} />
           <Route path="*" element={<NotFound />} />
         </Route>

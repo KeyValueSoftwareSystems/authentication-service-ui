@@ -55,7 +55,6 @@ const CreateOrEditRole = () => {
     const value = event.target.value;
     if (event.target.checked) {
       if (value === "all") {
-        console.log(allPermissions);
         setRolePermissions(allPermissions);
         return;
       } else if (rolePermissions[0] === null) {
@@ -81,8 +80,6 @@ const CreateOrEditRole = () => {
         },
       });
   }, [createRoleData]);
-
-  console.log("roleperm", rolePermissions);
 
   const onCreateRole = (inputs: NewRole) => {
     createRole({ variables: { input: inputs } });

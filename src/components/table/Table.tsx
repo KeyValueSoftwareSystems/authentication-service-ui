@@ -17,6 +17,8 @@ const TableList: FC<TableProps> = ({
   searchLabel,
   deleteMutation,
   refetchQuery,
+  onAdd,
+  onEdit
 }) => {
   const [deleteItem] = useMutation(deleteMutation, {
     refetchQueries: [{ query: refetchQuery }],
@@ -39,6 +41,7 @@ const TableList: FC<TableProps> = ({
               label="Edit"
               className="textPrimary"
               color="inherit"
+              onClick={() => onEdit(id)}
             />
           </Tooltip>,
           <Tooltip title="Delete" arrow>
@@ -69,6 +72,7 @@ const TableList: FC<TableProps> = ({
           text={text}
           buttonLabel={buttonLabel}
           searchLabel={searchLabel}
+          onAdd={onAdd}
         />
       </div>
       <div className="table-listing-items">

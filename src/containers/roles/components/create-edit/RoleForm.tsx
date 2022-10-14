@@ -32,8 +32,6 @@ const RoleForm: FC<RoleFormProps> = ({ createRole, editRole }) => {
     name: id ? role?.name : "",
   };
 
-  console.log(initialValues);
-
   const methods = useForm({
     defaultValues: initialValues,
   });

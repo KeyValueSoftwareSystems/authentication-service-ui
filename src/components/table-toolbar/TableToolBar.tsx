@@ -10,6 +10,7 @@ const TableToolBar: FC<TableToolBarProps> = ({
   text,
   searchLabel,
   buttonLabel,
+  onAdd
 }) => {
   return (
     <div className="table-toolbar">
@@ -22,7 +23,9 @@ const TableToolBar: FC<TableToolBarProps> = ({
           <SearchBar searchLabel={searchLabel} />
         </div>
         <div className="toolbar-button">
-          <Button variant="outlined">{buttonLabel}</Button>
+          <Button variant="outlined" onClick={onAdd}>
+            {buttonLabel}
+          </Button>
         </div>
       </div>
     </div>
