@@ -6,14 +6,3 @@ export const userListAtom = atom ({
     default : [],
   });
 
-  export const userAtom = atom({
-    key: "User",
-    default: {
-      firstName: "",
-      middleName: "",
-      lastName: "",
-      email: "",
-      phone: "",
-      password: "",
-    },
-  });

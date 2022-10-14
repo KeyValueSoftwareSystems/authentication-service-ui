@@ -1,58 +1,81 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import "./styles.css";
-import { Link, useNavigate } from "react-router-dom";
-import { useForm, FormProvider } from "react-hook-form";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { useForm, FormProvider, FieldValues } from "react-hook-form";
 import { Button, Chip } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { groupListAtom, userGroupsAtom } from "../../../../states/groupStates";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { UserPermissionsAtom } from "../../../../states/permissionsStates";
+
 import {
+  GET_GROUPS,
   GET_GROUP_PERMISSIONS,
 } from "../../../groups/services/queries";
-import { useLazyQuery } from "@apollo/client";
+import { useLazyQuery, useQuery } from "@apollo/client";
 import FormInputText from "../../../../components/inputText";
 import { ChecklistComponent } from "../../../../components/checklist/CheckList";
+import { GroupPermissionsDetails } from "../../../../types/permission";
+import { GET_USER } from "../../services/queries";
+import { User } from "../../../../types/user";
 
 const UserForm = (props: any) => {
   const {
     isEdit,
     updateUser,
     createUser,
-    initialValues,
     userformSchema,
     currentGroupIDs,
+    currentUserPermissions
   } = props;
 
+  const {id} = useParams();
   const navigate = useNavigate();
-  const groupList = useRecoilValue(groupListAtom);
-  const userGroups = useRecoilValue(userGroupsAtom);
-  const setUserGroups = useSetRecoilState(userGroupsAtom);
+  const [user, setUser] = useState<User>();
+  const[userGroupIds,setUserGroupIds]= useState<String[]>([])
   const [userPermissions, setUserPermissions] =
-    useRecoilState(UserPermissionsAtom);
+    useState<GroupPermissionsDetails[]>([]);
+  const [groupList,setGroupList] = useState<any[]>([]);
 
-  const groups: string[] = [];
-  groupList.map((item) => groups.push(item.id));
+  useEffect(()=>{
+    if(currentUserPermissions)
+      setUserPermissions(currentUserPermissions);
+  },[])
 
+  const { loading } = useQuery(GET_USER, {
+    skip: !id,
+    variables: { id: id },
+    onCompleted: (data) => {
+      setUser(data?.getUser);
+    },
+  });
+  
+  useQuery(GET_GROUPS, {
+    onCompleted: (data) => {
+      setGroupList(data?.getGroups);
+    },
+  });
+
+  useEffect(()=>{
+    if(isEdit) setUserGroupIds(currentGroupIDs)
+    console.log("fhjghf",currentGroupIDs)
+  },[])
+ 
   const methods = useForm({
-    defaultValues: initialValues,
     resolver: yupResolver(userformSchema),
   });
 
   const { handleSubmit } = methods;
 
-  const onSubmitForm = (inputs: any) => {
-    isEdit ? updateUser(inputs) : createUser(inputs);
+  const onSubmitForm = (inputs: FieldValues) => {
+    isEdit ? updateUser(inputs,userGroupIds,userPermissions) : createUser(inputs,userGroupIds,userPermissions);
   };
 
   const [getGroupPermissionsData] = useLazyQuery(GET_GROUP_PERMISSIONS);
 
   const removeGroup = (group: string) => {
-    const itemIndex = userGroups.findIndex((e: any) => e === group);
-    setUserGroups([
-      ...userGroups.slice(0, itemIndex),
-      ...userGroups.slice(itemIndex + 1),
+    const itemIndex = userGroupIds.findIndex((e: any) => e === group);
+    setUserGroupIds([
+      ...userGroupIds.slice(0, itemIndex),
+      ...userGroupIds.slice(itemIndex + 1),
     ]);
     const permission_index = userPermissions.findIndex(
       (permission: any) => permission.groupId === group
@@ -77,9 +100,8 @@ const UserForm = (props: any) => {
 
   const handleChange = (event: any, group: any) => {
     if (event.target.checked) {
-      // if (!userGroups.map((group) => group).includes(group.id))
-      setUserGroups([...userGroups, group.id]);
-
+      // if (!userGroupIds.map((group) => group).includes(group.id))
+      setUserGroupIds([...userGroupIds, group.id]);
       getGroupPermissionsData({
         variables: { id: group.id },
         onCompleted: (data) => {
@@ -122,26 +144,31 @@ const UserForm = (props: any) => {
           </div>
 
           <div id="inputs">
+          {!loading && (
             <div id="form-row">
               <FormInputText
                 name="firstName"
                 label="First name*"
                 type="text"
                 className="fields"
+                defaultText={user?.firstName}
               />
               <FormInputText
                 name="middleName"
                 label="Middle name"
                 type="text"
                 className="fields"
+                defaultText={user?.middleName}
               />
               <FormInputText
                 name="lastName"
                 label="Last Name*"
                 type="type"
                 className="fields"
+                defaultText={user?.lastName}
               />
             </div>
+             )}
             {!isEdit && (
               <div id="form-row">
                 <FormInputText
@@ -167,6 +194,7 @@ const UserForm = (props: any) => {
           </div>
         </form>
       </FormProvider>
+
       <div id="groups-permissions">
         <ChecklistComponent
           name="Select Groups"

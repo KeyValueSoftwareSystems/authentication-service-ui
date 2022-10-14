@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
-import { useMutation, useQuery } from "@apollo/client";
-import { useSetRecoilState, useRecoilValue } from "recoil";
+import React, { useEffect, useState } from "react";
+import { useMutation } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
 
 import {
@@ -8,45 +7,40 @@ import {
   UPDATE_USER_GROUPS,
   UPDATE_USER_PERMISSIONS,
 } from "../../services/mutations";
-import { groupListAtom, userGroupsAtom } from "../../../../states/groupStates";
 import "./styles.css";
-import { GET_GROUPS } from "../../../groups/services/queries";
-import { UserPermissionsAtom } from "../../../../states/permissionsStates";
 import UserForm from "./UserForm";
 import { AddUserformSchema } from "../../userSchema";
 import { getUniquePermissions } from "../../../../utils/permissions";
+import { GroupPermissionsDetails } from "../../../../types/permission";
+import { FieldValues } from "react-hook-form";
 
 const AddUser: React.FC = () => {
-
   const navigate = useNavigate();
 
-  const setGroupList = useSetRecoilState(groupListAtom);
-  const userPermissions = useRecoilValue(UserPermissionsAtom);
-  const userGroups = useRecoilValue(userGroupsAtom);
+  const [userPermissions,setUserPermissions] = useState<GroupPermissionsDetails[]>([]);
+  const [userGroupIds, setUserGroupIds] = useState<string[]>([]);
+
   const [createUser, { error: createUserError, data }] =
     useMutation(CREATE_USER);
-
-  useEffect(() => {
-    if (data) updateUserInfo();
-  }, [data]);
-
-  useQuery(GET_GROUPS, {
-    onCompleted: (data) => {
-      setGroupList(data?.getGroups);
-    },
-  });
   const [updateUserGroups, { error: groupUpdateError }] =
     useMutation(UPDATE_USER_GROUPS);
   const [updateUserPermissions, { error: permissionUpdateError }] = useMutation(
     UPDATE_USER_PERMISSIONS
   );
 
-  const onCreateUser = (inputs: any) => {
+  useEffect(() => {
+    if (data) updateUserInfo();
+  }, [data]);
+
+
+  const onCreateUser = (inputs: FieldValues,userGroupIds:string[],userPermissions:GroupPermissionsDetails[]) => {
     createUser({
       variables: {
         input: inputs,
       },
     });
+    setUserPermissions(userPermissions);
+    setUserGroupIds(userGroupIds);
   };
 
   const updateUserInfo = () => {
@@ -54,7 +48,7 @@ const AddUser: React.FC = () => {
       variables: {
         id: data?.passwordSignup.id,
         input: {
-          groups: userGroups,
+          groups: userGroupIds,
         },
       },
     });
@@ -66,6 +60,7 @@ const AddUser: React.FC = () => {
           permissions: getUniquePermissions(userPermissions),
         },
       },
+
       onCompleted: () => {
         if (!createUserError && !groupUpdateError && !permissionUpdateError)
           navigate("/home/users");
@@ -73,19 +68,10 @@ const AddUser: React.FC = () => {
     });
   };
 
-  const initialValues = {
-    firstName: "",
-    middleName: "",
-    lastName: "",
-    phone: "",
-    email: "",
-    password: "",
-  };
 
   return (
     <UserForm
       createUser={onCreateUser}
-      initialValues={initialValues}
       userformSchema={AddUserformSchema}
     />
   );
