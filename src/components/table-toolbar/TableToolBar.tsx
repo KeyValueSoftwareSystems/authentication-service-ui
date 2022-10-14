@@ -18,7 +18,9 @@ const TableToolBar: FC<TableToolBarProps> = ({
           <SearchBar searchLabel={searchLabel} />
         </div>
         <div className="toolbar-button">
-          <Button variant="outlined" id="add-button">{buttonLabel}</Button>
+          <Button variant="contained" id="add-button">
+            {buttonLabel}
+          </Button>
         </div>
       </div>
     </div>

@@ -15,8 +15,9 @@
 
 #chip {
   background-color: #edf6ff;
-  color: #039be5;
+  color: #01579b;
   margin: 5px 10px 5px 0px;
+  font-size: 15px;
 }
 
 .fullname {

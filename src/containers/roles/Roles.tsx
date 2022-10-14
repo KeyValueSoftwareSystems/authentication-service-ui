@@ -3,7 +3,7 @@ import { useRecoilState } from "recoil";
 import { useMutation, useQuery } from "@apollo/client";
 import { GridColumns } from "@mui/x-data-grid";
 
-import "./roles.css";
+import "./styles.css";
 import { GET_ROLES } from "./services/queries";
 import { DELETE_ROLE } from "./services/mutations";
 import { RolesListAtom } from "../../states/roleStates";
