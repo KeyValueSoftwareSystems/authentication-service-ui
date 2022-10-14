@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { GET_ROLE_PERMISSIONS } from "../../services/queries";
 import { ChecklistComponent } from "../../../../components/checklist/checkList";
@@ -16,12 +16,15 @@ import "./styles.css";
 
 const CreateOrEditRole = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
+
   const [rolePermissions, setRolePermissions] = useState<string[]>([]);
   const [allPermissions, setAllPermissions] = useState<string[]>([]);
 
   const [createRole, { data: createRoleData }] = useMutation(CREATE_ROLE);
-  const [updateRole] = useMutation(UPDATE_ROLE);
-  const [updateRolePermissions] = useMutation(UPDATE_ROLE_PERMISSIONS);
+  const [updateRole, { data: updateRoleData }] = useMutation(UPDATE_ROLE);
+  const [updateRolePermissions, { data: updateRolePermissionsData }] =
+    useMutation(UPDATE_ROLE_PERMISSIONS);
 
   const { data: permissionsData } = useQuery(GET_PERMISSIONS, {
     onCompleted: (data) => {
@@ -78,12 +81,18 @@ const CreateOrEditRole = () => {
           id: createRoleData?.createRole?.id,
           input: { permissions: rolePermissions },
         },
+        onCompleted: () => navigate("/home/roles"),
       });
   }, [createRoleData]);
+
+  useEffect(() => {
+    if (updateRoleData && updateRolePermissionsData) navigate("/home/roles");
+  }, [updateRoleData, updateRolePermissionsData]);
 
   const onCreateRole = (inputs: NewRole) => {
     createRole({ variables: { input: inputs } });
   };
+  
   const onEditRole = (inputs: NewRole) => {
     updateRole({ variables: { id: id, input: inputs } });
     updateRolePermissions({
@@ -93,6 +102,7 @@ const CreateOrEditRole = () => {
       },
     });
   };
+
   return (
     <div>
       <RoleForm createRole={onCreateRole} editRole={onEditRole} />

@@ -1,10 +1,9 @@
 import { FC, useState } from "react";
 import { Button, Divider, Stack } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { FormProvider, useForm } from "react-hook-form";
 import { useQuery } from "@apollo/client";
-
 
 import "./styles.css";
 import FormInputText from "../../../../components/inputText";
@@ -17,6 +16,8 @@ interface RoleFormProps {
 }
 
 const RoleForm: FC<RoleFormProps> = ({ createRole, editRole }) => {
+  const navigate = useNavigate();
+
   const { id } = useParams();
   const [role, setRole] = useState<Role>();
 
@@ -41,13 +42,17 @@ const RoleForm: FC<RoleFormProps> = ({ createRole, editRole }) => {
     id ? editRole(input) : createRole(input);
   };
 
+  const onClickBack = () => {
+    navigate("/home/roles");
+  };
+
   return (
     <div className="container">
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(onSubmitForm)} className="form">
           <div className="box">
             <div className="box1">
-              <div className="access-setting">
+              <div className="access-setting" onClick={onClickBack}>
                 <ArrowBackIcon sx={{ height: 15 }} />
                 Roles Listing
               </div>
@@ -56,7 +61,7 @@ const RoleForm: FC<RoleFormProps> = ({ createRole, editRole }) => {
               </div>
             </div>
             <Stack className="box2" spacing={2} direction="row">
-              <Button variant="text" className="button">
+              <Button variant="text" className="button" onClick={onClickBack}>
                 Cancel
               </Button>
               <Button variant="outlined" className="button" type="submit">
