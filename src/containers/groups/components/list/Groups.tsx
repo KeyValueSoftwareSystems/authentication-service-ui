@@ -5,7 +5,7 @@ import { GridColumns, GridRowId } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
 
 import "./groups.css";
-import { DELETE_GROUPS } from "../../services/mutations";
+import { DELETE_GROUP } from "../../services/mutations";
 import { GET_GROUPS, GET_GROUP_ROLES } from "../../services/queries";
 import TableList from "../../../../components/table";
 import { groupListAtom } from "../../../../states/groupStates";
@@ -14,7 +14,7 @@ import TableChipElement from "../../../../components/table-chip-element";
 const GroupList: React.FC = () => {
   const navigate = useNavigate();
 
-  useMutation(DELETE_GROUPS, {
+  useMutation(DELETE_GROUP, {
     refetchQueries: [{ query: GET_GROUPS }],
   });
   const [groupList, setGroupList] = useRecoilState(groupListAtom);
@@ -65,7 +65,7 @@ const GroupList: React.FC = () => {
         text="All Groups"
         buttonLabel="Add Group"
         searchLabel="Search Group"
-        deleteMutation={DELETE_GROUPS}
+        deleteMutation={DELETE_GROUP}
         refetchQuery={GET_GROUPS}
         onAdd={onAddGroup}
         onEdit={onEditGroup}

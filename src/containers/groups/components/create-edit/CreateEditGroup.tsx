@@ -63,7 +63,7 @@ const CreateOrEditGroup = () => {
   const [permissions, setPermissions] = useState<RolePermissionsDetails[]>([]);
   const [allRoles, setAllRoles] = useState<string[]>([]);
 
-  const [updateGroup] = useMutation(UPDATE_GROUP);
+  const [updateGroup, { data: updateGroupData }] = useMutation(UPDATE_GROUP);
   const [createGroup, { data: createGroupData }] = useMutation(CREATE_GROUP);
   const [updateGroupRoles, { data: updateGroupRolesData }] =
     useMutation(UPDATE_GROUP_ROLES);
@@ -127,7 +127,7 @@ const CreateOrEditGroup = () => {
             ...permissions,
             {
               roleId: item?.id as string,
-              rolePermissions: data?.getRolePermissions,
+              permissions: data?.getRolePermissions,
             },
           ]);
         },
@@ -171,6 +171,19 @@ const CreateOrEditGroup = () => {
       });
     }
   }, [createGroupData]);
+
+  useEffect(() => {
+    if (createGroupData || updateGroupData)
+      if (updateGroupRolesData && updateGroupPermissionsData) {
+        navigate("/home/groups");
+      }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    createGroupData,
+    updateGroupData,
+    updateGroupRolesData,
+    updateGroupPermissionsData,
+  ]);
 
   const onEditGroup = (inputs: FieldValues) => {
     updateGroup({
@@ -251,7 +264,7 @@ const CreateOrEditGroup = () => {
               </div>
               <div className="chips">
                 {permissions?.map((permission, index) =>
-                  permission?.rolePermissions?.map(
+                  permission?.permissions?.map(
                     (item: Permission, index: number) => (
                       <Chip
                         label={item.name}

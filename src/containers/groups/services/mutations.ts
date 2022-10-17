@@ -39,9 +39,9 @@ export const UPDATE_GROUP_PERMISSIONS = gql`
   }
 `;
 
-export const DELETE_GROUPS = gql`
+export const DELETE_GROUP = gql`
   mutation ($id: ID!) {
-    deleteGroups(id: $id) {
+    deleteGroup(id: $id) {
       id
       name
     }
