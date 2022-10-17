@@ -10,7 +10,7 @@ import { DELETE_USER } from "./services/mutations";
 import { userListAtom } from "../../states/userStates";
 import TableList from "../../components/table/Table";
 import TableChipElement from "../../components/table-chip-element";
-import { stringAvatar } from "./utils";
+import { stringAvatar } from "../../utils/table";
 
 const Users: React.FC = () => {
   const [userList, setUserList] = useRecoilState(userListAtom);
