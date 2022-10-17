@@ -24,9 +24,9 @@ const EditUser: React.FC = () => {
   >([]);
   const [selectedGroupIds, setUserGroupIds] = useState<string[]>([]);
 
-  const [updateUser] = useMutation(UPDATE_USER);
-  const [updateUserGroups] = useMutation(UPDATE_USER_GROUPS);
-  const [updateUserPermissions] = useMutation(UPDATE_USER_PERMISSIONS);
+  const [updateUser,{ error: userUpdateError }] = useMutation(UPDATE_USER);
+  const [updateUserGroups,{ error: groupUpdateError }] = useMutation(UPDATE_USER_GROUPS);
+  const [updateUserPermissions{ error: permissionUpdateError }] = useMutation(UPDATE_USER_PERMISSIONS);
   const navigate = useNavigate();
 
   useQuery(GET_USER_GROUPS, {
@@ -90,8 +90,12 @@ const EditUser: React.FC = () => {
           permissions: getUniquePermissions(userPermissions),
         },
       },
+      onCompleted: () => {
+        if (!userUpdateError && !groupUpdateError && !permissionUpdateError)
+          navigate("/home/users");
+      },
     });
-    navigate("/home");
+
   };
 
   console.log(userPermissions)
