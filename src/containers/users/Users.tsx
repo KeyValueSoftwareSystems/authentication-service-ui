@@ -6,10 +6,10 @@ import { Chip } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 import { GET_USERS, GET_USER_GROUPS } from "./services/queries";
-import "./styles.css";
 import { DELETE_USER } from "./services/mutations";
 import { userListAtom } from "../../states/userStates";
 import TableList from "../../components/table/Table";
+
 
 const Users: React.FC = () => {
   const navigate = useNavigate();
@@ -25,6 +25,14 @@ const Users: React.FC = () => {
       setUserList(data?.getUsers);
     },
   });
+
+  const onEdit = (id: any) => {
+    navigate(`/home/users/add/${id}`);
+  };
+
+  const onAdd = () => {
+    navigate(`/home/users/add`);
+  };
 
   const columns: GridColumns = [
     {
@@ -54,6 +62,8 @@ const Users: React.FC = () => {
         rows={userList}
         columns={columns}
         text="All Users"
+        onAdd={onAdd}
+        onEdit={onEdit}
         buttonLabel="Add User"
         searchLabel="Search User"
         deleteMutation={DELETE_USER}

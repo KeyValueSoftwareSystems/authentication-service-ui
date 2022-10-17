@@ -17,6 +17,8 @@ const TableList: FC<TableProps> = ({
   rows,
   columns,
   text,
+  onAdd,
+  onEdit,
   buttonLabel,
   searchLabel,
   deleteMutation,
@@ -40,10 +42,17 @@ const TableList: FC<TableProps> = ({
         return [
           <Tooltip title="Edit" arrow>
             <GridActionsCellItem
-              icon={<EditIcon />}
+              icon={
+                <EditIcon
+                  onClick={() => {
+                    onEdit(id)
+                  }}
+                />
+              }
               label="Edit"
               className="textPrimary"
               color="inherit"
+              onClick={() => onEdit(id)}
             />
           </Tooltip>,
           <Tooltip title="Delete" arrow>
@@ -74,6 +83,7 @@ const TableList: FC<TableProps> = ({
           text={text}
           buttonLabel={buttonLabel}
           searchLabel={searchLabel}
+          onAdd={onAdd}
         />
       </div>
       <div className="table-listing-items">

@@ -36,8 +36,6 @@ const GroupForm: FC<GroupFormProps> = ({ createGroup, editGroup }) => {
   const { handleSubmit } = methods;
 
   const onSubmitForm = (input: FieldValues) => {
-    console.log(input);
-
     id ? editGroup(input) : createGroup(input);
   };
 
