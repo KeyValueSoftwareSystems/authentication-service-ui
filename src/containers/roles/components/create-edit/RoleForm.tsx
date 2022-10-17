@@ -1,48 +1,49 @@
 import { FC, useState } from "react";
-
-import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, Divider, Stack } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { FieldValues, FormProvider, useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
+import { FormProvider, useForm } from "react-hook-form";
 import { useQuery } from "@apollo/client";
 
 import "./styles.css";
-import { GroupFormSchema } from "../../groupSchema";
-import { GET_GROUP } from "../../services/queries";
-import { Group } from "../../../../types/group";
 import FormInputText from "../../../../components/inputText";
+import { Role } from "../../../../types/role";
+import { GET_ROLE } from "../../services/queries";
 
-interface GroupFormProps {
-  createGroup: (inputs: FieldValues) => void;
-  editGroup: (inputs: FieldValues) => void;
+interface RoleFormProps {
+  createRole: (inputs: any) => void;
+  editRole: (inputs: any) => void;
 }
 
-const GroupForm: FC<GroupFormProps> = ({ createGroup, editGroup }) => {
+const RoleForm: FC<RoleFormProps> = ({ createRole, editRole }) => {
   const navigate = useNavigate();
 
   const { id } = useParams();
-  const [group, setGroup] = useState<Group>();
+  const [role, setRole] = useState<Role>();
 
-  const { loading } = useQuery(GET_GROUP, {
+  const { loading } = useQuery(GET_ROLE, {
     skip: !id,
     variables: { id: id },
     onCompleted: (data) => {
-      setGroup(data?.getGroup);
+      setRole(data?.getRole);
     },
   });
 
+  const initialValues = {
+    name: id ? role?.name : "",
+  };
+
   const methods = useForm({
-    resolver: yupResolver(GroupFormSchema),
+    defaultValues: initialValues,
   });
   const { handleSubmit } = methods;
 
-  const onSubmitForm = (input: FieldValues) => {
-    id ? editGroup(input) : createGroup(input);
+  const onSubmitForm = (input: any) => {
+    id ? editRole(input) : createRole(input);
   };
 
   const onClickBack = () => {
-    navigate("/home/groups");
+    navigate("/home/roles");
   };
 
   return (
@@ -53,10 +54,10 @@ const GroupForm: FC<GroupFormProps> = ({ createGroup, editGroup }) => {
             <div className="box1">
               <div className="access-setting" onClick={onClickBack}>
                 <ArrowBackIcon sx={{ height: 15 }} />
-                Access setting
+                Roles Listing
               </div>
-              <div className="create-group">
-                {id ? "Edit Group" : "Create Group"}
+              <div className="create-role">
+                {id ? "Edit Role" : "Create Role"}
               </div>
             </div>
             <Stack className="box2" spacing={2} direction="row">
@@ -64,7 +65,7 @@ const GroupForm: FC<GroupFormProps> = ({ createGroup, editGroup }) => {
                 Cancel
               </Button>
               <Button variant="outlined" className="button" type="submit">
-                {id ? "Update Group" : "Create Group"}
+                {id ? "Update Role" : "Create Role"}
               </Button>
             </Stack>
           </div>
@@ -73,10 +74,10 @@ const GroupForm: FC<GroupFormProps> = ({ createGroup, editGroup }) => {
             <>
               <FormInputText
                 name="name"
-                label="Group Name"
+                label="Role Name"
                 type="text"
-                className="group-name"
-                defaultText={group?.name}
+                className="role-name"
+                defaultText={role?.name}
               />
               <Divider sx={{ marginTop: 2 }} />
             </>
@@ -87,4 +88,4 @@ const GroupForm: FC<GroupFormProps> = ({ createGroup, editGroup }) => {
   );
 };
 
-export default GroupForm;
+export default RoleForm;
