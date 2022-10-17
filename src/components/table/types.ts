@@ -1,4 +1,4 @@
-import { GridColumns, GridRowsProp } from "@mui/x-data-grid";
+import { GridColumns, GridRowId, GridRowsProp } from "@mui/x-data-grid";
 import { DocumentNode } from "graphql";
 
 export interface TableProps {
@@ -9,4 +9,6 @@ export interface TableProps {
   searchLabel: string;
   deleteMutation: DocumentNode;
   refetchQuery: DocumentNode;
+  onAdd: () => void;
+  onEdit: (id: GridRowId) => void;
 }

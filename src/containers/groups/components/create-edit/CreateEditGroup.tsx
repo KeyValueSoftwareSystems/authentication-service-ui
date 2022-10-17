@@ -21,7 +21,7 @@ import "./styles.css";
 import GroupForm from "./GroupForm";
 import { GET_GROUP_ROLES } from "../../services/queries";
 import { getUniquePermissions } from "../../../../utils/permissions";
-import { ChecklistComponent } from "../../../../components/checklist/checkList";
+import { ChecklistComponent } from "../../../../components/checklist/CheckList";
 import {
   Permission,
   RolePermissionsDetails,
@@ -110,7 +110,6 @@ const CreateOrEditGroup = () => {
     item?: Role
   ) => {
     const value = event.target.value;
-    console.log(item);
 
     if (event.target.checked) {
       if (value === "all") {
@@ -145,8 +144,6 @@ const CreateOrEditGroup = () => {
   };
 
   const onCreateGroup = (inputs: FieldValues) => {
-    console.log(inputs);
-
     createGroup({
       variables: {
         input: inputs,
