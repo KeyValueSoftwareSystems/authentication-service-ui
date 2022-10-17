@@ -4,7 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, Divider, Stack } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { FieldValues, FormProvider, useForm } from "react-hook-form";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 
 import "./styles.css";
@@ -19,6 +19,8 @@ interface GroupFormProps {
 }
 
 const GroupForm: FC<GroupFormProps> = ({ createGroup, editGroup }) => {
+  const navigate = useNavigate();
+
   const { id } = useParams();
   const [group, setGroup] = useState<Group>();
 
@@ -41,13 +43,17 @@ const GroupForm: FC<GroupFormProps> = ({ createGroup, editGroup }) => {
     id ? editGroup(input) : createGroup(input);
   };
 
+  const onClickBack = () => {
+    navigate("/home/groups");
+  };
+
   return (
     <div className="container">
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(onSubmitForm)} className="form">
           <div className="box">
             <div className="box1">
-              <div className="access-setting">
+              <div className="access-setting" onClick={onClickBack}>
                 <ArrowBackIcon sx={{ height: 15 }} />
                 Access setting
               </div>
@@ -56,7 +62,7 @@ const GroupForm: FC<GroupFormProps> = ({ createGroup, editGroup }) => {
               </div>
             </div>
             <Stack className="box2" spacing={2} direction="row">
-              <Button variant="text" className="button">
+              <Button variant="text" className="button" onClick={onClickBack}>
                 Cancel
               </Button>
               <Button variant="outlined" className="button" type="submit">

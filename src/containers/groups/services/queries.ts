@@ -1,8 +1,17 @@
 import { gql } from "@apollo/client";
 
+export const GET_GROUPS = gql`
+  query getGroups {
+    getGroups {
+      id
+      name
+    }
+  }
+`;
+
 export const GET_GROUP = gql`
   query getGroup($id: ID!) {
-    getGroup(id: $id){
+    getGroup(id: $id) {
       id
       name
     }
@@ -11,7 +20,7 @@ export const GET_GROUP = gql`
 
 export const GET_GROUP_DETAILS = gql`
   query getGroup($id: ID!) {
-    getGroup(id: $id){
+    getGroup(id: $id) {
       id
       name
     }

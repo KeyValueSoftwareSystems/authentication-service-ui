@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
 import { FieldValues } from "react-hook-form";
 
@@ -55,6 +55,9 @@ function TabPanel(props: TabPanelProps) {
 }
 
 const CreateOrEditGroup = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+
   const [value, setValue] = useState(0);
   const [roles, setRoles] = useState<string[]>([]);
   const [permissions, setPermissions] = useState<RolePermissionsDetails[]>([]);
@@ -62,10 +65,10 @@ const CreateOrEditGroup = () => {
 
   const [updateGroup] = useMutation(UPDATE_GROUP);
   const [createGroup, { data: createGroupData }] = useMutation(CREATE_GROUP);
-  const [updateGroupRoles] = useMutation(UPDATE_GROUP_ROLES);
-  const [updateGroupPermissions] = useMutation(UPDATE_GROUP_PERMISSIONS);
-
-  const { id } = useParams();
+  const [updateGroupRoles, { data: updateGroupRolesData }] =
+    useMutation(UPDATE_GROUP_ROLES);
+  const [updateGroupPermissions, { data: updateGroupPermissionsData }] =
+    useMutation(UPDATE_GROUP_PERMISSIONS);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);

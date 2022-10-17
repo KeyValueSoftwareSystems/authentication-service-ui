@@ -1,8 +1,9 @@
 import React, { Suspense, lazy } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
+
+import CreateOrEditGroup from "../containers/groups/components/create-edit/CreateEditGroup";
 import GroupDetails from "../containers/groups/GroupDetails";
 import RoleDetails from "../containers/roles/RoleDetails";
-
 import { RoutePaths } from "./routePaths";
 
 const NotFound = lazy(() => import("../components/NotFound"));
@@ -33,12 +34,14 @@ const RoutesLayout: React.FC = () => {
           <Route path={RoutePaths.users} element={<Users />} />
           <Route path={RoutePaths.groups} element={<Groups />} />\
           <Route path="groups/:id" element={<GroupDetails />}></Route>
+          <Route path="groups/add" element={<CreateOrEditGroup />}></Route>
+          <Route path="groups/edit/:id" element={<CreateOrEditGroup />}></Route>
           {/* <Route
               path="/user/:id"
               element={<UserDetails />}
             /> */}
           <Route path={RoutePaths.roles} element={<Roles />} />
-          <Route path="roles/:id" element={<RoleDetails/>}></Route>
+          <Route path="roles/:id" element={<RoleDetails />}></Route>
           <Route path={RoutePaths.permissions} element={<Permissions />} />
           <Route path="*" element={<NotFound />} />
         </Route>
