@@ -1,27 +1,21 @@
 import { atom } from "recoil";
-import { Permission } from "../types/permission";
+import { GroupPermissionsDetails } from "../types/permission";
+import { Permission } from "../types/user";
 
 export const permissionsListAtom = atom<Permission[]>({
   key: "PermissionsList",
   default: [],
 });
 
-export const GroupPermissionsAtom = atom({
-  key: "GroupPermissions",
+export const GroupPermissionsAtom = atom<Permission[]>({
+  key: "GroupPermissionsList",
   default: [
-    {
-      id: "",
-      name: "",
-    },
   ],
 });
 
-export const RolePermissionsAtom = atom({
+
+export const RolePermissionsAtom = atom<Permission[]>({
   key: "RolePermissions",
   default: [
-    {
-      id: "",
-      name: "",
-    },
   ],
 });
