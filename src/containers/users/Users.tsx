@@ -9,7 +9,7 @@ import { GET_USERS, GET_USER_GROUPS } from "./services/queries";
 import { DELETE_USER } from "./services/mutations";
 import { userListAtom } from "../../states/userStates";
 import TableList from "../../components/table/Table";
-
+import "./components/create-edit-user/styles.css";
 
 const Users: React.FC = () => {
   const navigate = useNavigate();

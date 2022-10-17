@@ -39,7 +39,6 @@ const RoutesLayout: React.FC = () => {
           <Route path="users/:id" element={<UserDetails />} ></Route>
           <Route path="users/add" element={<AddUser />} />
           <Route path="users/add/:id" element={<EditUser />} />
-          <Route path={RoutePaths.groups} element={<Groups />} />\
           <Route path={RoutePaths.groups} element={<Groups />} />
           <Route path="groups/:id" element={<GroupDetails />}></Route>
           <Route path={RoutePaths.roles} element={<Roles />} />
