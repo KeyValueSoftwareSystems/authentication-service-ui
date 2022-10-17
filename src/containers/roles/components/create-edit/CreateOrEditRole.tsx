@@ -47,11 +47,10 @@ const CreateOrEditRole = () => {
   });
 
   const removeItem = (item: string) => {
-    const itemIndex = rolePermissions.findIndex((e: string) => e === item);
-    setRolePermissions([
-      ...rolePermissions.slice(0, itemIndex),
-      ...rolePermissions.slice(itemIndex + 1),
-    ]);
+    const newPermissions: string[] = rolePermissions.filter(
+      (e: string) => e !== item
+    );
+    setRolePermissions(newPermissions);
   };
 
   const onChange = (event: any, item?: any) => {
@@ -60,8 +59,6 @@ const CreateOrEditRole = () => {
       if (value === "all") {
         setRolePermissions(allPermissions);
         return;
-      } else if (rolePermissions[0] === null) {
-        setRolePermissions([item.id]);
       } else {
         setRolePermissions([...rolePermissions, item.id]);
       }
@@ -92,7 +89,7 @@ const CreateOrEditRole = () => {
   const onCreateRole = (inputs: NewRole) => {
     createRole({ variables: { input: inputs } });
   };
-  
+
   const onEditRole = (inputs: NewRole) => {
     updateRole({ variables: { id: id, input: inputs } });
     updateRolePermissions({
