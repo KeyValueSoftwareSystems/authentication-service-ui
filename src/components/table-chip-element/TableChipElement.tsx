@@ -1,7 +1,9 @@
 import { DocumentNode, useQuery } from "@apollo/client";
 import { Chip } from "@mui/material";
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
+import CancelIcon from '@mui/icons-material/Cancel';
 
+import "./tablechipelement.css";
 interface TableChipElementProps {
   props: any;
   query: DocumentNode;
@@ -14,7 +16,12 @@ const TableChipElement: FC<TableChipElementProps> = ({
   element,
 }) => {
   const { row } = props;
+
   const [itemList, setItemList] = React.useState([]);
+  const [smallerItemList, setSmallerItemList] = React.useState([]);
+  const [isManyItems, setisManyItems] = React.useState(false);
+  const [count, setCount] = React.useState("");
+  const [viewAllItems, setViewAllItems] = React.useState(false);
 
   useQuery(query, {
     variables: {
@@ -28,12 +35,43 @@ const TableChipElement: FC<TableChipElementProps> = ({
       }
     },
   });
-
+  useEffect(() => {
+    if (itemList.length > 3) {
+      setSmallerItemList(itemList.slice(0, 3));
+      setisManyItems(true);
+    }
+  }, [itemList.length]);
+  useEffect(() => {
+    setCount("+" + (itemList.length - smallerItemList.length));
+  }, [smallerItemList]);
+  const handleClick = () => {
+    setViewAllItems(true);
+    setisManyItems(false);
+  };
+  const handleReturnClick = () => {
+    setisManyItems(true);
+    setViewAllItems(false);
+  };
   return (
     <>
-      {itemList?.map((item: any) => (
-        <Chip label={item?.name} key={item?.id} />
-      ))}
+      {isManyItems
+        ? smallerItemList?.map((item: any) => (
+            <Chip label={item?.name} key={item?.id} id="chip" />
+          ))
+        : itemList?.map((item: any) => (
+            <Chip label={item?.name} key={item?.id} id="chip" />
+          ))}
+      {viewAllItems && (
+        <CancelIcon id="cancel-icon" onClick={handleReturnClick} />
+      )}
+      {isManyItems && !viewAllItems && (
+        <Chip
+          label={count}
+          key="click-to-see-more"
+          id="chip"
+          onClick={handleClick}
+        />
+      )}
     </>
   );
 };

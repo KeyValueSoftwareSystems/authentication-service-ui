@@ -33,7 +33,7 @@ const TableList: FC<TableProps> = ({
       headerAlign: "center",
       getActions: ({ id }) => {
         return [
-          <Tooltip title="Edit" arrow placement="top">
+          <Tooltip title="Edit" arrow>
             <GridActionsCellItem
               icon={<EditOutlinedIcon className="edit" />}
               label="Edit"
@@ -41,7 +41,7 @@ const TableList: FC<TableProps> = ({
               color="inherit"
             />
           </Tooltip>,
-          <Tooltip title="Delete" arrow placement="top">
+          <Tooltip title="Delete" arrow>
             <GridActionsCellItem
               icon={<DeleteOutlinedIcon className="delete" />}
               label="Delete"
@@ -78,6 +78,7 @@ const TableList: FC<TableProps> = ({
           style={{
             borderRadius: "0px 0px 5px 5px",
           }}
+          disableSelectionOnClick
         />
       </div>
     </div>
