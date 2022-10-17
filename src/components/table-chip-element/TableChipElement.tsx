@@ -4,6 +4,8 @@ import React, { FC, useEffect } from "react";
 import CancelIcon from "@mui/icons-material/Cancel";
 
 import "./styles.css";
+
+const DEFAULT_SIZE = 3;
 interface TableChipElementProps {
   props: any;
   query: DocumentNode;
@@ -15,7 +17,6 @@ const TableChipElement: FC<TableChipElementProps> = ({
   query,
   element,
 }) => {
-  const DEFAULT_SIZE = 3;
   const { row } = props;
 
   const [itemList, setItemList] = React.useState([]);
