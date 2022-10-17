@@ -3,7 +3,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import "./styles.css";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useForm, FormProvider, FieldValues } from "react-hook-form";
-import { Button, Chip } from "@mui/material";
+import { Box, Button, Chip, Tab, Tabs } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import {
@@ -15,7 +15,7 @@ import FormInputText from "../../../../components/inputText";
 import { ChecklistComponent } from "../../../../components/checklist/CheckList";
 import { GroupPermissionsDetails } from "../../../../types/permission";
 import { GET_USER } from "../../services/queries";
-import { User } from "../../../../types/user";
+import { Group, Permission, User } from "../../../../types/user";
 
 const UserForm = (props: any) => {
   const {
@@ -24,21 +24,21 @@ const UserForm = (props: any) => {
     createUser,
     userformSchema,
     currentGroupIDs,
-    currentUserPermissions
+    currentUserPermissions,
   } = props;
 
-  const {id} = useParams();
+  const { id } = useParams();
   const navigate = useNavigate();
   const [user, setUser] = useState<User>();
-  const[userGroupIds,setUserGroupIds]= useState<String[]>([])
-  const [userPermissions, setUserPermissions] =
-    useState<GroupPermissionsDetails[]>([]);
-  const [groupList,setGroupList] = useState<any[]>([]);
+  const [userGroupIds, setUserGroupIds] = useState<String[]>([]);
+  const [userPermissions, setUserPermissions] = useState<
+    GroupPermissionsDetails[]
+  >([]);
+  const [groupList, setGroupList] = useState<any[]>([]);
 
-  useEffect(()=>{
-    if(currentUserPermissions)
-      setUserPermissions(currentUserPermissions);
-  },[])
+  useEffect(() => {
+    if (currentUserPermissions) setUserPermissions(currentUserPermissions);
+  }, [currentUserPermissions]);
 
   const { loading } = useQuery(GET_USER, {
     skip: !id,
@@ -47,18 +47,17 @@ const UserForm = (props: any) => {
       setUser(data?.getUser);
     },
   });
-  
+
   useQuery(GET_GROUPS, {
     onCompleted: (data) => {
       setGroupList(data?.getGroups);
     },
   });
 
-  useEffect(()=>{
-    if(isEdit) setUserGroupIds(currentGroupIDs)
-    console.log("fhjghf",currentGroupIDs)
-  },[])
- 
+  useEffect(() => {
+    if (isEdit) setUserGroupIds(currentGroupIDs);
+  }, [isEdit, currentGroupIDs]);
+
   const methods = useForm({
     resolver: yupResolver(userformSchema),
   });
@@ -66,7 +65,9 @@ const UserForm = (props: any) => {
   const { handleSubmit } = methods;
 
   const onSubmitForm = (inputs: FieldValues) => {
-    isEdit ? updateUser(inputs,userGroupIds,userPermissions) : createUser(inputs,userGroupIds,userPermissions);
+    isEdit
+      ? updateUser(inputs, userGroupIds, userPermissions)
+      : createUser(inputs, userGroupIds, userPermissions);
   };
 
   const [getGroupPermissionsData] = useLazyQuery(GET_GROUP_PERMISSIONS);
@@ -87,25 +88,22 @@ const UserForm = (props: any) => {
     ]);
   };
 
-  const addGroupPermissions = (permissions: any, item: string) => {
-    // if (
-    //   !userPermissions.map((item: any) => item.groupId).includes(item)
-    // ) {
-    setUserPermissions([
-      ...userPermissions,
-      { groupId: item, permissions: permissions },
-    ]);
-    // }
-  };
-
-  const handleChange = (event: any, group: any) => {
+  const handleChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    group: Group
+  ) => {
     if (event.target.checked) {
       // if (!userGroupIds.map((group) => group).includes(group.id))
       setUserGroupIds([...userGroupIds, group.id]);
+
       getGroupPermissionsData({
         variables: { id: group.id },
+        fetchPolicy: "no-cache",
         onCompleted: (data) => {
-          addGroupPermissions(data?.getGroupPermissions, group.id);
+          setUserPermissions([
+            ...userPermissions,
+            { groupId: group.id, permissions: data?.getGroupPermissions },
+          ]);
         },
       });
     } else {
@@ -144,31 +142,31 @@ const UserForm = (props: any) => {
           </div>
 
           <div id="inputs">
-          {!loading && (
-            <div id="form-row">
-              <FormInputText
-                name="firstName"
-                label="First name*"
-                type="text"
-                className="fields"
-                defaultText={user?.firstName}
-              />
-              <FormInputText
-                name="middleName"
-                label="Middle name"
-                type="text"
-                className="fields"
-                defaultText={user?.middleName}
-              />
-              <FormInputText
-                name="lastName"
-                label="Last Name*"
-                type="type"
-                className="fields"
-                defaultText={user?.lastName}
-              />
-            </div>
-             )}
+            {!loading && (
+              <div id="form-row">
+                <FormInputText
+                  name="firstName"
+                  label="First name*"
+                  type="text"
+                  className="fields"
+                  defaultText={user?.firstName}
+                />
+                <FormInputText
+                  name="middleName"
+                  label="Middle name"
+                  type="text"
+                  className="fields"
+                  defaultText={user?.middleName}
+                />
+                <FormInputText
+                  name="lastName"
+                  label="Last Name*"
+                  type="type"
+                  className="fields"
+                  defaultText={user?.lastName}
+                />
+              </div>
+            )}
             {!isEdit && (
               <div id="form-row">
                 <FormInputText
@@ -194,6 +192,12 @@ const UserForm = (props: any) => {
           </div>
         </form>
       </FormProvider>
+
+      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+        <Tab
+          label="Groups & Permissions"
+          sx={{ textTransform: "none", color:' rgb(23, 119, 240);', fontWeight:'bolder'}}/>
+      </Box>
 
       <div id="groups-permissions">
         <ChecklistComponent

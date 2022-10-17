@@ -23,6 +23,7 @@ const EditUser: React.FC = () => {
     GroupPermissionsDetails[]
   >([]);
   const [selectedGroupIds, setUserGroupIds] = useState<string[]>([]);
+
   const [updateUser] = useMutation(UPDATE_USER);
   const [updateUserGroups] = useMutation(UPDATE_USER_GROUPS);
   const [updateUserPermissions] = useMutation(UPDATE_USER_PERMISSIONS);
@@ -31,7 +32,6 @@ const EditUser: React.FC = () => {
   useQuery(GET_USER_GROUPS, {
     variables: { id },
     onCompleted: (data) => {
-      console.log(data?.getUserGroups)
       const groupIds= data?.getUserGroups.map((group:any) => 
         group.id
       );
@@ -45,8 +45,8 @@ const EditUser: React.FC = () => {
     selectedGroupIds.forEach((group) => {
       getData({
         variables: { id: group },
+        fetchPolicy: "no-cache",
         onCompleted: (data) => {
-          console.log(data?.getGroupPermissions )
           setUserPermissions([
             ...userPermissions,
             { groupId: group, permissions: data?.getGroupPermissions },
@@ -54,7 +54,7 @@ const EditUser: React.FC = () => {
         },
       });
     });
-    
+  
   }, [selectedGroupIds]);
 
 
@@ -94,6 +94,7 @@ const EditUser: React.FC = () => {
     navigate("/home");
   };
 
+  console.log(userPermissions)
 
   return (
     <UserForm

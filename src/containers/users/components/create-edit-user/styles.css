@@ -79,6 +79,7 @@
 #form {
   border: 5px;
   padding: 10px 10px 10px 10px;
+  margin-bottom: 10px;
 }
 
 #arrowicon {
@@ -97,6 +98,7 @@
 
 #inputs {
   margin-left: 0px;
+  margin-bottom: 10px;
 }
 
 #cancel {
@@ -137,7 +139,7 @@
 }
 
 #groups-permissions {
-  margin-top: 20px;
+
   display: flex;
   justify-content: flex-start;
 }
