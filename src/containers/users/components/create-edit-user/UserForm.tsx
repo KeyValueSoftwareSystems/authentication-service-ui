@@ -73,19 +73,8 @@ const UserForm = (props: any) => {
   const [getGroupPermissionsData] = useLazyQuery(GET_GROUP_PERMISSIONS);
 
   const removeGroup = (group: string) => {
-    const itemIndex = userGroupIds.findIndex((e: any) => e === group);
-    setUserGroupIds([
-      ...userGroupIds.slice(0, itemIndex),
-      ...userGroupIds.slice(itemIndex + 1),
-    ]);
-    const permission_index = userPermissions.findIndex(
-      (permission: any) => permission.groupId === group
-    );
-
-    setUserPermissions([
-      ...userPermissions.slice(0, permission_index),
-      ...userPermissions.slice(permission_index + 1),
-    ]);
+    setUserGroupIds(userGroupIds.filter((groupId)=>groupId!==group));
+    setUserPermissions(userPermissions.filter((permission)=>permission.groupId!==group));
   };
 
   const handleChange = (
