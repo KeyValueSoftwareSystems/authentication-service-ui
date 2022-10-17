@@ -8,7 +8,6 @@ import { useMutation } from "@apollo/client";
 import { TableProps } from "./types";
 import TableToolBar from "../table-toolbar/TableToolBar";
 import "./table.css";
-import { useNavigate } from "react-router-dom";
 
 const TableList: FC<TableProps> = ({
   rows,
@@ -24,7 +23,6 @@ const TableList: FC<TableProps> = ({
   const [deleteItem] = useMutation(deleteMutation, {
     refetchQueries: [{ query: refetchQuery }],
   });
-  const navigate = useNavigate();
 
   const action_column: GridColumns = [
     {

@@ -3,7 +3,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import "./styles.css";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useForm, FormProvider, FieldValues } from "react-hook-form";
-import { Box, Button, Chip, Tab, Tabs } from "@mui/material";
+import { Box, Button, Chip, Tab } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import {
@@ -15,7 +15,7 @@ import FormInputText from "../../../../components/inputText";
 import { ChecklistComponent } from "../../../../components/checklist/CheckList";
 import { GroupPermissionsDetails } from "../../../../types/permission";
 import { GET_USER } from "../../services/queries";
-import { Group, Permission, User } from "../../../../types/user";
+import { Group, User } from "../../../../types/user";
 
 const UserForm = (props: any) => {
   const {
