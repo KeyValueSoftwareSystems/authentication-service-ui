@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { GET_ROLE_PERMISSIONS } from "../../services/queries";
-import { ChecklistComponent } from "../../../../components/checklist/checkList";
+import { ChecklistComponent } from "../../../../components/checklist/CheckList";
 import { NewRole } from "../../../../types/role";
 import { GET_PERMISSIONS } from "../../../permissions/services/queries";
 import {

@@ -13,12 +13,12 @@ const TableList: FC<TableProps> = ({
   rows,
   columns,
   text,
+  onAdd,
+  onEdit,
   buttonLabel,
   searchLabel,
   deleteMutation,
   refetchQuery,
-  onAdd,
-  onEdit
 }) => {
   const [deleteItem] = useMutation(deleteMutation, {
     refetchQueries: [{ query: refetchQuery }],
@@ -37,7 +37,13 @@ const TableList: FC<TableProps> = ({
         return [
           <Tooltip title="Edit" arrow>
             <GridActionsCellItem
-              icon={<EditIcon />}
+              icon={
+                <EditIcon
+                  onClick={() => {
+                    onEdit(id)
+                  }}
+                />
+              }
               label="Edit"
               className="textPrimary"
               color="inherit"
