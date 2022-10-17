@@ -1,7 +1,7 @@
 import { DocumentNode, useQuery } from "@apollo/client";
 import { Chip } from "@mui/material";
 import React, { FC, useEffect } from "react";
-import CancelIcon from '@mui/icons-material/Cancel';
+import CancelIcon from "@mui/icons-material/Cancel";
 
 import "./tablechipelement.css";
 interface TableChipElementProps {
@@ -15,11 +15,12 @@ const TableChipElement: FC<TableChipElementProps> = ({
   query,
   element,
 }) => {
+  const DEFAULT_SIZE = 3;
   const { row } = props;
 
   const [itemList, setItemList] = React.useState([]);
   const [smallerItemList, setSmallerItemList] = React.useState([]);
-  const [isManyItems, setisManyItems] = React.useState(false);
+  const [isManyItems, setIsManyItems] = React.useState(false);
   const [count, setCount] = React.useState("");
   const [viewAllItems, setViewAllItems] = React.useState(false);
 
@@ -38,18 +39,18 @@ const TableChipElement: FC<TableChipElementProps> = ({
   useEffect(() => {
     if (itemList.length > 3) {
       setSmallerItemList(itemList.slice(0, 3));
-      setisManyItems(true);
+      setIsManyItems(true);
     }
   }, [itemList.length]);
   useEffect(() => {
-    setCount("+" + (itemList.length - smallerItemList.length));
+    setCount("+" + (itemList.length - DEFAULT_SIZE));
   }, [smallerItemList]);
   const handleClick = () => {
     setViewAllItems(true);
-    setisManyItems(false);
+    setIsManyItems(false);
   };
   const handleReturnClick = () => {
-    setisManyItems(true);
+    setIsManyItems(true);
     setViewAllItems(false);
   };
   return (

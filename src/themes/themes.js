@@ -20,8 +20,7 @@ const theme = createTheme({
           height:"43px",
         },
         outlined: {
-          boxShadow: 1,
-          backgroundColor: "primary",      
+          boxShadow: 1,     
           border: "1px solid #fafafa",
           color: "#fafafa",
           "&:hover": {

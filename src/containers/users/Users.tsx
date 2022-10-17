@@ -10,6 +10,7 @@ import { DELETE_USER } from "./services/mutations";
 import { userListAtom } from "../../states/userStates";
 import TableList from "../../components/table/Table";
 import TableChipElement from "../../components/table-chip-element";
+import { stringAvatar } from "./utils";
 
 const Users: React.FC = () => {
   const [userList, setUserList] = useRecoilState(userListAtom);
@@ -69,29 +70,6 @@ const Users: React.FC = () => {
 const GetFullName = (props: any) => {
   const { row } = props;
   let fullName = row.firstName.concat(" ", row.lastName);
-
-  function stringToColor(string: string) {
-    let hash = 0;
-    let i;
-    for (i = 0; i < string.length; i += 1) {
-      hash = string.charCodeAt(i) + ((hash << 5) - hash);
-    }
-    let color = "#";
-    for (i = 0; i < 3; i += 1) {
-      const value = (hash >> (i * 8)) & 0xff;
-      color += `00${value.toString(16)}`.slice(-2);
-    }
-    return color;
-  }
-
-  function stringAvatar(name: string) {
-    return {
-      sx: {
-        bgcolor: stringToColor(name), //#039be5bf
-      },
-      children: `${name.split(" ")[0][0]}${name.split(" ")[1][0]}`,
-    };
-  }
   
   return (
     <>
