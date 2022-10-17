@@ -26,7 +26,7 @@ const EditUser: React.FC = () => {
 
   const [updateUser,{ error: userUpdateError }] = useMutation(UPDATE_USER);
   const [updateUserGroups,{ error: groupUpdateError }] = useMutation(UPDATE_USER_GROUPS);
-  const [updateUserPermissions{ error: permissionUpdateError }] = useMutation(UPDATE_USER_PERMISSIONS);
+  const [updateUserPermissions,{ error: permissionUpdateError }] = useMutation(UPDATE_USER_PERMISSIONS);
   const navigate = useNavigate();
 
   useQuery(GET_USER_GROUPS, {
@@ -97,8 +97,6 @@ const EditUser: React.FC = () => {
     });
 
   };
-
-  console.log(userPermissions)
 
   return (
     <UserForm

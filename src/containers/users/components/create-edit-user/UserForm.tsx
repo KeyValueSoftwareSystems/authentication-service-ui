@@ -13,7 +13,7 @@ import {
 import { useLazyQuery, useQuery } from "@apollo/client";
 import FormInputText from "../../../../components/inputText";
 import { ChecklistComponent } from "../../../../components/checklist/CheckList";
-import { GroupPermissionsDetails } from "../../../../types/permission";
+import { GroupPermissionsDetails, Permission } from "../../../../types/permission";
 import { GET_USER } from "../../services/queries";
 import { Group, User } from "../../../../types/user";
 
@@ -34,7 +34,7 @@ const UserForm = (props: any) => {
   const [userPermissions, setUserPermissions] = useState<
     GroupPermissionsDetails[]
   >([]);
-  const [groupList, setGroupList] = useState<any[]>([]);
+  const [groupList, setGroupList] = useState<Group[]>([]);
 
   useEffect(() => {
     if (currentUserPermissions) setUserPermissions(currentUserPermissions);
@@ -82,7 +82,6 @@ const UserForm = (props: any) => {
     group: Group
   ) => {
     if (event.target.checked) {
-      // if (!userGroupIds.map((group) => group).includes(group.id))
       setUserGroupIds([...userGroupIds, group.id]);
 
       getGroupPermissionsData({
@@ -201,11 +200,11 @@ const UserForm = (props: any) => {
             <div> Permissions </div>
           </div>
           <div id="permission-list">
-            {userPermissions?.map((group: any) => {
+            {userPermissions?.map((group: GroupPermissionsDetails) => {
               return (
                 <div key={group.groupId}>
-                  {group?.permissions.map((item: any) => {
-                    return <Chip id="item" key={item.id} label={item.name} />;
+                  {group?.permissions.map((permission: Permission) => {
+                    return <Chip id="item" key={permission.id} label={permission.name} />;
                   })}
                 </div>
               );
