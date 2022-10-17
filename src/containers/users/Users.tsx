@@ -11,6 +11,7 @@ import { userListAtom } from "../../states/userStates";
 import TableList from "../../components/table/Table";
 import TableChipElement from "../../components/table-chip-element";
 import { stringAvatar } from "../../utils/table";
+import { useNavigate } from "react-router-dom";
 
 const Users: React.FC = () => {
   const [userList, setUserList] = useRecoilState(userListAtom);
@@ -19,11 +20,20 @@ const Users: React.FC = () => {
     refetchQueries: [{ query: GET_USERS }],
   });
 
+  const navigate = useNavigate();
   useQuery(GET_USERS, {
     onCompleted: (data) => {
       setUserList(data?.getUsers);
     },
   });
+
+  const onEdit = (id: any) => {
+    navigate(`/home/users/add/${id}`);
+  };
+
+  const onAdd = () => {
+    navigate(`/home/users/add`);
+  };
 
   const columns: GridColumns = [
     {
@@ -58,6 +68,8 @@ const Users: React.FC = () => {
         rows={userList}
         columns={columns}
         text="All Users"
+        onAdd={onAdd}
+        onEdit={onEdit}
         buttonLabel="Add User"
         searchLabel="Search User"
         deleteMutation={DELETE_USER}
