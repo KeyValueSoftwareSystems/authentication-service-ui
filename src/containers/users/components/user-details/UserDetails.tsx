@@ -42,16 +42,14 @@ const UserDetails = () => {
     setValue(newValue);
   };
 
-  const onClick = (e: any) => {
-    console.log("ssffs");
-
+  const onBackNavigation = (e: any) => {
     navigate("/home/users");
   };
 
   return (
     <div className="cntr">
       <div className="user-details">
-        <div className="back-arrow" onClick={onClick}>
+        <div className="back-arrow" onClick={onBackNavigation}>
           <ArrowBackIcon />
         </div>
         <Box className="tabs">

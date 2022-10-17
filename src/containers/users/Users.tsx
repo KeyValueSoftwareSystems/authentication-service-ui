@@ -81,8 +81,8 @@ const ShowGroupList = (props: any) => {
     <div className="chips">
       {groupList?.map((group: any) => (
         <Chip
-          label={group?.name}
-          key={group?.id}
+          label={group.name}
+          key={group.id}
           sx={{ marginRight: 1, marginTop: 1, fontSize: "14px" }}
         />
       ))}
