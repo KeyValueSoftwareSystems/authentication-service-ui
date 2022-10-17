@@ -3,7 +3,7 @@ import { Chip } from "@mui/material";
 import React, { FC, useEffect } from "react";
 import CancelIcon from "@mui/icons-material/Cancel";
 
-import "./tablechipelement.css";
+import "./styles.css";
 interface TableChipElementProps {
   props: any;
   query: DocumentNode;
@@ -38,13 +38,13 @@ const TableChipElement: FC<TableChipElementProps> = ({
   });
   useEffect(() => {
     if (itemList.length > 3) {
-      setSmallerItemList(itemList.slice(0, 3));
+      setSmallerItemList(itemList.slice(0, DEFAULT_SIZE));
       setIsManyItems(true);
     }
-  }, [itemList.length]);
+  }, [itemList]);
   useEffect(() => {
     setCount("+" + (itemList.length - DEFAULT_SIZE));
-  }, [smallerItemList]);
+  }, [itemList]);
   const handleClick = () => {
     setViewAllItems(true);
     setIsManyItems(false);

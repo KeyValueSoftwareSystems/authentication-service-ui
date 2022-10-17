@@ -2,7 +2,7 @@ import { Button } from "@mui/material";
 import { FC } from "react";
 
 import { TableToolBarProps } from "./types";
-import "./tabletoolbar.css";
+import "./styles.css";
 import SearchBar from "../search-bar/SearchBar";
 
 const TableToolBar: FC<TableToolBarProps> = ({
