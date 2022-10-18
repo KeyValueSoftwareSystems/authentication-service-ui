@@ -2,7 +2,11 @@ import React from "react";
 import { useRecoilState } from "recoil";
 import { useMutation, useQuery } from "@apollo/client";
 import { Avatar } from "@mui/material";
-import { GridColumns, GridRenderCellParams, GridRowParams } from "@mui/x-data-grid";
+import {
+  GridColumns,
+  GridRenderCellParams,
+  GridRowParams,
+} from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
 
 import { GET_USERS, GET_USER_GROUPS } from "./services/queries";
@@ -44,7 +48,16 @@ const Users: React.FC = () => {
       width: 320,
       headerClassName: "user-list-header",
       headerAlign: "center",
-      renderCell: (params) => <div className="username-column" onClick={()=>{onUserClick(params)}}><GetFullName {...params} /></div>,
+      renderCell: (params) => (
+        <div
+          className="username-column"
+          onClick={() => {
+            onUserClick(params);
+          }}
+        >
+          <GetFullName {...params} />
+        </div>
+      ),
     },
     {
       field: "groups",
@@ -92,8 +105,8 @@ const GetFullName = (props: any) => {
     <>
       <Avatar {...stringAvatar(fullName)} className="avatar" />
       <div>
-        <div className="fullname" >{fullName}</div>
-        <div className="email" >{row.email}</div>
+        <div className="fullname">{fullName}</div>
+        <div className="email">{row.email}</div>
       </div>
     </>
   );
