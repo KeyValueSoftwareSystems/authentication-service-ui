@@ -19,6 +19,7 @@ const TableList: FC<TableProps> = ({
   searchLabel,
   deleteMutation,
   refetchQuery,
+  handleRowClick,
 }) => {
   const [deleteItem] = useMutation(deleteMutation, {
     refetchQueries: [{ query: refetchQuery }],
@@ -88,6 +89,7 @@ const TableList: FC<TableProps> = ({
           style={{
             borderRadius: "0px 0px 5px 5px",
           }}
+          onRowClick={handleRowClick}
         />
       </div>
     </div>
