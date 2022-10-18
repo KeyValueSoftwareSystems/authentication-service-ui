@@ -5,7 +5,7 @@ import CancelIcon from "@mui/icons-material/Cancel";
 
 import "./styles.css";
 
-const DEFAULT_SIZE = 3;
+const INITIALLY_VISIBLE_ITEMS = 3;
 interface TableChipElementProps {
   props: any;
   query: DocumentNode;
@@ -19,10 +19,10 @@ const TableChipElement: FC<TableChipElementProps> = ({
 }) => {
   const { row } = props;
 
-  const [itemList, setItemList] = React.useState([]);
-  const [smallerItemList, setSmallerItemList] = React.useState([]);
-  const [isManyItems, setIsManyItems] = React.useState(false);
-  const [count, setCount] = React.useState("");
+  const [allItems, setAllItems] = React.useState([]);
+  const [initiallyVisibleItems, setInitiallyVisibleItems] = React.useState([]);
+  const [hiddenItemsCount, setHiddenItemsCount] = React.useState("");
+  const [isManyItems, setIsManyItems] = React.useState(false);  
   const [viewAllItems, setViewAllItems] = React.useState(false);
 
   useQuery(query, {
@@ -31,21 +31,21 @@ const TableChipElement: FC<TableChipElementProps> = ({
     },
     onCompleted: (data) => {
       if (element === "user") {
-        setItemList(data?.getUserGroups);
+        setAllItems(data?.getUserGroups);
       } else if (element === "group") {
-        setItemList(data?.getGroupRoles);
+        setAllItems(data?.getGroupRoles);
       }
     },
   });
   useEffect(() => {
-    if (itemList.length > 3) {
-      setSmallerItemList(itemList.slice(0, DEFAULT_SIZE));
+    if (allItems.length > 3) {
+      setInitiallyVisibleItems(allItems.slice(0, INITIALLY_VISIBLE_ITEMS));
       setIsManyItems(true);
     }
-  }, [itemList]);
+  }, [allItems]);
   useEffect(() => {
-    setCount("+" + (itemList.length - DEFAULT_SIZE));
-  }, [itemList]);
+    setHiddenItemsCount("+" + (allItems.length - INITIALLY_VISIBLE_ITEMS));
+  }, [allItems]);
   const handleClick = () => {
     setViewAllItems(true);
     setIsManyItems(false);
@@ -57,10 +57,10 @@ const TableChipElement: FC<TableChipElementProps> = ({
   return (
     <>
       {isManyItems
-        ? smallerItemList?.map((item: any) => (
+        ? initiallyVisibleItems?.map((item: any) => (
             <Chip label={item?.name} key={item?.id} id="chip" />
           ))
-        : itemList?.map((item: any) => (
+        : allItems?.map((item: any) => (
             <Chip label={item?.name} key={item?.id} id="chip" />
           ))}
       {viewAllItems && (
@@ -68,7 +68,7 @@ const TableChipElement: FC<TableChipElementProps> = ({
       )}
       {isManyItems && !viewAllItems && (
         <Chip
-          label={count}
+          label={hiddenItemsCount}
           key="click-to-see-more"
           id="chip"
           onClick={handleClick}
