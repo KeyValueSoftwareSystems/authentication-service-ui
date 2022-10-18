@@ -48,6 +48,10 @@ const GroupList: React.FC = () => {
     },
   ];
 
+  const onAddGroup = () => {};
+
+  const onEditGroup = () => {};
+
   return (
     <>
       <TableList
@@ -58,6 +62,8 @@ const GroupList: React.FC = () => {
         searchLabel="Search Group"
         deleteMutation={DELETE_GROUPS}
         refetchQuery={GET_GROUPS}
+        onAdd={onAddGroup}
+        onEdit={onEditGroup}
       />
     </>
   );

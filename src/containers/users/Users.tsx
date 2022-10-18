@@ -1,8 +1,9 @@
 import React from "react";
 import { useRecoilState } from "recoil";
 import { useMutation, useQuery } from "@apollo/client";
-import { GridColumns } from "@mui/x-data-grid";
 import { Avatar } from "@mui/material";
+import { GridColumns, GridRenderCellParams, GridRowParams } from "@mui/x-data-grid";
+import { useNavigate } from "react-router-dom";
 
 import { GET_USERS, GET_USER_GROUPS } from "./services/queries";
 import "./styles.css";
@@ -11,16 +12,17 @@ import { userListAtom } from "../../states/userStates";
 import TableList from "../../components/table/Table";
 import TableChipElement from "../../components/table-chip-element";
 import { stringAvatar } from "../../utils/table";
-import { useNavigate } from "react-router-dom";
+import "./components/create-edit-user/styles.css";
 
 const Users: React.FC = () => {
   const [userList, setUserList] = useRecoilState(userListAtom);
+
+  const navigate = useNavigate();
 
   useMutation(DELETE_USER, {
     refetchQueries: [{ query: GET_USERS }],
   });
 
-  const navigate = useNavigate();
   useQuery(GET_USERS, {
     onCompleted: (data) => {
       setUserList(data?.getUsers);
@@ -42,7 +44,7 @@ const Users: React.FC = () => {
       width: 320,
       headerClassName: "user-list-header",
       headerAlign: "center",
-      renderCell: (params) => <GetFullName {...params} />,
+      renderCell: (params) => <div className="username-column" onClick={()=>{onUserClick(params)}}><GetFullName {...params} /></div>,
     },
     {
       field: "groups",
@@ -61,6 +63,10 @@ const Users: React.FC = () => {
       headerAlign: "center",
     },
   ];
+
+  const onUserClick = (params: any) => {
+    navigate(`./${params.id}`);
+  };
 
   return (
     <>
@@ -82,13 +88,12 @@ const Users: React.FC = () => {
 const GetFullName = (props: any) => {
   const { row } = props;
   let fullName = row.firstName.concat(" ", row.lastName);
-  
   return (
     <>
       <Avatar {...stringAvatar(fullName)} className="avatar" />
       <div>
-        <div className="fullname">{fullName}</div>
-        <div className="email">{row.email}</div>
+        <div className="fullname" >{fullName}</div>
+        <div className="email" >{row.email}</div>
       </div>
     </>
   );

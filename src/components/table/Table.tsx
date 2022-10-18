@@ -1,4 +1,8 @@
-import { DataGrid, GridActionsCellItem, GridColumns } from "@mui/x-data-grid";
+import {
+  DataGrid,
+  GridActionsCellItem,
+  GridColumns,
+} from "@mui/x-data-grid";
 import { FC } from "react";
 import { Tooltip } from "@mui/material";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
@@ -19,6 +23,7 @@ const TableList: FC<TableProps> = ({
   searchLabel,
   deleteMutation,
   refetchQuery,
+  handleRowClick
 }) => {
   const [deleteItem] = useMutation(deleteMutation, {
     refetchQueries: [{ query: refetchQuery }],
@@ -43,6 +48,7 @@ const TableList: FC<TableProps> = ({
               label="Edit"
               className="textPrimary"
               color="inherit"
+              onClick={() => onEdit(id)}
             />
           </Tooltip>,
           <Tooltip title="Delete" arrow placement="top">
@@ -84,6 +90,7 @@ const TableList: FC<TableProps> = ({
             borderRadius: "0px 0px 5px 5px",
           }}
           disableSelectionOnClick
+          onRowClick={handleRowClick}
         />
       </div>
     </div>
