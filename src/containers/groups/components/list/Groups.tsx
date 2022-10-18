@@ -1,7 +1,7 @@
 import React from "react";
 import { useRecoilState } from "recoil";
 import { useMutation, useQuery } from "@apollo/client";
-import { GridColumns, GridRowId } from "@mui/x-data-grid";
+import { GridColumns, GridRowId, GridRowParams } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
 
 import "./groups.css";
@@ -10,6 +10,7 @@ import { GET_GROUPS, GET_GROUP_ROLES } from "../../services/queries";
 import TableList from "../../../../components/table";
 import { groupListAtom } from "../../../../states/groupStates";
 import TableChipElement from "../../../../components/table-chip-element";
+
 
 const GroupList: React.FC = () => {
   const navigate = useNavigate();
@@ -49,6 +50,10 @@ const GroupList: React.FC = () => {
     },
   ];
 
+  const onGroupClick = (params:GridRowParams) => {
+    navigate(`./${params.id}`);
+  };
+
   const onAddGroup = () => {
     navigate("add");
   };
@@ -69,6 +74,7 @@ const GroupList: React.FC = () => {
         refetchQuery={GET_GROUPS}
         onAdd={onAddGroup}
         onEdit={onEditGroup}
+        handleRowClick={onGroupClick}
       />
     </>
   );

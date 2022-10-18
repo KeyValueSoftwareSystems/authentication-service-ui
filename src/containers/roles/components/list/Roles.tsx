@@ -1,7 +1,7 @@
 import React from "react";
 import { useRecoilState } from "recoil";
 import { useMutation, useQuery } from "@apollo/client";
-import { GridColumns, GridRowId } from "@mui/x-data-grid";
+import { GridColumns, GridRowId, GridRowParams } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
 
 import "./roles.css";
@@ -39,6 +39,11 @@ const Roles: React.FC = () => {
   const onEditRole = (id: GridRowId) => {
     navigate(`edit/${id}`);
   };
+
+  const onRoleClick = (params:GridRowParams) => {
+    navigate(`./${params.id}`);
+  };
+  
   return (
     <>
       <TableList
@@ -51,6 +56,7 @@ const Roles: React.FC = () => {
         refetchQuery={GET_ROLES}
         onAdd={onAddRole}
         onEdit={onEditRole}
+        handleRowClick={onRoleClick}
       />
     </>
   );
