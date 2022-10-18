@@ -28,7 +28,7 @@ const HomePage = () => {
                   }
                 >
                   <PeopleAltOutlinedIcon className="icon" />
-                  USERS
+                  Users
                 </NavLink>
                 <NavLink
                   to="/home/groups"
