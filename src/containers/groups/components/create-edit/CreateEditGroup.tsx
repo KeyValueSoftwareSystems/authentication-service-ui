@@ -63,11 +63,11 @@ const CreateOrEditGroup = () => {
   const [permissions, setPermissions] = useState<RolePermissionsDetails[]>([]);
   const [allRoles, setAllRoles] = useState<string[]>([]);
 
-  const [updateGroup, { data: updateGroupData }] = useMutation(UPDATE_GROUP);
-  const [createGroup, { data: createGroupData }] = useMutation(CREATE_GROUP);
-  const [updateGroupRoles, { data: updateGroupRolesData }] =
+  const [updateGroup, { data: updatedGroupData }] = useMutation(UPDATE_GROUP);
+  const [createGroup, { data: createdGroupData }] = useMutation(CREATE_GROUP);
+  const [updateGroupRoles, { data: updatedGroupRolesData }] =
     useMutation(UPDATE_GROUP_ROLES);
-  const [updateGroupPermissions, { data: updateGroupPermissionsData }] =
+  const [updateGroupPermissions, { data: updatedGroupPermissionsData }] =
     useMutation(UPDATE_GROUP_PERMISSIONS);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -151,34 +151,34 @@ const CreateOrEditGroup = () => {
   };
 
   useEffect(() => {
-    if (createGroupData) {
+    if (createdGroupData) {
       updateGroupRoles({
         variables: {
-          id: createGroupData?.createGroup?.id,
+          id: createdGroupData?.createGroup?.id,
           input: { roles: roles },
         },
       });
 
       updateGroupPermissions({
         variables: {
-          id: createGroupData?.createGroup?.id,
+          id: createdGroupData?.createGroup?.id,
           input: { permissions: getUniquePermissions(permissions) },
         },
       });
     }
-  }, [createGroupData]);
+  }, [createdGroupData]);
 
   useEffect(() => {
-    if (createGroupData || updateGroupData)
-      if (updateGroupRolesData && updateGroupPermissionsData) {
+    if (createdGroupData || updatedGroupData)
+      if (updatedGroupRolesData && updatedGroupPermissionsData) {
         navigate("/home/groups");
       }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
-    createGroupData,
-    updateGroupData,
-    updateGroupRolesData,
-    updateGroupPermissionsData,
+    createdGroupData,
+    updatedGroupData,
+    updatedGroupRolesData,
+    updatedGroupPermissionsData,
   ]);
 
   const onEditGroup = (inputs: FieldValues) => {
