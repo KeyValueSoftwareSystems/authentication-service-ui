@@ -1,5 +1,6 @@
-import { Link, Outlet, Navigate, useNavigate } from "react-router-dom";
+
 import { useMutation } from "@apollo/client";
+import { Outlet, Navigate, useNavigate, NavLink } from "react-router-dom";
 import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
 import Diversity3OutlinedIcon from "@mui/icons-material/Diversity3Outlined";
 import WorkOutlineOutlinedIcon from "@mui/icons-material/WorkOutlineOutlined";
@@ -47,25 +48,44 @@ const HomePage = () => {
           <div className="sideBar">
             <nav>
               <div className="sideBarContainer">
-                <Link to="/home/users" className="text-link">
+                <NavLink
+                  to="/home/users"
+                  className={({ isActive }) =>
+                    isActive ? "active-text-link" : "text-link"
+                  }
+                >
                   <PeopleAltOutlinedIcon className="icon" />
                   USERS
-                </Link>
-
-                <Link to="/home/groups" className="text-link">
+                </NavLink>
+                <NavLink
+                  to="/home/groups"
+                  className={({ isActive }) =>
+                    isActive ? "active-text-link" : "text-link"
+                  }
+                >
                   <Diversity3OutlinedIcon className="icon" />
                   GROUPS
-                </Link>
+                </NavLink>
 
-                <Link to="/home/roles" className="text-link">
+                <NavLink
+                  to="/home/roles"
+                  className={({ isActive }) =>
+                    isActive ? "active-text-link" : "text-link"
+                  }
+                >
                   <WorkOutlineOutlinedIcon className="icon" />
                   ROLES
-                </Link>
+                </NavLink>
 
-                <Link to="/home/permissions" className="text-link">
+                <NavLink
+                  to="/home/permissions"
+                  className={({ isActive }) =>
+                    isActive ? "active-text-link" : "text-link"
+                  }
+                >
                   <LockOutlinedIcon className="icon" />
                   PERMISSIONS
-                </Link>
+                </NavLink>
               </div>
             </nav>
           </div>
