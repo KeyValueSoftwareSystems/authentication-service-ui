@@ -34,13 +34,13 @@ const LoginPassword: React.FC<Props> = ({ onSubmitForm }) => {
             name="username"
             label="Username"
             type="text"
-            className="box"
+            className="textBox"
           />
           <FormInputText
             name="password"
             label="Password"
             type="password"
-            className="box"
+            className="textBox"
           />
           <Button
             variant="contained"
