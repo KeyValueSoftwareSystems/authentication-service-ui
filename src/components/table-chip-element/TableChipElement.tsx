@@ -12,44 +12,47 @@ interface TableChipElementProps {
 
 const TableChipElement: FC<TableChipElementProps> = ({
   rowItems,
-  columnName
+  columnName,
 }) => {
   const { row } = rowItems;
-  console.log(row)
+
   const [viewAllItems, setViewAllItems] = React.useState(false);
 
-  const handleClick = () => {
+  const onClickShowMore = () => {
     setViewAllItems(true);
   };
 
-  const handleReturnClick = () => {
+  const onCancel = () => {
     setViewAllItems(false);
   };
 
   return (
     <>
-        {!viewAllItems && (
+      {viewAllItems ? (
         <>
-          {row[columnName]?.map((item:any, i:number) => i < DEFAULT_SIZE && <Chip label={item?.name} key={item?.id} id="chip" />)}
-          {row[columnName].length > DEFAULT_SIZE && (
-               <Chip
-               label={`+${row[columnName].length-DEFAULT_SIZE}`}
-               key="click-to-see-more"
-               id="chip"
-               onClick={handleClick}
-             />
+          {row[columnName]?.map((item: any) => (
+            <Chip label={item?.name} key={item?.id} id="chip" />
+          ))}
+          <CancelIcon id="cancel-icon" onClick={onCancel} />
+        </>
+      ) : (
+        <>
+          {row[columnName]?.map(
+            (item: any, i: number) =>
+              i < DEFAULT_SIZE && (
+                <Chip label={item?.name} key={item?.id} id="chip" />
+              )
+          )}
+          {row[columnName]?.length > DEFAULT_SIZE && (
+            <Chip
+              label={`+${row[columnName]?.length - DEFAULT_SIZE}`}
+              key="click-to-see-more"
+              id="chip"
+              onClick={onClickShowMore}
+            />
           )}
         </>
       )}
-      {viewAllItems && (
-        <>
-          {row[columnName]?.map((item:any) => (
-            <Chip label={item?.name} key={item?.id} id="chip" />
-          ))}
-          <CancelIcon id="cancel-icon" onClick={handleReturnClick} />
-        </>
-      )}
-
     </>
   );
 };
