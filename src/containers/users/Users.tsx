@@ -4,12 +4,10 @@ import { useMutation, useQuery } from "@apollo/client";
 import { Avatar } from "@mui/material";
 import {
   GridColumns,
-  GridRenderCellParams,
-  GridRowParams,
 } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
 
-import { GET_USERS, GET_USER_GROUPS } from "./services/queries";
+import { GET_USERS} from "./services/queries";
 import "./styles.css";
 import { DELETE_USER } from "./services/mutations";
 import { userListAtom } from "../../states/userStates";
@@ -67,9 +65,8 @@ const Users: React.FC = () => {
       renderCell: (params) => (
         <div className="group-list">
           <TableChipElement
-            props={params}
-            query={GET_USER_GROUPS}
-            element="user"
+            rowItems={params}
+            columnName="groups"
           />
         </div>
       ),
@@ -103,7 +100,7 @@ const GetFullName = (props: any) => {
   let fullName = row.firstName.concat(" ", row.lastName);
   return (
     <>
-      <Avatar {...stringAvatar(fullName)} className="avatar" />
+      <Avatar {...stringAvatar(fullName.toUpperCase())} className="avatar" />
       <div>
         <div className="fullname">{fullName}</div>
         <div className="email">{row.email}</div>
