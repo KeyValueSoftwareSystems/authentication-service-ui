@@ -19,7 +19,7 @@
 }
 
 .edit {
-  color: #67686cbf;
+  color: #67686cbf !important;
 }
 
 .edit:hover {
@@ -27,7 +27,7 @@
 }
 
 .delete {
-  color: #67686cbf;
+  color: #67686cbf !important;
 }
 
 .delete:hover {
