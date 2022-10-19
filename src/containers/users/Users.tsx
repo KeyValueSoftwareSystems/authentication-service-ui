@@ -2,12 +2,10 @@ import React from "react";
 import { useRecoilState } from "recoil";
 import { useMutation, useQuery } from "@apollo/client";
 import { Avatar } from "@mui/material";
-import {
-  GridColumns,
-} from "@mui/x-data-grid";
+import { GridColumns } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
 
-import { GET_USERS} from "./services/queries";
+import { GET_USERS } from "./services/queries";
 import "./styles.css";
 import { DELETE_USER } from "./services/mutations";
 import { userListAtom } from "../../states/userStates";
@@ -64,10 +62,7 @@ const Users: React.FC = () => {
       flex: 0.5,
       renderCell: (params) => (
         <div className="group-list">
-          <TableChipElement
-            rowItems={params}
-            columnName="groups"
-          />
+          <TableChipElement rowItems={params} columnName="groups" />
         </div>
       ),
       headerAlign: "center",
@@ -100,7 +95,7 @@ const GetFullName = (props: any) => {
   let fullName = row.firstName.concat(" ", row.lastName);
   return (
     <>
-      <Avatar {...stringAvatar(fullName.toUpperCase())} className="avatar" />
+      <Avatar {...stringAvatar(fullName)} className="avatar" />
       <div>
         <div className="fullname">{fullName}</div>
         <div className="email">{row.email}</div>

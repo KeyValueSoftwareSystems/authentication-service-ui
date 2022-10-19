@@ -46,8 +46,7 @@ const TableList: FC<TableProps> = ({
                 />
               }
               label="Edit"
-              className="textPrimary"
-              color="inherit"
+              className="edit"
               onClick={() => onEdit(id)}
             />
           </Tooltip>,
@@ -55,7 +54,7 @@ const TableList: FC<TableProps> = ({
             <GridActionsCellItem
               icon={<DeleteOutlinedIcon className="delete" />}
               label="Delete"
-              color="inherit"
+              className="delete"
               onClick={() => {
                 deleteItem({
                   variables: {
