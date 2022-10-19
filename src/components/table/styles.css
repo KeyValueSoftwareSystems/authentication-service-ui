@@ -23,7 +23,7 @@
 }
 
 .edit:hover {
-  color: #039be5;
+  color: #039be5 !important;
 }
 
 .delete {
@@ -31,7 +31,7 @@
 }
 
 .delete:hover {
-  color: #eb272785;
+  color: #eb272785 !important;
 }
 
 .MuiDataGrid-root .MuiDataGrid-cell {
