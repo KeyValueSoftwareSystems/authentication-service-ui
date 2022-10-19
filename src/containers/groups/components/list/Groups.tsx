@@ -1,18 +1,21 @@
 import React from "react";
 import { useRecoilState } from "recoil";
 import { useMutation, useQuery } from "@apollo/client";
-import { GridColumns, GridRowParams } from "@mui/x-data-grid";
-
-import "./styles.css";
-import { DELETE_GROUPS } from "./services/mutations";
-import { GET_GROUPS } from "./services/queries";
-import TableList from "../../../components/table";
-import { groupListAtom } from "../../../states/groupStates";
-import TableChipElement from "../../../components/table-chip-element";
+import { GridColumns, GridRowId, GridRowParams } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
 
+import "./styles.css";
+import { DELETE_GROUP } from "../../services/mutations";
+import { GET_GROUPS } from "../../services/queries";
+import TableList from "../../../../components/table";
+import { groupListAtom } from "../../../../states/groupStates";
+import TableChipElement from "../../../../components/table-chip-element";
+
+
 const GroupList: React.FC = () => {
-  useMutation(DELETE_GROUPS, {
+  const navigate = useNavigate();
+
+  useMutation(DELETE_GROUP, {
     refetchQueries: [{ query: GET_GROUPS }],
   });
   const [groupList, setGroupList] = useRecoilState(groupListAtom);
@@ -48,14 +51,17 @@ const GroupList: React.FC = () => {
     },
   ];
 
-  const navigate= useNavigate();
   const onGroupClick = (params:GridRowParams) => {
     navigate(`./${params.id}`);
   };
-  
-  const onAddGroup = () => {};
 
-  const onEditGroup = () => {};
+  const onAddGroup = () => {
+    navigate("add");
+  };
+
+  const onEditGroup = (id: GridRowId) => {
+    navigate(`edit/${id}`);
+  };
 
   return (
     <>
@@ -65,7 +71,7 @@ const GroupList: React.FC = () => {
         text="All Groups"
         buttonLabel="Add Group"
         searchLabel="Search Group"
-        deleteMutation={DELETE_GROUPS}
+        deleteMutation={DELETE_GROUP}
         refetchQuery={GET_GROUPS}
         onAdd={onAddGroup}
         onEdit={onEditGroup}

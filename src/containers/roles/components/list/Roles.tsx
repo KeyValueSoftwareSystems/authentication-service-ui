@@ -4,11 +4,11 @@ import { useMutation, useQuery } from "@apollo/client";
 import { GridColumns, GridRowId, GridRowParams } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
 
-import "./styles.css";
-import { GET_ROLES } from "./services/queries";
-import { DELETE_ROLE } from "./services/mutations";
-import { RolesListAtom } from "../../states/roleStates";
-import TableList from "../../components/table";
+import "./roles.css";
+import { GET_ROLES } from "../../services/queries";
+import { DELETE_ROLE } from "../../services/mutations";
+import { RolesListAtom } from "../../../../states/roleStates";
+import TableList from "../../../../components/table";
 
 const Roles: React.FC = () => {
   const navigate = useNavigate();
