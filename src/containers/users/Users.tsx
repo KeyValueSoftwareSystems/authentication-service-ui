@@ -43,7 +43,7 @@ const Users: React.FC = () => {
       headerName: "User",
       width: 320,
       headerClassName: "user-list-header",
-      headerAlign: "center",
+      headerAlign: "left",
       renderCell: (params) => (
         <div className="username-column">
           <GetFullName {...params} />
@@ -60,7 +60,8 @@ const Users: React.FC = () => {
           <TableChipElement rowItems={params} columnName="groups" />
         </div>
       ),
-      headerAlign: "center",
+      headerAlign: "left",
+      sortable: false,
     },
   ];
 

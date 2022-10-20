@@ -9,6 +9,7 @@ import { GET_ROLES } from "../../services/queries";
 import { DELETE_ROLE } from "../../services/mutations";
 import { RolesListAtom } from "../../../../states/roleStates";
 import TableList from "../../../../components/table";
+import TableChipElement from "../../../../components/table-chip-element";
 
 const Roles: React.FC = () => {
   const navigate = useNavigate();
@@ -26,9 +27,22 @@ const Roles: React.FC = () => {
     {
       field: "name",
       headerName: "Role",
-      width: 900,
+      width: 280,
       headerClassName: "user-list-header",
-      headerAlign: "center",
+      headerAlign: "left",
+    },
+    {
+      field: "permissions",
+      headerName: "Permissions",
+      headerClassName: "user-list-header",
+      flex: 0.5,
+      renderCell: (params) => (
+        <div className="role-list">
+          <TableChipElement rowItems={params} columnName="roles" />
+        </div>
+      ),
+      headerAlign: "left",
+      sortable: false,
     },
   ];
 
@@ -40,10 +54,10 @@ const Roles: React.FC = () => {
     navigate(`edit/${id}`);
   };
 
-  const onRoleClick = (params:GridRowParams) => {
+  const onRoleClick = (params: GridRowParams) => {
     navigate(`./${params.id}`);
   };
-  
+
   return (
     <>
       <TableList
