@@ -86,6 +86,10 @@ const PermissionList: React.FC = () => {
     setShowAddPermission(true);
   };
 
+  const onCancelAdd = () => {
+    setShowAddPermission(false);
+  };
+
   return (
     <div className="permissionContainer">
       <div className="topContainer">
@@ -111,6 +115,7 @@ const PermissionList: React.FC = () => {
               onSave={onCreatePermission}
               onDeletePermission={onDeletePermission}
               isAdd
+              onCancelAdd={onCancelAdd}
             />
           )}
         </>
