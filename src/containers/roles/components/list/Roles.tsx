@@ -28,7 +28,7 @@ const Roles: React.FC = () => {
       headerName: "Role",
       width: 900,
       headerClassName: "user-list-header",
-      headerAlign: "left",
+      headerAlign: "center",
     },
   ];
 
@@ -40,10 +40,10 @@ const Roles: React.FC = () => {
     navigate(`edit/${id}`);
   };
 
-  const onRoleClick = (params:GridRowParams) => {
+  const onRoleClick = (params: GridRowParams) => {
     navigate(`./${params.id}`);
   };
-  
+
   return (
     <>
       <TableList

@@ -4,13 +4,12 @@ import { useMutation, useQuery } from "@apollo/client";
 import { GridColumns, GridRowId, GridRowParams } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
 
-import "./groups.css";
+import "./styles.css";
 import { DELETE_GROUP } from "../../services/mutations";
-import { GET_GROUPS, GET_GROUP_ROLES } from "../../services/queries";
+import { GET_GROUPS } from "../../services/queries";
 import TableList from "../../../../components/table";
 import { groupListAtom } from "../../../../states/groupStates";
 import TableChipElement from "../../../../components/table-chip-element";
-
 
 const GroupList: React.FC = () => {
   const navigate = useNavigate();
@@ -31,26 +30,24 @@ const GroupList: React.FC = () => {
       field: "name",
       headerName: "Groups",
       headerClassName: "user-list-header",
-      headerAlign: "left",
+      headerAlign: "center",
       width: 280,
     },
     {
       field: "roles",
       headerName: "Roles",
       headerClassName: "user-list-header",
-      flex: 1,
+      flex: 0.5,
       renderCell: (params) => (
-        <TableChipElement
-          props={params}
-          query={GET_GROUP_ROLES}
-          element="group"
-        />
+        <div className="role-list">
+          <TableChipElement rowItems={params} columnName="roles" />
+        </div>
       ),
       headerAlign: "center",
     },
   ];
 
-  const onGroupClick = (params:GridRowParams) => {
+  const onGroupClick = (params: GridRowParams) => {
     navigate(`./${params.id}`);
   };
 
