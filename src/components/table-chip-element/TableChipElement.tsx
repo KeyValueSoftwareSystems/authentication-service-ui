@@ -18,12 +18,14 @@ const TableChipElement: FC<TableChipElementProps> = ({
 
   const [viewAllItems, setViewAllItems] = React.useState(false);
 
-  const onClickShowMore = () => {
+  const onClickShowMore = (event: React.MouseEvent) => {
     setViewAllItems(true);
+    event.stopPropagation();
   };
 
-  const onCancel = () => {
+  const onCancel = (event: React.MouseEvent) => {
     setViewAllItems(false);
+    event.stopPropagation();
   };
 
   return (

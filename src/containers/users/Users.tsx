@@ -45,12 +45,7 @@ const Users: React.FC = () => {
       headerClassName: "user-list-header",
       headerAlign: "center",
       renderCell: (params) => (
-        <div
-          className="username-column"
-          onClick={() => {
-            onUserClick(params);
-          }}
-        >
+        <div className="username-column">
           <GetFullName {...params} />
         </div>
       ),
@@ -85,6 +80,7 @@ const Users: React.FC = () => {
         searchLabel="Search User"
         deleteMutation={DELETE_USER}
         refetchQuery={GET_USERS}
+        handleRowClick={onUserClick}
       />
     </>
   );
