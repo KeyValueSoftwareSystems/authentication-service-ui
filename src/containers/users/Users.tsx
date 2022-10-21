@@ -93,7 +93,7 @@ const GetFullName = (props: any) => {
   let fullName = row.firstName.concat(" ", row.lastName);
   return (
     <>
-      <Avatar {...stringAvatar(fullName)} className="avatar" />
+      <Avatar {...stringAvatar(fullName.toUpperCase())} className="avatar" />
       <div>
         <div className="fullname">{fullName}</div>
         <div className="email">{row.email}</div>
