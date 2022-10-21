@@ -22,6 +22,7 @@ const Roles: React.FC = () => {
     onCompleted: (data) => {
       setRoleList(data?.getRoles);
     },
+    fetchPolicy: "network-only",
   });
   const columns: GridColumns = [
     {
@@ -35,7 +36,6 @@ const Roles: React.FC = () => {
       field: "permissions",
       headerName: "Permissions",
       headerClassName: "user-list-header",
-      flex: 0.5,
       renderCell: (params) => (
         <div className="role-list">
           <TableChipElement rowItems={params} columnName="roles" />
@@ -43,6 +43,7 @@ const Roles: React.FC = () => {
       ),
       headerAlign: "left",
       sortable: false,
+      flex: 0.7,
     },
   ];
 
