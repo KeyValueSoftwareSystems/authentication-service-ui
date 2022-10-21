@@ -59,6 +59,8 @@ const Roles: React.FC = () => {
         onAdd={onAddRole}
         onEdit={onEditRole}
         handleRowClick={onRoleClick}
+        editPermission="edit-roles"
+        deletePermission="delete-roles"
       />
     </>
   );

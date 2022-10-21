@@ -82,6 +82,8 @@ const Users: React.FC = () => {
         deleteMutation={DELETE_USER}
         refetchQuery={GET_USERS}
         handleRowClick={onUserClick}
+        editPermission="edit-user"
+        deletePermission="delete-user"
       />
     </>
   );

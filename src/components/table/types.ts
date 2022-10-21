@@ -14,6 +14,8 @@ export interface TableProps {
   searchLabel: string;
   deleteMutation: DocumentNode;
   refetchQuery: DocumentNode;
+  editPermission?: string;
+  deletePermission?: string;
   handleRowClick?: (params: GridRowParams) => void;
   onAdd: () => void;
   onEdit: (id: GridRowId) => void;

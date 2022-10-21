@@ -73,6 +73,8 @@ const GroupList: React.FC = () => {
         onAdd={onAddGroup}
         onEdit={onEditGroup}
         handleRowClick={onGroupClick}
+        editPermission="edit-groups"
+        deletePermission="delete-groups"
       />
     </>
   );
