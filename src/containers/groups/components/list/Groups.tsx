@@ -23,6 +23,7 @@ const GroupList: React.FC = () => {
     onCompleted: (data) => {
       setGroupList(data?.getGroups);
     },
+    fetchPolicy: "network-only",
   });
 
   const columns: GridColumns = [

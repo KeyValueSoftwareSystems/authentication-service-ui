@@ -21,6 +21,7 @@ const Roles: React.FC = () => {
     onCompleted: (data) => {
       setRoleList(data?.getRoles);
     },
+    fetchPolicy: "network-only",
   });
   const columns: GridColumns = [
     {
@@ -29,6 +30,7 @@ const Roles: React.FC = () => {
       width: 900,
       headerClassName: "user-list-header",
       headerAlign: "center",
+      flex: 0.7,
     },
   ];
 
