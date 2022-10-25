@@ -90,12 +90,14 @@ const Users: React.FC = () => {
 
 const GetFullName = (props: any) => {
   const { row } = props;
-  let fullName = row.firstName.concat(" ", row.lastName);
   return (
     <>
-      <Avatar {...stringAvatar(fullName.toUpperCase())} className="avatar" />
+      <Avatar
+        {...stringAvatar(`${row.firstName} ${row.lastName}`?.toUpperCase())}
+        className="avatar"
+      />
       <div>
-        <div className="fullname">{fullName}</div>
+        <div className="fullname">{`${row.firstName} ${row.lastName}`}</div>
         <div className="email">{row.email}</div>
       </div>
     </>
