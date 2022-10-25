@@ -44,11 +44,6 @@ const HomePage = () => {
     },
   });
 
-  let fullName = currentUserDetails.firstName.concat(
-    " ",
-    currentUserDetails.lastName
-  );
-
   const onLogout = () => {
     logout();
   };
@@ -62,7 +57,12 @@ const HomePage = () => {
           <div className="userdetails-logout">
             <Tooltip title="Account Details">
               <IconButton className="navbar-avatar" onClick={handleClick}>
-                <Avatar {...stringAvatar(fullName)} className="navbar-avatar" />
+                <Avatar
+                  {...stringAvatar(
+                    `${currentUserDetails.firstName} ${currentUserDetails.lastName}`
+                  )}
+                  className="navbar-avatar"
+                />
               </IconButton>
             </Tooltip>
             <Menu
@@ -102,7 +102,7 @@ const HomePage = () => {
             >
               <MenuItem>
                 <Avatar sx={{ backgroundColor: "#7e6b6b" }} />
-                {fullName}
+                {`${currentUserDetails.firstName} ${currentUserDetails.lastName}`}
               </MenuItem>
               <MenuItem>
                 <EmailIcon className="dropdown-icon" />
