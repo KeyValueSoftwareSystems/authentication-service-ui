@@ -86,3 +86,17 @@
   background-color: aliceblue;
   padding: 10px 0px 10px 20px;
 }
+
+.navbar-avatar {
+  padding: none !important;
+}
+
+.userdetails-logout {
+  display: flex;
+  align-items: center;
+}
+
+.dropdown-icon {
+  margin-right: 11px;
+  color: #7e6b6b;
+}
