@@ -58,7 +58,11 @@ const Users: React.FC = () => {
       flex: 0.5,
       renderCell: (params) => (
         <div className="group-list">
-          <TableChipElement rowItems={params} columnName="groups" />
+          <TableChipElement
+            rowItems={params}
+            columnName="groups"
+            defaultSize={6}
+          />
         </div>
       ),
       headerAlign: "left",

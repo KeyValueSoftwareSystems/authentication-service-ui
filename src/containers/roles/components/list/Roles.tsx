@@ -38,7 +38,11 @@ const Roles: React.FC = () => {
       headerClassName: "user-list-header",
       renderCell: (params) => (
         <div className="role-list">
-          <TableChipElement rowItems={params} columnName="roles" />
+          <TableChipElement
+            rowItems={params}
+            columnName="roles"
+            defaultSize={6}
+          />
         </div>
       ),
       headerAlign: "left",
