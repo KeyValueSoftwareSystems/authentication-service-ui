@@ -163,7 +163,13 @@ const CreateOrEditGroup = () => {
   useEffect(() => {
     if (createdGroupData || updatedGroupData)
       if (updatedGroupRolesData && updatedGroupPermissionsData) {
-        navigate("/home/groups");
+        navigate("/home/groups", {
+          state: {
+            message: createdGroupData
+              ? "Group has been successfully created"
+              : "Group has been successfully updated",
+          },
+        });
       }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [

@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { useMutation, useQuery } from "@apollo/client";
 import { GridColumns, GridRowId, GridRowParams } from "@mui/x-data-grid";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import "./styles.css";
 import { DELETE_GROUP } from "../../services/mutations";
@@ -10,14 +10,23 @@ import { GET_GROUPS } from "../../services/queries";
 import TableList from "../../../../components/table";
 import { groupListAtom } from "../../../../states/groupStates";
 import TableChipElement from "../../../../components/table-chip-element";
+import Toast from "../../../../components/toast";
 
 const GroupList: React.FC = () => {
   const navigate = useNavigate();
+  const { state } = useLocation();
+  const [message, setMessage] = useState<string>();
 
   useMutation(DELETE_GROUP, {
     refetchQueries: [{ query: GET_GROUPS }],
   });
   const [groupList, setGroupList] = useRecoilState(groupListAtom);
+
+  useEffect(() => {
+    if (state?.message) {
+      setMessage(state.message);
+    }
+  }, [state]);
 
   useQuery(GET_GROUPS, {
     onCompleted: (data) => {
@@ -60,6 +69,10 @@ const GroupList: React.FC = () => {
     navigate(`edit/${id}`);
   };
 
+  const onCloseToast = () => {
+    setMessage("");
+  };
+
   return (
     <>
       <TableList
@@ -73,6 +86,12 @@ const GroupList: React.FC = () => {
         onAdd={onAddGroup}
         onEdit={onEditGroup}
         handleRowClick={onGroupClick}
+      />
+
+      <Toast
+        message={message}
+        isOpen={Boolean(message)}
+        handleClose={onCloseToast}
       />
     </>
   );

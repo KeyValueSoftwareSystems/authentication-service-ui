@@ -1,17 +1,27 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { useMutation, useQuery } from "@apollo/client";
 import { GridColumns, GridRowId, GridRowParams } from "@mui/x-data-grid";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import "./roles.css";
 import { GET_ROLES } from "../../services/queries";
 import { DELETE_ROLE } from "../../services/mutations";
 import { RolesListAtom } from "../../../../states/roleStates";
 import TableList from "../../../../components/table";
+import Toast from "../../../../components/toast";
 
 const Roles: React.FC = () => {
   const navigate = useNavigate();
+  const { state } = useLocation();
+
+  const [message, setMessage] = useState<string>();
+
+  useEffect(() => {
+    if (state?.message) {
+      setMessage(state.message);
+    }
+  }, [state]);
 
   useMutation(DELETE_ROLE, {
     refetchQueries: [{ query: GET_ROLES }],
@@ -46,6 +56,10 @@ const Roles: React.FC = () => {
     navigate(`./${params.id}`);
   };
 
+  const onCloseToast = () => {
+    setMessage("");
+  };
+
   return (
     <>
       <TableList
@@ -59,6 +73,12 @@ const Roles: React.FC = () => {
         onAdd={onAddRole}
         onEdit={onEditRole}
         handleRowClick={onRoleClick}
+      />
+
+      <Toast
+        message={message}
+        isOpen={Boolean(message)}
+        handleClose={onCloseToast}
       />
     </>
   );

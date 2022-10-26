@@ -90,7 +90,9 @@ const EditUser: React.FC = () => {
       },
       onCompleted: () => {
         if (!userUpdateError && !groupUpdateError && !permissionUpdateError)
-          navigate("/home/users");
+          navigate("/home/users", {
+            state: { message: "User has been successfully updated" },
+          });
       },
     });
   };
