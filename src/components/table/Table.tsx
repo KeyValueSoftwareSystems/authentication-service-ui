@@ -1,6 +1,6 @@
-import { DataGrid, GridActionsCellItem, GridColumns } from "@mui/x-data-grid";
-import { FC } from "react";
-import { Tooltip } from "@mui/material";
+import { DataGrid, GridActionsCellItem, GridColumns, GridRowId } from "@mui/x-data-grid";
+import { FC, useState } from "react";
+import { Button, Dialog, DialogActions, DialogContentText, DialogTitle, Tooltip } from "@mui/material";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { useMutation } from "@apollo/client";
@@ -20,10 +20,38 @@ const TableList: FC<TableProps> = ({
   deleteMutation,
   refetchQuery,
   handleRowClick,
+  entity
 }) => {
+
   const [deleteItem] = useMutation(deleteMutation, {
     refetchQueries: [{ query: refetchQuery }],
   });
+
+  const [open, setOpen] = useState(false);
+  const [entityId,setEntityId]= useState<GridRowId>("");
+
+  const handleYesNo= (input:string) => {
+
+    if(input==="yes")
+    deleteItem({
+      variables: {
+        id: entityId,
+      },
+    onCompleted(data){
+      console.log(data)
+    }
+    });
+    handleClose();
+  };
+
+  const handleClose=()=> {
+    setOpen(false)
+  }
+
+  const handleClickOpen = (id:GridRowId) => {
+    setOpen(true);
+    setEntityId(id);
+  };
 
   const action_column: GridColumns = [
     {
@@ -34,6 +62,7 @@ const TableList: FC<TableProps> = ({
       flex: 0.3,
       cellClassName: "actions",
       headerAlign: "center",
+
       getActions: ({ id }) => {
         return [
           <Tooltip title="Edit" arrow placement="top">
@@ -51,19 +80,52 @@ const TableList: FC<TableProps> = ({
             />
           </Tooltip>,
           <Tooltip title="Delete" arrow placement="top">
-            <GridActionsCellItem
-              icon={<DeleteOutlinedIcon className="delete" />}
-              label="Delete"
-              className="delete"
-              onClick={() => {
-                deleteItem({
-                  variables: {
-                    id: id,
+            <>
+              <GridActionsCellItem
+                icon={<DeleteOutlinedIcon className="delete" />}
+                label="Delete"
+                className="delete"
+                onClick={() => handleClickOpen(id)}
+              />
+              <Dialog
+                BackdropProps={{ invisible: true }}
+                PaperProps={{
+                  style: {
+                    // backgroundColor: "white",
+                    boxShadow: "none",
+                    marginLeft:'10px',
+                    // position: "absolute",
+                    // border:'1px',
+                    // borderColor:'black',
+                    width:'400px',
+                    // top: "50%",
+                    // left: "50%",
+                    alignItems:'center',
+                    // transform: "translate(-50%, -50%)",
                   },
-                });
-              }}
-            />
-          </Tooltip>,
+                }}
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+              >
+                <DialogTitle id="alert-dialog-title">
+                  <>Select {entity}</>
+                </DialogTitle>
+                <DialogContentText id="alert-dialog-description">
+                  <> Are you sure you want to delete the {entity}</>
+                </DialogContentText>
+                <DialogActions>
+                  <Button onClick={() => {
+                    console.log(id)
+                    handleYesNo("no")}}>No</Button>
+                  <Button onClick={() => handleYesNo("yes")} autoFocus>
+                    Yes
+                  </Button>
+                </DialogActions>
+              </Dialog>
+            </>
+          </Tooltip>
         ];
       },
     },
