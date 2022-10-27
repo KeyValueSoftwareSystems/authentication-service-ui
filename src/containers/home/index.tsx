@@ -4,16 +4,17 @@ import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
 import Diversity3OutlinedIcon from "@mui/icons-material/Diversity3Outlined";
 import WorkOutlineOutlinedIcon from "@mui/icons-material/WorkOutlineOutlined";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
+import ArrowDropDownOutlinedIcon from "@mui/icons-material/ArrowDropDownOutlined";
 import {
   Avatar,
-  Button,
+  Divider,
   IconButton,
   Menu,
   MenuItem,
   Tooltip,
 } from "@mui/material";
-import EmailIcon from "@mui/icons-material/Email";
-import CallIcon from "@mui/icons-material/Call";
+import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import React from "react";
 import { useRecoilState } from "recoil";
 
@@ -22,7 +23,7 @@ import CustomerAuth from "../../services/auth";
 import "./styles.css";
 import { LOGOUT } from "../auth/services/mutations";
 import { currentUserAtom } from "../../states/loginStates";
-import { stringAvatar } from "../../utils/table";
+import { stringAvatar, stringToColor } from "../../utils/table";
 
 const HomePage = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -54,15 +55,15 @@ const HomePage = () => {
           <div className="navLogo">
             <img alt="logo" src={LOGO_URL} />
           </div>
-          <div className="userdetails-logout">
+          <div className="userdetails">
+            <Avatar
+              {...stringAvatar(
+                `${currentUserDetails.firstName} ${currentUserDetails.lastName}`
+              )}
+            />
             <Tooltip title="Account Details">
               <IconButton className="navbar-avatar" onClick={handleClick}>
-                <Avatar
-                  {...stringAvatar(
-                    `${currentUserDetails.firstName} ${currentUserDetails.lastName}`
-                  )}
-                  className="navbar-avatar"
-                />
+                <ArrowDropDownOutlinedIcon />
               </IconButton>
             </Tooltip>
             <Menu
@@ -74,12 +75,13 @@ const HomePage = () => {
               PaperProps={{
                 elevation: 0,
                 sx: {
+                  minWidth: "250px",
                   overflow: "visible",
                   filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
                   mt: 1.5,
                   "& .MuiAvatar-root": {
-                    width: 32,
-                    height: 32,
+                    width: 39,
+                    height: 39,
                     ml: -0.5,
                     mr: 1,
                   },
@@ -101,27 +103,37 @@ const HomePage = () => {
               anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
             >
               <MenuItem>
-                <Avatar sx={{ backgroundColor: "#7e6b6b" }} />
-                {`${currentUserDetails.firstName} ${currentUserDetails.lastName}`}
+                <Avatar
+                  {...stringAvatar(
+                    `${currentUserDetails.firstName} ${currentUserDetails.lastName}`
+                  )}
+                  sx={{
+                    marginLeft: "0px !important",
+                    bgcolor: stringToColor(
+                      `${currentUserDetails.firstName} ${currentUserDetails.lastName}`
+                    ),
+                  }}
+                />
+                <div>
+                  <div className="user-name">{`${currentUserDetails.firstName} ${currentUserDetails.lastName}`}</div>
+                  <div className="user-email">{currentUserDetails.email}</div>
+                </div>
               </MenuItem>
-              <MenuItem>
-                <EmailIcon className="dropdown-icon" />
-                {currentUserDetails.email}
+              <Divider />
+              <MenuItem
+                onClick={() => {
+                  navigate(`./users/${currentUserDetails.id}`);
+                }}
+                sx={{ color: "#6d6d6d" }}
+              >
+                <AccountCircleOutlinedIcon className="details-icon" />
+                View Profile
               </MenuItem>
-              <MenuItem>
-                <CallIcon className="dropdown-icon" />
-                {currentUserDetails.phone}
+              <MenuItem onClick={onLogout} sx={{ color: "#6d6d6d" }}>
+                <LogoutOutlinedIcon className="details-icon" />
+                Logout
               </MenuItem>
             </Menu>
-            <div className="logout">
-              <Button
-                variant="outlined"
-                onClick={onLogout}
-                sx={{ textTransform: "none", marginLeft: "10px" }}
-              >
-                Logout
-              </Button>
-            </div>
           </div>
         </div>
 

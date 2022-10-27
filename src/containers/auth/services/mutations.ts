@@ -6,6 +6,7 @@ export const LOGIN = gql`
       refreshToken
       accessToken
       user {
+        id
         firstName
         lastName
         email
