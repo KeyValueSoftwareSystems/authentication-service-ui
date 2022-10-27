@@ -14,8 +14,6 @@ import { GET_GROUP_PERMISSIONS } from "../../../groups/services/queries";
 import { getUniquePermissions } from "../../../../utils/permissions";
 import { GroupPermissionsDetails } from "../../../../types/permission";
 import "./styles.css";
-import { useRecoilState } from "recoil";
-import { currentUserAtom } from "../../../../states/loginStates";
 
 const EditUser: React.FC = () => {
   const { id } = useParams();
@@ -24,8 +22,6 @@ const EditUser: React.FC = () => {
     GroupPermissionsDetails[]
   >([]);
   const [selectedGroupIds, setUserGroupIds] = useState<string[]>([]);
-  const [currentUserDetails, setCurrentUserDetails] =
-    useRecoilState(currentUserAtom);
 
   const [updateUser, { error: userUpdateError }] = useMutation(UPDATE_USER);
   const [updateUserGroups, { error: groupUpdateError }] =
@@ -73,11 +69,6 @@ const EditUser: React.FC = () => {
           middleName: inputs.middleName,
           lastName: inputs.lastName,
         },
-      },
-      onCompleted: (data) => {
-        if (id === currentUserDetails.id) {
-          setCurrentUserDetails(data?.updateUser);
-        }
       },
     });
 
