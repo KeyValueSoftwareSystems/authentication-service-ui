@@ -36,7 +36,6 @@ const UserForm = (props: any) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [user, setUser] = useState<User>();
-  const [selectAll, setSelectAll] = useState<boolean>(false);
   const [userGroups, setUserGroups] = useState<Group[]>([]);
   const [userPermissions, setUserPermissions] = useState<
     EntityPermissionsDetails[]
@@ -145,7 +144,6 @@ const UserForm = (props: any) => {
           allGroups.forEach((group) => {
             handlePermissions(group);
           });
-          setSelectAll(true);
         } else {
           setUserGroups([...userGroups, group]);
         }
@@ -155,7 +153,6 @@ const UserForm = (props: any) => {
       if (value === "all") {
         setUserGroups([]);
         setUserPermissions([]);
-        setSelectAll(false);
       }
       removeGroup(group);
     }
@@ -265,7 +262,6 @@ const UserForm = (props: any) => {
                   mapList={groupData?.getGroups}
                   currentCheckedItems={userGroups}
                   onChange={handleChange}
-                  selectAll={selectAll}
                 />
               </div>
               <Divider orientation="vertical" flexItem sx={{ marginLeft: 2 }} />

@@ -1,20 +1,29 @@
-
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { Outlet, Navigate, useNavigate, NavLink } from "react-router-dom";
 import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
 import Diversity3OutlinedIcon from "@mui/icons-material/Diversity3Outlined";
 import WorkOutlineOutlinedIcon from "@mui/icons-material/WorkOutlineOutlined";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { Button } from "@mui/material";
+import { useSetRecoilState } from "recoil";
 
 import { LOGO_URL } from "../../config";
 import CustomerAuth from "../../services/auth";
 import "./styles.css";
 import { LOGOUT } from "../auth/services/mutations";
-
+import { GET_USERS } from "../users/services/queries";
+import { allUsersAtom } from "../../states/userStates";
 
 const HomePage = () => {
   const navigate = useNavigate();
+
+  const setUsers = useSetRecoilState(allUsersAtom);
+
+  useQuery(GET_USERS, {
+    onCompleted: (data) => {
+      setUsers(data?.getUsers);
+    },
+  });
 
   const [logout] = useMutation(LOGOUT, {
     onCompleted: () => {
