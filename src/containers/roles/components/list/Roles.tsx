@@ -10,6 +10,7 @@ import { DELETE_ROLE } from "../../services/mutations";
 import { RolesListAtom } from "../../../../states/roleStates";
 import TableList from "../../../../components/table";
 import { UserPermissionsAtom } from "../../../../states/permissionsStates";
+import TableChipElement from "../../../../components/table-chip-element";
 
 const Roles: React.FC = () => {
   const navigate = useNavigate();
@@ -31,9 +32,25 @@ const Roles: React.FC = () => {
     {
       field: "name",
       headerName: "Role",
-      width: 900,
+      width: 280,
       headerClassName: "user-list-header",
-      headerAlign: "center",
+      headerAlign: "left",
+    },
+    {
+      field: "permissions",
+      headerName: "Permissions",
+      headerClassName: "user-list-header",
+      renderCell: (params) => (
+        <div className="permission-list">
+          <TableChipElement
+            rowItems={params}
+            columnName="permissions"
+            defaultSize={6}
+          />
+        </div>
+      ),
+      headerAlign: "left",
+      sortable: false,
       flex: 0.7,
     },
   ];
