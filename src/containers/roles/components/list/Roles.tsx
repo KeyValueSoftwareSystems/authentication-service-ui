@@ -37,10 +37,10 @@ const Roles: React.FC = () => {
       headerName: "Permissions",
       headerClassName: "user-list-header",
       renderCell: (params) => (
-        <div className="role-list">
+        <div className="permission-list">
           <TableChipElement
             rowItems={params}
-            columnName="roles"
+            columnName="permissions"
             defaultSize={6}
           />
         </div>
