@@ -107,6 +107,7 @@ const PermissionList: React.FC = () => {
               onSave={onEditPermission}
               onDeletePermission={onDeletePermission}
               isAdd={false}
+              onCancelAdd={onCancelAdd}
             />
           ))}
           {showAddPermission && (

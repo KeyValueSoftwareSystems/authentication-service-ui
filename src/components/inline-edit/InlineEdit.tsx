@@ -12,7 +12,7 @@ type InlineEditProps = {
   onSave: (value: string | undefined, id: string | undefined) => void;
   onDeletePermission: (id: string | undefined) => void;
   isAdd: boolean;
-  onCancelAdd?: any;
+  onCancelAdd: () => void;
 };
 
 const InlineEdit: React.FC<InlineEditProps> = ({
