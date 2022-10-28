@@ -2,6 +2,7 @@ import { useQuery } from "@apollo/client";
 import { Chip } from "@mui/material";
 import DoneIcon from "@mui/icons-material/Done";
 import { useState } from "react";
+
 import "./styles.css";
 import { GET_PERMISSIONS } from "../../containers/permissions/services/queries";
 import { Permission } from "../../types/user";
@@ -23,9 +24,9 @@ const FilterChips: React.FC<FilterChipsProps> = (props: FilterChipsProps) => {
   return (
     <div className="chips-stack">
       {allPermissions?.map((permission: Permission) => {
-        const selected = selectedPermissions
-          .map((selected: Permission) => selected.id)
-          .includes(permission.id);
+        const selected = selectedPermissions.some(
+          (selected: Permission) => selected.id === permission.id
+        );
         return (
           <Chip
             sx={
