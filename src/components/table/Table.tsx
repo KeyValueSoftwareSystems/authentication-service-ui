@@ -22,7 +22,7 @@ const TableList: FC<TableProps> = ({
   refetchQuery,
   editPermission,
   deletePermission,
-  addPermission,
+  isAddVerified,
   handleRowClick,
 }) => {
   const [isEditVerified, setEditVerified] = React.useState(true);
@@ -108,7 +108,7 @@ const TableList: FC<TableProps> = ({
           text={text}
           buttonLabel={buttonLabel}
           searchLabel={searchLabel}
-          addPermission={addPermission}
+          isAddVerified={isAddVerified}
           onAdd={onAdd}
         />
       </div>

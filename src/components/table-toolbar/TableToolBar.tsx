@@ -12,22 +12,10 @@ const TableToolBar: FC<TableToolBarProps> = ({
   text,
   searchLabel,
   buttonLabel,
-  addPermission,
+  isAddVerified,
   onAdd,
 }) => {
   const navigate = useNavigate();
-
-  const [isAddVerified, setAddVerified] = React.useState(false);
-  const [userPermissions, setUserPermissions] =
-    useRecoilState(UserPermissionsAtom);
-
-  useEffect(() => {
-    userPermissions.map((item: any) => {
-      if (item?.name.includes(addPermission)) {
-        setAddVerified(true);
-      }
-    });
-  }, []);
 
   return (
     <div className="table-toolbar">

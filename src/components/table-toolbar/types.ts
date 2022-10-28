@@ -2,6 +2,6 @@ export interface TableToolBarProps {
   buttonLabel: string;
   text: string;
   searchLabel: string;
-  addPermission?: string;
+  isAddVerified?: boolean;
   onAdd?: () => void;
 }

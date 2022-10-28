@@ -16,7 +16,7 @@ export interface TableProps {
   refetchQuery: DocumentNode;
   editPermission?: string;
   deletePermission?: string;
-  addPermission?: string;
+  isAddVerified?: boolean;
   handleRowClick?: (params: GridRowParams) => void;
   onAdd: () => void;
   onEdit: (id: GridRowId) => void;

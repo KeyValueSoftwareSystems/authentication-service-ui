@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { useMutation, useQuery } from "@apollo/client";
 import { GridColumns, GridRowId, GridRowParams } from "@mui/x-data-grid";
@@ -9,9 +9,13 @@ import { GET_ROLES } from "../../services/queries";
 import { DELETE_ROLE } from "../../services/mutations";
 import { RolesListAtom } from "../../../../states/roleStates";
 import TableList from "../../../../components/table";
+import { UserPermissionsAtom } from "../../../../states/permissionsStates";
 
 const Roles: React.FC = () => {
   const navigate = useNavigate();
+
+  const [isAddVerified, setAddVerified] = React.useState(false);
+  const [userPermissions] = useRecoilState(UserPermissionsAtom);
 
   useMutation(DELETE_ROLE, {
     refetchQueries: [{ query: GET_ROLES }],
@@ -46,6 +50,14 @@ const Roles: React.FC = () => {
     navigate(`./${params.id}`);
   };
 
+  useEffect(() => {
+    userPermissions.map((item: any) => {
+      if (item?.name.includes("create-roles")) {
+        setAddVerified(true);
+      }
+    });
+  }, []);
+
   return (
     <>
       <TableList
@@ -61,7 +73,7 @@ const Roles: React.FC = () => {
         handleRowClick={onRoleClick}
         editPermission="edit-roles"
         deletePermission="delete-roles"
-        addPermission="create-roles"
+        isAddVerified={!isAddVerified}
       />
     </>
   );
