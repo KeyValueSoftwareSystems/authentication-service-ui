@@ -1,6 +1,19 @@
-import { DataGrid, GridActionsCellItem, GridColumns, GridRowId } from "@mui/x-data-grid";
+import {
+  DataGrid,
+  GridActionsCellItem,
+  GridColumns,
+  GridRowId,
+} from "@mui/x-data-grid";
 import { FC, useState } from "react";
-import { Button, Dialog, DialogActions, DialogContentText, DialogTitle, Tooltip } from "@mui/material";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContentText,
+  DialogTitle,
+  styled,
+  Tooltip,
+} from "@mui/material";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { useMutation } from "@apollo/client";
@@ -8,6 +21,12 @@ import { useMutation } from "@apollo/client";
 import { TableProps } from "./types";
 import TableToolBar from "../table-toolbar/TableToolBar";
 import "./styles.css";
+
+const StyledDialog = styled(Dialog)`
+  .MuiBackdrop-root {
+    background-color: rgba(220, 220, 220, 0.05);
+  }
+`;
 
 const TableList: FC<TableProps> = ({
   rows,
@@ -20,35 +39,33 @@ const TableList: FC<TableProps> = ({
   deleteMutation,
   refetchQuery,
   handleRowClick,
-  entity
+  entity,
 }) => {
-
   const [deleteItem] = useMutation(deleteMutation, {
     refetchQueries: [{ query: refetchQuery }],
   });
 
   const [open, setOpen] = useState(false);
-  const [entityId,setEntityId]= useState<GridRowId>("");
+  const [entityId, setEntityId] = useState<GridRowId>("");
 
-  const handleYesNo= (input:string) => {
-
-    if(input==="yes")
-    deleteItem({
-      variables: {
-        id: entityId,
-      },
-    onCompleted(data){
-      console.log(data)
-    }
-    });
+  const handleYesNo = (input: string) => {
+    if (input === "yes")
+      deleteItem({
+        variables: {
+          id: entityId,
+        },
+        onCompleted(data) {
+          console.log(data);
+        },
+      });
     handleClose();
   };
 
-  const handleClose=()=> {
-    setOpen(false)
-  }
+  const handleClose = () => {
+    setOpen(false);
+  };
 
-  const handleClickOpen = (id:GridRowId) => {
+  const handleClickOpen = (id: GridRowId) => {
     setOpen(true);
     setEntityId(id);
   };
@@ -87,45 +104,58 @@ const TableList: FC<TableProps> = ({
                 className="delete"
                 onClick={() => handleClickOpen(id)}
               />
-              <Dialog
-                BackdropProps={{ invisible: true }}
+              <StyledDialog
                 PaperProps={{
                   style: {
-                    // backgroundColor: "white",
                     boxShadow: "none",
-                    marginLeft:'10px',
-                    // position: "absolute",
-                    // border:'1px',
-                    // borderColor:'black',
-                    width:'400px',
-                    // top: "50%",
-                    // left: "50%",
-                    alignItems:'center',
-                    // transform: "translate(-50%, -50%)",
+                    width: "400px",
+                    alignItems: "center",
                   },
                 }}
                 open={open}
                 onClose={handleClose}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
               >
-                <DialogTitle id="alert-dialog-title">
-                  <>Select {entity}</>
+                <DialogTitle>
+                  <>Delete {entity}</>
                 </DialogTitle>
-                <DialogContentText id="alert-dialog-description">
+                <DialogContentText>
                   <> Are you sure you want to delete the {entity}</>
                 </DialogContentText>
                 <DialogActions>
-                  <Button onClick={() => {
-                    console.log(id)
-                    handleYesNo("no")}}>No</Button>
-                  <Button onClick={() => handleYesNo("yes")} autoFocus>
+                  <Button
+                    sx={{
+                      backgroundColor: "#808080",
+                      color: "white",
+                      borderRadius:'5px',
+                      height:'40px',
+                      marginBottom:'20px',
+                      marginRight:'5px',
+                      marginTop:'10px'
+                    }}
+                    onClick={() => {
+                      handleYesNo("no");
+                    }}
+                  >
+                    No
+                  </Button>
+                  <Button
+                    sx={{
+                      backgroundColor: "#039BE5",
+                      color: "white",
+                      borderRadius:'5px',
+                      height:'40px',
+                      marginBottom:'20px',
+                      marginTop:'10px'
+                    }}
+                    onClick={() => handleYesNo("yes")}
+                    autoFocus
+                  >
                     Yes
                   </Button>
                 </DialogActions>
-              </Dialog>
+              </StyledDialog>
             </>
-          </Tooltip>
+          </Tooltip>,
         ];
       },
     },
