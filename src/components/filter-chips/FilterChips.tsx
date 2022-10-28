@@ -24,9 +24,9 @@ const FilterChips: React.FC<FilterChipsProps> = (props: FilterChipsProps) => {
   return (
     <div className="chips-stack">
       {allPermissions?.map((permission: Permission) => {
-        const selected = selectedPermissions
-          .map((selected: Permission) => selected.id)
-          .includes(permission.id);
+        const selected = selectedPermissions.some(
+          (selected: Permission) => selected.id === permission.id
+        );
         return (
           <Chip
             sx={
