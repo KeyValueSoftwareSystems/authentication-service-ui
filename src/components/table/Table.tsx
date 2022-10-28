@@ -48,16 +48,12 @@ const TableList: FC<TableProps> = ({
   const [open, setOpen] = useState(false);
   const [entityId, setEntityId] = useState<GridRowId>("");
 
-  const handleYesNo = (input: string) => {
-    if (input === "yes")
-      deleteItem({
-        variables: {
-          id: entityId,
-        },
-        onCompleted(data) {
-          console.log(data);
-        },
-      });
+  const onConfirmDelete = () => {
+    deleteItem({
+      variables: {
+        id: entityId,
+      },
+    });
     handleClose();
   };
 
@@ -65,7 +61,7 @@ const TableList: FC<TableProps> = ({
     setOpen(false);
   };
 
-  const handleClickOpen = (id: GridRowId) => {
+  const openConfirmPopup = (id: GridRowId) => {
     setOpen(true);
     setEntityId(id);
   };
@@ -102,7 +98,7 @@ const TableList: FC<TableProps> = ({
                 icon={<DeleteOutlinedIcon className="delete" />}
                 label="Delete"
                 className="delete"
-                onClick={() => handleClickOpen(id)}
+                onClick={() => openConfirmPopup(id)}
               />
               <StyledDialog
                 PaperProps={{
@@ -126,15 +122,13 @@ const TableList: FC<TableProps> = ({
                     sx={{
                       backgroundColor: "#808080",
                       color: "white",
-                      borderRadius:'5px',
-                      height:'40px',
-                      marginBottom:'20px',
-                      marginRight:'5px',
-                      marginTop:'10px'
+                      borderRadius: "5px",
+                      height: "40px",
+                      marginBottom: "20px",
+                      marginRight: "5px",
+                      marginTop: "10px",
                     }}
-                    onClick={() => {
-                      handleYesNo("no");
-                    }}
+                    onClick={handleClose}
                   >
                     No
                   </Button>
@@ -142,12 +136,12 @@ const TableList: FC<TableProps> = ({
                     sx={{
                       backgroundColor: "#039BE5",
                       color: "white",
-                      borderRadius:'5px',
-                      height:'40px',
-                      marginBottom:'20px',
-                      marginTop:'10px'
+                      borderRadius: "5px",
+                      height: "40px",
+                      marginBottom: "20px",
+                      marginTop: "10px",
                     }}
-                    onClick={() => handleYesNo("yes")}
+                    onClick={onConfirmDelete}
                     autoFocus
                   >
                     Yes
