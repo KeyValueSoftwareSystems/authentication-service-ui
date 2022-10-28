@@ -27,9 +27,7 @@ import PermissionTabs from "../../../../components/tabs/PermissionTabs";
 import { EntityPermissionsDetails } from "../../../../types/generic";
 import FilterChips from "../../../../components/filter-chips/FilterChips";
 import { Permission, User } from "../../../../types/user";
-import AddMembers from "./AddMembers";
 import { Group } from "../../../../types/group";
-import { GET_USERS } from "../../../users/services/queries";
 
 import { allUsersAtom } from "../../../../states/userStates";
 import UserCard from "./Usercard";
@@ -98,6 +96,7 @@ const CreateOrEditGroup = () => {
 
   const { loading } = useQuery(GET_GROUP, {
     skip: !id,
+    fetchPolicy: "network-only",
     variables: { id: id },
     onCompleted: (data) => {
       setGroup(data?.getGroup);
@@ -129,7 +128,13 @@ const CreateOrEditGroup = () => {
     } else setSelectedPermissions([...selectedPermissions, permission]);
   };
 
-  const removeItem = (roleId?: string, userId?: string) => {
+  const removeItem = ({
+    roleId,
+    userId,
+  }: {
+    roleId?: string;
+    userId?: string;
+  }) => {
     if (roleId) {
       setRoles(roles.filter((role: Role) => role.id !== roleId));
       setPermissions(
@@ -164,7 +169,7 @@ const CreateOrEditGroup = () => {
         setPermissions([]);
         return;
       }
-      removeItem(item?.id as string);
+      removeItem({ roleId: item?.id as string });
     }
   };
 
@@ -189,7 +194,7 @@ const CreateOrEditGroup = () => {
         setUsers([]);
         return;
       }
-      removeItem("", item?.id as string);
+      removeItem({ userId: item?.id as string });
     }
   };
 
@@ -203,6 +208,13 @@ const CreateOrEditGroup = () => {
 
   useEffect(() => {
     if (createdGroupData) {
+      updateGroup({
+        variables: {
+          id: createdGroupData?.createGroup?.id,
+          input: { users: users.map((user) => user.id) },
+        },
+      });
+
       updateGroupRoles({
         variables: {
           id: createdGroupData?.createGroup?.id,
@@ -220,12 +232,12 @@ const CreateOrEditGroup = () => {
       });
     }
   }, [createdGroupData]);
-  console.log(users);
 
   useEffect(() => {
-    if (createdGroupData || updatedGroupData)
+    if ((createdGroupData && updatedGroupData) || updatedGroupData)
       if (updatedGroupRolesData && updatedGroupPermissionsData) {
         navigate("/home/groups");
+        return;
       }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
@@ -239,7 +251,7 @@ const CreateOrEditGroup = () => {
     updateGroup({
       variables: {
         id: id,
-        input: inputs,
+        input: { name: inputs.name, users: users.map((user) => user.id) },
       },
     });
 
@@ -359,14 +371,22 @@ const CreateOrEditGroup = () => {
                   onChange={onChangeUsers}
                 />
               </Grid>
-              <Divider orientation="vertical" flexItem sx={{ marginLeft: 2 }} />
-              <Grid item xs={10} lg={6.7} sx={{ padding: 20 }}>
+              <Divider
+                orientation="vertical"
+                flexItem
+                sx={{ marginRight: 2 }}
+              />
+              <Grid item xs={10} lg={6.7}>
                 <div style={{ fontSize: "20px", marginBottom: "10px" }}>
                   Group Members:
                 </div>
                 <div className="user-cards">
-                  {users.map((user) => (
-                    <UserCard user={user} />
+                  {users.map((user, index) => (
+                    <UserCard
+                      user={user}
+                      onRemoveUser={removeItem}
+                      key={index}
+                    />
                   ))}
                 </div>
               </Grid>
