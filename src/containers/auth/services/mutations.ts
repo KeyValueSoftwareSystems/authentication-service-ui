@@ -9,6 +9,8 @@ export const LOGIN = gql`
         id
         firstName
         lastName
+        email
+        phone
         permissions {
           name
         }
