@@ -61,6 +61,7 @@ const Roles: React.FC = () => {
         handleRowClick={onRoleClick}
         editPermission="edit-roles"
         deletePermission="delete-roles"
+        addPermission="create-roles"
       />
     </>
   );

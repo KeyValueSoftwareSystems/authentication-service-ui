@@ -75,6 +75,7 @@ const GroupList: React.FC = () => {
         handleRowClick={onGroupClick}
         editPermission="edit-groups"
         deletePermission="delete-groups"
+        addPermission="create-groups"
       />
     </>
   );

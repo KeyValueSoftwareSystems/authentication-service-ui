@@ -84,6 +84,7 @@ const Users: React.FC = () => {
         handleRowClick={onUserClick}
         editPermission="edit-user"
         deletePermission="delete-user"
+        addPermission="create-user"
       />
     </>
   );

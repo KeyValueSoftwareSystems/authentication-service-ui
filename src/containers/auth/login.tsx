@@ -6,19 +6,25 @@ import { LOGIN } from "./services/mutations";
 import CustomerAuth from "../../services/auth";
 import "./styles.css";
 import LoginPassword from "./loginPassword";
+import { useRecoilState } from "recoil";
+import { UserPermissionsAtom } from "../../states/permissionsStates";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
+
+  const [userPermissions, setUserPermissions] =
+    useRecoilState(UserPermissionsAtom);
 
   const [userLogin, { data }] = useMutation(LOGIN);
 
   useEffect(() => {
     if (data) {
-      const { accessToken, refreshToken } = data.passwordLogin;
+      const { accessToken, refreshToken, user } = data.passwordLogin;
       CustomerAuth.setTokens({
         accessToken: accessToken,
         refreshToken: refreshToken,
       });
+      setUserPermissions(user?.permissions);
       navigate("/home/users");
     }
   }, [data]);
@@ -34,7 +40,7 @@ const Login: React.FC = () => {
   return (
     <div className="login-page">
       <div className="left">
-        <img src={LOGIN_URL} alt="login image" id="login-image"/>
+        <img src={LOGIN_URL} alt="login image" id="login-image" />
       </div>
       <div className="input-container">
         <LoginPassword onSubmitForm={onSubmitForm} />
