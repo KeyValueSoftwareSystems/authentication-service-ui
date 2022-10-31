@@ -118,28 +118,11 @@ const TableList: FC<TableProps> = ({
                   <> Are you sure you want to delete the {entity}</>
                 </DialogContentText>
                 <DialogActions>
+                  <Button onClick={handleClose}>No</Button>
                   <Button
+                    variant="outlined"
                     sx={{
-                      backgroundColor: "#808080",
-                      color: "white",
-                      borderRadius: "5px",
-                      height: "40px",
-                      marginBottom: "20px",
-                      marginRight: "5px",
-                      marginTop: "10px",
-                    }}
-                    onClick={handleClose}
-                  >
-                    No
-                  </Button>
-                  <Button
-                    sx={{
-                      backgroundColor: "#039BE5",
-                      color: "white",
-                      borderRadius: "5px",
-                      height: "40px",
-                      marginBottom: "20px",
-                      marginTop: "10px",
+                      height: "30px",
                     }}
                     onClick={onConfirmDelete}
                     autoFocus
