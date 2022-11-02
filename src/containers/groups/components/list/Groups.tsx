@@ -85,7 +85,7 @@ const GroupList: React.FC = () => {
 
   useEffect(() => {
     userPermissions.map((item: any) => {
-      if (item?.name.includes("create-roles")) {
+      if (item?.name.includes("create-groups")) {
         setAddVerified(true);
       }
     });
