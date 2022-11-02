@@ -3,6 +3,7 @@ import {
   GridActionsCellItem,
   GridColumns,
   GridRowId,
+  GridRowParams,
 } from "@mui/x-data-grid";
 import { FC, useState } from "react";
 import {
@@ -47,6 +48,7 @@ const TableList: FC<TableProps> = ({
 
   const [open, setOpen] = useState(false);
   const [entityId, setEntityId] = useState<GridRowId>("");
+  const [entityName, setEntityName] = useState<string>("");
 
   const onConfirmDelete = () => {
     deleteItem({
@@ -61,9 +63,10 @@ const TableList: FC<TableProps> = ({
     setOpen(false);
   };
 
-  const openConfirmPopup = (id: GridRowId) => {
+  const openConfirmPopup = (id: GridRowId, name: string) => {
     setOpen(true);
     setEntityId(id);
+    setEntityName(name);
   };
 
   const action_column: GridColumns = [
@@ -76,20 +79,20 @@ const TableList: FC<TableProps> = ({
       cellClassName: "actions",
       headerAlign: "center",
 
-      getActions: ({ id }) => {
+      getActions: (params) => {
         return [
           <Tooltip title="Edit" arrow placement="top">
             <GridActionsCellItem
               icon={
                 <EditOutlinedIcon
                   onClick={() => {
-                    onEdit(id);
+                    onEdit(params.id);
                   }}
                 />
               }
               label="Edit"
               className="edit"
-              onClick={() => onEdit(id)}
+              onClick={() => onEdit(params.id)}
             />
           </Tooltip>,
           <Tooltip title="Delete" arrow placement="top">
@@ -98,7 +101,7 @@ const TableList: FC<TableProps> = ({
                 icon={<DeleteOutlinedIcon className="delete" />}
                 label="Delete"
                 className="delete"
-                onClick={() => openConfirmPopup(id)}
+                onClick={() => openConfirmPopup(params.id, params.row.name)}
               />
               <StyledDialog
                 PaperProps={{
@@ -115,7 +118,11 @@ const TableList: FC<TableProps> = ({
                   <>Delete {entity}</>
                 </DialogTitle>
                 <DialogContentText>
-                  <> Are you sure you want to delete the {entity}</>
+                  <>
+                    {" "}
+                    Are you sure you want to delete the {entity?.toLowerCase()}{" "}
+                    {entityName}
+                  </>
                 </DialogContentText>
                 <DialogActions>
                   <Button onClick={handleClose}>No</Button>
