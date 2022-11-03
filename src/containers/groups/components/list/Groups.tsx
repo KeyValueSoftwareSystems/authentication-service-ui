@@ -11,12 +11,16 @@ import TableList from "../../../../components/table";
 import { groupListAtom } from "../../../../states/groupStates";
 import TableChipElement from "../../../../components/table-chip-element";
 import Toast from "../../../../components/toast";
+import { UserPermissionsAtom } from "../../../../states/permissionsStates";
 import AvatarList from "../../../../components/avatar-list/AvatarList";
 
 const GroupList: React.FC = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
   const [message, setMessage] = useState<string>();
+
+  const [isAddVerified, setAddVerified] = React.useState(false);
+  const [userPermissions] = useRecoilState(UserPermissionsAtom);
 
   useMutation(DELETE_GROUP, {
     refetchQueries: [{ query: GET_GROUPS }],
@@ -91,6 +95,13 @@ const GroupList: React.FC = () => {
   const onCloseToast = () => {
     setMessage("");
   };
+  useEffect(() => {
+    userPermissions.map((item: any) => {
+      if (item?.name.includes("create-groups")) {
+        setAddVerified(true);
+      }
+    });
+  }, []);
 
   return (
     <>
@@ -105,6 +116,9 @@ const GroupList: React.FC = () => {
         onAdd={onAddGroup}
         onEdit={onEditGroup}
         handleRowClick={onGroupClick}
+        editPermission="edit-groups"
+        deletePermission="delete-groups"
+        isAddVerified={!isAddVerified}
       />
 
       <Toast

@@ -10,6 +10,7 @@ import { DELETE_ROLE } from "../../services/mutations";
 import { RolesListAtom } from "../../../../states/roleStates";
 import TableList from "../../../../components/table";
 import Toast from "../../../../components/toast";
+import { UserPermissionsAtom } from "../../../../states/permissionsStates";
 import TableChipElement from "../../../../components/table-chip-element";
 
 const Roles: React.FC = () => {
@@ -23,6 +24,9 @@ const Roles: React.FC = () => {
       setMessage(state.message);
     }
   }, [state]);
+
+  const [isAddVerified, setAddVerified] = React.useState(false);
+  const [userPermissions] = useRecoilState(UserPermissionsAtom);
 
   useMutation(DELETE_ROLE, {
     refetchQueries: [{ query: GET_ROLES }],
@@ -76,6 +80,13 @@ const Roles: React.FC = () => {
   const onCloseToast = () => {
     setMessage("");
   };
+  useEffect(() => {
+    userPermissions.map((item: any) => {
+      if (item?.name.includes("create-roles")) {
+        setAddVerified(true);
+      }
+    });
+  }, []);
 
   return (
     <>
@@ -90,6 +101,9 @@ const Roles: React.FC = () => {
         onAdd={onAddRole}
         onEdit={onEditRole}
         handleRowClick={onRoleClick}
+        editPermission="edit-roles"
+        deletePermission="delete-roles"
+        isAddVerified={!isAddVerified}
       />
 
       <Toast
