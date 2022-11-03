@@ -3,7 +3,7 @@ import { Button, Divider } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate, useParams } from "react-router-dom";
-import { FormProvider, useForm } from "react-hook-form";
+import { FieldValues, FormProvider, useForm } from "react-hook-form";
 import { useQuery } from "@apollo/client";
 
 import { RoleFormSchema } from "../../roleSchema";
@@ -13,8 +13,8 @@ import { Role } from "../../../../types/role";
 import { GET_ROLE } from "../../services/queries";
 
 interface RoleFormProps {
-  createRole: (inputs: any) => void;
-  editRole: (inputs: any) => void;
+  createRole: (inputs: FieldValues) => void;
+  editRole: (inputs: FieldValues) => void;
 }
 
 const RoleForm: FC<RoleFormProps> = ({ createRole, editRole }) => {
@@ -41,7 +41,7 @@ const RoleForm: FC<RoleFormProps> = ({ createRole, editRole }) => {
   });
   const { handleSubmit } = methods;
 
-  const onSubmitForm = (input: any) => {
+  const onSubmitForm = (input: FieldValues) => {
     id ? editRole(input) : createRole(input);
   };
 
