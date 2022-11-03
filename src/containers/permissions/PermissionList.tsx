@@ -13,13 +13,11 @@ import { GET_PERMISSIONS } from "./services/queries";
 import InlineEdit from "../../components/inline-edit";
 import { Permission } from "../../types/permission";
 import "./styles.css";
-import Toast from "../../components/toast";
 
 const PermissionList: React.FC = () => {
   const [showAddPermission, setShowAddPermission] = useState(false);
   const [permissionList, setPermissionList] =
     useRecoilState(permissionsListAtom);
-  const [message, setMessage] = useState<string>();
 
   const { refetch } = useQuery(GET_PERMISSIONS, {
     onCompleted: (data) => {
@@ -29,11 +27,7 @@ const PermissionList: React.FC = () => {
 
   const [deletePermission] = useMutation(DELETE_PERMISSION);
 
-  const [updatePermission] = useMutation(UPDATE_PERMISSION, {
-    onCompleted: () => {
-      setMessage("Permission has been successfully updated");
-    },
-  });
+  const [updatePermission] = useMutation(UPDATE_PERMISSION);
 
   const [createNewPermission] = useMutation(CREATE_PERMISSION, {
     update(cache, { data }) {
@@ -48,9 +42,6 @@ const PermissionList: React.FC = () => {
         query: GET_PERMISSIONS,
         data: { getPermissions: newPermissionList },
       });
-    },
-    onCompleted: () => {
-      setMessage("Permission has been successfully created");
     },
   });
 
@@ -94,10 +85,6 @@ const PermissionList: React.FC = () => {
     setShowAddPermission(true);
   };
 
-  const onCloseToast = () => {
-    setMessage("");
-  };
-
   const onCancelAdd = () => {
     setShowAddPermission(false);
   };
@@ -132,12 +119,6 @@ const PermissionList: React.FC = () => {
             />
           )}
         </>
-
-        <Toast
-          message={message}
-          isOpen={Boolean(message)}
-          handleClose={onCloseToast}
-        />
       </div>
     </div>
   );

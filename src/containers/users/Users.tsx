@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { useMutation, useQuery } from "@apollo/client";
 import { Avatar } from "@mui/material";
 import { GridColumns } from "@mui/x-data-grid";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { GET_USERS } from "./services/queries";
 import "./styles.css";
@@ -13,22 +13,14 @@ import TableList from "../../components/table/Table";
 import TableChipElement from "../../components/table-chip-element";
 import { stringAvatar } from "../../utils/table";
 import "./components/create-edit-user/styles.css";
-import Toast from "../../components/toast";
 import { UserPermissionsAtom } from "../../states/permissionsStates";
 
 const Users: React.FC = () => {
   const [isAddVerified, setAddVerified] = React.useState(false);
   const [userPermissions] = useRecoilState(UserPermissionsAtom);
   const [userList, setUserList] = useRecoilState(userListAtom);
-  const [message, setMessage] = useState<string>();
-  const { state } = useLocation();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (state?.message) {
-      setMessage(state.message);
-    }
-  }, [state]);
 
   useMutation(DELETE_USER, {
     refetchQueries: [{ query: GET_USERS }],
@@ -93,10 +85,6 @@ const Users: React.FC = () => {
     navigate(`./${params.id}`);
   };
 
-  const onCloseToast = () => {
-    setMessage("");
-  };
-
   return (
     <>
       <TableList
@@ -115,11 +103,6 @@ const Users: React.FC = () => {
         isAddVerified={!isAddVerified}
       />
 
-      <Toast
-        message={message}
-        isOpen={Boolean(message)}
-        handleClose={onCloseToast}
-      />
     </>
   );
 };

@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { useMutation, useQuery } from "@apollo/client";
 import { GridColumns, GridRowId, GridRowParams } from "@mui/x-data-grid";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import "./styles.css";
 import { DELETE_GROUP } from "../../services/mutations";
@@ -10,14 +10,11 @@ import { GET_GROUPS } from "../../services/queries";
 import TableList from "../../../../components/table";
 import { groupListAtom } from "../../../../states/groupStates";
 import TableChipElement from "../../../../components/table-chip-element";
-import Toast from "../../../../components/toast";
 import { UserPermissionsAtom } from "../../../../states/permissionsStates";
 import AvatarList from "../../../../components/avatar-list/AvatarList";
 
 const GroupList: React.FC = () => {
   const navigate = useNavigate();
-  const { state } = useLocation();
-  const [message, setMessage] = useState<string>();
 
   const [isAddVerified, setAddVerified] = React.useState(false);
   const [userPermissions] = useRecoilState(UserPermissionsAtom);
@@ -27,11 +24,6 @@ const GroupList: React.FC = () => {
   });
   const [groupList, setGroupList] = useRecoilState(groupListAtom);
 
-  useEffect(() => {
-    if (state?.message) {
-      setMessage(state.message);
-    }
-  }, [state]);
 
   useQuery(GET_GROUPS, {
     onCompleted: (data) => {
@@ -92,9 +84,6 @@ const GroupList: React.FC = () => {
     navigate(`edit/${id}`);
   };
 
-  const onCloseToast = () => {
-    setMessage("");
-  };
   useEffect(() => {
     userPermissions.map((item: any) => {
       if (item?.name.includes("create-groups")) {
@@ -121,11 +110,6 @@ const GroupList: React.FC = () => {
         isAddVerified={!isAddVerified}
       />
 
-      <Toast
-        message={message}
-        isOpen={Boolean(message)}
-        handleClose={onCloseToast}
-      />
     </>
   );
 };
