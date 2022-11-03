@@ -1,7 +1,10 @@
+import { Avatar } from "@mui/material";
 import { FC, useEffect, useState } from "react";
+
 import { Entity } from "../../types/generic";
 import { User } from "../../types/user";
 import { getFullName } from "../../utils/user";
+import { stringAvatar } from "../../utils/table";
 import "./styles.css";
 interface ChecklistProps {
   name: String;
@@ -57,8 +60,16 @@ export const ChecklistComponent: FC<ChecklistProps> = ({
                 checked={isChecked(item.id)}
                 onChange={(e) => onChange(e, item)}
               />
+              {item?.firstName && (
+                <Avatar
+                  {...stringAvatar(
+                    getFullName(item.firstName, item.middleName, item.lastName)
+                  )}
+                  className="avatar"
+                />
+              )}
               <span className="checklistLabel">
-                {item.name ||
+                {item?.name ||
                   getFullName(item.firstName, item.middleName, item.lastName)}
               </span>
             </div>

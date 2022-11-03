@@ -377,7 +377,7 @@ const CreateOrEditGroup = () => {
                 sx={{ marginRight: 2 }}
               />
               <Grid item xs={10} lg={6.7}>
-                <div style={{ fontSize: "20px", marginBottom: "10px" }}>
+                <div style={{ fontSize: "16px", marginBottom: "10px" }}>
                   Group Members:
                 </div>
                 <div className="user-cards">

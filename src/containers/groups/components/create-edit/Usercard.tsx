@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Avatar, Box, Card, IconButton } from "@mui/material";
+import { Avatar, Box, Card, Chip, IconButton } from "@mui/material";
 import CancelIcon from "@mui/icons-material/Cancel";
 
 import { stringAvatar } from "../../../../utils/table";
@@ -21,6 +21,7 @@ const UserCard: FC<UserCardProps> = ({ user, onRemoveUser }) => {
         <div className="card-content">
           <Avatar {...stringAvatar(fullName)} className="avatar" />
           <div style={{ textTransform: "capitalize" }}>{fullName}</div>
+          <Chip label={"Active"} sx={{ background: "#D3F4BE" }} />
         </div>
         <IconButton onClick={() => onRemoveUser({ userId: user.id })}>
           <CancelIcon
