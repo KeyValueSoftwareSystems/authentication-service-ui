@@ -1,4 +1,4 @@
-import { Permission } from "../types/permission";
+import { EntityPermissionsDetails, Permission } from "../types/permission";
 
 export const getUniquePermissions = (permissions: any) => {
   const permissionsList: Permission[] = [];
@@ -10,14 +10,16 @@ export const getUniquePermissions = (permissions: any) => {
   return [...Array.from(new Set(ids))];
 };
 
-export const getOverallPermissions = (permissions: any) => {
-  const permissionsList: Permission[] = [];
-  const overallPermissions: Array<string> = [];
-  permissions?.forEach((item: any) =>
-    permissionsList.push(...item?.permissions)
-  );
-  permissionsList?.forEach((permission: any) =>
-    overallPermissions?.push(permission?.name)
-  );
-  return [...Array.from(new Set(overallPermissions))];
+export const getOverallPermissions = (
+  permissions: EntityPermissionsDetails[]
+) => {
+  const permissionsList = permissions.reduce((acc: Permission[], cur) => {
+    acc.push(...cur.permissions);
+    return acc;
+  }, []);
+  return [
+    ...Array.from(
+      new Set(permissionsList.map((permission: any) => permission.name))
+    ),
+  ];
 };

@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { GET_ROLE_PERMISSIONS } from "../../services/queries";
-import { NewRole } from "../../../../types/role";
 import {
   CREATE_ROLE,
   UPDATE_ROLE,
@@ -13,6 +12,7 @@ import RoleForm from "./RoleForm";
 import "./styles.css";
 import { Permission } from "../../../../types/user";
 import FilterChips from "../../../../components/filter-chips/FilterChips";
+import { FieldValues } from "react-hook-form";
 
 const CreateOrEditRole = () => {
   const { id } = useParams();
@@ -66,11 +66,11 @@ const CreateOrEditRole = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [updatedRoleData, updatedRolePermissionsData]);
 
-  const onCreateRole = (inputs: NewRole) => {
+  const onCreateRole = (inputs: FieldValues) => {
     createRole({ variables: { input: inputs } });
   };
 
-  const onEditRole = (inputs: NewRole) => {
+  const onEditRole = (inputs: FieldValues) => {
     updateRole({ variables: { id: id, input: inputs } });
     updateRolePermissions({
       variables: {

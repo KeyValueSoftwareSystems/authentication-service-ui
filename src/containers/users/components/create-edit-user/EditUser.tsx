@@ -1,25 +1,19 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 
 import {
   UPDATE_USER,
   UPDATE_USER_GROUPS,
   UPDATE_USER_PERMISSIONS,
 } from "../../services/mutations";
-import { GET_USER_GROUPS, GET_USER_PERMISSIONS } from "../../services/queries";
-import { EditUserformSchema } from "../../userSchema";
 import UserForm from "./UserForm";
 import "./styles.css";
 import { Group, Permission } from "../../../../types/user";
+import { FieldValues } from "react-hook-form";
 
 const EditUser: React.FC = () => {
   const { id } = useParams();
-  const [userGroups, setUserGroups] = useState<Group[]>([]);
-  const [selectedPermissions, setSelectedPermissions] = useState<Permission[]>(
-    []
-  );
-
   const [updateUser, { error: userUpdateError }] = useMutation(UPDATE_USER);
   const [updateUserGroups, { error: groupUpdateError }] =
     useMutation(UPDATE_USER_GROUPS);
@@ -28,23 +22,11 @@ const EditUser: React.FC = () => {
   );
   const navigate = useNavigate();
 
-  useQuery(GET_USER_GROUPS, {
-    variables: { id },
-    onCompleted: (data) => {
-      const groupList = data?.getUserGroups.map((group: any) => group);
-      setUserGroups(groupList);
-    },
-  });
-
-  useQuery(GET_USER_PERMISSIONS, {
-    variables: { id },
-    onCompleted: (data) => {
-      const permissionList = data?.getUserPermissions;
-      setSelectedPermissions(permissionList);
-    },
-  });
-
-  const onUpdateUser = (inputs: any, userGroups: Group[]) => {
+  const onUpdateUser = (
+    inputs: FieldValues,
+    userGroups: Group[],
+    selectedPermissions: Permission[]
+  ) => {
     updateUser({
       variables: {
         id: id,
@@ -79,15 +61,7 @@ const EditUser: React.FC = () => {
     });
   };
 
-  return (
-    <UserForm
-      isEdit
-      updateUser={onUpdateUser}
-      userformSchema={EditUserformSchema}
-      currentGroups={userGroups}
-      currentPermissions={selectedPermissions}
-    />
-  );
+  return <UserForm isEdit updateUser={onUpdateUser} />;
 };
 
 export default EditUser;

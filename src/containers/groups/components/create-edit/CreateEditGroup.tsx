@@ -24,11 +24,10 @@ import { ChecklistComponent } from "../../../../components/checklist/CheckList";
 import { Role } from "../../../../types/role";
 import apolloClient from "../../../../services/apolloClient";
 import PermissionTabs from "../../../../components/tabs/PermissionTabs";
-import { EntityPermissionsDetails } from "../../../../types/generic";
+import { Entity, EntityPermissionsDetails } from "../../../../types/generic";
 import FilterChips from "../../../../components/filter-chips/FilterChips";
 import { Permission, User } from "../../../../types/user";
 import { Group } from "../../../../types/group";
-
 import { allUsersAtom } from "../../../../states/userStates";
 import UserCard from "./Usercard";
 
@@ -116,9 +115,9 @@ const CreateOrEditGroup = () => {
 
   const handleClick = (permission: Permission) => {
     if (
-      selectedPermissions
-        .map((permission) => permission.id)
-        .includes(permission.id)
+      selectedPermissions.some(
+        (selected_permission) => selected_permission.id === permission.id
+      )
     ) {
       setSelectedPermissions(
         selectedPermissions.filter(
@@ -149,7 +148,10 @@ const CreateOrEditGroup = () => {
     }
   };
 
-  const onChange = (event: React.ChangeEvent<HTMLInputElement>, item: Role) => {
+  const onChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    item?: Entity
+  ) => {
     const value = event.target.value;
 
     if (event.target.checked) {
@@ -157,11 +159,13 @@ const CreateOrEditGroup = () => {
         setRoles(allRoles);
         return;
       }
-      handlePermissions(item);
-      if (roles[0] === null) {
-        setRoles([item]);
-      } else {
-        setRoles([...roles, item]);
+      if (item) {
+        handlePermissions(item);
+        if (roles[0] === null) {
+          setRoles([item]);
+        } else {
+          setRoles([...roles, item]);
+        }
       }
     } else {
       if (value === "all") {
@@ -286,19 +290,15 @@ const CreateOrEditGroup = () => {
           id: role.id,
         },
       });
-
       if (response?.data?.getRolePermissions) {
-        const currentPermissions = permissions;
-        if (
-          !currentPermissions.some((permission) => permission.id === role.id)
-        ) {
-          currentPermissions.push({
-            id: role.id as string,
+        setPermissions((previousState) => [
+          ...previousState,
+          {
+            id: role.id,
             name: role.name,
             permissions: response?.data?.getRolePermissions,
-          });
-          setPermissions([...currentPermissions]);
-        }
+          },
+        ]);
       }
     } finally {
       setStatus(false);

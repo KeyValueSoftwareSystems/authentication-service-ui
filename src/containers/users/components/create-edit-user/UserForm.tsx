@@ -2,10 +2,15 @@ import React, { useEffect, useState } from "react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm, FormProvider, FieldValues } from "react-hook-form";
-import { Box, Button, Divider, Grid, Tab } from "@mui/material";
-import TabContext from "@mui/lab/TabContext";
-import TabList from "@mui/lab/TabList";
-import TabPanel from "@mui/lab/TabPanel";
+import {
+  Box,
+  Button,
+  Divider,
+  Grid,
+  Tab,
+  Tabs,
+  Typography,
+} from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import {
@@ -15,29 +20,66 @@ import {
 import { useQuery } from "@apollo/client";
 import FormInputText from "../../../../components/inputText";
 import { ChecklistComponent } from "../../../../components/checklist/CheckList";
-import { GET_USER } from "../../services/queries";
+import { GET_USER, GET_USER_PERMISSIONS } from "../../services/queries";
 import { Group, Permission, User } from "../../../../types/user";
 import "./styles.css";
 import apolloClient from "../../../../services/apolloClient";
 import PermissionTabs from "../../../../components/tabs/PermissionTabs";
-import { EntityPermissionsDetails } from "../../../../types/generic";
+import { Entity } from "../../../../types/generic";
+import { EntityPermissionsDetails } from "../../../../types/permission";
+import { AddUserformSchema, EditUserformSchema } from "../../userSchema";
 import FilterChips from "../../../../components/filter-chips/FilterChips";
 
-const UserForm = (props: any) => {
-  const {
-    isEdit,
-    updateUser,
-    createUser,
-    userformSchema,
-    currentGroups,
-    currentPermissions,
-  } = props;
+interface UserProps {
+  isEdit?: boolean;
+  updateUser?: (
+    inputs: FieldValues,
+    userGroups: Group[],
+    userPermissions: Permission[]
+  ) => void;
+  createUser?: (
+    inputs: FieldValues,
+    userGroups: Group[],
+    userPermissions: Permission[]
+  ) => void;
+}
+
+interface TabPanelProps {
+  children?: React.ReactNode;
+  index: number;
+  value: number;
+}
+
+function TabPanel(props: TabPanelProps) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography component={"span"}>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+const UserForm = (props: UserProps) => {
+  const { isEdit, updateUser, createUser } = props;
+
+  const userformSchema = isEdit ? EditUserformSchema : AddUserformSchema;
 
   const { id } = useParams();
   const navigate = useNavigate();
   const [user, setUser] = useState<User>();
   const [userGroups, setUserGroups] = useState<Group[]>([]);
-  const [userPermissions, setUserPermissions] = useState<
+  const [groupPermissions, setGroupPermissions] = useState<
     EntityPermissionsDetails[]
   >([]);
   const [allGroups, setAllGroups] = useState<Group[]>([]);
@@ -47,9 +89,9 @@ const UserForm = (props: any) => {
 
   const handleClick = (permission: Permission) => {
     if (
-      selectedPermissions
-        .map((permission) => permission.id)
-        .includes(permission.id)
+      selectedPermissions.some(
+        (selected_permission) => selected_permission.id === permission.id
+      )
     ) {
       setSelectedPermissions(
         selectedPermissions.filter(
@@ -60,14 +102,15 @@ const UserForm = (props: any) => {
   };
 
   useEffect(() => {
-    if (id) {
-      currentGroups.forEach((group: Group) => {
+    if (
+      groupPermissions.length === 0 ||
+      allGroups.length === userGroups.length
+    ) {
+      userGroups.forEach((group: Group) => {
         handlePermissions(group);
       });
-      setUserGroups(currentGroups);
-      setSelectedPermissions(currentPermissions);
     }
-  }, [currentGroups]);
+  }, [userGroups]);
 
   const handlePermissions = async (group: Group) => {
     const response = await apolloClient.query({
@@ -77,17 +120,15 @@ const UserForm = (props: any) => {
       },
     });
     if (response) {
-      const currentPermissions = userPermissions;
-      if (
-        !currentPermissions.some((permission) => permission.id === group.id)
-      ) {
-        currentPermissions.push({
-          id: group.id,
-          name: group.name,
-          permissions: response?.data?.getGroupPermissions,
-        });
-      }
-      setUserPermissions([...currentPermissions]);
+      if (!groupPermissions.some((permission) => permission.id === group.id))
+        setGroupPermissions((previousState) => [
+          ...previousState,
+          {
+            id: group.id,
+            name: group.name,
+            permissions: response?.data?.getGroupPermissions,
+          },
+        ]);
     }
   };
 
@@ -103,12 +144,17 @@ const UserForm = (props: any) => {
     variables: { id: id },
     onCompleted: (data) => {
       setUser(data?.getUser);
+      setUserGroups(data?.getUser.groups);
     },
   });
 
-  useEffect(() => {
-    if (isEdit) setUserGroups(currentGroups);
-  }, [isEdit, currentGroups]);
+  useQuery(GET_USER_PERMISSIONS, {
+    skip: !id,
+    variables: { id: id },
+    onCompleted: (data) => {
+      setSelectedPermissions(data?.getUserPermissions);
+    },
+  });
 
   const methods = useForm({
     resolver: yupResolver(userformSchema),
@@ -117,44 +163,42 @@ const UserForm = (props: any) => {
   const { handleSubmit } = methods;
 
   const onSubmitForm = (inputs: FieldValues) => {
-    isEdit
-      ? updateUser(inputs, userGroups, selectedPermissions)
-      : createUser(inputs, userGroups, selectedPermissions);
+    if (updateUser) updateUser(inputs, userGroups, selectedPermissions);
+    else if (createUser) createUser(inputs, userGroups, selectedPermissions);
   };
 
   const removeGroup = (group: Group) => {
     setUserGroups(
       userGroups.filter((groupDetails) => groupDetails.id !== group.id)
     );
-    setUserPermissions(
-      userPermissions.filter((permission) => permission.id !== group.id)
+    setGroupPermissions(
+      groupPermissions.filter((permission) => permission.id !== group.id)
     );
   };
 
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement>,
-    group: Group
+    group?: Entity
   ) => {
     const value = event.target.value;
-
     if (event.target.checked) {
-      if (event.target.checked) {
-        if (value === "all") {
-          setUserGroups(allGroups);
-          allGroups.forEach((group) => {
-            handlePermissions(group);
-          });
-        } else {
+      if (value === "all") {
+        setUserGroups(allGroups);
+        allGroups.forEach((group) => {
+          handlePermissions(group);
+        });
+      } else {
+        if (group) {
           setUserGroups([...userGroups, group]);
+          handlePermissions(group);
         }
-        handlePermissions(group);
       }
     } else {
       if (value === "all") {
         setUserGroups([]);
-        setUserPermissions([]);
+        setGroupPermissions([]);
       }
-      removeGroup(group);
+      if (group) removeGroup(group);
     }
   };
 
@@ -162,9 +206,9 @@ const UserForm = (props: any) => {
     navigate("/home/users");
   };
 
-  const [value, setValue] = useState<string>("groups");
+  const [value, setValue] = useState(0);
 
-  const handleTabChange = (event: React.SyntheticEvent, newValue: string) => {
+  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 
@@ -182,9 +226,7 @@ const UserForm = (props: any) => {
               <legend id="bold">{isEdit ? "Modify user" : "Add user"}</legend>
               <div id="add-cancel">
                 <Button variant="text" onClick={onBackNavigation}>
-                  {/* <Link  to="/home/users"> */}
                   Cancel
-                  {/* </Link> */}
                 </Button>
                 <Button id="add" type="submit" variant="outlined">
                   {isEdit ? "Update" : "Add"}
@@ -246,17 +288,15 @@ const UserForm = (props: any) => {
         </form>
       </FormProvider>
 
-      <div id="groups-permissions">
-        <Box sx={{ width: "100%", typography: "body1" }}>
-          <TabContext value={value}>
-            <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-              <TabList onChange={handleTabChange}>
-                <Tab label="Groups" value="groups" />
-                <Tab label="Permissions" value="permissions" />
-              </TabList>
-            </Box>
-            <TabPanel value="groups" id="groups-permissions">
-              <div id="add-items">
+      <div>
+        <Box>
+          <Tabs value={value} onChange={handleTabChange}>
+            <Tab label="Groups" />
+            <Tab label="Permissions" />
+          </Tabs>
+          <TabPanel value={value} index={0}>
+            <div id="groups-permissions">
+              <div id="user-groups">
                 <ChecklistComponent
                   name="Select Groups"
                   mapList={groupData?.getGroups}
@@ -265,22 +305,22 @@ const UserForm = (props: any) => {
                 />
               </div>
               <Divider orientation="vertical" flexItem sx={{ marginLeft: 2 }} />
-              <div id="add-items">
+              <div id="user-groups">
                 <Grid item xs={10} lg={6.7} sx={{ paddingLeft: 5 }}>
                   <div className="header">
                     Permissions summary of selected roles
                   </div>
-                  <PermissionTabs permissions={userPermissions} />
+                  <PermissionTabs permissions={groupPermissions} />
                 </Grid>
               </div>
-            </TabPanel>
-            <TabPanel value="permissions">
-              <FilterChips
-                selectedPermissions={selectedPermissions}
-                handleClick={handleClick}
-              />
-            </TabPanel>
-          </TabContext>
+            </div>
+          </TabPanel>
+          <TabPanel value={value} index={1}>
+            <FilterChips
+              selectedPermissions={selectedPermissions}
+              handleClick={handleClick}
+            />
+          </TabPanel>
         </Box>
       </div>
     </div>

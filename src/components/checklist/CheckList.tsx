@@ -8,14 +8,15 @@ import { stringAvatar } from "../../utils/table";
 import "./styles.css";
 interface ChecklistProps {
   name: String;
-  mapList: any;
-  currentCheckedItems?: Entity[] | User[];
-  onChange: (event: any, item?: any) => void;
+  mapList: Entity[] | User[];
+  currentCheckedItems: Entity[] | User[];
+  onChange: (event: React.ChangeEvent<HTMLInputElement>, item?: any) => void;
 }
+
 export const ChecklistComponent: FC<ChecklistProps> = ({
   mapList,
   name,
-  currentCheckedItems = [],
+  currentCheckedItems,
   onChange,
 }) => {
   const [selectAll, setSelectAll] = useState<boolean>(false);
@@ -25,9 +26,8 @@ export const ChecklistComponent: FC<ChecklistProps> = ({
     else setSelectAll(false);
     onChange(e);
   };
-
   const isChecked = (id: string) => {
-    return currentCheckedItems.map((item) => item.id).includes(id);
+    return currentCheckedItems.some((item) => item.id === id);
   };
 
   useEffect(() => {
