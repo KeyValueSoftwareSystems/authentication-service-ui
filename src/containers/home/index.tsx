@@ -1,6 +1,12 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { useMutation } from "@apollo/client";
-import { Outlet, Navigate, useNavigate, NavLink, useLocation } from "react-router-dom";
+import {
+  Outlet,
+  Navigate,
+  useNavigate,
+  NavLink,
+  useLocation,
+} from "react-router-dom";
 import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
 import Diversity3OutlinedIcon from "@mui/icons-material/Diversity3Outlined";
 import WorkOutlineOutlinedIcon from "@mui/icons-material/WorkOutlineOutlined";
@@ -39,7 +45,6 @@ const HomePage = () => {
   const navigate = useNavigate();
   const { state: toastMessage } = useLocation();
 
-
   const [currentUserDetails] = useRecoilState(currentUserAtom);
 
   const [logout] = useMutation(LOGOUT, {
@@ -52,7 +57,6 @@ const HomePage = () => {
   const onLogout = () => {
     logout();
   };
-
 
   useEffect(() => {
     if (toastMessage?.message) {
@@ -183,10 +187,10 @@ const HomePage = () => {
             )}
           </div>
           <Toast
-        message={message}
-        isOpen={Boolean(message)}
-        handleClose={onCloseToast}
-      />
+            message={message}
+            isOpen={Boolean(message)}
+            handleClose={onCloseToast}
+          />
         </div>
       </div>
     </>

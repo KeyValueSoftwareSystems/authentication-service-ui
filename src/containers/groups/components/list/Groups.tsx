@@ -24,7 +24,6 @@ const GroupList: React.FC = () => {
   });
   const [groupList, setGroupList] = useRecoilState(groupListAtom);
 
-
   useQuery(GET_GROUPS, {
     onCompleted: (data) => {
       setGroupList(data?.getGroups);
@@ -109,7 +108,6 @@ const GroupList: React.FC = () => {
         deletePermission="delete-groups"
         isAddVerified={!isAddVerified}
       />
-
     </>
   );
 };

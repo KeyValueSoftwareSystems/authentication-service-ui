@@ -21,7 +21,6 @@ const Users: React.FC = () => {
   const [userList, setUserList] = useRecoilState(userListAtom);
   const navigate = useNavigate();
 
-
   useMutation(DELETE_USER, {
     refetchQueries: [{ query: GET_USERS }],
   });
@@ -102,7 +101,6 @@ const Users: React.FC = () => {
         deletePermission="delete-user"
         isAddVerified={!isAddVerified}
       />
-
     </>
   );
 };

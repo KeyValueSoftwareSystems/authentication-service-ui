@@ -15,7 +15,6 @@ import TableChipElement from "../../../../components/table-chip-element";
 const Roles: React.FC = () => {
   const navigate = useNavigate();
 
-
   const [isAddVerified, setAddVerified] = React.useState(false);
   const [userPermissions] = useRecoilState(UserPermissionsAtom);
 
