@@ -72,7 +72,7 @@ const GroupForm: FC<GroupFormProps> = ({ createGroup, editGroup }) => {
               </Button>
             </div>
           </div>
-          <Divider />
+          <Divider sx={{ width: "98.7%" }} />
           {!loading && (
             <>
               <FormInputText

@@ -83,7 +83,7 @@ const CreateOrEditRole = () => {
   };
 
   return (
-    <div className="roleContainer">
+    <div className="access-settings">
       <RoleForm createRole={onCreateRole} editRole={onEditRole} />
       <div className="role-permissions">
         <div className="permission-header"> Permissions</div>

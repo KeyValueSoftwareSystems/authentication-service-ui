@@ -263,7 +263,14 @@ const CreateOrEditGroup = () => {
     <div className="access-settings">
       <GroupForm createGroup={onCreateGroup} editGroup={onEditGroup} />
       <div>
-        <Box sx={{ borderBottom: 1, borderColor: "divider", display: "flex" }}>
+        <Box
+          sx={{
+            borderBottom: 1,
+            borderColor: "divider",
+            display: "flex",
+            width: "98.7%",
+          }}
+        >
           <Tabs value={value} onChange={handleChange}>
             <Tab
               label="Roles"
