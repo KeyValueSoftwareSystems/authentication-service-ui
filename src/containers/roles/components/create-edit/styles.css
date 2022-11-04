@@ -22,6 +22,7 @@
   align-items: center;
   column-gap: 5px;
   justify-content: center;
+  margin-top: 24px;
 }
 
 .access-setting {
@@ -68,5 +69,5 @@
 }
 
 .roleContainer {
-  padding: 40px;
+  padding: 30px;
 }

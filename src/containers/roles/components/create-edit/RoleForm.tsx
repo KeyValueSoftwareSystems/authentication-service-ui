@@ -72,7 +72,7 @@ const RoleForm: FC<RoleFormProps> = ({ createRole, editRole }) => {
               </Button>
             </div>
           </div>
-          <Divider sx={{ marginTop: "2px" }} />
+          <Divider sx={{ marginTop: "2px", marginBottom: "10px" }} />
           {!loading && (
             <>
               <FormInputText
