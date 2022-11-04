@@ -231,8 +231,9 @@ const CreateOrEditGroup = () => {
   };
 
   useEffect(() => {
-    if (permissions.length === 0 || selectAll)
+    if ((permissions.length === 0 && !status) || selectAll) {
       roles.forEach((role) => handlePermissions(role));
+    }
   }, [roles]);
 
   useEffect(() => {
@@ -252,14 +253,15 @@ const CreateOrEditGroup = () => {
       });
 
       if (response?.data?.getRolePermissions) {
-        setPermissions((previousState) => [
-          ...previousState,
-          {
-            id: role.id,
-            name: role.name,
-            permissions: response?.data?.getRolePermissions,
-          },
-        ]);
+        if (!permissions.some((permission) => permission.id === role.id))
+          setPermissions((previousState) => [
+            ...previousState,
+            {
+              id: role.id,
+              name: role.name,
+              permissions: response?.data?.getRolePermissions,
+            },
+          ]);
       }
     } finally {
       setStatus(false);
