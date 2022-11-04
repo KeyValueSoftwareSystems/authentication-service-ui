@@ -60,9 +60,9 @@ const CreateOrEditGroup = () => {
 
   const [value, setValue] = useState(0);
   const [roles, setRoles] = useState<Role[]>([]);
-  const [permissions, setPermissions] = useState<EntityPermissionsDetails[]>(
-    []
-  );
+  const [entityPermissions, setEntityPermissions] = useState<
+    EntityPermissionsDetails[]
+  >([]);
   const [allRoles, setAllRoles] = useState<Role[]>([]);
   const [status, setStatus] = useState<boolean>(false);
   const [selectAll, setSelectAll] = useState<boolean>(false);
@@ -120,8 +120,8 @@ const CreateOrEditGroup = () => {
 
   const removeItem = (item: string) => {
     setRoles(roles.filter((role: Role) => role.id !== item));
-    setPermissions(
-      permissions.filter(
+    setEntityPermissions(
+      entityPermissions.filter(
         (permission: EntityPermissionsDetails) => permission.id !== item
       )
     );
@@ -151,7 +151,7 @@ const CreateOrEditGroup = () => {
       if (value === "all") {
         setSelectAll(false);
         setRoles([]);
-        setPermissions([]);
+        setEntityPermissions([]);
         return;
       }
       removeItem(item?.id as string);
@@ -231,7 +231,7 @@ const CreateOrEditGroup = () => {
   };
 
   useEffect(() => {
-    if ((permissions.length === 0 && !status) || selectAll) {
+    if ((entityPermissions.length === 0 && !status) || selectAll) {
       roles.forEach((role) => handlePermissions(role));
     }
   }, [roles]);
@@ -253,8 +253,8 @@ const CreateOrEditGroup = () => {
       });
 
       if (response?.data?.getRolePermissions) {
-        if (!permissions.some((permission) => permission.id === role.id))
-          setPermissions((previousState) => [
+        if (!entityPermissions.some((entityObj) => entityObj.id === role.id))
+          setEntityPermissions((previousState) => [
             ...previousState,
             {
               id: role.id,
@@ -304,7 +304,7 @@ const CreateOrEditGroup = () => {
               <div className="header">
                 Permissions summary of selected roles
               </div>
-              <PermissionTabs permissions={permissions} />
+              <PermissionTabs permissions={entityPermissions} />
             </Grid>
           </Grid>
         </TabPanel>
