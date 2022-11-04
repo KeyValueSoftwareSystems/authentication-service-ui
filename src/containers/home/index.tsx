@@ -1,5 +1,12 @@
 import { useMutation, useQuery } from "@apollo/client";
-import { Outlet, Navigate, useNavigate, NavLink } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import {
+  Outlet,
+  Navigate,
+  useNavigate,
+  NavLink,
+  useLocation,
+} from "react-router-dom";
 import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
 import Diversity3OutlinedIcon from "@mui/icons-material/Diversity3Outlined";
 import WorkOutlineOutlinedIcon from "@mui/icons-material/WorkOutlineOutlined";
@@ -16,7 +23,6 @@ import {
   Tooltip,
 } from "@mui/material";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
-import React from "react";
 import { useRecoilState } from "recoil";
 
 import { LOGO_URL } from "../../config";
@@ -27,8 +33,10 @@ import { GET_USERS } from "../users/services/queries";
 import { allUsersAtom } from "../../states/userStates";
 import { currentUserAtom } from "../../states/loginStates";
 import { stringAvatar, stringToColor } from "../../utils/table";
+import Toast from "../../components/toast";
 
 const HomePage = () => {
+  const [message, setMessage] = useState<string>();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -38,6 +46,7 @@ const HomePage = () => {
     setAnchorEl(null);
   };
   const navigate = useNavigate();
+  const { state: toastMessage } = useLocation();
 
   const setUsers = useSetRecoilState(allUsersAtom);
 
@@ -58,6 +67,17 @@ const HomePage = () => {
   const onLogout = () => {
     logout();
   };
+
+  useEffect(() => {
+    if (toastMessage?.message) {
+      setMessage(toastMessage.message);
+    }
+  }, [toastMessage]);
+
+  const onCloseToast = () => {
+    setMessage("");
+  };
+
   return (
     <>
       <div className="wrapperContainer">
@@ -176,6 +196,11 @@ const HomePage = () => {
               <Navigate replace to="/login" />
             )}
           </div>
+          <Toast
+            message={message}
+            isOpen={Boolean(message)}
+            handleClose={onCloseToast}
+          />
         </div>
       </div>
     </>
