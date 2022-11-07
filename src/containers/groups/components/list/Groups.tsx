@@ -91,6 +91,10 @@ const GroupList: React.FC = () => {
     });
   }, []);
 
+  const setItemList = (data: any) => {
+    setGroupList(data.getGroups);
+  };
+
   return (
     <>
       <TableList
@@ -99,6 +103,7 @@ const GroupList: React.FC = () => {
         text="All Groups"
         buttonLabel="Add Group"
         searchLabel="Search Group"
+        setItemList={setItemList}
         deleteMutation={DELETE_GROUP}
         refetchQuery={GET_GROUPS}
         onAdd={onAddGroup}

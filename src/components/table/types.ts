@@ -12,6 +12,7 @@ export interface TableProps {
   buttonLabel: string;
   text: string;
   searchLabel: string;
+  setItemList: (data: any) => void;
   deleteMutation: DocumentNode;
   refetchQuery: DocumentNode;
   editPermission?: string;
