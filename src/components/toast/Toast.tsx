@@ -34,7 +34,7 @@ const Toast: React.FC<ToastProps> = ({ isOpen, message, handleClose }) => {
           sx={
             apiSuccess === true
               ? { backgroundColor: "#D5F2C7" }
-              : { backgroundColor: "#ff00008c" }
+              : { backgroundColor: "#ff000069" }
           }
         >
           {message}
