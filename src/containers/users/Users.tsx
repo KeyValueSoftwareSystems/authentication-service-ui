@@ -4,7 +4,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import { Avatar, Chip } from "@mui/material";
 import { GridColumns } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
-import CircleIcon from '@mui/icons-material/Circle';
+import CircleIcon from "@mui/icons-material/Circle";
 
 import { GET_USERS } from "./services/queries";
 import "./styles.css";
@@ -138,38 +138,45 @@ const CheckAccess = (props: any) => {
   const { row } = props;
   return (
     <div className="toggle">
-      {row.status === "ACTIVE" && (
+      {row.status !== "INVITED" && (
         <div className="switch">
           <Chip
-          icon={<CircleIcon sx={{width:"9px", color:"#00800069 !important", marginLeft: "18px !important"}} />}
-          sx={{
-            marginLeft: "24px !important",
-            borderRadius: "5px !important",
-            backgroundColor: "#0080003d !important",
-            width: "21px",
-            height: "21px",
-          }}
+            icon={
+              <CircleIcon
+                sx={{ width: "9px", marginLeft: "18px !important" }}
+                id={
+                  row.status === "ACTIVE" ? "active-circle" : "inactive-circle"
+                }
+              />
+            }
+            sx={{
+              marginLeft: "24px !important",
+              borderRadius: "5px !important",
+              width: "21px",
+              height: "21px",
+            }}
+            id={row.status === "ACTIVE" ? "active" : "inactive"}
           />
-          <div id="enabled-text">Active</div>
-        </div>
-      )}
-      {row.status === "INACTIVE" && (
-        <div className="switch">
-           <Chip
-          icon={<CircleIcon sx={{width:"9px", color:"#80000052 !important", marginLeft: "18px !important"}} />}
-          sx={{
-            marginLeft: "24px !important",
-            borderRadius: "5px !important",
-            backgroundColor: "#80000036 !important",
-            width: "21px",
-            height: "21px",
-          }}
-          />
-          <div id="disabled-text">Inactive</div>
+          {row.status === "ACTIVE" ? (
+            <div id="enabled-text">Active</div>
+          ) : (
+            <div id="enabled-text">Inactive</div>
+          )}
         </div>
       )}
       <div className="invited-switch">
-      {row.status === "INVITED" && <Chip label="Invited" className="pending" sx={{height: "36px", width: "107px", borderRadius: "5px", fontWeight:"600"}} />}
+        {row.status === "INVITED" && (
+          <Chip
+            label="Invited"
+            className="pending"
+            sx={{
+              height: "36px",
+              width: "107px",
+              borderRadius: "5px",
+              fontWeight: "600",
+            }}
+          />
+        )}
       </div>
     </div>
   );

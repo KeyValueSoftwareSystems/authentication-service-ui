@@ -44,13 +44,13 @@
 .switch {
   display: flex;
   align-items: center;
-  margin-left:15px;
+  margin-left: 15px;
 }
 
 .invited-switch {
   display: flex;
   align-items: center;
-  margin-left:37px;
+  margin-left: 37px;
 }
 
 #enabled-text {
@@ -58,7 +58,18 @@
   margin-left: 10px;
 }
 
-#disabled-text {
-  font-size: 17px;
-  margin-left: 10px;
+#active {
+  background-color: #0080003d;
+}
+
+#active-circle {
+  color: #00800069;
+}
+
+#inactive {
+  background-color: #80000036;
+}
+
+#inactive-circle {
+  color: #80000052;
 }
