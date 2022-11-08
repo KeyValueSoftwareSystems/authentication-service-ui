@@ -9,6 +9,7 @@ export const GET_USER = gql`
       firstName
       middleName
       lastName
+      status
       groups {
         id
         name
@@ -40,6 +41,7 @@ export const GET_USERS = gql`
       firstName
       middleName
       lastName
+      status
       groups {
         id
         name
