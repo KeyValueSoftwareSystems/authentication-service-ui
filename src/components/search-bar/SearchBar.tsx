@@ -1,7 +1,7 @@
 import { InputBase } from "@mui/material";
 import { GridSearchIcon } from "@mui/x-data-grid";
-import { FC, useState } from "react";
-import { useQuery } from "@apollo/client";
+import { FC, useEffect, useState } from "react";
+import { useLazyQuery } from "@apollo/client";
 
 import { SearchBarProps } from "./types";
 import "./styles.css";
@@ -12,7 +12,8 @@ const SearchBar: FC<SearchBarProps> = ({
   searchQuery,
 }) => {
   const [searchValue, setSearchValue] = useState("");
-  useQuery(searchQuery, {
+
+  const [searchItemQuery] = useLazyQuery(searchQuery, {
     variables: {
       value: searchValue,
     },
@@ -20,13 +21,27 @@ const SearchBar: FC<SearchBarProps> = ({
       setItemList(data);
     },
   });
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const delayDebounceFn = setTimeout(() => {
+      setSearchValue(e.target.value);
+    }, 2000);
+    return () => clearTimeout(delayDebounceFn);
+  };
+
+  useEffect(() => {
+    searchItemQuery();
+  }, [searchValue]);
+
   return (
     <div className="search">
       <div className="search-bar">
         <InputBase
           placeholder={searchLabel}
           onChange={(e) => {
-            setSearchValue(e.target.value);
+            handleChange(e);
           }}
         />
       </div>
