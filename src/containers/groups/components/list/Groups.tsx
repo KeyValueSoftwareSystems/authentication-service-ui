@@ -104,6 +104,7 @@ const GroupList: React.FC = () => {
         buttonLabel="Add Group"
         searchLabel="Search Group"
         setItemList={setItemList}
+        entity="Group"
         deleteMutation={DELETE_GROUP}
         refetchQuery={GET_GROUPS}
         onAdd={onAddGroup}

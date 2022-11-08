@@ -13,6 +13,7 @@ export interface TableProps {
   text: string;
   searchLabel: string;
   setItemList: (data: any) => void;
+  entity: string;
   deleteMutation: DocumentNode;
   refetchQuery: DocumentNode;
   editPermission?: string;

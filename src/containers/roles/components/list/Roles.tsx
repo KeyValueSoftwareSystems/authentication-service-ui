@@ -88,6 +88,7 @@ const Roles: React.FC = () => {
         buttonLabel="Add Role"
         searchLabel="Search Role"
         setItemList={setItemList}
+        entity="Role"
         deleteMutation={DELETE_ROLE}
         refetchQuery={GET_ROLES}
         onAdd={onAddRole}

@@ -97,6 +97,7 @@ const Users: React.FC = () => {
         setItemList={setItemList}
         onAdd={onAdd}
         onEdit={onEdit}
+        entity="User"
         buttonLabel="Add User"
         searchLabel="Search User"
         deleteMutation={DELETE_USER}
