@@ -25,10 +25,10 @@ const SearchBar: FC<SearchBarProps> = ({
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    const delayDebounceFn = setTimeout(() => {
+    const delayDebounce = setTimeout(() => {
       setSearchValue(e.target.value);
-    }, 2000);
-    return () => clearTimeout(delayDebounceFn);
+    }, 1000);
+    return () => clearTimeout(delayDebounce);
   };
 
   useEffect(() => {
