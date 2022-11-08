@@ -34,8 +34,10 @@ import { allUsersAtom } from "../../states/userStates";
 import { currentUserAtom } from "../../states/loginStates";
 import { stringAvatar, stringToColor } from "../../utils/table";
 import Toast from "../../components/toast";
+import { toastMessageAtom } from "../../states/apiRequestState";
 
 const HomePage = () => {
+  const [toastMessage] = useRecoilState(toastMessageAtom);
   const [message, setMessage] = useState<string>();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -46,7 +48,6 @@ const HomePage = () => {
     setAnchorEl(null);
   };
   const navigate = useNavigate();
-  const { state: toastMessage } = useLocation();
 
   const setUsers = useSetRecoilState(allUsersAtom);
 
@@ -69,9 +70,7 @@ const HomePage = () => {
   };
 
   useEffect(() => {
-    if (toastMessage?.message) {
-      setMessage(toastMessage.message);
-    }
+    setMessage(toastMessage);
   }, [toastMessage]);
 
   const onCloseToast = () => {
