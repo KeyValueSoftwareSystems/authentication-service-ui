@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { useMutation, useQuery } from "@apollo/client";
-import { Avatar } from "@mui/material";
+import { Avatar, Chip } from "@mui/material";
 import { GridColumns } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
+import CircleIcon from "@mui/icons-material/Circle";
 
 import { GET_USERS } from "./services/queries";
 import "./styles.css";
@@ -63,7 +64,7 @@ const Users: React.FC = () => {
     },
     {
       field: "groups",
-      headerName: "Member Of",
+      headerName: "Groups",
       headerClassName: "user-list-header",
       flex: 0.5,
       renderCell: (params) => (
@@ -76,6 +77,18 @@ const Users: React.FC = () => {
         </div>
       ),
       headerAlign: "left",
+      sortable: false,
+    },
+    {
+      field: "status",
+      headerName: "Status",
+      flex: 0.2,
+      renderCell: (params) => (
+        <div className="access-column">
+          <CheckAccess {...params} />
+        </div>
+      ),
+      headerAlign: "center",
       sortable: false,
     },
   ];
@@ -92,6 +105,7 @@ const Users: React.FC = () => {
         text="All Users"
         onAdd={onAdd}
         onEdit={onEdit}
+        entity="User"
         buttonLabel="Add User"
         searchLabel="Search User"
         deleteMutation={DELETE_USER}
@@ -118,6 +132,54 @@ const GetFullName = (props: any) => {
         <div className="email">{row.email}</div>
       </div>
     </>
+  );
+};
+
+const CheckAccess = (props: any) => {
+  const { row } = props;
+  return (
+    <div className="toggle">
+      {row.status !== "INVITED" && (
+        <div className="switch">
+          <Chip
+            icon={
+              <CircleIcon
+                sx={{ width: "9px", marginLeft: "18px !important" }}
+                id={
+                  row.status === "ACTIVE" ? "active-circle" : "inactive-circle"
+                }
+              />
+            }
+            sx={{
+              marginLeft: "24px !important",
+              borderRadius: "5px !important",
+              width: "21px",
+              height: "21px",
+            }}
+            id={row.status === "ACTIVE" ? "active" : "inactive"}
+          />
+          {row.status === "ACTIVE" ? (
+            <div id="enabled-text">Active</div>
+          ) : (
+            <div id="enabled-text">Inactive</div>
+          )}
+        </div>
+      )}
+      <div className="invited-switch">
+        {row.status === "INVITED" && (
+          <Chip
+            label="Invited"
+            className="pending"
+            sx={{
+              height: "36px",
+              width: "107px",
+              borderRadius: "5px",
+              fontWeight: "600",
+            }}
+          />
+        )}
+      </div>
+    </div>
   );
 };
 

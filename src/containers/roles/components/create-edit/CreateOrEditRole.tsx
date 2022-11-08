@@ -80,7 +80,6 @@ const CreateOrEditRole = () => {
   };
 
   const onEditRole = (inputs: FieldValues) => {
-    debugger;
     updateRole({ variables: { id: id, input: inputs } });
     updateRolePermissions({
       variables: {
