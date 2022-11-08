@@ -19,7 +19,6 @@ const Users: React.FC = () => {
   const [isAddVerified, setAddVerified] = React.useState(false);
   const [userPermissions] = useRecoilState(UserPermissionsAtom);
   const [userList, setUserList] = useRecoilState(userListAtom);
-
   const navigate = useNavigate();
 
   useMutation(DELETE_USER, {
@@ -93,6 +92,7 @@ const Users: React.FC = () => {
         text="All Users"
         onAdd={onAdd}
         onEdit={onEdit}
+        entity="User"
         buttonLabel="Add User"
         searchLabel="Search User"
         deleteMutation={DELETE_USER}

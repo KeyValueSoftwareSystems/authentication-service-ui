@@ -11,14 +11,29 @@ import UserForm from "./UserForm";
 import "./styles.css";
 import { Group, Permission } from "../../../../types/user";
 import { FieldValues } from "react-hook-form";
+import { currentUserAtom } from "../../../../states/loginStates";
+import { useRecoilState } from "recoil";
+import { UserPermissionsAtom } from "../../../../states/permissionsStates";
 
 const EditUser: React.FC = () => {
   const { id } = useParams();
+
+  const [userPermissions, setUserPermissions] =
+    useRecoilState(UserPermissionsAtom);
+  const [currentUserDetails] = useRecoilState(currentUserAtom);
+
   const [updateUser, { error: userUpdateError }] = useMutation(UPDATE_USER);
   const [updateUserGroups, { error: groupUpdateError }] =
     useMutation(UPDATE_USER_GROUPS);
   const [updateUserPermissions, { error: permissionUpdateError }] = useMutation(
-    UPDATE_USER_PERMISSIONS
+    UPDATE_USER_PERMISSIONS,
+    {
+      onCompleted: (data) => {
+        if (currentUserDetails.id === id) {
+          setUserPermissions(data.updateUserPermissions);
+        }
+      },
+    }
   );
   const navigate = useNavigate();
 
@@ -56,7 +71,9 @@ const EditUser: React.FC = () => {
       },
       onCompleted: () => {
         if (!userUpdateError && !groupUpdateError && !permissionUpdateError)
-          navigate("/home/users");
+          navigate("/home/users", {
+            state: { message: "User has been successfully updated" },
+          });
       },
     });
   };
