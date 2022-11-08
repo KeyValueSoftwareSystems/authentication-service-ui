@@ -12,9 +12,12 @@ export interface TableProps {
   buttonLabel: string;
   text: string;
   searchLabel: string;
-  entity:string;
+  entity: string;
   deleteMutation: DocumentNode;
   refetchQuery: DocumentNode;
+  editPermission?: string;
+  deletePermission?: string;
+  isAddVerified?: boolean;
   handleRowClick?: (params: GridRowParams) => void;
   onAdd: () => void;
   onEdit: (id: GridRowId) => void;

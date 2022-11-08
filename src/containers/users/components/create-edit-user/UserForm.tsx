@@ -2,7 +2,15 @@ import React, { useEffect, useState } from "react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm, FormProvider, FieldValues } from "react-hook-form";
-import { Button, Divider, Grid } from "@mui/material";
+import {
+  Box,
+  Button,
+  Divider,
+  Grid,
+  Tab,
+  Tabs,
+  Typography,
+} from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import {
@@ -12,32 +20,58 @@ import {
 import { useQuery } from "@apollo/client";
 import FormInputText from "../../../../components/inputText";
 import { ChecklistComponent } from "../../../../components/checklist/CheckList";
-import { GET_USER } from "../../services/queries";
-import { Group, User } from "../../../../types/user";
+import { GET_USER, GET_USER_PERMISSIONS } from "../../services/queries";
+import { Group, Permission, User } from "../../../../types/user";
 import "./styles.css";
 import apolloClient from "../../../../services/apolloClient";
 import PermissionTabs from "../../../../components/tabs/PermissionTabs";
 import { Entity } from "../../../../types/generic";
-import { GroupPermissionsDetails } from "../../../../types/permission";
+import { EntityPermissionsDetails } from "../../../../types/permission";
 import { AddUserformSchema, EditUserformSchema } from "../../userSchema";
+import FilterChips from "../../../../components/filter-chips/FilterChips";
 
 interface UserProps {
   isEdit?: boolean;
   updateUser?: (
     inputs: FieldValues,
     userGroups: Group[],
-    groupPermissions: GroupPermissionsDetails[]
+    userPermissions: Permission[]
   ) => void;
   createUser?: (
     inputs: FieldValues,
     userGroups: Group[],
-    groupPermissions: GroupPermissionsDetails[]
+    userPermissions: Permission[]
   ) => void;
-  currentGroups?: Group[];
+}
+
+interface TabPanelProps {
+  children?: React.ReactNode;
+  index: number;
+  value: number;
+}
+
+function TabPanel(props: TabPanelProps) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography component={"span"}>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
 }
 
 const UserForm = (props: UserProps) => {
-  const { isEdit, updateUser, createUser, currentGroups } = props;
+  const { isEdit, updateUser, createUser } = props;
 
   const userformSchema = isEdit ? EditUserformSchema : AddUserformSchema;
 
@@ -46,18 +80,37 @@ const UserForm = (props: UserProps) => {
   const [user, setUser] = useState<User>();
   const [userGroups, setUserGroups] = useState<Group[]>([]);
   const [groupPermissions, setGroupPermissions] = useState<
-    GroupPermissionsDetails[]
+    EntityPermissionsDetails[]
   >([]);
   const [allGroups, setAllGroups] = useState<Group[]>([]);
+  const [selectedPermissions, setSelectedPermissions] = useState<Permission[]>(
+    []
+  );
+
+  const handleClick = (permission: Permission) => {
+    if (
+      selectedPermissions.some(
+        (selected_permission) => selected_permission.id === permission.id
+      )
+    ) {
+      setSelectedPermissions(
+        selectedPermissions.filter(
+          (selected_permission) => selected_permission.id !== permission.id
+        )
+      );
+    } else setSelectedPermissions([...selectedPermissions, permission]);
+  };
 
   useEffect(() => {
-    if (currentGroups) {
-      currentGroups.forEach((group: Group) => {
+    if (
+      groupPermissions.length === 0 ||
+      allGroups.length === userGroups.length
+    ) {
+      userGroups.forEach((group: Group) => {
         handlePermissions(group);
       });
-      setUserGroups(currentGroups);
     }
-  }, [currentGroups]);
+  }, [userGroups]);
 
   const handlePermissions = async (group: Group) => {
     const response = await apolloClient.query({
@@ -67,14 +120,15 @@ const UserForm = (props: UserProps) => {
       },
     });
     if (response) {
-      setGroupPermissions((previousState) => [
-        ...previousState,
-        {
-          id: group.id,
-          name: group.name,
-          permissions: response?.data?.getGroupPermissions,
-        },
-      ]);
+      if (!groupPermissions.some((permission) => permission.id === group.id))
+        setGroupPermissions((previousState) => [
+          ...previousState,
+          {
+            id: group.id,
+            name: group.name,
+            permissions: response?.data?.getGroupPermissions,
+          },
+        ]);
     }
   };
 
@@ -90,6 +144,15 @@ const UserForm = (props: UserProps) => {
     variables: { id: id },
     onCompleted: (data) => {
       setUser(data?.getUser);
+      setUserGroups(data?.getUser.groups);
+    },
+  });
+
+  useQuery(GET_USER_PERMISSIONS, {
+    skip: !id,
+    variables: { id: id },
+    onCompleted: (data) => {
+      setSelectedPermissions(data?.getUserPermissions);
     },
   });
 
@@ -100,8 +163,8 @@ const UserForm = (props: UserProps) => {
   const { handleSubmit } = methods;
 
   const onSubmitForm = (inputs: FieldValues) => {
-    if (updateUser) updateUser(inputs, userGroups, groupPermissions);
-    else if (createUser) createUser(inputs, userGroups, groupPermissions);
+    if (updateUser) updateUser(inputs, userGroups, selectedPermissions);
+    else if (createUser) createUser(inputs, userGroups, selectedPermissions);
   };
 
   const removeGroup = (group: Group) => {
@@ -141,6 +204,12 @@ const UserForm = (props: UserProps) => {
 
   const onBackNavigation = () => {
     navigate("/home/users");
+  };
+
+  const [value, setValue] = useState(0);
+
+  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+    setValue(newValue);
   };
 
   return (
@@ -219,28 +288,41 @@ const UserForm = (props: UserProps) => {
         </form>
       </FormProvider>
 
-      <div className="userGroups"> {"Groups & Permissions"}</div>
-
-      <div id="groups-permissions">
-        <ChecklistComponent
-          name="Select Groups"
-          mapList={groupData?.getGroups}
-          currentCheckedItems={userGroups}
-          onChange={handleChange}
-        />
-
-        <Divider orientation="vertical" flexItem sx={{ marginLeft: 2 }} />
-        <div id="add-items">
-          <Grid item xs={10} lg={6.7} sx={{ paddingLeft: 5 }}>
-            <div className="header">Permissions summary of selected roles</div>
-            <PermissionTabs permissions={groupPermissions} />
-          </Grid>
-        </div>
+      <div>
+        <Box>
+          <Tabs value={value} onChange={handleTabChange}>
+            <Tab label="Groups" />
+            <Tab label="Permissions" />
+          </Tabs>
+          <TabPanel value={value} index={0}>
+            <div id="groups-permissions">
+              <div id="user-groups">
+                <ChecklistComponent
+                  name="Select Groups"
+                  mapList={groupData?.getGroups}
+                  currentCheckedItems={userGroups}
+                  onChange={handleChange}
+                />
+              </div>
+              <Divider orientation="vertical" flexItem sx={{ marginLeft: 2 }} />
+              <div id="user-groups">
+                <Grid item xs={10} lg={6.7} sx={{ paddingLeft: 5 }}>
+                  <div className="header">
+                    Permissions summary of selected roles
+                  </div>
+                  <PermissionTabs permissions={groupPermissions} />
+                </Grid>
+              </div>
+            </div>
+          </TabPanel>
+          <TabPanel value={value} index={1}>
+            <FilterChips
+              selectedPermissions={selectedPermissions}
+              handleClick={handleClick}
+            />
+          </TabPanel>
+        </Box>
       </div>
-      {/* <div id="add-items">
-          <span>Permissions</span>
-          <PermissionTabs permissions={groupPermissions} />
-        </div> */}
     </div>
   );
 };

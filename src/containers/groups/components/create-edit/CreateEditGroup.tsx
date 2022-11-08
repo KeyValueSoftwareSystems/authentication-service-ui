@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import { useNavigate, useParams } from "react-router-dom";
 import { FieldValues } from "react-hook-form";
-
+import { useRecoilValue } from "recoil";
 import { Box, Tab, Tabs, Typography, Grid, Divider } from "@mui/material";
 
 import {
@@ -19,13 +19,17 @@ import {
 
 import "./styles.css";
 import GroupForm from "./GroupForm";
-import { GET_GROUP_ROLES } from "../../services/queries";
-import { getUniquePermissions } from "../../../../utils/permissions";
+import { GET_GROUP, GET_GROUP_PERMISSIONS } from "../../services/queries";
 import { ChecklistComponent } from "../../../../components/checklist/CheckList";
 import { Role } from "../../../../types/role";
 import apolloClient from "../../../../services/apolloClient";
 import PermissionTabs from "../../../../components/tabs/PermissionTabs";
 import { Entity, EntityPermissionsDetails } from "../../../../types/generic";
+import FilterChips from "../../../../components/filter-chips/FilterChips";
+import { Permission, User } from "../../../../types/user";
+import { Group } from "../../../../types/group";
+import { allUsersAtom } from "../../../../states/userStates";
+import UserCard from "./Usercard";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -58,13 +62,19 @@ const CreateOrEditGroup = () => {
   const navigate = useNavigate();
 
   const [value, setValue] = useState(0);
+  const [group, setGroup] = useState<Group>();
   const [roles, setRoles] = useState<Role[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
   const [permissions, setPermissions] = useState<EntityPermissionsDetails[]>(
     []
   );
   const [allRoles, setAllRoles] = useState<Role[]>([]);
+  const allUsers = useRecoilValue(allUsersAtom);
   const [status, setStatus] = useState<boolean>(false);
-  const [selectAll, setSelectAll] = useState<boolean>(false);
+
+  const [selectedPermissions, setSelectedPermissions] = useState<Permission[]>(
+    []
+  );
 
   const [updateGroup, { data: updatedGroupData }] = useMutation(UPDATE_GROUP);
   const [createGroup, { data: createdGroupData }] = useMutation(CREATE_GROUP);
@@ -83,24 +93,59 @@ const CreateOrEditGroup = () => {
     },
   });
 
-  const { loading: groupRolesloading } = useQuery(GET_GROUP_ROLES, {
+  const { loading } = useQuery(GET_GROUP, {
     skip: !id,
+    fetchPolicy: "network-only",
     variables: { id: id },
     onCompleted: (data) => {
-      setRoles([...roles, ...data.getGroupRoles]);
+      setGroup(data?.getGroup);
+      setRoles([...roles, ...data?.getGroup?.roles]);
+      setUsers([...users, ...data?.getGroup?.users]);
     },
   });
 
-  const removeItem = (item: string) => {
-    const itemIndex = roles.findIndex((e: Role) => e.id === item);
-    setRoles([...roles.slice(0, itemIndex), ...roles.slice(itemIndex + 1)]);
-    const permissionIndex = permissions.findIndex(
-      (e: EntityPermissionsDetails) => e.id === item
-    );
-    setPermissions([
-      ...permissions.slice(0, permissionIndex),
-      ...permissions.slice(permissionIndex + 1),
-    ]);
+  useQuery(GET_GROUP_PERMISSIONS, {
+    skip: !id,
+    variables: { id },
+    onCompleted: (data) => {
+      const permissionList = data?.getGroupPermissions;
+      setSelectedPermissions(permissionList);
+    },
+  });
+
+  const handleClick = (permission: Permission) => {
+    if (
+      selectedPermissions.some(
+        (selected_permission) => selected_permission.id === permission.id
+      )
+    ) {
+      setSelectedPermissions(
+        selectedPermissions.filter(
+          (selected_permission) => selected_permission.id !== permission.id
+        )
+      );
+    } else setSelectedPermissions([...selectedPermissions, permission]);
+  };
+
+  const removeItem = ({
+    roleId,
+    userId,
+  }: {
+    roleId?: string;
+    userId?: string;
+  }) => {
+    if (roleId) {
+      setRoles(roles.filter((role: Role) => role.id !== roleId));
+      setPermissions(
+        permissions.filter(
+          (permission: EntityPermissionsDetails) => permission.id !== roleId
+        )
+      );
+    }
+
+    if (userId) {
+      setUsers(users.filter((user: User) => user.id !== userId));
+    }
   };
 
   const onChange = (
@@ -111,7 +156,6 @@ const CreateOrEditGroup = () => {
 
     if (event.target.checked) {
       if (value === "all") {
-        setSelectAll(true);
         setRoles(allRoles);
         return;
       }
@@ -125,12 +169,36 @@ const CreateOrEditGroup = () => {
       }
     } else {
       if (value === "all") {
-        setSelectAll(false);
         setRoles([]);
         setPermissions([]);
         return;
       }
-      removeItem(item?.id as string);
+      removeItem({ roleId: item?.id as string });
+    }
+  };
+
+  const onChangeUsers = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    item: User
+  ) => {
+    const value = event.target.value;
+
+    if (event.target.checked) {
+      if (value === "all") {
+        setUsers(allUsers);
+        return;
+      }
+      if (users[0] === null) {
+        setUsers([item]);
+      } else {
+        setUsers([...users, item]);
+      }
+    } else {
+      if (value === "all") {
+        setUsers([]);
+        return;
+      }
+      removeItem({ userId: item?.id as string });
     }
   };
 
@@ -144,6 +212,13 @@ const CreateOrEditGroup = () => {
 
   useEffect(() => {
     if (createdGroupData) {
+      updateGroup({
+        variables: {
+          id: createdGroupData?.createGroup?.id,
+          input: { users: users.map((user) => user.id) },
+        },
+      });
+
       updateGroupRoles({
         variables: {
           id: createdGroupData?.createGroup?.id,
@@ -154,16 +229,24 @@ const CreateOrEditGroup = () => {
       updateGroupPermissions({
         variables: {
           id: createdGroupData?.createGroup?.id,
-          input: { permissions: getUniquePermissions(permissions) },
+          input: {
+            permissions: selectedPermissions.map((permission) => permission.id),
+          },
         },
       });
     }
   }, [createdGroupData]);
 
   useEffect(() => {
-    if (createdGroupData || updatedGroupData)
+    if ((createdGroupData && updatedGroupData) || updatedGroupData)
       if (updatedGroupRolesData && updatedGroupPermissionsData) {
-        navigate("/home/groups");
+        navigate("/home/groups", {
+          state: {
+            message: createdGroupData
+              ? "Group has been successfully created"
+              : "Group has been successfully updated",
+          },
+        });
       }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
@@ -177,7 +260,7 @@ const CreateOrEditGroup = () => {
     updateGroup({
       variables: {
         id: id,
-        input: inputs,
+        input: { name: inputs.name, users: users.map((user) => user.id) },
       },
     });
 
@@ -191,21 +274,17 @@ const CreateOrEditGroup = () => {
     updateGroupPermissions({
       variables: {
         id: id,
-        input: { permissions: getUniquePermissions(permissions) },
+        input: {
+          permissions: selectedPermissions.map((permission) => permission.id),
+        },
       },
     });
   };
 
   useEffect(() => {
-    if (permissions.length === 0 || selectAll)
+    if (permissions.length === 0 || allRoles?.length === roles?.length)
       roles.forEach((role) => handlePermissions(role));
   }, [roles]);
-
-  useEffect(() => {
-    if (allRoles?.length === roles?.length) {
-      setSelectAll(true);
-    } else setSelectAll(false);
-  }, [allRoles, roles]);
 
   const handlePermissions = async (role: Role) => {
     setStatus(true);
@@ -216,7 +295,6 @@ const CreateOrEditGroup = () => {
           id: role.id,
         },
       });
-
       if (response?.data?.getRolePermissions) {
         setPermissions((previousState) => [
           ...previousState,
@@ -231,15 +309,28 @@ const CreateOrEditGroup = () => {
       setStatus(false);
     }
   };
-
   return (
     <div className="access-settings">
-      <GroupForm createGroup={onCreateGroup} editGroup={onEditGroup} />
+      {!loading && (
+        <GroupForm
+          name={group?.name as string}
+          createGroup={onCreateGroup}
+          editGroup={onEditGroup}
+        />
+      )}
       <div>
-        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+        <Box sx={{ borderBottom: 1, borderColor: "divider", display: "flex" }}>
           <Tabs value={value} onChange={handleChange}>
             <Tab
-              label="Roles & Permissions"
+              label="Roles"
+              sx={{ textTransform: "none", fontSize: "18px" }}
+            />
+            <Tab
+              label="Permissions"
+              sx={{ textTransform: "none", fontSize: "18px" }}
+            />
+            <Tab
+              label="Members"
               sx={{ textTransform: "none", fontSize: "18px" }}
             />
           </Tabs>
@@ -250,13 +341,12 @@ const CreateOrEditGroup = () => {
               <div>
                 <div className="header">Roles</div>
               </div>
-              {!groupRolesloading && (
+              {!loading && (
                 <ChecklistComponent
                   mapList={roleData?.getRoles}
                   currentCheckedItems={roles}
                   name="Select roles"
                   onChange={onChange}
-                  selectAll={selectAll}
                 />
               )}
             </Grid>
@@ -268,6 +358,45 @@ const CreateOrEditGroup = () => {
               <PermissionTabs permissions={permissions} />
             </Grid>
           </Grid>
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          <FilterChips
+            selectedPermissions={selectedPermissions}
+            handleClick={handleClick}
+          />
+        </TabPanel>
+        <TabPanel value={value} index={2}>
+          <div className="add-members">
+            <Grid container spacing={1} width="100%">
+              <Grid item xs={10} lg={5}>
+                <ChecklistComponent
+                  mapList={allUsers}
+                  currentCheckedItems={users}
+                  name="Select members"
+                  onChange={onChangeUsers}
+                />
+              </Grid>
+              <Divider
+                orientation="vertical"
+                flexItem
+                sx={{ marginRight: 2 }}
+              />
+              <Grid item xs={10} lg={6.7}>
+                <div style={{ fontSize: "16px", marginBottom: "10px" }}>
+                  Group Members:
+                </div>
+                <div className="user-cards">
+                  {users.map((user, index) => (
+                    <UserCard
+                      user={user}
+                      onRemoveUser={removeItem}
+                      key={index}
+                    />
+                  ))}
+                </div>
+              </Grid>
+            </Grid>
+          </div>
         </TabPanel>
       </div>
     </div>
