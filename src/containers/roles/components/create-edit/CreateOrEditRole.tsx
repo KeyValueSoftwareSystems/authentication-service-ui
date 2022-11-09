@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
 
-import { GET_ROLE_PERMISSIONS } from "../../services/queries";
+import { GET_ROLE } from "../../services/queries";
 import {
   CREATE_ROLE,
   UPDATE_ROLE,
@@ -18,6 +18,7 @@ import {
   apiRequestAtom,
   toastMessageAtom,
 } from "../../../../states/apiRequestState";
+import { Role } from "../../../../types/role";
 
 const CreateOrEditRole = () => {
   const { id } = useParams();
@@ -25,6 +26,7 @@ const CreateOrEditRole = () => {
 
   const [apiSuccess, setApiSuccess] = useRecoilState(apiRequestAtom);
   const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom);
+  const [role, setRole] = useState<Role>();
   const [rolePermissions, setRolePermissions] = useState<Permission[]>([]);
 
   const handleClick = (permission: Permission) => {
@@ -59,12 +61,13 @@ const CreateOrEditRole = () => {
       },
     });
 
-  const { loading } = useQuery(GET_ROLE_PERMISSIONS, {
+  const { loading } = useQuery(GET_ROLE, {
     skip: !id,
     variables: { id: id },
     onCompleted: (data) => {
-      const permissions = data?.getRolePermissions?.map(
-        (permission: any) => permission
+      setRole(data?.getRole);
+      const permissions = data?.getRole?.permissions.map(
+        (permission: Permission) => permission
       );
       setRolePermissions([...permissions]);
     },
@@ -114,7 +117,13 @@ const CreateOrEditRole = () => {
 
   return (
     <div className="roleContainer">
-      <RoleForm createRole={onCreateRole} editRole={onEditRole} />
+      {!loading && (
+        <RoleForm
+          name={role?.name || ""}
+          createRole={onCreateRole}
+          editRole={onEditRole}
+        />
+      )}
       <div className="role-permissions">
         <div className="permission-header"> Permissions</div>
         {!loading && (
