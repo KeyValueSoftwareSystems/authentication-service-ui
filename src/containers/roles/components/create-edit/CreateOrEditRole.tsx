@@ -71,6 +71,7 @@ const CreateOrEditRole = () => {
       );
       setRolePermissions([...permissions]);
     },
+    fetchPolicy: "network-only",
   });
 
   useEffect(() => {

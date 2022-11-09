@@ -126,50 +126,48 @@ const TableList: FC<TableProps> = ({
             />
           </Tooltip>,
           <Tooltip title="Delete" arrow placement="top">
-            <>
-              <GridActionsCellItem
-                icon={<DeleteOutlinedIcon className="delete" />}
-                label="Delete"
-                className={`delete  ${!isDeleteVerified && "disabled-styles"}`}
-                onClick={() => openConfirmPopup(params.id, params.row.name)}
-              />
-              <StyledDialog
-                PaperProps={{
-                  style: {
-                    boxShadow: "none",
-                    width: "400px",
-                    alignItems: "center",
-                  },
-                }}
-                open={open}
-                onClose={handleClose}
-              >
-                <DialogTitle>
-                  <>Delete {entity}</>
-                </DialogTitle>
-                <DialogContentText>
-                  <>
-                    {" "}
-                    Are you sure you want to delete the {entity?.toLowerCase()}{" "}
-                    {entityName}
-                  </>
-                </DialogContentText>
-                <DialogActions>
-                  <Button onClick={handleClose}>No</Button>
-                  <Button
-                    variant="outlined"
-                    sx={{
-                      height: "30px",
-                    }}
-                    onClick={onConfirmDelete}
-                    autoFocus
-                  >
-                    Yes
-                  </Button>
-                </DialogActions>
-              </StyledDialog>
-            </>
+            <GridActionsCellItem
+              icon={<DeleteOutlinedIcon className="delete" />}
+              label="Delete"
+              className={`delete  ${!isDeleteVerified && "disabled-styles"}`}
+              onClick={() => openConfirmPopup(params.id, params.row.name)}
+            />
           </Tooltip>,
+          <StyledDialog
+            PaperProps={{
+              style: {
+                boxShadow: "none",
+                minWidth: "400px",
+                alignItems: "center",
+              },
+            }}
+            open={open}
+            onClose={handleClose}
+          >
+            <DialogTitle>
+              <>Delete {entity}</>
+            </DialogTitle>
+            <DialogContentText sx={{ width: "84%" }}>
+              <>
+                {" "}
+                Are you sure you want to delete the {entity?.toLowerCase()}{" "}
+                {entityName}?
+              </>
+            </DialogContentText>
+            <DialogActions>
+              <Button onClick={handleClose}>No</Button>
+              <Button
+                variant="outlined"
+                sx={{
+                  height: "30px",
+                }}
+                onClick={onConfirmDelete}
+                autoFocus
+              >
+                Yes
+              </Button>
+            </DialogActions>
+          </StyledDialog>,
         ];
       },
     },
