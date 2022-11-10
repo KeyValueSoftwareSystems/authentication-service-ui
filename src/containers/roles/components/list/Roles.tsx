@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useRecoilState } from "recoil";
-import { useMutation, useQuery } from "@apollo/client";
+import { ApolloError, useMutation, useQuery } from "@apollo/client";
 import { GridColumns, GridRowId, GridRowParams } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
 
@@ -11,20 +11,29 @@ import { RolesListAtom } from "../../../../states/roleStates";
 import TableList from "../../../../components/table";
 import { UserPermissionsAtom } from "../../../../states/permissionsStates";
 import TableChipElement from "../../../../components/table-chip-element";
+import {
+  apiRequestAtom,
+  toastMessageAtom,
+} from "../../../../states/apiRequestState";
+import { GraphQLError } from "graphql";
 
 const Roles: React.FC = () => {
   const navigate = useNavigate();
 
   const [isAddVerified, setAddVerified] = React.useState(false);
   const [userPermissions] = useRecoilState(UserPermissionsAtom);
+  const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom);
+  const [apiSuccess, setApiSuccess] = useRecoilState(apiRequestAtom);
 
-  useMutation(DELETE_ROLE, {
-    refetchQueries: [{ query: GET_ROLES }],
-  });
   const [roleList, setRoleList] = useRecoilState(RolesListAtom);
   useQuery(GET_ROLES, {
     onCompleted: (data) => {
       setRoleList(data?.getRoles);
+    },
+    onError: (error: ApolloError) => {
+      setToastMessage(error.message);
+      setApiSuccess(false);
+      console.log("hi");
     },
     fetchPolicy: "network-only",
   });
