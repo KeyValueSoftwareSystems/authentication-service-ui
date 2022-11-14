@@ -1,5 +1,5 @@
 import { Button } from "@mui/material";
-import { FC } from "react";
+import React, { FC } from "react";
 
 import { TableToolBarProps } from "./types";
 import "./styles.css";
