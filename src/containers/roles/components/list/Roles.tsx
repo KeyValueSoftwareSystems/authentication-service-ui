@@ -32,7 +32,6 @@ const Roles: React.FC = () => {
     onError: (error: ApolloError) => {
       setToastMessage(error.message);
       setApiSuccess(false);
-      console.log("hi");
     },
     fetchPolicy: "network-only",
   });

@@ -20,10 +20,9 @@ import {
 } from "../../../../states/apiRequestState";
 
 const EditUser: React.FC = () => {
-  const { id } = useParams();
-
-  const [apiSuccess, setApiSuccess] = useRecoilState(apiRequestAtom);
-  const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom);
+  const { id } = useParams(); // eslint-disable-next-line
+  const [apiSuccess, setApiSuccess] = useRecoilState(apiRequestAtom); // eslint-disable-next-line
+  const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom); // eslint-disable-next-line
   const [userPermissions, setUserPermissions] =
     useRecoilState(UserPermissionsAtom);
   const [currentUserDetails, setCurrentUserDetails] =
