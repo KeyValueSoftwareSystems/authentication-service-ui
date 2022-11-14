@@ -26,9 +26,15 @@ const EditUser: React.FC = () => {
   const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom);
   const [userPermissions, setUserPermissions] =
     useRecoilState(UserPermissionsAtom);
-  const [currentUserDetails] = useRecoilState(currentUserAtom);
+  const [currentUserDetails, setCurrentUserDetails] =
+    useRecoilState(currentUserAtom);
 
   const [updateUser, { error: userUpdateError }] = useMutation(UPDATE_USER, {
+    onCompleted: (data) => {
+      if (currentUserDetails.id === id) {
+        setCurrentUserDetails(data.updateUser);
+      }
+    },
     onError: () => {
       setApiSuccess(false);
       setToastMessage("The request could not be processed");
