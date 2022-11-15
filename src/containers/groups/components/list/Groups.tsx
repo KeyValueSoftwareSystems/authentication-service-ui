@@ -85,8 +85,8 @@ const GroupList: React.FC = () => {
     navigate("add");
   };
 
-  const onEditGroup = (id: GridRowId) => {
-    navigate(`edit/${id}`);
+  const onEditGroup = (id: GridRowId, isEditVerified: boolean) => {
+    if (isEditVerified) navigate(`edit/${id}`);
   };
 
   useEffect(() => {

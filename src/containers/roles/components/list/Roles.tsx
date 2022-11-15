@@ -70,8 +70,8 @@ const Roles: React.FC = () => {
     navigate("add");
   };
 
-  const onEditRole = (id: GridRowId) => {
-    navigate(`edit/${id}`);
+  const onEditRole = (id: GridRowId, isEditVerified: boolean) => {
+    if (isEditVerified) navigate(`edit/${id}`);
   };
 
   useEffect(() => {

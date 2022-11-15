@@ -21,5 +21,5 @@ export interface TableProps {
   isAddVerified?: boolean;
   handleRowClick?: (params: GridRowParams) => void;
   onAdd: () => void;
-  onEdit: (id: GridRowId) => void;
+  onEdit: (id: GridRowId, isEditVerified: boolean) => void;
 }

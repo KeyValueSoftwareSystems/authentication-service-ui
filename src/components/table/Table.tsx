@@ -110,9 +110,11 @@ const TableList: FC<TableProps> = ({
   };
 
   const openConfirmPopup = (id: GridRowId, name: string) => {
-    setOpen(true);
-    setEntityId(id);
-    setEntityName(name);
+    if (isDeleteVerified) {
+      setOpen(true);
+      setEntityId(id);
+      setEntityName(name);
+    }
   };
 
   const action_column: GridColumns = [
@@ -129,16 +131,10 @@ const TableList: FC<TableProps> = ({
         return [
           <Tooltip title="Edit" arrow placement="top">
             <GridActionsCellItem
-              icon={
-                <EditOutlinedIcon
-                  onClick={() => {
-                    onEdit(params.id);
-                  }}
-                />
-              }
+              icon={<EditOutlinedIcon />}
               label="Edit"
               className={`edit  ${!isEditVerified && "disabled-styles"}`}
-              onClick={() => onEdit(params.id)}
+              onClick={() => onEdit(params.id, isEditVerified)}
             />
           </Tooltip>,
           <Tooltip title="Delete" arrow placement="top">

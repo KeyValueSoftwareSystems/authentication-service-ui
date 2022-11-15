@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useRecoilState } from "recoil";
-import { ApolloError, useMutation, useQuery } from "@apollo/client";
+import { ApolloError, useQuery } from "@apollo/client";
 import { Avatar, Chip } from "@mui/material";
 import { GridColumns } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
@@ -38,8 +38,8 @@ const Users: React.FC = () => {
     fetchPolicy: "network-only",
   });
 
-  const onEdit = (id: any) => {
-    navigate(`/home/users/add/${id}`);
+  const onEdit = (id: any, isEditVerified: boolean) => {
+    if (isEditVerified) navigate(`/home/users/add/${id}`);
   };
 
   const onAdd = () => {
