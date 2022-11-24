@@ -57,12 +57,20 @@ const PermissionList: React.FC = () => {
       setToastMessage(error.message);
       setApiSuccess(false);
     },
+    onCompleted: () => {
+      setToastMessage("Permission deleted successfully");
+      setApiSuccess(true);
+    },
   });
 
   const [updatePermission] = useMutation(UPDATE_PERMISSION, {
     onError: (error: ApolloError) => {
       setToastMessage(error.message);
       setApiSuccess(false);
+    },
+    onCompleted: () => {
+      setToastMessage("Permission updated successfully");
+      setApiSuccess(true);
     },
   });
 
@@ -83,6 +91,10 @@ const PermissionList: React.FC = () => {
     onError: (error: ApolloError) => {
       setToastMessage(error.message);
       setApiSuccess(false);
+    },
+    onCompleted: () => {
+      setToastMessage("Permission created successfully");
+      setApiSuccess(true);
     },
   });
 
