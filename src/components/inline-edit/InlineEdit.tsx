@@ -2,9 +2,23 @@ import React, { useState, useRef, useEffect } from "react";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import CheckIcon from "@mui/icons-material/Check";
-import { Tooltip } from "@mui/material";
+import {
+  Tooltip,
+  Dialog,
+  DialogActions,
+  DialogContentText,
+  DialogTitle,
+  styled,
+  Button,
+} from "@mui/material";
 
 import "./styles.css";
+
+const StyledDialog = styled(Dialog)`
+  .MuiBackdrop-root {
+    background-color: rgb(220 220 220 / 46%);
+  }
+`;
 
 type InlineEditProps = {
   value?: string;
@@ -26,6 +40,7 @@ const InlineEdit: React.FC<InlineEditProps> = ({
   const inputElement = useRef<any>(null);
   const [editingValue, setEditingValue] = useState<string | undefined>(value);
   const [isDisabled, setIsDisabled] = useState(!isAdd);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     setEditingValue(value);
@@ -55,11 +70,20 @@ const InlineEdit: React.FC<InlineEditProps> = ({
 
   const onDelete = () => {
     onDeletePermission(id);
+    handleClose();
   };
 
   const onEdit = () => {
     setIsDisabled(false);
     setTimeout(() => inputElement.current.focus(), 0);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const openConfirmPopup = () => {
+    setOpen(true);
   };
 
   return (
@@ -92,11 +116,42 @@ const InlineEdit: React.FC<InlineEditProps> = ({
           />
         ) : (
           <DeleteOutlineOutlinedIcon
-            onClick={onDelete}
+            onClick={() => openConfirmPopup()}
             sx={{ marginRight: "1px", color: "#eb272785" }}
           />
         )}
       </span>
+      <StyledDialog
+        PaperProps={{
+          style: {
+            boxShadow: "none",
+            minWidth: "400px",
+            alignItems: "center",
+          },
+        }}
+        open={open}
+        onClose={handleClose}
+      >
+        <DialogTitle>
+          <>Delete permission</>
+        </DialogTitle>
+        <DialogContentText sx={{ width: "84%" }}>
+          <> Are you sure you want to delete the permission {value}?</>
+        </DialogContentText>
+        <DialogActions>
+          <Button onClick={handleClose}>No</Button>
+          <Button
+            variant="outlined"
+            sx={{
+              height: "30px",
+            }}
+            onClick={onDelete}
+            autoFocus
+          >
+            Yes
+          </Button>
+        </DialogActions>
+      </StyledDialog>
     </div>
   );
 };

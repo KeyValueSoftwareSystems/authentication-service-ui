@@ -92,6 +92,10 @@ const TableList: FC<TableProps> = ({
       setToastMessage(error.message);
       setApiSuccess(false);
     },
+    onCompleted: () => {
+      setToastMessage(`${entity} deleted successfully`);
+      setApiSuccess(true);
+    },
   });
 
   const [open, setOpen] = useState(false);
