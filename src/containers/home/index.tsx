@@ -173,7 +173,7 @@ const HomePage = () => {
                   ROLES
                 </NavLink>
 
-                <NavLink
+                {/* <NavLink
                   to="/home/permissions"
                   className={({ isActive }) =>
                     isActive ? "active-text-link" : "text-link"
@@ -181,7 +181,7 @@ const HomePage = () => {
                 >
                   <LockOutlinedIcon className="icon" />
                   PERMISSIONS
-                </NavLink>
+                </NavLink> */}
               </div>
             </nav>
           </div>
