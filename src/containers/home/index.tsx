@@ -34,7 +34,7 @@ import { viewTableAtom } from "../../states/tableStates";
 const HomePage = () => {
   const setApiSuccess = useSetRecoilState(apiRequestAtom);
   const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom);
-  const [isViewVerified] = useRecoilState(viewTableAtom);
+  const [isViewVerified, setViewVerified] = useRecoilState(viewTableAtom);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -137,6 +137,7 @@ const HomePage = () => {
               <Divider />
               <MenuItem
                 onClick={() => {
+                  setViewVerified(true);
                   navigate(`./users/${currentUserDetails.id}`);
                 }}
                 sx={{ color: "#6d6d6d" }}
