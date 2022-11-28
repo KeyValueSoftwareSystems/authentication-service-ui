@@ -126,6 +126,7 @@ const Users: React.FC = () => {
         handleRowClick={onUserClick}
         editPermission="edit-user"
         deletePermission="delete-user"
+        viewPermission="view-user"
         isAddVerified={!isAddVerified}
         actionFlex={0.23}
         cursorType="pointer"

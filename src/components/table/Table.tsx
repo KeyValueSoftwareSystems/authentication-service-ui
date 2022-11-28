@@ -13,17 +13,34 @@ import {
   DialogTitle,
   styled,
   Tooltip,
+  Box,
+  Typography,
+  Modal,
 } from "@mui/material";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { ApolloError, useMutation, useQuery } from "@apollo/client";
-import { useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 
 import { TableProps } from "./types";
 import TableToolBar from "../table-toolbar/TableToolBar";
 import "./styles.css";
 import { VERIFY_USER_PERMISSION } from "./services/queries";
 import { apiRequestAtom, toastMessageAtom } from "../../states/apiRequestState";
+import { viewTableAtom } from "../../states/tableStates";
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid black",
+  boxShadow: 24,
+  p: 4,
+  pt: 2.5,
+};
 
 const StyledDialog = styled(Dialog)`
   .MuiBackdrop-root {
@@ -46,14 +63,33 @@ const TableList: FC<TableProps> = ({
   refetchQuery,
   editPermission,
   deletePermission,
+  viewPermission,
   isAddVerified,
   handleRowClick,
   entity,
 }) => {
   const [isEditVerified, setEditVerified] = React.useState(true);
   const [isDeleteVerified, setDeleteVerified] = React.useState(true);
+  const [isViewVerified, setViewVerified] = useRecoilState(viewTableAtom);
   const setApiSuccess = useSetRecoilState(apiRequestAtom);
   const setToastMessage = useSetRecoilState(toastMessageAtom);
+  useQuery(VERIFY_USER_PERMISSION, {
+    variables: {
+      params: {
+        permissions: [viewPermission],
+        operation: "AND",
+      },
+    },
+    onCompleted: (data) => {
+      setViewVerified(data?.verifyUserPermission);
+      console.log(data?.verifyUserPermission);
+    },
+    onError: (error: ApolloError) => {
+      setToastMessage(error.message);
+      setApiSuccess(false);
+    },
+    fetchPolicy: "network-only",
+  });
   useQuery(VERIFY_USER_PERMISSION, {
     variables: {
       params: {
@@ -194,30 +230,58 @@ const TableList: FC<TableProps> = ({
 
   return (
     <div className="table-component">
-      <div className="table-toolbar" style={{ border: "none" }}>
-        <TableToolBar
-          text={text}
-          buttonLabel={buttonLabel}
-          searchLabel={searchLabel}
-          setItemList={setItemList}
-          searchQuery={refetchQuery}
-          isAddVerified={isAddVerified}
-          onAdd={onAdd}
-        />
-      </div>
-      <div className="table-listing-items">
-        <DataGrid
-          rows={rows}
-          columns={final_columns}
-          style={{
-            borderRadius: "0px 0px 5px 5px",
-            cursor: cursorType,
-          }}
-          disableSelectionOnClick
-          onRowClick={handleRowClick}
-          disableColumnMenu
-        />
-      </div>
+      {isViewVerified ? (
+        <>
+          <div className="table-toolbar" style={{ border: "none" }}>
+            <TableToolBar
+              text={text}
+              buttonLabel={buttonLabel}
+              searchLabel={searchLabel}
+              setItemList={setItemList}
+              searchQuery={refetchQuery}
+              isAddVerified={isAddVerified}
+              onAdd={onAdd}
+            />
+          </div>
+          <div className="table-listing-items">
+            <DataGrid
+              rows={rows}
+              columns={final_columns}
+              style={{
+                borderRadius: "0px 0px 5px 5px",
+                cursor: cursorType,
+              }}
+              disableSelectionOnClick
+              onRowClick={handleRowClick}
+              disableColumnMenu
+            />
+          </div>
+        </>
+      ) : (
+        <Modal
+          open={!isViewVerified}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+          // hideBackdrop={true}
+        >
+          <Box sx={style}>
+            <Typography
+              id="modal-modal-title"
+              variant="h6"
+              component="h2"
+              sx={{ fontWeight: "bold", color: "black" }}
+            >
+              Access Denied!
+            </Typography>
+            <Typography
+              id="modal-modal-description"
+              sx={{ mt: 2, color: "black" }}
+            >
+              Sorry, you are not allowed to access this page.
+            </Typography>
+          </Box>
+        </Modal>
+      )}
     </div>
   );
 };

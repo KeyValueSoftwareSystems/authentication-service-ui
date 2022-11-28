@@ -29,10 +29,12 @@ import { currentUserAtom } from "../../states/loginStates";
 import { stringAvatar, stringToColor } from "../../utils/table";
 import Toast from "../../components/toast";
 import { apiRequestAtom, toastMessageAtom } from "../../states/apiRequestState";
+import { viewTableAtom } from "../../states/tableStates";
 
 const HomePage = () => {
   const setApiSuccess = useSetRecoilState(apiRequestAtom);
   const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom);
+  const [isViewVerified] = useRecoilState(viewTableAtom);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -99,9 +101,16 @@ const HomePage = () => {
               onClose={handleClose}
               onClick={handleClose}
               className="menu-styles"
-              PaperProps={{
-                elevation: 0,
-              }}
+              PaperProps={
+                isViewVerified
+                  ? {
+                      elevation: 0,
+                    }
+                  : {
+                      elevation: 0,
+                      sx: { backgroundColor: "#808080e0 !important" },
+                    }
+              }
               transformOrigin={{ horizontal: "right", vertical: "top" }}
               anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
             >
@@ -116,10 +125,13 @@ const HomePage = () => {
                       `${currentUserDetails.firstName} ${currentUserDetails.lastName}`?.toUpperCase()
                     ),
                   }}
+                  className={`${!isViewVerified && "denied-avatar"}`}
                 />
                 <div>
                   <div className="user-name">{`${currentUserDetails.firstName} ${currentUserDetails.lastName}`}</div>
-                  <div className="user-email">{currentUserDetails.email}</div>
+                  <div className={`${!isViewVerified && "denied-"}user-email`}>
+                    {currentUserDetails.email}
+                  </div>
                 </div>
               </MenuItem>
               <Divider />
@@ -128,12 +140,25 @@ const HomePage = () => {
                   navigate(`./users/${currentUserDetails.id}`);
                 }}
                 sx={{ color: "#6d6d6d" }}
+                className={`${!isViewVerified && "denied-menu-item"}`}
               >
-                <AccountCircleOutlinedIcon className="details-icon" />
+                <AccountCircleOutlinedIcon
+                  className={
+                    isViewVerified ? "details-icon" : "denied-details-icon"
+                  }
+                />
                 View Profile
               </MenuItem>
-              <MenuItem onClick={onLogout} sx={{ color: "#6d6d6d" }}>
-                <LogoutOutlinedIcon className="details-icon" />
+              <MenuItem
+                onClick={onLogout}
+                sx={{ color: "#6d6d6d" }}
+                className={`${!isViewVerified && "denied-menu-item"}`}
+              >
+                <LogoutOutlinedIcon
+                  className={
+                    isViewVerified ? "details-icon" : "denied-details-icon"
+                  }
+                />
                 Logout
               </MenuItem>
             </Menu>
@@ -141,13 +166,19 @@ const HomePage = () => {
         </div>
 
         <div className="body">
-          <div className="sideBar">
+          <div className={isViewVerified ? "sideBar" : "denied-sideBar"}>
             <nav>
               <div className="sideBarContainer">
                 <NavLink
                   to="/home/users"
                   className={({ isActive }) =>
-                    isActive ? "active-text-link" : "text-link"
+                    isActive
+                      ? isViewVerified
+                        ? "active-text-link"
+                        : "denied-active-text-link"
+                      : isViewVerified
+                      ? "text-link"
+                      : "denied-text-link"
                   }
                 >
                   <PeopleAltOutlinedIcon className="icon" />
@@ -156,7 +187,13 @@ const HomePage = () => {
                 <NavLink
                   to="/home/groups"
                   className={({ isActive }) =>
-                    isActive ? "active-text-link" : "text-link"
+                    isActive
+                      ? isViewVerified
+                        ? "active-text-link"
+                        : "denied-active-text-link"
+                      : isViewVerified
+                      ? "text-link"
+                      : "denied-text-link"
                   }
                 >
                   <Diversity3OutlinedIcon className="icon" />
@@ -166,7 +203,13 @@ const HomePage = () => {
                 <NavLink
                   to="/home/roles"
                   className={({ isActive }) =>
-                    isActive ? "active-text-link" : "text-link"
+                    isActive
+                      ? isViewVerified
+                        ? "active-text-link"
+                        : "denied-active-text-link"
+                      : isViewVerified
+                      ? "text-link"
+                      : "denied-text-link"
                   }
                 >
                   <WorkOutlineOutlinedIcon className="icon" />

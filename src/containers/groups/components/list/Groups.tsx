@@ -119,6 +119,7 @@ const GroupList: React.FC = () => {
         handleRowClick={onGroupClick}
         editPermission="edit-groups"
         deletePermission="delete-groups"
+        viewPermission="view-groups"
         isAddVerified={!isAddVerified}
         actionFlex={0.3}
         cursorType="pointer"

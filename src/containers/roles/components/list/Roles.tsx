@@ -99,6 +99,7 @@ const Roles: React.FC = () => {
         onEdit={onEditRole}
         editPermission="edit-roles"
         deletePermission="delete-roles"
+        viewPermission="view-roles"
         isAddVerified={!isAddVerified}
         actionFlex={0.3}
         cursorType="default"
