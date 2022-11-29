@@ -34,6 +34,7 @@ import {
   apiRequestAtom,
   toastMessageAtom,
 } from "../../../../states/apiRequestState";
+import { getOverallPermissions } from "../../../../utils/permissions";
 
 interface UserProps {
   isEdit?: boolean;
@@ -190,6 +191,18 @@ const UserForm = (props: UserProps) => {
   const { handleSubmit } = methods;
 
   const onSubmitForm = (inputs: FieldValues) => {
+    //TODO:waiting for backend fix
+    // const isValidUser = mandatoryPermissions.some((mandatoryPermission) =>
+    //   selectedPermissions.some(
+    //     (permission) =>
+    //       permission.name === mandatoryPermission ||
+    //       getOverallPermissions(groupPermissions).some(
+    //         (permission) => permission.name === mandatoryPermission
+    //       )
+    //   )
+    // );
+    // console.log(isValidUser);
+
     if (updateUser) updateUser(inputs, userGroups, selectedPermissions);
     else if (createUser) createUser(inputs, userGroups, selectedPermissions);
   };
@@ -235,6 +248,10 @@ const UserForm = (props: UserProps) => {
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
+  console.log(selectedPermissions);
+  console.log("group", getOverallPermissions(groupPermissions));
+
+  const mandatoryPermissions = ["view-user", "view-roles", "view-groups"];
 
   return (
     <div id="page">
