@@ -248,8 +248,6 @@ const UserForm = (props: UserProps) => {
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
-  console.log(selectedPermissions);
-  console.log("group", getOverallPermissions(groupPermissions));
 
   const mandatoryPermissions = ["view-user", "view-roles", "view-groups"];
 
