@@ -27,12 +27,6 @@
   background-color: white;
   height: calc(-60px + 100vh);
 }
-.denied-sideBar {
-  width: 300px;
-  background-color: rgb(47 47 47 / 5%);
-  height: calc(-60px + 100vh);
-  z-index: 1400 !important;
-}
 .option {
   text-decoration: none;
 }
@@ -47,23 +41,6 @@
   background-color: aliceblue;
   padding: 5px 10px 5px 20px;
 }
-
-.denied-text-link {
-  color: inherit;
-  height: 40px;
-  text-decoration: inherit;
-  margin: 10px 0px 20px 20px;
-  display: flex;
-  border-radius: 20px 0px 0px 20px;
-  align-items: center;
-  background-color: #6d6d6d61;
-  padding: 5px 10px 5px 20px;
-}
-
-.denied-text-link:hover {
-  background-color: #342d2d61;
-}
-
 .text-link:hover {
   background-color: #00aeef;
   color: white;
@@ -79,22 +56,6 @@
   border-radius: 20px 0px 0px 20px;
   align-items: center;
   padding: 5px 10px 5px 20px;
-}
-
-.denied-active-text-link {
-  background-color: #00aeef7a;
-  color: #ffffff96;
-  height: 40px;
-  text-decoration: inherit;
-  margin: 10px 0px 20px 20px;
-  display: flex;
-  border-radius: 20px 0px 0px 20px;
-  align-items: center;
-  padding: 5px 10px 5px 20px;
-}
-
-.denied-active-text-link:hover {
-  cursor: default;
 }
 
 .body {
@@ -149,35 +110,11 @@
   color: #6d6d6d;
 }
 
-.denied-user-email {
-  font-size: 13px;
-  margin-left: 4px;
-  color: #322f2f !important;
-}
-
 .details-icon {
   margin-right: 10px;
   color: #6d6d6d;
 }
 
-.denied-details-icon {
-  margin-right: 10px;
-  color: #484040;
-}
-
 .disabled-menu-styles {
   background-color: grey !important;
-}
-
-.css-78trlr-MuiButtonBase-root-MuiIconButton-root {
-  z-index: 1400;
-}
-
-.denied-avatar {
-  background-color: #6c6969 !important;
-  color: #ffffff4f !important;
-}
-
-.denied-menu-item {
-  color: #322f2f !important;
 }
