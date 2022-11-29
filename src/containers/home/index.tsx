@@ -23,8 +23,6 @@ import { LOGO_URL } from "../../config";
 import CustomerAuth from "../../services/auth";
 import "./styles.css";
 import { LOGOUT } from "../auth/services/mutations";
-import { GET_USERS } from "../users/services/queries";
-import { allUsersAtom } from "../../states/userStates";
 import { currentUserAtom } from "../../states/loginStates";
 import { stringAvatar, stringToColor } from "../../utils/table";
 import Toast from "../../components/toast";
@@ -44,18 +42,6 @@ const HomePage = () => {
     setAnchorEl(null);
   };
   const navigate = useNavigate();
-
-  const setUsers = useSetRecoilState(allUsersAtom);
-
-  useQuery(GET_USERS, {
-    onCompleted: (data) => {
-      setUsers(data?.getUsers);
-    },
-    onError: (error: ApolloError) => {
-      setToastMessage(error.message);
-      setApiSuccess(false);
-    },
-  });
   const [currentUserDetails] = useRecoilState(currentUserAtom);
 
   const [logout] = useMutation(LOGOUT, {

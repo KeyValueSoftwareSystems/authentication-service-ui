@@ -28,7 +28,7 @@ import { Entity, EntityPermissionsDetails } from "../../../../types/generic";
 import FilterChips from "../../../../components/filter-chips/FilterChips";
 import { Permission, User } from "../../../../types/user";
 import { Group } from "../../../../types/group";
-import { allUsersAtom } from "../../../../states/userStates";
+import { userListAtom } from "../../../../states/userStates";
 import UserCard from "./Usercard";
 import {
   apiRequestAtom,
@@ -75,7 +75,7 @@ const CreateOrEditGroup = () => {
   const [users, setUsers] = useState<User[]>([]);
 
   const [allRoles, setAllRoles] = useState<Role[]>([]);
-  const allUsers = useRecoilValue(allUsersAtom);
+  const allUsers = useRecoilValue(userListAtom);
   const [status, setStatus] = useState<boolean>(false);
 
   const [selectedPermissions, setSelectedPermissions] = useState<Permission[]>(
@@ -123,6 +123,7 @@ const CreateOrEditGroup = () => {
       setToastMessage(error.message);
       setApiSuccess(false);
     },
+    fetchPolicy: "network-only",
   });
 
   const { loading } = useQuery(GET_GROUP, {
