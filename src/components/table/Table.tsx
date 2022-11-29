@@ -36,6 +36,8 @@ const style = {
   transform: "translate(-50%, -50%)",
   width: 400,
   bgcolor: "background.paper",
+  border: "2px solid black",
+  boxShadow: 24,
   p: 4,
   pt: 2.5,
 };
@@ -80,6 +82,7 @@ const TableList: FC<TableProps> = ({
     },
     onCompleted: (data) => {
       setViewVerified(data?.verifyUserPermission);
+      console.log(data?.verifyUserPermission);
     },
     onError: (error: ApolloError) => {
       setToastMessage(error.message);
@@ -259,6 +262,7 @@ const TableList: FC<TableProps> = ({
           open={!isViewVerified}
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
+          // hideBackdrop={true}
         >
           <Box sx={style}>
             <Typography
