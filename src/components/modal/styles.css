@@ -1,8 +1,11 @@
 .MuiModal-root {
-  top: 35px !important;
-  left: 284px !important;
+  top: 80px !important;
+  left: 310px !important;
 }
 
 .css-i9fmh8-MuiBackdrop-root-MuiModal-backdrop {
-  display: none !important;
+  right: 34px !important;
+  bottom: 24px !important;
+  top: 102px !important;
+  left: 340px !important;
 }

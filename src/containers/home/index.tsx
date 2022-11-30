@@ -29,7 +29,6 @@ import { currentUserAtom } from "../../states/loginStates";
 import { stringAvatar, stringToColor } from "../../utils/table";
 import Toast from "../../components/toast";
 import { apiRequestAtom, toastMessageAtom } from "../../states/apiRequestState";
-import { viewTableAtom } from "../../states/tableStates";
 
 const HomePage = () => {
   const setApiSuccess = useSetRecoilState(apiRequestAtom);
