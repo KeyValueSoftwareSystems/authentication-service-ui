@@ -8,7 +8,7 @@ import React, { FC, useState } from "react";
 import { Tooltip } from "@mui/material";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
-import { ApolloError, useQuery } from "@apollo/client";
+import { ApolloError, useMutation, useQuery } from "@apollo/client";
 import { useSetRecoilState } from "recoil";
 
 import { TableProps } from "./types";
@@ -88,6 +88,27 @@ const TableList: FC<TableProps> = ({
     setOpen(false);
   };
 
+  const [deleteItem] = useMutation(deleteMutation, {
+    refetchQueries: [{ query: refetchQuery }],
+    onError: (error: ApolloError) => {
+      setToastMessage(error.message);
+      setApiSuccess(false);
+    },
+    onCompleted: () => {
+      setToastMessage(`${entity} deleted successfully`);
+      setApiSuccess(true);
+    },
+  });
+
+  const onConfirmDelete = () => {
+    deleteItem({
+      variables: {
+        id: entityId,
+      },
+    });
+    handleClose();
+  };
+
   const action_column: GridColumns = [
     {
       field: "actions",
@@ -141,6 +162,7 @@ const TableList: FC<TableProps> = ({
                 entity={entity}
                 entityId={entityId}
                 entityName={entityName}
+                onConfirm={onConfirmDelete}
                 handleClose={handleClose}
               />
             )}

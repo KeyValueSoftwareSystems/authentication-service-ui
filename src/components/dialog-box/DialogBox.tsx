@@ -25,41 +25,16 @@ type DialogProps = {
   entity: string;
   entityId: GridRowId;
   entityName: string;
+  onConfirm: () => void;
   handleClose: () => void;
 };
 
 const DialogBox: React.FC<DialogProps> = ({
-  deleteMutation,
-  refetchQuery,
   entity,
   entityName,
-  entityId,
+  onConfirm,
   handleClose,
 }) => {
-  const setApiSuccess = useSetRecoilState(apiRequestAtom);
-  const setToastMessage = useSetRecoilState(toastMessageAtom);
-
-  const [deleteItem] = useMutation(deleteMutation, {
-    refetchQueries: [{ query: refetchQuery }],
-    onError: (error: ApolloError) => {
-      setToastMessage(error.message);
-      setApiSuccess(false);
-    },
-    onCompleted: () => {
-      setToastMessage(`${entity} deleted successfully`);
-      setApiSuccess(true);
-    },
-  });
-
-  const onConfirmDelete = () => {
-    deleteItem({
-      variables: {
-        id: entityId,
-      },
-    });
-    handleClose();
-  };
-
   return (
     <StyledDialog
       PaperProps={{
@@ -89,7 +64,7 @@ const DialogBox: React.FC<DialogProps> = ({
           sx={{
             height: "30px",
           }}
-          onClick={onConfirmDelete}
+          onClick={onConfirm}
           autoFocus
         >
           Yes
