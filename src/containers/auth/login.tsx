@@ -14,17 +14,14 @@ import { currentUserAtom } from "../../states/loginStates";
 import PasswordConfirmation from "./PasswordConfirmation";
 import { apiRequestAtom, toastMessageAtom } from "../../states/apiRequestState";
 import Toast from "../../components/toast";
+import { PASSWORD_SET_MESSAGE } from "../../constants/messages";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const inviteToken: string | null = searchParams.get("token");
-  // eslint-disable-next-line
-  const [userPermissions, setUserPermissions] =
-    useRecoilState(UserPermissionsAtom);
-  // eslint-disable-next-line
-  const [currentUserDetails, setCurrentUserDetails] =
-    useRecoilState(currentUserAtom);
+  const setUserPermissions = useSetRecoilState(UserPermissionsAtom);
+  const setCurrentUserDetails = useSetRecoilState(currentUserAtom);
 
   const [userLogin, { data }] = useMutation(LOGIN, {
     onError: (error: ApolloError) => {
@@ -77,7 +74,7 @@ const Login: React.FC = () => {
       },
       fetchPolicy: "no-cache",
     });
-    setToastMessage("Password set successfully");
+    setToastMessage(PASSWORD_SET_MESSAGE);
     setApiSuccess(true);
   };
 

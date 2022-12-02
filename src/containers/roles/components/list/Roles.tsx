@@ -15,6 +15,12 @@ import {
   apiRequestAtom,
   toastMessageAtom,
 } from "../../../../states/apiRequestState";
+import {
+  CREATE_ROLE_PERMISSION,
+  DELETE_ROLE_PERMISSION,
+  UPDATE_ROLE_PERMISSION,
+  VIEW_ROLE_PERMISSION,
+} from "../../../../constants/permissions";
 
 const Roles: React.FC = () => {
   const navigate = useNavigate();
@@ -77,7 +83,7 @@ const Roles: React.FC = () => {
   useEffect(() => {
     // eslint-disable-next-line
     userPermissions.map((item: any) => {
-      if (item?.name.includes("create-roles")) {
+      if (item?.name.includes(CREATE_ROLE_PERMISSION)) {
         setAddVerified(true);
       }
     }); // eslint-disable-next-line
@@ -97,9 +103,9 @@ const Roles: React.FC = () => {
         refetchQuery={GET_ROLES}
         onAdd={onAddRole}
         onEdit={onEditRole}
-        editPermission="edit-roles"
-        deletePermission="delete-roles"
-        viewPermission="view-roles"
+        editPermission={UPDATE_ROLE_PERMISSION}
+        deletePermission={DELETE_ROLE_PERMISSION}
+        viewPermission={VIEW_ROLE_PERMISSION}
         isAddVerified={!isAddVerified}
         actionFlex={0.3}
         cursorType="default"
