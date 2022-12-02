@@ -51,7 +51,7 @@ const Users: React.FC = () => {
   useEffect(() => {
     // eslint-disable-next-line
     userPermissions.map((item: any) => {
-      if (item?.name.includes("create-users")) {
+      if (item?.name.includes("create-user")) {
         setAddVerified(true);
       }
     }); // eslint-disable-next-line
