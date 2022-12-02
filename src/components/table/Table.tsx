@@ -5,15 +5,7 @@ import {
   GridRowId,
 } from "@mui/x-data-grid";
 import React, { FC, useState } from "react";
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContentText,
-  DialogTitle,
-  styled,
-  Tooltip,
-} from "@mui/material";
+import { Tooltip } from "@mui/material";
 import { ApolloError, useMutation, useQuery } from "@apollo/client";
 import { useSetRecoilState } from "recoil";
 
@@ -25,12 +17,7 @@ import { apiRequestAtom, toastMessageAtom } from "../../states/apiRequestState";
 import {ReactComponent as EditIcon} from '../../assets/edit.svg'
 import {ReactComponent as LineIcon} from '../../assets/line.svg'
 import {ReactComponent as DeleteIcon} from '../../assets/trash.svg'
-
-const StyledDialog = styled(Dialog)`
-  .MuiBackdrop-root {
-    background-color: rgba(220, 220, 220, 0.05);
-  }
-`;
+import DialogBox from "../dialog-box";
 
 const TableList: FC<TableProps> = ({
   rows,
@@ -87,17 +74,32 @@ const TableList: FC<TableProps> = ({
     },
     fetchPolicy: "network-only",
   });
+
+  const [open, setOpen] = useState(false);
+  const [entityId, setEntityId] = useState<GridRowId>("");
+  const [entityName, setEntityName] = useState<string>("");
+
+  const openConfirmPopup = (id: GridRowId, name: string) => {
+    setOpen(true);
+    setEntityId(id);
+    setEntityName(name);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const [deleteItem] = useMutation(deleteMutation, {
     refetchQueries: [{ query: refetchQuery }],
     onError: (error: ApolloError) => {
       setToastMessage(error.message);
       setApiSuccess(false);
     },
+    onCompleted: () => {
+      setToastMessage(`${entity} deleted successfully`);
+      setApiSuccess(true);
+    },
   });
-
-  const [open, setOpen] = useState(false);
-  const [entityId, setEntityId] = useState<GridRowId>("");
-  const [entityName, setEntityName] = useState<string>("");
 
   const onConfirmDelete = () => {
     deleteItem({
@@ -106,16 +108,6 @@ const TableList: FC<TableProps> = ({
       },
     });
     handleClose();
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const openConfirmPopup = (id: GridRowId, name: string) => {
-    setOpen(true);
-    setEntityId(id);
-    setEntityName(name);
   };
 
   const action_column: GridColumns = [
@@ -160,47 +152,25 @@ const TableList: FC<TableProps> = ({
                   onClick={() => {
                     openConfirmPopup(
                       params.id,
-                      `${params.row.firstName} ${params.row.lastName}`
+                      params.row.name
+                        ? params.row.name
+                        : `${params.row.firstName} ${params.row.lastName}`
                     );
                   }}
                 />
               </Tooltip>
             )}
-            <StyledDialog
-              PaperProps={{
-                style: {
-                  boxShadow: "none",
-                  minWidth: "400px",
-                  alignItems: "center",
-                },
-              }}
-              open={open}
-              onClose={handleClose}
-            >
-              <DialogTitle>
-                <>Delete {entity}</>
-              </DialogTitle>
-              <DialogContentText sx={{ width: "84%" }}>
-                <>
-                  {" "}
-                  Are you sure you want to delete the {entity?.toLowerCase()}{" "}
-                  {entityName}?
-                </>
-              </DialogContentText>
-              <DialogActions>
-                <Button onClick={handleClose}>No</Button>
-                <Button
-                  variant="outlined"
-                  sx={{
-                    height: "30px",
-                  }}
-                  onClick={onConfirmDelete}
-                  autoFocus
-                >
-                  Yes
-                </Button>
-              </DialogActions>
-            </StyledDialog>
+            {open && (
+              <DialogBox
+                deleteMutation={deleteMutation}
+                refetchQuery={refetchQuery}
+                entity={entity}
+                entityId={entityId}
+                entityName={entityName}
+                onConfirm={onConfirmDelete}
+                handleClose={handleClose}
+              />
+            )}
           </>,
         ];
       },
