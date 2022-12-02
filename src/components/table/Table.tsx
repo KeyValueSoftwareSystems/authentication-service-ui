@@ -5,18 +5,10 @@ import {
   GridRowId,
 } from "@mui/x-data-grid";
 import React, { FC, useState } from "react";
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContentText,
-  DialogTitle,
-  styled,
-  Tooltip,
-} from "@mui/material";
+import { Tooltip } from "@mui/material";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
-import { ApolloError, useMutation, useQuery } from "@apollo/client";
+import { ApolloError, useQuery } from "@apollo/client";
 import { useSetRecoilState } from "recoil";
 
 import { TableProps } from "./types";
@@ -24,12 +16,7 @@ import TableToolBar from "../table-toolbar/TableToolBar";
 import "./styles.css";
 import { VERIFY_USER_PERMISSION } from "./services/queries";
 import { apiRequestAtom, toastMessageAtom } from "../../states/apiRequestState";
-
-const StyledDialog = styled(Dialog)`
-  .MuiBackdrop-root {
-    background-color: rgba(220, 220, 220, 0.05);
-  }
-`;
+import DialogBox from "../dialog-box";
 
 const TableList: FC<TableProps> = ({
   rows,
@@ -86,39 +73,19 @@ const TableList: FC<TableProps> = ({
     },
     fetchPolicy: "network-only",
   });
-  const [deleteItem] = useMutation(deleteMutation, {
-    refetchQueries: [{ query: refetchQuery }],
-    onError: (error: ApolloError) => {
-      setToastMessage(error.message);
-      setApiSuccess(false);
-    },
-    onCompleted: () => {
-      setToastMessage(`${entity} deleted successfully`);
-      setApiSuccess(true);
-    },
-  });
 
   const [open, setOpen] = useState(false);
   const [entityId, setEntityId] = useState<GridRowId>("");
   const [entityName, setEntityName] = useState<string>("");
 
-  const onConfirmDelete = () => {
-    deleteItem({
-      variables: {
-        id: entityId,
-      },
-    });
-    handleClose();
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
   const openConfirmPopup = (id: GridRowId, name: string) => {
     setOpen(true);
     setEntityId(id);
     setEntityName(name);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
   const action_column: GridColumns = [
@@ -159,47 +126,24 @@ const TableList: FC<TableProps> = ({
                   onClick={() => {
                     openConfirmPopup(
                       params.id,
-                      `${params.row.firstName} ${params.row.lastName}`
+                      params.row.name
+                        ? params.row.name
+                        : `${params.row.firstName} ${params.row.lastName}`
                     );
                   }}
                 />
               </Tooltip>
             )}
-            <StyledDialog
-              PaperProps={{
-                style: {
-                  boxShadow: "none",
-                  minWidth: "400px",
-                  alignItems: "center",
-                },
-              }}
-              open={open}
-              onClose={handleClose}
-            >
-              <DialogTitle>
-                <>Delete {entity}</>
-              </DialogTitle>
-              <DialogContentText sx={{ width: "84%" }}>
-                <>
-                  {" "}
-                  Are you sure you want to delete the {entity?.toLowerCase()}{" "}
-                  {entityName}?
-                </>
-              </DialogContentText>
-              <DialogActions>
-                <Button onClick={handleClose}>No</Button>
-                <Button
-                  variant="outlined"
-                  sx={{
-                    height: "30px",
-                  }}
-                  onClick={onConfirmDelete}
-                  autoFocus
-                >
-                  Yes
-                </Button>
-              </DialogActions>
-            </StyledDialog>
+            {open && (
+              <DialogBox
+                deleteMutation={deleteMutation}
+                refetchQuery={refetchQuery}
+                entity={entity}
+                entityId={entityId}
+                entityName={entityName}
+                handleClose={handleClose}
+              />
+            )}
           </>,
         ];
       },
