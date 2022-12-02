@@ -4,10 +4,12 @@ import { ApolloError, useMutation, useQuery } from "@apollo/client";
 import { Avatar, Chip } from "@mui/material";
 import { GridColumns } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
-import CircleIcon from "@mui/icons-material/Circle";
-import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-import RefreshIcon from "@mui/icons-material/Refresh";
+import Switch from '@mui/material/Switch';
 import { Tooltip } from "@mui/material";
+import FormControlLabel from '@mui/material/FormControlLabel';
+import { styled } from '@mui/material/styles';
+import {ReactComponent as RefreshIcon} from '../../assets/refresh.svg'
+import {ReactComponent as ContentCopyIcon} from '../../assets/copy.svg'
 
 import { GET_USERS } from "./services/queries";
 import { REFRESH_INVITE_TOKEN } from "../auth/services/mutations";
@@ -64,7 +66,7 @@ const Users: React.FC = () => {
   const columns: GridColumns = [
     {
       field: "firstName",
-      headerName: "User",
+      headerName: "Users",
       width: 320,
       headerClassName: "user-list-header",
       headerAlign: "left",
@@ -100,7 +102,7 @@ const Users: React.FC = () => {
           <CheckAccess {...params} />
         </div>
       ),
-      headerAlign: "center",
+      headerAlign: "left",
       sortable: false,
       align: "center",
     },
@@ -154,6 +156,29 @@ const GetFullName = (props: any) => {
 const CheckAccess = (props: any) => {
   const { row } = props;
 
+  const IOSSwitch = styled((props) => (
+    <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} checked={row.status==="ACTIVE"?true:false}/>
+  ))(({ theme }) => ({
+    '& .MuiSwitch-switchBase': {
+      '&.Mui-checked': {
+        transform: 'translateX(16px)',
+        color: '#fff',
+        '& + .MuiSwitch-track': {
+          backgroundColor: '#0AAAA1',
+          opacity: 1,
+        },
+      },
+    },
+    '& .MuiSwitch-track': {
+      borderRadius: 26 / 2,
+      backgroundColor: '#CF1322',
+      opacity: 1,
+      transition: theme.transitions.create(['background-color'], {
+        duration: 500,
+      }),
+    },
+  }));
+
   const [isLinkCopied, setIsLinkCopied] = React.useState(false);
   const [isLinkRefreshed, setIsLinkRefreshed] = React.useState(false);
 
@@ -186,27 +211,12 @@ const CheckAccess = (props: any) => {
     <div className="toggle">
       {row.status !== "INVITED" && (
         <div className="switch">
-          <Chip
-            icon={
-              <CircleIcon
-                sx={{ width: "9px", marginLeft: "18px !important" }}
-                id={
-                  row.status === "ACTIVE" ? "active-circle" : "inactive-circle"
-                }
-              />
-            }
-            sx={{
-              borderRadius: "5px !important",
-              width: "21px",
-              height: "21px",
-            }}
-            id={row.status === "ACTIVE" ? "active" : "inactive"}
-          />
-          {row.status === "ACTIVE" ? (
-            <div id="enabled-text">Active</div>
-          ) : (
-            <div id="enabled-text">Inactive</div>
-          )}
+           <FormControlLabel
+           sx={row.status==="ACTIVE"?{color:"#0AAAA1"}:{color:"#CF1322"}}
+        control={<IOSSwitch sx={{ m: 1 }} />}
+        label={row.status==="ACTIVE"?"Active":"Inactive"}
+        onClick={(e:any)=> e.stopPropagation()}
+      />
         </div>
       )}
       <div className="invited-switch">
@@ -216,19 +226,12 @@ const CheckAccess = (props: any) => {
               label="Invited"
               className="pending"
               sx={{
-                height: "36px",
-                width: "107px",
+                height: "31px",
+                width: "76px",
                 borderRadius: "5px",
                 fontWeight: "600",
               }}
             />
-            <Tooltip
-              title={isLinkCopied ? "Copied" : "Copy Invite Link"}
-              onClick={onCopyInviteLink}
-              sx={{ cursor: "pointer" }}
-            >
-              <ContentCopyIcon fontSize="small" htmlColor="#01579B" />
-            </Tooltip>
             <Tooltip
               title={
                 isLinkRefreshed
@@ -238,7 +241,14 @@ const CheckAccess = (props: any) => {
               onClick={onRefreshInviteLink}
               sx={{ cursor: "pointer" }}
             >
-              <RefreshIcon fontSize="medium" htmlColor="#01579B" />
+              <RefreshIcon className="refresh-token-icon"/>
+            </Tooltip>
+            <Tooltip
+              title={isLinkCopied ? "Copied" : "Copy Invite Link"}
+              onClick={onCopyInviteLink}
+              sx={{ cursor: "pointer" }}
+            >
+              <ContentCopyIcon fontSize="small" className="refresh-token-icon"/>
             </Tooltip>
           </>
         )}

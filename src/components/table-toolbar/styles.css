@@ -1,16 +1,16 @@
 .table-toolbar {
-  padding: 11px 0px;
   box-sizing: border-box;
   border-radius: 5px 5px 0px 0px;
   display: flex;
   justify-content: space-between;
-  height: 90px;
+  height: 117px;
+  padding-bottom: 11px;
   border-bottom: none;
+  background-color: #E9EDF2;
 }
 
 .search-button {
   display: flex;
-  margin-right: 40px;
 }
 
 .legend-title {
@@ -27,13 +27,21 @@
   position: relative;
 }
 
-.only-search {
-  margin-top: 10px;
+.sort{
+  margin-right: 20px;
 }
 
 #add-button {
   height: 49px;
-  width: 150px;
+  width: 128px;
+  background-color: #2653F1;
+  font-family: 'Manrope';
+  font-size: 16px;
+}
+
+.search-sort-filter{
+  display: flex;
+  align-items: center;
 }
 
 @media screen and (max-width: 1103px) {

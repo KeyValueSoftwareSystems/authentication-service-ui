@@ -14,8 +14,6 @@ import {
   styled,
   Tooltip,
 } from "@mui/material";
-import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
-import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { ApolloError, useMutation, useQuery } from "@apollo/client";
 import { useSetRecoilState } from "recoil";
 
@@ -24,6 +22,9 @@ import TableToolBar from "../table-toolbar/TableToolBar";
 import "./styles.css";
 import { VERIFY_USER_PERMISSION } from "./services/queries";
 import { apiRequestAtom, toastMessageAtom } from "../../states/apiRequestState";
+import {ReactComponent as EditIcon} from '../../assets/edit.svg'
+import {ReactComponent as LineIcon} from '../../assets/line.svg'
+import {ReactComponent as DeleteIcon} from '../../assets/trash.svg'
 
 const StyledDialog = styled(Dialog)`
   .MuiBackdrop-root {
@@ -134,11 +135,15 @@ const TableList: FC<TableProps> = ({
               <Tooltip title="Edit" arrow placement="top">
                 <GridActionsCellItem
                   icon={
-                    <EditOutlinedIcon
+                    <><EditIcon
+                    className="edit"
                       onClick={() => {
                         onEdit(params.id);
-                      }}
-                    />
+                      } 
+                    } /><LineIcon
+                        onClick={() => {
+                          onEdit(params.id);
+                        } } className="edit-line"/></>
                   }
                   label="Edit"
                   className="edit"
@@ -149,7 +154,7 @@ const TableList: FC<TableProps> = ({
             {isDeleteVerified && (
               <Tooltip title="Delete" arrow placement="top">
                 <GridActionsCellItem
-                  icon={<DeleteOutlinedIcon className="delete" />}
+                  icon={<DeleteIcon className="delete" />}
                   label="Delete"
                   className="delete"
                   onClick={() => {
@@ -210,7 +215,6 @@ const TableList: FC<TableProps> = ({
 
   return (
     <div className="table-component">
-      <div className="table-toolbar" style={{ border: "none" }}>
         <TableToolBar
           text={text}
           buttonLabel={buttonLabel}
@@ -220,8 +224,6 @@ const TableList: FC<TableProps> = ({
           isAddVerified={isAddVerified}
           onAdd={onAdd}
         />
-      </div>
-      <div className="table-listing-items">
         <DataGrid
           rows={rows}
           columns={final_columns}
@@ -233,7 +235,6 @@ const TableList: FC<TableProps> = ({
           onRowClick={handleRowClick}
           disableColumnMenu
         />
-      </div>
     </div>
   );
 };

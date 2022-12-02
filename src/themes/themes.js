@@ -113,6 +113,24 @@ const theme = createTheme({
         },
       },
     },
+    MuiSwitch: {
+      styleOverrides: {
+        root: {
+        width: 41,
+        height: 25,
+        padding: 0,
+        '& .MuiSwitch-switchBase': {
+          padding: 0,
+          margin: 2,
+        },
+        '& .MuiSwitch-thumb': {
+          boxSizing: 'border-box',
+          width: 20,
+          height: 20,
+        },
+      }
+      }
+    },
   },
 });
 export default theme;

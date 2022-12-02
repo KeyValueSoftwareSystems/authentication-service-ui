@@ -2,11 +2,12 @@
   font-size: 16px;
   margin-left: 15px;
   font-weight: bold;
-  color: #6d6d6d;
+  color: #0A0D14;
   white-space: nowrap;
   width: 204px;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-family: 'Manrope';
 }
 
 .avatar {
@@ -14,7 +15,12 @@
 }
 
 .email {
-  margin-left: 15px;
+font-family: 'Manrope';
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 20px;
+margin-left: 15px;
 }
 
 .group-list {
@@ -33,11 +39,13 @@
 }
 
 .pending {
-  background-color: #efcc2433 !important;
-  margin-right: 10px;
-  font-size: 15px !important;
-  color: #d9a034 !important;
-  padding: 0px 7px 0px 7px !important;
+  background-color:rgba(244, 148, 3, 0.1) !important;
+  margin-right: 13px;
+  color: #F69A40 !important;
+  font-size: 16px !important;
+  font-family: 'Manrope' !important;
+  font-weight: bold !important;
+  border-radius: 42px !important;
 }
 
 .switch {
@@ -50,23 +58,17 @@
   align-items: center;
 }
 
-#enabled-text {
-  font-size: 17px;
-  margin-left: 13px;
+.css-ahj2mt-MuiTypography-root{
+  font-size: 16px !important;
+  font-family: 'Manrope' !important;
+  font-weight: bold !important;
 }
 
-#active {
-  background-color: #0080003d;
+.refresh-token-icon{
+  filter: invert(32%) sepia(15%) saturate(1057%) hue-rotate(167deg) brightness(89%) contrast(87%);
+  margin-right: 13px;
 }
 
-#active-circle {
-  color: #00800069;
-}
-
-#inactive {
-  background-color: #80000036;
-}
-
-#inactive-circle {
-  color: #80000052;
+.refresh-token-icon:hover{
+  filter: invert(40%) sepia(68%) saturate(4403%) hue-rotate(210deg) brightness(96%) contrast(93%);;
 }

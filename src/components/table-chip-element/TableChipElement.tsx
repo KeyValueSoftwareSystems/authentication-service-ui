@@ -49,7 +49,7 @@ const TableChipElement: FC<TableChipElementProps> = ({
             <Chip
               label={`+${row[columnName]?.length - defaultSize}`}
               key="click-to-see-more"
-              id="chip"
+              id="count-chip"
               onClick={onClickShowMore}
             />
           )}
