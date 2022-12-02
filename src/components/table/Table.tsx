@@ -17,7 +17,7 @@ import "./styles.css";
 import { VERIFY_USER_PERMISSION } from "./services/queries";
 import { apiRequestAtom, toastMessageAtom } from "../../states/apiRequestState";
 import { viewTableAtom } from "../../states/tableStates";
-import ModalComponent from "../modal";
+import AccessDenied from "../access-denied";
 import DialogBox from "../dialog-box";
 
 const TableList: FC<TableProps> = ({
@@ -229,11 +229,7 @@ const TableList: FC<TableProps> = ({
           </div>
         </>
       ) : (
-        <ModalComponent
-          isOpen={!isViewVerified}
-          heading={"Access Denied"}
-          text={"Sorry, you are not allowed to view this page."}
-        />
+        <AccessDenied />
       )}
     </div>
   );
