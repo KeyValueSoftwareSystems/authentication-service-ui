@@ -34,7 +34,6 @@ export const ChecklistComponent: FC<ChecklistProps> = ({
       setSelectAll(true);
     } else setSelectAll(false);
   }, [mapList, currentCheckedItems]);
-  console.log(mapList);
 
   return (
     <div id="add-items">
