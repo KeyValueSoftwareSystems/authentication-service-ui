@@ -60,7 +60,7 @@ const GroupList: React.FC = () => {
           <TableChipElement
             rowItems={params}
             columnName="roles"
-            defaultSize={5}
+            defaultSize={3}
           />
         </div>
       ),
@@ -113,6 +113,7 @@ const GroupList: React.FC = () => {
         rows={groupList}
         columns={columns}
         text="All Groups"
+        count={groupList.length}
         buttonLabel="Add Group"
         searchLabel="Search Group"
         setItemList={setItemList}

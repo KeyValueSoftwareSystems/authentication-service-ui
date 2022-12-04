@@ -4,12 +4,9 @@ import { ApolloError, useMutation, useQuery } from "@apollo/client";
 import { Avatar, Chip } from "@mui/material";
 import { GridColumns } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
-import Switch from '@mui/material/Switch';
 import { Tooltip } from "@mui/material";
-import FormControlLabel from '@mui/material/FormControlLabel';
-import { styled } from '@mui/material/styles';
-import {ReactComponent as RefreshIcon} from '../../assets/refresh.svg'
-import {ReactComponent as ContentCopyIcon} from '../../assets/copy.svg'
+import { ReactComponent as RefreshIcon } from "../../assets/refresh.svg";
+import { ReactComponent as ContentCopyIcon } from "../../assets/copy.svg";
 
 import { GET_USERS } from "./services/queries";
 import { REFRESH_INVITE_TOKEN } from "../auth/services/mutations";
@@ -71,7 +68,7 @@ const Users: React.FC = () => {
   const columns: GridColumns = [
     {
       field: "firstName",
-      headerName: "Users",
+      headerName: "User",
       width: 320,
       headerClassName: "user-list-header",
       headerAlign: "left",
@@ -91,7 +88,7 @@ const Users: React.FC = () => {
           <TableChipElement
             rowItems={params}
             columnName="groups"
-            defaultSize={6}
+            defaultSize={3}
           />
         </div>
       ),
@@ -101,6 +98,7 @@ const Users: React.FC = () => {
     {
       field: "status",
       headerName: "Status",
+      headerClassName: "status-header",
       flex: 0.21,
       renderCell: (params) => (
         <div className="access-column">
@@ -109,7 +107,6 @@ const Users: React.FC = () => {
       ),
       headerAlign: "left",
       sortable: false,
-      align: "center",
     },
   ];
 
@@ -123,6 +120,7 @@ const Users: React.FC = () => {
         rows={userList}
         columns={columns}
         text="All Users"
+        count={userList.length}
         setItemList={setItemList}
         onAdd={onAdd}
         onEdit={onEdit}
@@ -148,11 +146,15 @@ const GetFullName = (props: any) => {
     <>
       <Avatar
         {...stringAvatar(`${row.firstName} ${row.lastName}`?.toUpperCase())}
-        className="avatar"
+        className={row.status !== "INVITED" ? "avatar" : "blurred-avatar"}
       />
       <div>
-        <div className="fullname">{`${row.firstName} ${row.lastName}`}</div>
-        <div className="email">{row.email}</div>
+        <div
+          className={row.status !== "INVITED" ? "fullname" : "blurred-fullname"}
+        >{`${row.firstName} ${row.lastName}`}</div>
+        <div className={row.status !== "INVITED" ? "email" : "blurred-email"}>
+          {row.email}
+        </div>
       </div>
     </>
   );
@@ -160,29 +162,6 @@ const GetFullName = (props: any) => {
 
 const CheckAccess = (props: any) => {
   const { row } = props;
-
-  const IOSSwitch = styled((props) => (
-    <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} checked={row.status==="ACTIVE"?true:false}/>
-  ))(({ theme }) => ({
-    '& .MuiSwitch-switchBase': {
-      '&.Mui-checked': {
-        transform: 'translateX(16px)',
-        color: '#fff',
-        '& + .MuiSwitch-track': {
-          backgroundColor: '#0AAAA1',
-          opacity: 1,
-        },
-      },
-    },
-    '& .MuiSwitch-track': {
-      borderRadius: 26 / 2,
-      backgroundColor: '#CF1322',
-      opacity: 1,
-      transition: theme.transitions.create(['background-color'], {
-        duration: 500,
-      }),
-    },
-  }));
 
   const [isLinkCopied, setIsLinkCopied] = React.useState(false);
   const [isLinkRefreshed, setIsLinkRefreshed] = React.useState(false);
@@ -213,51 +192,43 @@ const CheckAccess = (props: any) => {
   };
 
   return (
-    <div className="toggle">
-      {row.status !== "INVITED" && (
-        <div className="switch">
-           <FormControlLabel
-           sx={row.status==="ACTIVE"?{color:"#0AAAA1"}:{color:"#CF1322"}}
-        control={<IOSSwitch sx={{ m: 1 }} />}
-        label={row.status==="ACTIVE"?"Active":"Inactive"}
-        onClick={(e:any)=> e.stopPropagation()}
+    <div className="invited-switch">
+      <Chip
+        label={row.status.charAt(0) + row.status.toLowerCase().slice(1)}
+        className={
+          row.status === "INVITED"
+            ? "pending"
+            : row.status === "ACTIVE"
+            ? "active-user"
+            : "inactive-user"
+        }
+        sx={{
+          height: "31px",
+          width: "76px",
+          borderRadius: "5px",
+          fontWeight: "600",
+        }}
       />
-        </div>
+      {row.status === "INVITED" && (
+        <>
+          <Tooltip
+            title={
+              isLinkRefreshed ? "Invite Link Refreshed!" : "Refresh Invite Link"
+            }
+            onClick={onRefreshInviteLink}
+            sx={{ cursor: "pointer" }}
+          >
+            <RefreshIcon className="refresh-token-icon" />
+          </Tooltip>
+          <Tooltip
+            title={isLinkCopied ? "Copied" : "Copy Invite Link"}
+            onClick={onCopyInviteLink}
+            sx={{ cursor: "pointer" }}
+          >
+            <ContentCopyIcon fontSize="small" className="refresh-token-icon" />
+          </Tooltip>
+        </>
       )}
-      <div className="invited-switch">
-        {row.status === "INVITED" && (
-          <>
-            <Chip
-              label="Invited"
-              className="pending"
-              sx={{
-                height: "31px",
-                width: "76px",
-                borderRadius: "5px",
-                fontWeight: "600",
-              }}
-            />
-            <Tooltip
-              title={
-                isLinkRefreshed
-                  ? "Invite Link Refreshed!"
-                  : "Refresh Invite Link"
-              }
-              onClick={onRefreshInviteLink}
-              sx={{ cursor: "pointer" }}
-            >
-              <RefreshIcon className="refresh-token-icon"/>
-            </Tooltip>
-            <Tooltip
-              title={isLinkCopied ? "Copied" : "Copy Invite Link"}
-              onClick={onCopyInviteLink}
-              sx={{ cursor: "pointer" }}
-            >
-              <ContentCopyIcon fontSize="small" className="refresh-token-icon"/>
-            </Tooltip>
-          </>
-        )}
-      </div>
     </div>
   );
 };

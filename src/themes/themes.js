@@ -56,6 +56,9 @@ const theme = createTheme({
             color: "#01579B",
           },
         },
+        contained: {
+          padding: "6px 6px",
+        },
         text: {
           color: "#636363",
           backgroundColor: "transparent",
@@ -69,6 +72,23 @@ const theme = createTheme({
     MuiDataGrid: {
       styleOverrides: {
         root: {
+          borderTop: "1px solid #9d9d9d29 !important",
+          borderBottom: "none !important",
+          borderLeft: "none !important",
+          borderRight: "none !important",
+          "& .MuiDataGrid-columnHeaders": {
+            borderBottom: "1px solid #9d9d9d29 !important",
+            color: "#67686c",
+            minHeight: "49px !important",
+            backgroundColor: "#f4f8fb94",
+            borderRadius: "0% !important",
+          },
+          "& .MuiDataGrid-columnHeaderTitle": {
+            fontSize: "16px",
+            color: "#0A0D14",
+            fontFamily: "Manrope",
+            fontWeight: "600 !important",
+          },
           "& .MuiDataGrid-renderingZone": {
             maxHeight: "none !important",
           },
@@ -79,13 +99,36 @@ const theme = createTheme({
             flexWrap: "wrap !important",
             textOverflow: "ellipsis",
           },
+          "& .MuiDataGrid-cellContent": {
+            marginLeft: "30px !important",
+            fontSize: "16px",
+          },
           "& .MuiDataGrid-row": {
             maxHeight: "none !important",
+            minHeight: "76px !important",
+            borderBottom: "1px solid #D9D9D9 !important",
           },
           "& .MuiDataGrid-cell--withRenderer MuiDataGrid-cell MuiDataGrid-cell--textLeft":
             {
               maxHeight: "none !important",
             },
+          "& .MuiDataGrid-virtualScroller": {
+            fontFamily: "Manrope",
+            marginTop: "57px !important",
+          },
+          "& .MuiDataGrid-iconSeparator": {
+            display: "none",
+          },
+          "& .MuiDataGrid-footerContainer": {
+            backgroundColor: "#E9EDF2",
+            position: "relative",
+            minHeight: "70px !important",
+            position: "relative",
+            top: "-2px",
+          },
+          ". &.MuiSvgIcon-root-MuiSvgIcon": {
+            color: "#039be5 !important",
+          },
         },
       },
     },
@@ -116,20 +159,20 @@ const theme = createTheme({
     MuiSwitch: {
       styleOverrides: {
         root: {
-        width: 41,
-        height: 25,
-        padding: 0,
-        '& .MuiSwitch-switchBase': {
+          width: 41,
+          height: 25,
           padding: 0,
-          margin: 2,
+          "& .MuiSwitch-switchBase": {
+            padding: 0,
+            margin: 2,
+          },
+          "& .MuiSwitch-thumb": {
+            boxSizing: "border-box",
+            width: 20,
+            height: 20,
+          },
         },
-        '& .MuiSwitch-thumb': {
-          boxSizing: 'border-box',
-          width: 20,
-          height: 20,
-        },
-      }
-      }
+      },
     },
   },
 });

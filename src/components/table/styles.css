@@ -1,5 +1,5 @@
 .table-component {
-  height: 100%;
+  height: 86%;
 }
 
 .table-list-header {
@@ -8,12 +8,34 @@
   height: 60px !important;
 }
 
+.blurred-edit {
+  opacity: 0.5;
+}
+
+.blurred-delete {
+  opacity: 0.5;
+}
+
+.blurred-edit:hover {
+  filter: invert(33%) sepia(91%) saturate(3281%) hue-rotate(213deg)
+    brightness(99%) contrast(87%);
+  opacity: 0.5;
+}
+
+.blurred-delete:hover {
+  filter: invert(15%) sepia(97%) saturate(4902%) hue-rotate(349deg)
+    brightness(83%) contrast(96%);
+  opacity: 0.5;
+}
+
 .edit:hover {
-  filter: invert(33%) sepia(91%) saturate(3281%) hue-rotate(213deg) brightness(99%) contrast(87%);
+  filter: invert(33%) sepia(91%) saturate(3281%) hue-rotate(213deg)
+    brightness(99%) contrast(87%);
 }
 
 .delete:hover {
-  filter: invert(15%) sepia(97%) saturate(4902%) hue-rotate(349deg) brightness(83%) contrast(96%);
+  filter: invert(15%) sepia(97%) saturate(4902%) hue-rotate(349deg)
+    brightness(83%) contrast(96%);
 }
 
 .disabled-styles:hover {
@@ -26,70 +48,87 @@
   min-height: 50px !important;
 }
 
-.edit-line{
+.edit-line {
   padding-top: 15px;
 }
 
-.edit-line:hover{
-  filter: invert(33%) sepia(91%) saturate(3281%) hue-rotate(213deg) brightness(99%) contrast(87%);
+.edit-line:hover {
+  filter: invert(33%) sepia(91%) saturate(3281%) hue-rotate(213deg)
+    brightness(99%) contrast(87%);
 }
 
-.MuiDataGrid-root {
-  border-top: 1px solid #9d9d9d29 !important;
-  border-bottom: none !important;
-  border-left: none !important;
-  border-right: none !important;
+.blurred-edit-line {
+  padding-top: 15px;
+  opacity: 0.5;
 }
 
-.MuiDataGrid-columnHeaders {
-  border-bottom: 1px solid #9d9d9d29 !important;
-  color: #67686c;
+.blurred-edit-line:hover {
+  filter: invert(33%) sepia(91%) saturate(3281%) hue-rotate(213deg)
+    brightness(99%) contrast(87%);
+  opacity: 0.5;
 }
 
-.MuiDataGrid-footerContainer {
-  border-top: 1px solid #9d9d9d29 !important;
-  color: #67686c8c !important;
-}
-
-.MuiDataGrid-virtualScroller {
-  margin-top: 57px !important;
-}
-
-.MuiDataGrid-columnHeaders {
-  min-height: 49px !important;
-  background-color: #f4f8fb94;
-  border-radius: 0% !important;
-}
-
-.MuiDataGrid-columnHeaderTitle {
-  font-size: 16px;
-  color: #0A0D14;
-  font-family: 'Manrope';
-  font-weight: 600 !important;
-}
-
-.MuiDataGrid-row {
-  min-height: 70px !important;
-  border-bottom: 1px solid #D9D9D9 !important;
-}
-
-.MuiSvgIcon-root-MuiSvgIcon {
-  color: #039be5 !important;
-}
-
-.MuiCheckbox-root {
-  color: #67686c8c !important;
-}
-
-.MuiDataGrid-cellContent {
-  font-size: 16px;
-  margin-left: 35px;
+#pagination-text {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  color: #727782;
+  line-height: 20px;
+  width: 89px;
 }
 
 .MuiDataGrid-cell:focus {
   outline: none !important;
 }
 
-.css-1i9pg5b-MuiDataGrid-root .MuiDataGrid-iconSeparator{
-  display: none;
+.css-3q9hkm-MuiInputBase-root-MuiOutlinedInput-root {
+  width: 37px;
+  height: 31px;
+  background-color: white;
+  font-family: "Inter" !important;
+  font-size: 15px !important;
+}
+
+.css-c4e03a-MuiButtonBase-root-MuiPaginationItem-root {
+  background-color: white !important;
+  margin: 0px 5px !important;
+}
+
+.css-c4e03a-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected {
+  color: #1890ff !important;
+  border-color: #1890ff !important;
+}
+
+@media screen and (max-width: 1597px) {
+  .css-1oj2twp-MuiPagination-root {
+    width: 73% !important;
+  }
+  .go-to-page {
+    width: 169px;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .go-to-page {
+    display: none !important;
+  }
+  .css-1oj2twp-MuiPagination-root {
+    width: 76% !important;
+  }
+}
+
+.css-1oj2twp-MuiPagination-root {
+  width: 78%;
+}
+
+.pagination-count {
+  width: 120px;
+  font-family: "Inter";
+  font-size: 16px;
+  color: #1a191c;
+}
+
+.go-to-page {
+  display: flex;
+  align-items: center;
 }

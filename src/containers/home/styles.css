@@ -11,7 +11,7 @@
 }
 
 .sideBar {
-  width: 370px;
+  width: 480px;
   background-color: white;
   height: 100vh;
   display: flex;
@@ -19,16 +19,19 @@
 }
 
 .body {
-  background-color: #E9EDF2;
+  background-color: #e9edf2;
   display: flex;
   height: 100vh;
 }
 .outlet {
-  width: 80%;
-  margin: 35px;
-  margin-top: 0px;
+  width: 93%;
+  margin-left: 53px;
+  margin-right: 53px;
+  margin-top: 5px;
+  margin-bottom: 0px;
   background-color: white;
   overflow: auto;
+  height: 875px;
 }
 
 .navLogo {
@@ -56,7 +59,7 @@
 }
 
 .menu-icon {
-  margin-right: 13px;
+  margin-right: 8px;
 }
 
 .name-logout {
@@ -74,4 +77,17 @@
   font-size: 16px;
   color: #374151;
   margin-bottom: 4px;
+}
+
+.nav {
+  width: 101%;
+  height: 76px;
+  background-color: white;
+}
+
+.nav-outlet {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

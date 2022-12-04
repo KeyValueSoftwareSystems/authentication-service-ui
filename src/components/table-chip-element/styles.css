@@ -1,18 +1,19 @@
 #chip {
   margin: 5px 10px 5px 0px;
   font-size: 16px;
-    background: #EAF1FD;
-    border-radius: 6px;
-    font-family: 'Manrope';
+  background: #eaf1fd;
+  border-radius: 6px;
+  font-family: "Manrope";
+  color: #000000;
 }
 
 #count-chip {
   margin: 5px 10px 5px 0px;
   font-size: 16px;
-    background: #2F6FED;
-    color: white;
-    border-radius: 6px;
-    font-family: 'Manrope';
+  background: #2f6fed;
+  color: white;
+  border-radius: 6px;
+  font-family: "Manrope";
 }
 
 #cancel-icon {

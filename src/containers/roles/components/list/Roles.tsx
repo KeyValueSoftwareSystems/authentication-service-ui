@@ -61,7 +61,7 @@ const Roles: React.FC = () => {
           <TableChipElement
             rowItems={params}
             columnName="permissions"
-            defaultSize={6}
+            defaultSize={3}
           />
         </div>
       ),
@@ -94,6 +94,7 @@ const Roles: React.FC = () => {
         rows={roleList}
         columns={columns}
         text="All Roles"
+        count={roleList.length}
         buttonLabel="Add Role"
         searchLabel="Search Role"
         setItemList={setItemList}

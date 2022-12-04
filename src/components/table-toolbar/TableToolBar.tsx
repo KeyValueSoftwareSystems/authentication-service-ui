@@ -19,34 +19,37 @@ const TableToolBar: FC<TableToolBarProps> = ({
 }) => {
   return (
     <div className="table-toolbar">
-        <div className="search-sort-filter">
-            <SearchBar
-              searchLabel={searchLabel}
-              setItemList={setItemList}
-              searchQuery={searchQuery}
-            />
-          <div className="sort">
-            <SortIcon />
-            Sort
-          </div>
-          <div className="filter">
-            <FilterIcon />
-            Filter
-          </div>
+      <div className="search-sort-filter">
+        <SearchBar
+          searchLabel={searchLabel}
+          setItemList={setItemList}
+          searchQuery={searchQuery}
+        />
+        <div
+          className="sort-filter"
+          style={{ marginRight: "18px", width: "110px" }}
+        >
+          <SortIcon id="sort-filter-icon" />
+          Sort by
         </div>
-        {!isAddVerified && (
-          <div className="toolbar-button">
-            <Button
-              variant="contained"
-              id="add-button"
-              onClick={onAdd}
-              sx={{ textTransform: "none" }}
-            >
-              <PlusIcon />
-              {buttonLabel}
-            </Button>
-          </div>
-        )}
+        <div className="sort-filter">
+          <FilterIcon id="sort-filter-icon" />
+          Add Filter
+        </div>
+      </div>
+      {!isAddVerified && (
+        <div className="toolbar-button">
+          <Button
+            variant="contained"
+            id="add-button"
+            onClick={onAdd}
+            sx={{ textTransform: "none" }}
+          >
+            <PlusIcon />
+            {buttonLabel}
+          </Button>
+        </div>
+      )}
     </div>
   );
 };
