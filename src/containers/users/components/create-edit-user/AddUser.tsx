@@ -17,6 +17,7 @@ import {
   apiRequestAtom,
   toastMessageAtom,
 } from "../../../../states/apiRequestState";
+import { USER_CREATE_SUCCESS_MESSAGE } from "../../../../constants/messages";
 
 const AddUser: React.FC = () => {
   const navigate = useNavigate();
@@ -66,7 +67,10 @@ const AddUser: React.FC = () => {
   ) => {
     createUser({
       variables: {
-        input: inputs,
+        input: {
+          ...inputs,
+          phone: String(inputs.phone).replaceAll(" ", ""),
+        },
       },
     });
     setUserPermissions(userPermissions);
@@ -96,7 +100,7 @@ const AddUser: React.FC = () => {
         if (!createUserError && !groupUpdateError && !permissionUpdateError) {
           navigate("/home/users");
           setApiSuccess(true);
-          setToastMessage("User has been successfully created");
+          setToastMessage(USER_CREATE_SUCCESS_MESSAGE);
         }
       },
     });
