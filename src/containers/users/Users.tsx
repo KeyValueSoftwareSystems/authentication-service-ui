@@ -192,17 +192,17 @@ const CheckAccess = (props: any) => {
     }, 2000);
   };
 
+  const getClassName = () => {
+    if (row.status === "ACTIVE") return "active-user";
+    else if (row.status === "INACTIVE") return "inactive-user";
+    else return "pending";
+  };
+
   return (
     <div className="invited-switch">
       <Chip
         label={row.status.charAt(0) + row.status.toLowerCase().slice(1)}
-        className={
-          row.status === "INVITED"
-            ? "pending"
-            : row.status === "ACTIVE"
-            ? "active-user"
-            : "inactive-user"
-        }
+        className={getClassName()}
         sx={{
           height: "31px",
           width: "76px",

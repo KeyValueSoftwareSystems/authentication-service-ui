@@ -198,14 +198,8 @@ const TableList: FC<TableProps> = ({
                             ? "edit"
                             : "blurred-edit"
                         }
-                        onClick={() => {
-                          onEdit(params.id);
-                        }}
                       />
                       <LineIcon
-                        onClick={() => {
-                          onEdit(params.id);
-                        }}
                         className={
                           params.row.status !== "INVITED"
                             ? "edit-line"

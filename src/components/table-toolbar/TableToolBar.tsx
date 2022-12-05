@@ -25,10 +25,7 @@ const TableToolBar: FC<TableToolBarProps> = ({
           setItemList={setItemList}
           searchQuery={searchQuery}
         />
-        <div
-          className="sort-filter"
-          style={{ marginRight: "18px", width: "110px" }}
-        >
+        <div className="sort-filter">
           <SortIcon id="sort-filter-icon" />
           Sort by
         </div>

@@ -41,13 +41,14 @@
 
 .sort-filter {
   background-color: white;
-  width: 140px;
   height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 26px;
   cursor: pointer;
+  margin-right: 18px;
+  width: 110px;
 }
 
 .search-sort-filter {
