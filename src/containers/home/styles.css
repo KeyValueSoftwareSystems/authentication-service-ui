@@ -11,7 +11,7 @@
 }
 
 .sideBar {
-  width: 380px;
+  width: 480px;
   background-color: white;
   height: 100vh;
   display: flex;
@@ -71,12 +71,13 @@
   font-size: 14px;
   color: #6b7280;
   cursor: pointer;
+  line-height: 20px;
 }
 
 .username {
   font-size: 16px;
   color: #374151;
-  margin-bottom: 4px;
+  line-height: 24px;
 }
 
 .nav {

@@ -1,4 +1,5 @@
 import { createTheme } from "@mui/material/styles";
+import { checkboxClasses } from "@mui/material";
 const theme = createTheme({
   palette: {
     primary: {
@@ -155,6 +156,7 @@ const theme = createTheme({
           flexDirection: "row",
           color: "#01579B",
           backgroundColor: "#EDF6FF",
+          fontSize: "14px",
         },
         label: {
           overflowWrap: "break-word",
@@ -186,6 +188,32 @@ const theme = createTheme({
             width: 20,
             height: 20,
           },
+        },
+      },
+    },
+    MuiTabs: {
+      styleOverrides: {
+        indicator: {
+          backgroundColor: "#2F6FED",
+        },
+      },
+    },
+    MuiTab: {
+      styleOverrides: {
+        root: {
+          fontSize: "20px",
+          textTransform: "none",
+          color: "#727782",
+          "&.Mui-selected": {
+            color: "#2F6FED",
+          },
+        },
+      },
+    },
+    MuiCheckbox: {
+      styleOverrides: {
+        root: {
+          padding: "0px",
         },
       },
     },

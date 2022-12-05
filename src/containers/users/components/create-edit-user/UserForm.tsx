@@ -34,6 +34,7 @@ import {
   apiRequestAtom,
   toastMessageAtom,
 } from "../../../../states/apiRequestState";
+import { getOverallPermissions } from "../../../../utils/permissions";
 
 interface UserProps {
   isEdit?: boolean;
@@ -67,7 +68,7 @@ function TabPanel(props: TabPanelProps) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
+        <Box>
           <Typography component={"span"}>{children}</Typography>
         </Box>
       )}
@@ -193,6 +194,18 @@ const UserForm = (props: UserProps) => {
   const { handleSubmit } = methods;
 
   const onSubmitForm = (inputs: FieldValues) => {
+    //TODO:waiting for backend fix
+    // const isValidUser = mandatoryPermissions.some((mandatoryPermission) =>
+    //   selectedPermissions.some(
+    //     (permission) =>
+    //       permission.name === mandatoryPermission ||
+    //       getOverallPermissions(groupPermissions).some(
+    //         (permission) => permission.name === mandatoryPermission
+    //       )
+    //   )
+    // );
+    // console.log(isValidUser);
+
     if (updateUser) updateUser(inputs, userGroups, selectedPermissions);
     else if (createUser) createUser(inputs, userGroups, selectedPermissions);
   };
@@ -238,6 +251,8 @@ const UserForm = (props: UserProps) => {
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
+
+  const mandatoryPermissions = ["view-user", "view-roles", "view-groups"];
 
   return (
     <div id="page">
@@ -313,7 +328,11 @@ const UserForm = (props: UserProps) => {
           <Box
             sx={{ borderBottom: 1, borderColor: "divider", display: "flex" }}
           >
-            <Tabs value={value} onChange={handleTabChange}>
+            <Tabs
+              value={value}
+              onChange={handleTabChange}
+              className="custom-tabs"
+            >
               <Tab label="Groups" />
               <Tab label="Permissions" />
             </Tabs>
@@ -328,7 +347,7 @@ const UserForm = (props: UserProps) => {
                   onChange={handleChange}
                 />
               </div>
-              <Divider orientation="vertical" flexItem sx={{ marginLeft: 2 }} />
+              {/* <Divider orientation="vertical" flexItem sx={{ marginLeft: 2 }} />
               <div id="user-groups">
                 <Grid item xs={10} lg={6.7} sx={{ paddingLeft: 5 }}>
                   <div className="header">
@@ -336,7 +355,7 @@ const UserForm = (props: UserProps) => {
                   </div>
                   <PermissionTabs permissions={groupPermissions} />
                 </Grid>
-              </div>
+              </div> */}
             </div>
           </TabPanel>
           <TabPanel value={value} index={1}>
