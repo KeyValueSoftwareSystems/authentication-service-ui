@@ -77,6 +77,7 @@ const Users: React.FC = () => {
           <GetFullName {...params} />
         </div>
       ),
+      sortable: false,
     },
     {
       field: "groups",

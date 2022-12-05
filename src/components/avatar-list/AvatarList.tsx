@@ -9,7 +9,7 @@ const AvatarList = (avatarList: any) => {
   const { row } = avatarList;
   return (
     <div className="avatar-list">
-      <AvatarGroup max={DEFAULT_SIZE} spacing="small">
+      <AvatarGroup max={DEFAULT_SIZE} spacing={22}>
         {row?.users?.map((item: any) => (
           <Avatar
             {...stringAvatar(

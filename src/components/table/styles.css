@@ -99,6 +99,10 @@
   border-color: #1890ff !important;
 }
 
+.css-204u17-MuiDataGrid-main {
+  border: 1px solid #d9d9d9 !important;
+}
+
 @media screen and (max-width: 1597px) {
   .css-1oj2twp-MuiPagination-root {
     width: 73% !important;

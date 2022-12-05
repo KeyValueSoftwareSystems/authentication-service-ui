@@ -55,6 +55,8 @@
   margin-left: 22px;
   display: flex;
   flex-wrap: wrap;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .username-column {

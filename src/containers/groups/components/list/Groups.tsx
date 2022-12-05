@@ -49,6 +49,7 @@ const GroupList: React.FC = () => {
       headerClassName: "user-list-header",
       headerAlign: "left",
       width: 280,
+      sortable: false,
     },
     {
       field: "roles",

@@ -10,6 +10,21 @@ const theme = createTheme({
     },
   },
   components: {
+    MuiAvatarGroup: {
+      styleOverrides: {
+        root: ({ ownerState: { max } }) => ({
+          ...[...Array(max)].reduce(
+            (result, curr, index) => ({
+              ...result,
+              [`& > .MuiAvatar-root:nth-child(${index + 1})`]: {
+                zIndex: max - index,
+              },
+            }),
+            {}
+          ),
+        }),
+      },
+    },
     MuiMenu: {
       styleOverrides: {
         paper: {
