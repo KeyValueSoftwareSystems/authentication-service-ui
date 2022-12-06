@@ -233,7 +233,7 @@ const TableToolBar: FC<TableToolBarProps> = ({
                 </div>
               </MenuItem>
             </div>
-            <div style={{ position: "fixed", top: "380px" }}>
+            <div style={{ position: "fixed", top: "372px" }}>
               <MenuItem>
                 <Button
                   id="filter-button"

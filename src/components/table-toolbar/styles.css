@@ -99,7 +99,7 @@
 }
 
 .filter-by {
-  width: 349px;
+  width: 350px;
   font-family: "Inter" !important;
   border-right: 2px solid #80808014;
   display: flex;
@@ -115,7 +115,7 @@
 
 #filter-by-options {
   height: 56px;
-  width: 298px;
+  width: 310px;
   left: 8px;
   border-radius: 8px;
   padding: 16px;
@@ -130,6 +130,7 @@
 
 #clear-all {
   color: #f64040;
+  margin-right: -6px;
 }
 
 #avatar-arrow {
@@ -150,9 +151,8 @@
 }
 
 .css-6hp17o-MuiList-root-MuiMenu-list {
-  height: 100%;
-  /* display: flex; */
-  overflow: scroll;
+  height: 419px;
+  overflow: auto;
 }
 
 .checked {
@@ -172,4 +172,10 @@
   border-radius: 6px;
   padding: 13px 17px 13px 17px;
   margin-bottom: 20px;
+}
+
+@media screen and (max-width: 687px) {
+  #account-menu {
+    display: none;
+  }
 }
