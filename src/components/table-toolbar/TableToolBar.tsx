@@ -168,7 +168,10 @@ const TableToolBar: FC<TableToolBarProps> = ({
         // onKeyDown={onKeyDown}
       >
         <div className="filter">
-          <div className="filter-by">
+          <div
+            className="filter-by"
+            style={viewGroupFilter ? { width: "348px" } : { width: "318px" }}
+          >
             <div style={{ position: "fixed" }}>
               <MenuItem
                 id="heading-clear-all"

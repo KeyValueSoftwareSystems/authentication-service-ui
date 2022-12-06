@@ -98,7 +98,6 @@
 }
 
 .filter-by {
-  width: 350px;
   font-family: "Inter" !important;
   border-right: 2px solid #80808014;
   display: flex;
@@ -130,6 +129,7 @@
 #clear-all {
   color: #f64040;
   margin-right: -6px;
+  cursor: pointer;
 }
 
 #avatar-arrow {
