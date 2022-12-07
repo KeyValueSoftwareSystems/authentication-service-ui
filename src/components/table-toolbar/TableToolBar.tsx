@@ -6,7 +6,7 @@ import Checkbox from "@mui/material/Checkbox";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { useRecoilState } from "recoil";
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 
 import { TableToolBarProps } from "./types";
 import "./styles.css";
@@ -26,11 +26,11 @@ const TableToolBar: FC<TableToolBarProps> = ({
   isAddVerified,
   onAdd,
 }) => {
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [viewStatusFilter, setStatusFilter] = React.useState(true);
-  const [viewGroupFilter, setGroupFilter] = React.useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [viewStatusFilter, setStatusFilter] = useState(true);
+  const [viewGroupFilter, setGroupFilter] = useState(false);
   const open = Boolean(anchorEl);
-  const status = ["Active", "Inactive", "Invited"];
+  const statusList = ["Active", "Inactive", "Invited"];
   const [groupList] = useRecoilState(groupListAtom);
   const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
@@ -41,48 +41,33 @@ const TableToolBar: FC<TableToolBarProps> = ({
     setAnchorEl(null);
     handleCancel();
   };
-  const [checkedStatus, setCheckedStatus] = React.useState([]);
-  const [checkedGroups, setCheckedGroups] = React.useState([]);
-  const [currentCheckedStatus, setCurrentCheckedStatus] = React.useState([]);
-  const [currentCheckedGroups, setCurrentCheckedGroups] = React.useState([]);
+  const [checkedStatus, setCheckedStatus] = useState([]);
+  const [checkedGroups, setCheckedGroups] = useState([]);
+  const [currentCheckedStatus, setCurrentCheckedStatus] = useState([]);
+  const [currentCheckedGroups, setCurrentCheckedGroups] = useState([]);
 
-  const onStatusChange = (name: any, e: any) => {
+  const switchFilter = (status: boolean, group: boolean) => {
+    setStatusFilter(status);
+    setGroupFilter(group);
+  };
+
+  const onAddFilter = (
+    name: string,
+    e: React.ChangeEvent<HTMLInputElement>,
+    checkedItems: never[],
+    setCheckedItems: React.Dispatch<React.SetStateAction<never[]>>
+  ) => {
     const isChecked = e.target.checked;
     if (isChecked) {
-      setCheckedStatus(checkedStatus.concat(name));
+      setCheckedItems(checkedItems.concat(name as unknown as never[]));
     } else {
-      setCheckedStatus(checkedStatus.filter((x) => x !== name));
-    }
-  };
-  const onGroupChange = (name: any, e: any) => {
-    const isChecked = e.target.checked;
-    if (isChecked) {
-      setCheckedGroups(checkedGroups.concat(name));
-    } else {
-      setCheckedGroups(checkedGroups.filter((x) => x !== name));
+      setCheckedItems(checkedItems.filter((x) => x !== name));
     }
   };
 
-  const handleStatusCheck = (a: string) => {
-    let flag = 0;
-    checkedStatus.map((item: any) => {
-      if (a === item) {
-        flag = 1;
-      }
-    });
-    if (flag === 0) return false;
-    else return true;
-  };
-
-  const handleGroupsCheck = (a: string) => {
-    let flag = 0;
-    checkedGroups.map((item: any) => {
-      if (a === item) {
-        flag = 1;
-      }
-    });
-    if (flag === 0) return false;
-    else return true;
+  const handleCheckedItems = (item: string, checkedItems: never[]) => {
+    if (checkedItems.includes(item as unknown as never)) return true;
+    else return false;
   };
 
   const handleClearAll = () => {
@@ -113,10 +98,7 @@ const TableToolBar: FC<TableToolBarProps> = ({
           Sort by
         </div>
 
-        <div
-          className="filter-button"
-          onClick={(e: React.MouseEvent) => handleClick(e)}
-        >
+        <div className="filter-button" onClick={handleClick}>
           <FilterIcon id="sort-filter-icon" />
           Add Filter
         </div>
@@ -142,30 +124,9 @@ const TableToolBar: FC<TableToolBarProps> = ({
         sx={{ minHeight: "100%" }}
         PaperProps={{
           elevation: 0,
-          sx: {
-            overflow: "visible",
-            filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-            mt: 1.5,
-            width: "675px",
-            height: "436px",
-            borderRadius: "6px",
-            "&:before": {
-              content: '""',
-              display: "block",
-              position: "absolute",
-              top: 0,
-              right: 14,
-              width: 10,
-              height: 10,
-              bgcolor: "background.paper",
-              transform: "translateY(-50%) rotate(45deg)",
-              zIndex: 0,
-            },
-          },
         }}
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-        // onKeyDown={onKeyDown}
       >
         <div className="filter">
           <div
@@ -183,16 +144,13 @@ const TableToolBar: FC<TableToolBarProps> = ({
                 }}
               >
                 <div id="filter-heading">Filters</div>
-                <div id="clear-all" onClick={() => handleClearAll()}>
+                <div id="clear-all" onClick={handleClearAll}>
                   Clear All
                 </div>
               </MenuItem>
               <MenuItem
                 id="filter-by-options"
-                onClick={() => {
-                  setStatusFilter(true);
-                  setGroupFilter(false);
-                }}
+                onClick={() => switchFilter(true, false)}
               >
                 <div>Status</div>
                 <div id="avatar-arrow">
@@ -213,10 +171,7 @@ const TableToolBar: FC<TableToolBarProps> = ({
               </MenuItem>
               <MenuItem
                 id="filter-by-options"
-                onClick={() => {
-                  setStatusFilter(false);
-                  setGroupFilter(true);
-                }}
+                onClick={() => switchFilter(false, true)}
               >
                 <div>Groups</div>
                 <div id="avatar-arrow">
@@ -236,7 +191,7 @@ const TableToolBar: FC<TableToolBarProps> = ({
                 </div>
               </MenuItem>
             </div>
-            <div style={{ position: "fixed", top: "372px" }}>
+            <div style={{ position: "fixed", top: "382px" }}>
               <MenuItem>
                 <Button
                   id="filter-button"
@@ -249,7 +204,7 @@ const TableToolBar: FC<TableToolBarProps> = ({
                       color: "#2653F1",
                     },
                   }}
-                  onClick={() => handleCancel()}
+                  onClick={handleCancel}
                 >
                   Cancel
                 </Button>
@@ -264,7 +219,7 @@ const TableToolBar: FC<TableToolBarProps> = ({
                       color: "white",
                     },
                   }}
-                  onClick={() => handleSave()}
+                  onClick={handleSave}
                 >
                   Apply
                 </Button>
@@ -274,18 +229,25 @@ const TableToolBar: FC<TableToolBarProps> = ({
           {viewStatusFilter && (
             <div className="options">
               <FormGroup>
-                {status.map((a) => (
+                {statusList.map((status: string) => (
                   <FormControlLabel
-                    label={a}
-                    name={a}
+                    label={status}
+                    name={status}
                     control={
                       <Checkbox
                         sx={{ color: "#7E818D" }}
-                        onChange={onStatusChange.bind(undefined, a)}
+                        onChange={(e) => {
+                          onAddFilter(
+                            status,
+                            e,
+                            checkedStatus,
+                            setCheckedStatus
+                          );
+                        }}
                         defaultChecked={false}
-                        checked={handleStatusCheck(a)}
+                        checked={handleCheckedItems(status, checkedStatus)}
                         className={
-                          handleStatusCheck(a) === true
+                          handleCheckedItems(status, checkedStatus) === true
                             ? "checked"
                             : "unchecked"
                         }
@@ -299,17 +261,24 @@ const TableToolBar: FC<TableToolBarProps> = ({
           {viewGroupFilter && (
             <div className="options">
               <FormGroup>
-                {groupList.map((a: any) => (
+                {groupList.map((group: any) => (
                   <FormControlLabel
-                    label={a.name}
-                    name={a.name}
+                    label={group.name}
+                    name={group.name}
                     control={
                       <Checkbox
                         sx={{ color: "#7E818D" }}
-                        onChange={onGroupChange.bind(undefined, a.name)}
-                        checked={handleGroupsCheck(a.name)}
+                        onChange={(e) => {
+                          onAddFilter(
+                            group.name,
+                            e,
+                            checkedGroups,
+                            setCheckedGroups
+                          );
+                        }}
+                        checked={handleCheckedItems(group.name, checkedGroups)}
                         className={
-                          handleGroupsCheck(a.name) === true
+                          handleCheckedItems(group.name, checkedGroups) === true
                             ? "checked"
                             : "unchecked"
                         }

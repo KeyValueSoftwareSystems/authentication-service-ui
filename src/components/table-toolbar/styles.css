@@ -3,7 +3,7 @@
   border-radius: 5px 5px 0px 0px;
   display: flex;
   justify-content: space-between;
-  padding-bottom: 20px;
+  padding-bottom: 35px;
   border-bottom: none;
   background-color: #e9edf2;
 }
@@ -99,7 +99,7 @@
 
 .filter-by {
   font-family: "Inter" !important;
-  border-right: 2px solid #80808014;
+  border-right: 2px solid #bdbcbc14;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -170,7 +170,6 @@
   width: 135px;
   border-radius: 6px;
   padding: 13px 17px 13px 17px;
-  margin-bottom: 20px;
 }
 
 @media screen and (max-width: 687px) {
