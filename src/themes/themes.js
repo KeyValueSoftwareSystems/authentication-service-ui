@@ -29,13 +29,12 @@ const theme = createTheme({
     MuiMenu: {
       styleOverrides: {
         paper: {
-          overflow: "visible",
-          minHeight: "none !important",
-          filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-          mt: 1.5,
+          overflow: "visible !important",
+          filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32)) !important",
+          mt: "1.5 !important",
           width: "675px",
           height: "444px",
-          borderRadius: "6px",
+          borderRadius: "6px !important",
           "&:before": {
             content: '""',
             display: "block",
