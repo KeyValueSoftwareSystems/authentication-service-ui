@@ -34,6 +34,8 @@ import {
   apiRequestAtom,
   toastMessageAtom,
 } from "../../../../states/apiRequestState";
+import { getOverallPermissions } from "../../../../utils/permissions";
+import BottomFormController from "../../../../components/bottom-form-controller";
 
 interface UserProps {
   isEdit?: boolean;
@@ -67,7 +69,7 @@ function TabPanel(props: TabPanelProps) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
+        <Box>
           <Typography component={"span"}>{children}</Typography>
         </Box>
       )}
@@ -193,6 +195,18 @@ const UserForm = (props: UserProps) => {
   const { handleSubmit } = methods;
 
   const onSubmitForm = (inputs: FieldValues) => {
+    //TODO:waiting for backend fix
+    // const isValidUser = mandatoryPermissions.some((mandatoryPermission) =>
+    //   selectedPermissions.some(
+    //     (permission) =>
+    //       permission.name === mandatoryPermission ||
+    //       getOverallPermissions(groupPermissions).some(
+    //         (permission) => permission.name === mandatoryPermission
+    //       )
+    //   )
+    // );
+    // console.log(isValidUser);
+
     if (updateUser) updateUser(inputs, userGroups, selectedPermissions);
     else if (createUser) createUser(inputs, userGroups, selectedPermissions);
   };
@@ -239,96 +253,76 @@ const UserForm = (props: UserProps) => {
     setValue(newValue);
   };
 
+  const mandatoryPermissions = ["view-user", "view-roles", "view-groups"];
+
   return (
-    <div id="page">
-      <FormProvider {...methods}>
-        <form onSubmit={handleSubmit(onSubmitForm)}>
-          <div id="fixed">
-            <div id="back-page" onClick={onBackNavigation}>
-              <ArrowBackIcon id="arrowicon" />
-              Users
+    <>
+      <div id="page">
+        <FormProvider {...methods}>
+          <form onSubmit={handleSubmit(onSubmitForm)} id="add-user-form">
+            <div id="inputs">
+              {!loading && (
+                <div id="form-row">
+                  <FormInputText
+                    name="firstName"
+                    label="First name*"
+                    type="text"
+                    className="fields three-items-row"
+                    defaultText={user?.firstName}
+                  />
+                  <FormInputText
+                    name="lastName"
+                    label="Last Name*"
+                    type="type"
+                    className="fields three-items-row"
+                    defaultText={user?.lastName}
+                  />
+                </div>
+              )}
+              {!isEdit && (
+                <div id="form-row">
+                  <FormInputText
+                    name="email"
+                    label="Email*"
+                    type="text"
+                    className="fields three-items-row"
+                  />
+                  <FormInputText
+                    name="phone"
+                    label="Phone Number"
+                    type="text"
+                    className="fields three-items-row"
+                  />
+                </div>
+              )}
             </div>
+          </form>
+        </FormProvider>
 
-            <div id="title">
-              <legend id="bold">{isEdit ? "Modify user" : "Add user"}</legend>
-              <div id="add-cancel">
-                <Button variant="text" onClick={onBackNavigation}>
-                  Cancel
-                </Button>
-                <Button id="add" type="submit" variant="outlined">
-                  {isEdit ? "Update" : "Add"}
-                </Button>
-              </div>
-            </div>
-          </div>
-
-          <div id="inputs">
-            {!loading && (
-              <div id="form-row">
-                <FormInputText
-                  name="firstName"
-                  label="First name*"
-                  type="text"
-                  className="fields"
-                  defaultText={user?.firstName}
-                />
-                <FormInputText
-                  name="middleName"
-                  label="Middle name"
-                  type="text"
-                  className="fields"
-                  defaultText={user?.middleName}
-                />
-                <FormInputText
-                  name="lastName"
-                  label="Last Name*"
-                  type="type"
-                  className="fields"
-                  defaultText={user?.lastName}
-                />
-              </div>
-            )}
-            {!isEdit && (
-              <div id="form-row">
-                <FormInputText
-                  name="email"
-                  label="Email*"
-                  type="text"
-                  className="fields"
-                />
-                <FormInputText
-                  name="phone"
-                  label="Phone Number"
-                  type="text"
-                  className="fields"
-                />
-              </div>
-            )}
-          </div>
-        </form>
-      </FormProvider>
-
-      <div>
-        <Box>
-          <Box
-            sx={{ borderBottom: 1, borderColor: "divider", display: "flex" }}
-          >
-            <Tabs value={value} onChange={handleTabChange}>
-              <Tab label="Groups" />
-              <Tab label="Permissions" />
-            </Tabs>
-          </Box>
-          <TabPanel value={value} index={0}>
-            <div id="groups-permissions">
-              <div id="user-groups">
-                <ChecklistComponent
-                  name="Select Groups"
-                  mapList={groupData?.getGroups}
-                  currentCheckedItems={userGroups}
-                  onChange={handleChange}
-                />
-              </div>
-              <Divider orientation="vertical" flexItem sx={{ marginLeft: 2 }} />
+        <div>
+          <Box>
+            <Box
+              sx={{ borderBottom: 1, borderColor: "divider", display: "flex" }}
+            >
+              <Tabs
+                value={value}
+                onChange={handleTabChange}
+                className="custom-tabs"
+              >
+                <Tab label="Groups" />
+                <Tab label="Permissions" />
+              </Tabs>
+            </Box>
+            <TabPanel value={value} index={0}>
+              <div id="groups-permissions">
+                <div id="user-groups">
+                  <ChecklistComponent
+                    mapList={groupData?.getGroups}
+                    currentCheckedItems={userGroups}
+                    onChange={handleChange}
+                  />
+                </div>
+                {/* <Divider orientation="vertical" flexItem sx={{ marginLeft: 2 }} />
               <div id="user-groups">
                 <Grid item xs={10} lg={6.7} sx={{ paddingLeft: 5 }}>
                   <div className="header">
@@ -336,18 +330,27 @@ const UserForm = (props: UserProps) => {
                   </div>
                   <PermissionTabs permissions={groupPermissions} />
                 </Grid>
+              </div> */}
               </div>
-            </div>
-          </TabPanel>
-          <TabPanel value={value} index={1}>
-            <FilterChips
-              selectedPermissions={selectedPermissions}
-              handleClick={handleClick}
-            />
-          </TabPanel>
-        </Box>
+            </TabPanel>
+            <TabPanel value={value} index={1}>
+              <FilterChips
+                selectedPermissions={selectedPermissions}
+                handleClick={handleClick}
+              />
+            </TabPanel>
+          </Box>
+        </div>
       </div>
-    </div>
+      <BottomFormController
+        primarybuttonLabel={isEdit ? "Update user" : "Add user"}
+        primaryButtonType="submit"
+        formId="add-user-form"
+        onSubmit={() => handleSubmit(onSubmitForm)()}
+        onCancel={onBackNavigation}
+        secondaryButtonLabel="Cancel"
+      />
+    </>
   );
 };
 

@@ -20,16 +20,13 @@ import {
 import "./styles.css";
 import GroupForm from "./GroupForm";
 import { GET_GROUP, GET_GROUP_PERMISSIONS } from "../../services/queries";
-import { ChecklistComponent } from "../../../../components/checklist/CheckList";
 import { Role } from "../../../../types/role";
 import apolloClient from "../../../../services/apolloClient";
-import PermissionTabs from "../../../../components/tabs/PermissionTabs";
 import { Entity, EntityPermissionsDetails } from "../../../../types/generic";
 import FilterChips from "../../../../components/filter-chips/FilterChips";
 import { Permission, User } from "../../../../types/user";
 import { Group } from "../../../../types/group";
 import { allUsersAtom } from "../../../../states/userStates";
-import UserCard from "./Usercard";
 import {
   apiRequestAtom,
   toastMessageAtom,
@@ -38,7 +35,11 @@ import {
   GROUP_CREATE_SUCCESS_MESSAGE,
   GROUP_UPDATE_SUCCESS_MESSAGE,
 } from "../../../../constants/messages";
-
+import RoleCardsChecklist from "../../../../components/role-cards-checklist/RoleCardsChecklist";
+import { AvatarChecklistComponent } from "../../../../components/avatar-checklist/AvatarChecklist";
+import { GET_USERS } from "../../../users/services/queries";
+import { CustomAvatar } from "../../../../components/custom-avatar/CustomAvatar";
+import { ReactComponent as CrossIcon } from "../../../../assets/cross-icon.svg";
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
@@ -57,7 +58,7 @@ function TabPanel(props: TabPanelProps) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
+        <Box>
           <Typography component={"span"}>{children}</Typography>
         </Box>
       )}
@@ -70,22 +71,27 @@ const CreateOrEditGroup = () => {
   const navigate = useNavigate();
   const setApiSuccess = useSetRecoilState(apiRequestAtom);
   const setToastMessage = useSetRecoilState(toastMessageAtom);
+  const usersResponse = useRecoilValue(allUsersAtom);
+
   const [value, setValue] = useState(0);
   const [group, setGroup] = useState<Group>();
   const [roles, setRoles] = useState<Role[]>([]);
   const [entityPermissions, setEntityPermissions] = useState<
     EntityPermissionsDetails[]
   >([]);
+  const [allUsers, setAllUsers] = useState<User[]>(usersResponse);
+
   const [users, setUsers] = useState<User[]>([]);
 
   const [allRoles, setAllRoles] = useState<Role[]>([]);
-  const allUsers = useRecoilValue(allUsersAtom);
   const [status, setStatus] = useState<boolean>(false);
 
   const [selectedPermissions, setSelectedPermissions] = useState<Permission[]>(
     []
   );
-
+  useEffect(() => {
+    setAllUsers(usersResponse);
+  }, [usersResponse]);
   const [updateGroup, { data: updatedGroupData }] = useMutation(UPDATE_GROUP, {
     onError: (error: ApolloError) => {
       setApiSuccess(false);
@@ -107,13 +113,15 @@ const CreateOrEditGroup = () => {
       },
     }
   );
-  const [updateGroupPermissions, { data: updatedGroupPermissionsData }] =
-    useMutation(UPDATE_GROUP_PERMISSIONS, {
-      onError: (error: ApolloError) => {
-        setApiSuccess(false);
-        setToastMessage(error.message);
-      },
-    });
+  const [
+    updateGroupPermissions,
+    { data: updatedGroupPermissionsData },
+  ] = useMutation(UPDATE_GROUP_PERMISSIONS, {
+    onError: (error: ApolloError) => {
+      setApiSuccess(false);
+      setToastMessage(error.message);
+    },
+  });
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -195,10 +203,9 @@ const CreateOrEditGroup = () => {
 
   const onChange = (
     event: React.ChangeEvent<HTMLInputElement>,
-    item?: Entity
+    item?: Role
   ) => {
     const value = event.target.value;
-
     if (event.target.checked) {
       if (value === "all") {
         setRoles(allRoles);
@@ -358,6 +365,7 @@ const CreateOrEditGroup = () => {
       setStatus(false);
     }
   };
+
   return (
     <div className="access-settings">
       {!loading && (
@@ -370,13 +378,13 @@ const CreateOrEditGroup = () => {
       <div>
         <Box
           sx={{
-            borderBottom: 1,
             borderColor: "divider",
             display: "flex",
             width: "98.7%",
+            marginBottom: "20px",
           }}
         >
-          <Tabs value={value} onChange={handleChange}>
+          <Tabs value={value} onChange={handleChange} className="custom-tabs">
             <Tab
               label="Roles"
               sx={{ textTransform: "none", fontSize: "18px" }}
@@ -392,28 +400,15 @@ const CreateOrEditGroup = () => {
           </Tabs>
         </Box>
         <TabPanel value={value} index={0}>
-          <Grid container spacing={1} width="100%">
-            <Grid item xs={10} lg={5}>
-              <div>
-                <div className="header">Roles</div>
-              </div>
-              {!loading && (
-                <ChecklistComponent
-                  mapList={roleData?.getRoles}
-                  currentCheckedItems={roles}
-                  name="Select roles"
-                  onChange={onChange}
-                />
-              )}
-            </Grid>
-            <Divider orientation="vertical" flexItem sx={{ marginLeft: 2 }} />
-            <Grid item xs={10} lg={6.7} sx={{ paddingLeft: 5 }}>
-              <div className="header">
-                Permissions summary of selected roles
-              </div>
-              <PermissionTabs permissions={entityPermissions} />
-            </Grid>
-          </Grid>
+          {!loading && (
+            <>
+              <RoleCardsChecklist
+                roleList={roleData?.getRoles}
+                currentCheckedItems={roles}
+                onChange={onChange}
+              />
+            </>
+          )}
         </TabPanel>
         <TabPanel value={value} index={1}>
           <FilterChips
@@ -425,11 +420,12 @@ const CreateOrEditGroup = () => {
           <div className="add-members">
             <Grid container spacing={1} width="100%">
               <Grid item xs={10} lg={5}>
-                <ChecklistComponent
+                <AvatarChecklistComponent
                   mapList={allUsers}
                   currentCheckedItems={users}
-                  name="Select members"
                   onChange={onChangeUsers}
+                  setItemList={setAllUsers}
+                  searchQuery={GET_USERS}
                 />
               </Grid>
               <Divider
@@ -438,16 +434,22 @@ const CreateOrEditGroup = () => {
                 sx={{ marginRight: 2 }}
               />
               <Grid item xs={10} lg={6.7}>
-                <div style={{ fontSize: "16px", marginBottom: "10px" }}>
-                  Group Members:
-                </div>
-                <div className="user-cards">
+                <div className="select-member-wrapper">Select Members</div>
+                <div className="selected-members">
                   {users.map((user, index) => (
-                    <UserCard
-                      user={user}
-                      onRemoveUser={removeItem}
-                      key={index}
-                    />
+                    <div id={user?.id} className="selected-items">
+                      <CustomAvatar
+                        firstName={user?.firstName}
+                        lastName={user?.lastName}
+                        email={user?.email}
+                      />
+                      <CrossIcon
+                        className="cross-icon"
+                        onClick={() =>
+                          removeItem({ userId: user?.id as string })
+                        }
+                      />
+                    </div>
                   ))}
                 </div>
               </Grid>

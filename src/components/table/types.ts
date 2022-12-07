@@ -11,6 +11,7 @@ export interface TableProps {
   columns: GridColumns;
   buttonLabel: string;
   text: string;
+  count: number;
   searchLabel: string;
   setItemList: (data: any) => void;
   entity: string;
@@ -18,7 +19,7 @@ export interface TableProps {
   refetchQuery: DocumentNode;
   editPermission?: string;
   deletePermission?: string;
-  viewPermission?: string;
+  isViewVerified?: boolean;
   isAddVerified?: boolean;
   actionFlex: number;
   cursorType: string;

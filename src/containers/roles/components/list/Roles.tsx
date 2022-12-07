@@ -9,7 +9,7 @@ import { GET_ROLES } from "../../services/queries";
 import { DELETE_ROLE } from "../../services/mutations";
 import { RolesListAtom } from "../../../../states/roleStates";
 import TableList from "../../../../components/table";
-import { UserPermissionsAtom } from "../../../../states/permissionsStates";
+import { IsViewRolesVerifiedAtom, UserPermissionsAtom } from "../../../../states/permissionsStates";
 import TableChipElement from "../../../../components/table-chip-element";
 import {
   apiRequestAtom,
@@ -19,13 +19,13 @@ import {
   CREATE_ROLE_PERMISSION,
   DELETE_ROLE_PERMISSION,
   UPDATE_ROLE_PERMISSION,
-  VIEW_ROLE_PERMISSION,
 } from "../../../../constants/permissions";
 
 const Roles: React.FC = () => {
   const navigate = useNavigate();
 
   const [isAddVerified, setAddVerified] = React.useState(false);
+  const [isViewRolesVerified] = useRecoilState(IsViewRolesVerifiedAtom);
   const [userPermissions] = useRecoilState(UserPermissionsAtom);
   const setApiSuccess = useSetRecoilState(apiRequestAtom);
   const setToastMessage = useSetRecoilState(toastMessageAtom);
@@ -52,6 +52,7 @@ const Roles: React.FC = () => {
       width: 280,
       headerClassName: "user-list-header",
       headerAlign: "left",
+      sortable: false,
     },
     {
       field: "permissions",
@@ -62,7 +63,7 @@ const Roles: React.FC = () => {
           <TableChipElement
             rowItems={params}
             columnName="permissions"
-            defaultSize={6}
+            defaultSize={3}
           />
         </div>
       ),
@@ -95,6 +96,7 @@ const Roles: React.FC = () => {
         rows={roleList}
         columns={columns}
         text="All Roles"
+        count={roleList.length}
         buttonLabel="Add Role"
         searchLabel="Search Role"
         setItemList={setItemList}
@@ -105,7 +107,7 @@ const Roles: React.FC = () => {
         onEdit={onEditRole}
         editPermission={UPDATE_ROLE_PERMISSION}
         deletePermission={DELETE_ROLE_PERMISSION}
-        viewPermission={VIEW_ROLE_PERMISSION}
+        isViewVerified={isViewRolesVerified}
         isAddVerified={!isAddVerified}
         actionFlex={0.3}
         cursorType="default"

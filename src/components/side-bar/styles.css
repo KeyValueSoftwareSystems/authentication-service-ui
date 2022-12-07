@@ -9,7 +9,7 @@
   color: #7e818d;
   height: 40px;
   text-decoration: inherit;
-  margin: 10px 6px 20px 7px;
+  margin: 10px 6px 0px 7px;
   display: flex;
   align-items: center;
   padding: 5px 10px 5px 20px;
@@ -47,7 +47,7 @@
   font-size: 17px;
   height: 40px;
   text-decoration: inherit;
-  margin: 10px 9px 20px 9px;
+  margin: 10px 9px 0px 7px;
   display: flex;
   align-items: center;
   padding: 5px 10px 5px 20px;

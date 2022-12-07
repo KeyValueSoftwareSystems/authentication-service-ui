@@ -1,0 +1,15 @@
+.bottom-wrapper {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: white;
+  left: 0px;
+  padding: 30px 60px;
+  display: flex;
+  border-top: 1px solid #d2d5dd;
+  z-index: 1;
+}
+
+.submit-buttom-style {
+  margin-left: 20px;
+}

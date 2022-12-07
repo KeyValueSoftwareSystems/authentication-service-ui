@@ -1,4 +1,5 @@
 import { createTheme } from "@mui/material/styles";
+import { checkboxClasses } from "@mui/material";
 const theme = createTheme({
   palette: {
     primary: {
@@ -10,18 +11,30 @@ const theme = createTheme({
     },
   },
   components: {
+    MuiAvatarGroup: {
+      styleOverrides: {
+        root: ({ ownerState: { max } }) => ({
+          ...[...Array(max)].reduce(
+            (result, curr, index) => ({
+              ...result,
+              [`& > .MuiAvatar-root:nth-child(${index + 1})`]: {
+                zIndex: max - index,
+              },
+            }),
+            {}
+          ),
+        }),
+      },
+    },
     MuiMenu: {
       styleOverrides: {
         paper: {
-          minWidth: "250px !important",
           overflow: "visible !important",
           filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32)) !important",
           mt: "1.5 !important",
-          "& .MuiAvatar-root": {
-            width: 38,
-            height: 38,
-            marginRight: 6,
-          },
+          width: "675px",
+          height: "444px",
+          borderRadius: "6px !important",
           "&:before": {
             content: '""',
             display: "block",
@@ -48,13 +61,18 @@ const theme = createTheme({
         },
         outlined: {
           boxShadow: 1,
-          borderRadius: 20,
-          border: "1px solid #039BE5",
-          color: "#039BE5",
+          borderRadius: 5,
+          border: "1px solid #2F6FED",
+          color: "#2F6FED",
           "&:hover": {
             border: "1px solid #01579B",
             color: "#01579B",
           },
+        },
+        contained: {
+          padding: "6px 6px",
+          borderRadius: 5,
+          background: "#2F6FED",
         },
         text: {
           color: "#636363",
@@ -69,6 +87,23 @@ const theme = createTheme({
     MuiDataGrid: {
       styleOverrides: {
         root: {
+          borderTop: "1px solid #9d9d9d29 !important",
+          borderBottom: "none !important",
+          borderLeft: "none !important",
+          borderRight: "none !important",
+          "& .MuiDataGrid-columnHeaders": {
+            borderBottom: "1px solid #9d9d9d29 !important",
+            color: "#67686c",
+            minHeight: "49px !important",
+            backgroundColor: "#f4f8fb94",
+            borderRadius: "0% !important",
+          },
+          "& .MuiDataGrid-columnHeaderTitle": {
+            fontSize: "16px",
+            color: "#0A0D14",
+            fontFamily: "Manrope",
+            fontWeight: "600 !important",
+          },
           "& .MuiDataGrid-renderingZone": {
             maxHeight: "none !important",
           },
@@ -79,13 +114,36 @@ const theme = createTheme({
             flexWrap: "wrap !important",
             textOverflow: "ellipsis",
           },
+          "& .MuiDataGrid-cellContent": {
+            marginLeft: "30px !important",
+            fontSize: "16px",
+          },
           "& .MuiDataGrid-row": {
             maxHeight: "none !important",
+            minHeight: "77.87px !important",
+            borderBottom: "1px solid #D9D9D9 !important",
           },
           "& .MuiDataGrid-cell--withRenderer MuiDataGrid-cell MuiDataGrid-cell--textLeft":
             {
               maxHeight: "none !important",
             },
+          "& .MuiDataGrid-virtualScroller": {
+            fontFamily: "Manrope",
+            marginTop: "57px !important",
+          },
+          "& .MuiDataGrid-iconSeparator": {
+            display: "none",
+          },
+          "& .MuiDataGrid-footerContainer": {
+            backgroundColor: "#E9EDF2",
+            position: "relative",
+            minHeight: "94px !important",
+            position: "relative",
+            top: "-2px",
+          },
+          ". &.MuiSvgIcon-root-MuiSvgIcon": {
+            color: "#039be5 !important",
+          },
         },
       },
     },
@@ -97,6 +155,7 @@ const theme = createTheme({
           flexDirection: "row",
           color: "#01579B",
           backgroundColor: "#EDF6FF",
+          fontSize: "14px",
         },
         label: {
           overflowWrap: "break-word",
@@ -110,6 +169,50 @@ const theme = createTheme({
       styleOverrides: {
         tooltip: {
           fontSize: "14px",
+        },
+      },
+    },
+    MuiSwitch: {
+      styleOverrides: {
+        root: {
+          width: 41,
+          height: 25,
+          padding: 0,
+          "& .MuiSwitch-switchBase": {
+            padding: 0,
+            margin: 2,
+          },
+          "& .MuiSwitch-thumb": {
+            boxSizing: "border-box",
+            width: 20,
+            height: 20,
+          },
+        },
+      },
+    },
+    MuiTabs: {
+      styleOverrides: {
+        indicator: {
+          backgroundColor: "#2F6FED",
+        },
+      },
+    },
+    MuiTab: {
+      styleOverrides: {
+        root: {
+          fontSize: "20px",
+          textTransform: "none",
+          color: "#727782",
+          "&.Mui-selected": {
+            color: "#2F6FED",
+          },
+        },
+      },
+    },
+    MuiCheckbox: {
+      styleOverrides: {
+        root: {
+          padding: "0px",
         },
       },
     },

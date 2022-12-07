@@ -63,6 +63,9 @@
   height: 45px;
 }
 
+.three-items-row {
+  width: 33% !important;
+}
 .text {
   border-radius: 6px !important;
   margin-right: 30px !important;
@@ -141,7 +144,7 @@
 }
 
 #page {
-  padding: 30px;
+  padding: 24px;
   display: flex;
   flex-direction: column;
 }
@@ -188,4 +191,18 @@
 #permission-groupwise {
   margin-top: 10px;
   display: flex;
+}
+
+.custom-tabs button {
+  padding: 12px 0px;
+  min-width: 0px;
+  margin: 0px 12px;
+}
+
+.custom-tabs button:first-of-type {
+  margin-left: 0;
+}
+
+.custom-tabs button:last-of-type {
+  margin-right: 0;
 }
