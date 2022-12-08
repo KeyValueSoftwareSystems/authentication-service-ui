@@ -25,7 +25,7 @@ const TableChipElement: FC<TableChipElementProps> = ({
       moreItems = moreItems.slice(2, moreItems.length);
     }
     setViewMore(moreItems);
-  }, []);
+  });
   return (
     <>
       {row[columnName]?.map(

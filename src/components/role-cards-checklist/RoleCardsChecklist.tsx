@@ -5,7 +5,6 @@ import RoleCard from "../role-card/RoleCard";
 import { ReactComponent as UnCheckedIcon } from "../../assets/icons/uncheckedicon.svg";
 import { ReactComponent as CheckedIcon } from "../../assets/icons/checkedicon.svg";
 import styled from "@emotion/styled";
-import BottomFormController from "../bottom-form-controller";
 
 interface Props {
   roleList: Role[];

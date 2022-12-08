@@ -231,7 +231,7 @@ const TableToolBar: FC<TableToolBarProps> = ({
               <FormGroup>
                 {statusList.map((status: string, index: number) => (
                   <FormControlLabel
-                    key={index}
+                    key={`${index}_${status}`}
                     label={status}
                     name={status}
                     control={
