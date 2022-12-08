@@ -31,7 +31,7 @@ const GroupList: React.FC = () => {
   const setToastMessage = useSetRecoilState(toastMessageAtom);
   const [groupList, setGroupList] = useRecoilState(groupListAtom);
 
-  useQuery(GET_GROUPS, {
+  const { loading } = useQuery(GET_GROUPS, {
     onCompleted: (data) => {
       setGroupList(data?.getGroups);
     },
@@ -110,26 +110,28 @@ const GroupList: React.FC = () => {
 
   return (
     <>
-      <TableList
-        rows={groupList}
-        columns={columns}
-        text="All Groups"
-        count={groupList.length}
-        buttonLabel="Add Group"
-        searchLabel="Search Group"
-        setItemList={setItemList}
-        entity="Group"
-        deleteMutation={DELETE_GROUP}
-        refetchQuery={GET_GROUPS}
-        onAdd={onAddGroup}
-        onEdit={onEditGroup}
-        handleRowClick={onGroupClick}
-        editPermission={UPDATE_GROUP_PERMISSION}
-        deletePermission={DELETE_GROUP_PERMISSION}
-        isAddVerified={!isAddVerified}
-        actionFlex={0.3}
-        cursorType="pointer"
-      />
+      {!loading && (
+        <TableList
+          rows={groupList}
+          columns={columns}
+          text="All Groups"
+          count={groupList.length}
+          buttonLabel="Add Group"
+          searchLabel="Search Group"
+          setItemList={setItemList}
+          entity="Group"
+          deleteMutation={DELETE_GROUP}
+          refetchQuery={GET_GROUPS}
+          onAdd={onAddGroup}
+          onEdit={onEditGroup}
+          handleRowClick={onGroupClick}
+          editPermission={UPDATE_GROUP_PERMISSION}
+          deletePermission={DELETE_GROUP_PERMISSION}
+          isAddVerified={!isAddVerified}
+          actionFlex={0.3}
+          cursorType="pointer"
+        />
+      )}
     </>
   );
 };

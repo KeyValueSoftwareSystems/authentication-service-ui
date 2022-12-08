@@ -5,6 +5,7 @@ import RoleCard from "../role-card/RoleCard";
 import { ReactComponent as UnCheckedIcon } from "../../assets/icons/uncheckedicon.svg";
 import { ReactComponent as CheckedIcon } from "../../assets/icons/checkedicon.svg";
 import styled from "@emotion/styled";
+import BottomFormController from "../bottom-form-controller";
 
 interface Props {
   roleList: Role[];
@@ -23,6 +24,7 @@ const Container = styled.div`
 const SelectAll = styled.div`
   display: flex;
   column-gap: 6px;
+  margin-bottom: 7px;
 `;
 
 const CardsContainer = styled.div`
@@ -66,8 +68,10 @@ const RoleCardsChecklist: FC<Props> = ({
           icon={<UnCheckedIcon />}
           checkedIcon={<CheckedIcon />}
         />
-        <span style={{ marginLeft: "5px", marginBottom: "7px" }}>
-          Select All
+        <span
+          style={{ marginLeft: "5px", fontSize: "14px", lineHeight: "24px" }}
+        >
+          Select all
         </span>
       </SelectAll>
       <CardsContainer>
@@ -76,6 +80,7 @@ const RoleCardsChecklist: FC<Props> = ({
             role={role}
             checked={isChecked(role.id)}
             onChange={onChange}
+            key={role?.id}
           />
         ))}
       </CardsContainer>

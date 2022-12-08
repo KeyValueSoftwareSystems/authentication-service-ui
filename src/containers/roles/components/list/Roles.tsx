@@ -30,7 +30,7 @@ const Roles: React.FC = () => {
   const setToastMessage = useSetRecoilState(toastMessageAtom);
 
   const [roleList, setRoleList] = useRecoilState(RolesListAtom);
-  useQuery(GET_ROLES, {
+  const { loading } = useQuery(GET_ROLES, {
     onCompleted: (data) => {
       setRoleList(data?.getRoles);
     },
@@ -91,25 +91,27 @@ const Roles: React.FC = () => {
 
   return (
     <>
-      <TableList
-        rows={roleList}
-        columns={columns}
-        text="All Roles"
-        count={roleList.length}
-        buttonLabel="Add Role"
-        searchLabel="Search Role"
-        setItemList={setItemList}
-        entity="Role"
-        deleteMutation={DELETE_ROLE}
-        refetchQuery={GET_ROLES}
-        onAdd={onAddRole}
-        onEdit={onEditRole}
-        editPermission={UPDATE_ROLE_PERMISSION}
-        deletePermission={DELETE_ROLE_PERMISSION}
-        isAddVerified={!isAddVerified}
-        actionFlex={0.3}
-        cursorType="default"
-      />
+      {!loading && (
+        <TableList
+          rows={roleList}
+          columns={columns}
+          text="All Roles"
+          count={roleList.length}
+          buttonLabel="Add Role"
+          searchLabel="Search Role"
+          setItemList={setItemList}
+          entity="Role"
+          deleteMutation={DELETE_ROLE}
+          refetchQuery={GET_ROLES}
+          onAdd={onAddRole}
+          onEdit={onEditRole}
+          editPermission={UPDATE_ROLE_PERMISSION}
+          deletePermission={DELETE_ROLE_PERMISSION}
+          isAddVerified={!isAddVerified}
+          actionFlex={0.3}
+          cursorType="default"
+        />
+      )}
     </>
   );
 };

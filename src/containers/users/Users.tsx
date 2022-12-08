@@ -33,7 +33,7 @@ const Users: React.FC = () => {
   const setApiSuccess = useSetRecoilState(apiRequestAtom);
   const navigate = useNavigate();
 
-  useQuery(GET_USERS, {
+  const { loading } = useQuery(GET_USERS, {
     onCompleted: (data) => {
       setUserList(data?.getUsers);
     },
@@ -117,26 +117,28 @@ const Users: React.FC = () => {
 
   return (
     <>
-      <TableList
-        rows={userList}
-        columns={columns}
-        text="All Users"
-        count={userList.length}
-        setItemList={setItemList}
-        onAdd={onAdd}
-        onEdit={onEdit}
-        entity="User"
-        buttonLabel="Add User"
-        searchLabel="Search User"
-        deleteMutation={DELETE_USER}
-        refetchQuery={GET_USERS}
-        handleRowClick={onUserClick}
-        editPermission={UPDATE_USER_PERMISSION}
-        deletePermission={DELETE_USER_PERMISSION}
-        isAddVerified={!isAddVerified}
-        actionFlex={0.23}
-        cursorType="pointer"
-      />
+      {!loading && (
+        <TableList
+          rows={userList}
+          columns={columns}
+          text="All Users"
+          count={userList.length}
+          setItemList={setItemList}
+          onAdd={onAdd}
+          onEdit={onEdit}
+          entity="User"
+          buttonLabel="Add User"
+          searchLabel="Search User"
+          deleteMutation={DELETE_USER}
+          refetchQuery={GET_USERS}
+          handleRowClick={onUserClick}
+          editPermission={UPDATE_USER_PERMISSION}
+          deletePermission={DELETE_USER_PERMISSION}
+          isAddVerified={!isAddVerified}
+          actionFlex={0.23}
+          cursorType="pointer"
+        />
+      )}
     </>
   );
 };
