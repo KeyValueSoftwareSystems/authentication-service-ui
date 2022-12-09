@@ -25,7 +25,6 @@ import { GET_USER, GET_USER_PERMISSIONS } from "../../services/queries";
 import { Group, Permission, User } from "../../../../types/user";
 import "./styles.css";
 import apolloClient from "../../../../services/apolloClient";
-import PermissionTabs from "../../../../components/tabs/PermissionTabs";
 import { Entity } from "../../../../types/generic";
 import { EntityPermissionsDetails } from "../../../../types/permission";
 import { AddUserformSchema, EditUserformSchema } from "../../userSchema";
@@ -34,7 +33,6 @@ import {
   apiRequestAtom,
   toastMessageAtom,
 } from "../../../../states/apiRequestState";
-import { getOverallPermissions } from "../../../../utils/permissions";
 import BottomFormController from "../../../../components/bottom-form-controller";
 
 interface UserProps {
@@ -289,7 +287,7 @@ const UserForm = (props: UserProps) => {
                   />
                   <FormInputText
                     name="phone"
-                    label="Phone Number"
+                    label="Phone Number*"
                     type="text"
                     className="fields three-items-row"
                   />
@@ -301,9 +299,7 @@ const UserForm = (props: UserProps) => {
 
         <div>
           <Box>
-            <Box
-              sx={{ borderBottom: 1, borderColor: "divider", display: "flex" }}
-            >
+            <Box sx={{ display: "flex" }}>
               <Tabs
                 value={value}
                 onChange={handleTabChange}
