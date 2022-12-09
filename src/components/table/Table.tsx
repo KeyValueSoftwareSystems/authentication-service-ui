@@ -14,7 +14,6 @@ import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
 import React, { FC, useState } from "react";
 import { Tooltip, Button, TextField } from "@mui/material";
-import { ApolloError, useMutation } from "@apollo/client";
 import { useSetRecoilState } from "recoil";
 
 import { TableProps } from "./types";
@@ -28,6 +27,7 @@ import { ReactComponent as LineIcon } from "../../assets/line.svg";
 import { ReactComponent as DeleteIcon } from "../../assets/trash.svg";
 import DialogBox from "../dialog-box";
 import { useCustomQuery } from "../../hooks/useQuery";
+import { useCustomMutation } from "../../hooks/useMutation";
 
 const TableList: FC<TableProps> = ({
   rows,
@@ -91,17 +91,16 @@ const TableList: FC<TableProps> = ({
     setOpen(false);
   };
 
-  const [deleteItem] = useMutation(deleteMutation, {
-    refetchQueries: [{ query: refetchQuery }],
-    onError: (error: ApolloError) => {
-      setToastMessage(error.message);
-      setApiSuccess(false);
-    },
-    onCompleted: () => {
-      setToastMessage(`${entity} deleted successfully`);
-      setApiSuccess(true);
-    },
-  });
+  const onDeleteMutationCompleted = () => {
+    setToastMessage(`${entity} deleted successfully`);
+    setApiSuccess(true);
+  };
+
+  const [deleteItem] = useCustomMutation(
+    deleteMutation,
+    onDeleteMutationCompleted,
+    [{ query: refetchQuery }]
+  );
 
   const onConfirmDelete = () => {
     deleteItem({
