@@ -1,16 +1,7 @@
 import React, { useEffect, useState } from "react";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm, FormProvider, FieldValues } from "react-hook-form";
-import {
-  Box,
-  Button,
-  Divider,
-  Grid,
-  Tab,
-  Tabs,
-  Typography,
-} from "@mui/material";
+import { Box, Tab, Tabs, Typography } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useSetRecoilState } from "recoil";
 
@@ -18,14 +9,13 @@ import {
   GET_GROUPS,
   GET_GROUP_PERMISSIONS,
 } from "../../../groups/services/queries";
-import { ApolloError, useQuery } from "@apollo/client";
+import { ApolloError } from "@apollo/client";
 import FormInputText from "../../../../components/inputText";
 import { ChecklistComponent } from "../../../../components/checklist/CheckList";
 import { GET_USER, GET_USER_PERMISSIONS } from "../../services/queries";
 import { Group, Permission, User } from "../../../../types/user";
 import "./styles.css";
 import apolloClient from "../../../../services/apolloClient";
-import PermissionTabs from "../../../../components/tabs/PermissionTabs";
 import { Entity } from "../../../../types/generic";
 import { EntityPermissionsDetails } from "../../../../types/permission";
 import { AddUserformSchema, EditUserformSchema } from "../../userSchema";
@@ -34,8 +24,8 @@ import {
   apiRequestAtom,
   toastMessageAtom,
 } from "../../../../states/apiRequestState";
-import { getOverallPermissions } from "../../../../utils/permissions";
 import BottomFormController from "../../../../components/bottom-form-controller";
+import { useCustomQuery } from "../../../../hooks/getUsers";
 
 interface UserProps {
   isEdit?: boolean;
@@ -150,43 +140,34 @@ const UserForm = (props: UserProps) => {
     }
   };
 
-  const { data: groupData } = useQuery(GET_GROUPS, {
-    onCompleted: (data) => {
-      const groups = data?.getGroups.map((group: Group) => group);
-      setAllGroups([...groups]);
-    },
-    onError: (error: ApolloError) => {
-      setToastMessage(error.message);
-      setApiSuccess(false);
-    },
-  });
+  const onGetGroupsComplete = (data: any) => {
+    const groups = data?.getGroups.map((group: Group) => group);
+    setAllGroups([...groups]);
+  };
 
-  const { loading } = useQuery(GET_USER, {
-    skip: !id,
-    variables: { id: id },
-    onCompleted: (data) => {
-      setUser(data?.getUser);
-      setUserGroups(data?.getUser.groups);
-    },
-    onError: (error: ApolloError) => {
-      setToastMessage(error.message);
-      setApiSuccess(false);
-    },
-    fetchPolicy: "network-only",
-  });
+  const { data: groupData } = useCustomQuery(GET_GROUPS, onGetGroupsComplete);
 
-  useQuery(GET_USER_PERMISSIONS, {
-    skip: !id,
-    variables: { id: id },
-    onCompleted: (data) => {
-      setSelectedPermissions(data?.getUserPermissions);
-    },
-    onError: (error: ApolloError) => {
-      setToastMessage(error.message);
-      setApiSuccess(false);
-    },
-    fetchPolicy: "network-only",
-  });
+  const onGetUserComplete = (data: any) => {
+    setUser(data?.getUser);
+    setUserGroups(data?.getUser.groups);
+  };
+  const { loading } = useCustomQuery(
+    GET_USER,
+    onGetUserComplete,
+    { id: id },
+    !id
+  );
+
+  const onGetUserPermissionsComplete = (data: any) => {
+    setSelectedPermissions(data?.getUserPermissions);
+  };
+
+  useCustomQuery(
+    GET_USER_PERMISSIONS,
+    onGetUserPermissionsComplete,
+    { id: id },
+    !id
+  );
 
   const methods = useForm({
     resolver: yupResolver(userformSchema),

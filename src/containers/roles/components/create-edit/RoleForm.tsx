@@ -1,11 +1,8 @@
 import { FC, useState } from "react";
-import { Button, Divider } from "@mui/material";
+import { Divider } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate, useParams } from "react-router-dom";
 import { FieldValues, FormProvider, useForm } from "react-hook-form";
-import { ApolloError, useQuery } from "@apollo/client";
-import { useSetRecoilState } from "recoil";
 import BottomFormController from "../../../../components/bottom-form-controller";
 
 import { RoleFormSchema } from "../../roleSchema";
@@ -13,10 +10,7 @@ import "./styles.css";
 import FormInputText from "../../../../components/inputText";
 import { Role } from "../../../../types/role";
 import { GET_ROLE } from "../../services/queries";
-import {
-  apiRequestAtom,
-  toastMessageAtom,
-} from "../../../../states/apiRequestState";
+import { useCustomQuery } from "../../../../hooks/getUsers";
 
 interface RoleFormProps {
   name: string;
@@ -29,20 +23,17 @@ const RoleForm: FC<RoleFormProps> = ({ name, createRole, editRole }) => {
 
   const { id } = useParams();
   const [role, setRole] = useState<Role>();
-  const setApiSuccess = useSetRecoilState(apiRequestAtom);
-  const setToastMessage = useSetRecoilState(toastMessageAtom);
 
-  const { loading } = useQuery(GET_ROLE, {
-    skip: !id,
-    variables: { id: id },
-    onCompleted: (data) => {
-      setRole(data?.getRole);
-    },
-    onError: (error: ApolloError) => {
-      setToastMessage(error.message);
-      setApiSuccess(false);
-    },
-  });
+  const onGetRoleComplete = (data: any) => {
+    setRole(data?.getRole);
+  };
+
+  const { loading } = useCustomQuery(
+    GET_ROLE,
+    onGetRoleComplete,
+    { id: id },
+    !id
+  );
 
   const initialValues = {
     name: name,

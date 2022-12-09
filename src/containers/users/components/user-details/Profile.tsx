@@ -13,6 +13,7 @@ import {
   apiRequestAtom,
   toastMessageAtom,
 } from "../../../../states/apiRequestState";
+import { useCustomQuery } from "../../../../hooks/getUsers";
 
 const Item = styled(Paper)(() => ({
   backgroundColor: "#fff",
@@ -28,19 +29,13 @@ const Profile = () => {
   const setToastMessage = useSetRecoilState(toastMessageAtom);
   const setApiSuccess = useSetRecoilState(apiRequestAtom);
 
-  useQuery(GET_USER, {
-    variables: { id: id },
-    fetchPolicy: "network-only",
-    onCompleted: (data) => {
-      setUser(data?.getUser);
-      setUserGroups(data?.getUser?.groups);
-      setUserPermissions(data?.getUser?.permissions);
-    },
-    onError: (error: ApolloError) => {
-      setToastMessage(error.message);
-      setApiSuccess(false);
-    },
-  });
+  const onGetUserComplete = (data: any) => {
+    setUser(data?.getUser);
+    setUser(data?.getUser);
+    setUserGroups(data?.getUser?.groups);
+    setUserPermissions(data?.getUser?.permissions);
+  };
+  useCustomQuery(GET_USER, onGetUserComplete, { id: id });
 
   return (
     <Box sx={{ flexGrow: 1 }}>

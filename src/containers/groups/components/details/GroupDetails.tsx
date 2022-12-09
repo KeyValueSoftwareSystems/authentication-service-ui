@@ -1,4 +1,3 @@
-import { ApolloError, useQuery } from "@apollo/client";
 import { Chip } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate, useParams } from "react-router-dom";
@@ -16,6 +15,7 @@ import {
   apiRequestAtom,
   toastMessageAtom,
 } from "../../../../states/apiRequestState";
+import { useCustomQuery } from "../../../../hooks/getUsers";
 
 const GroupDetails: React.FC = () => {
   const { id } = useParams();
@@ -26,30 +26,18 @@ const GroupDetails: React.FC = () => {
   const [permissions, setPermissions] = useRecoilState(GroupPermissionsAtom);
   const navigate = useNavigate();
 
-  const { loading } = useQuery(GET_GROUP, {
-    variables: { id },
-    fetchPolicy: "network-only",
-    onCompleted: (data) => {
-      setGroup(data?.getGroup);
-      setRoles(data?.getGroup?.roles);
-    },
-    onError: (error: ApolloError) => {
-      setToastMessage(error.message);
-      setApiSuccess(false);
-    },
-  });
+  const onGetGroupComplete = (data: any) => {
+    setGroup(data?.getGroup);
+    setRoles(data?.getGroup?.roles);
+  };
 
-  useQuery(GET_GROUP_PERMISSIONS, {
-    variables: { id },
-    fetchPolicy: "network-only",
-    onCompleted: (data) => {
-      setPermissions(data?.getGroupPermissions);
-    },
-    onError: (error: ApolloError) => {
-      setToastMessage(error.message);
-      setApiSuccess(false);
-    },
-  });
+  const { loading } = useCustomQuery(GET_GROUP, onGetGroupComplete, { id });
+
+  const onGetGroupPermissionsComplete = (data: any) => {
+    setPermissions(data?.getGroupPermissions);
+  };
+
+  useCustomQuery(GET_GROUP_PERMISSIONS, onGetGroupPermissionsComplete, { id });
 
   const onBackNavigation = () => {
     navigate("/home/groups");

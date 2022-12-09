@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import { useRecoilState, useSetRecoilState } from "recoil";
-import { ApolloError, useMutation, useQuery } from "@apollo/client";
+import { useRecoilState } from "recoil";
+import { useMutation } from "@apollo/client";
 import { Avatar, Chip } from "@mui/material";
 import { GridColumns } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
@@ -17,33 +17,29 @@ import TableList from "../../components/table/Table";
 import TableChipElement from "../../components/table-chip-element";
 import { stringAvatar } from "../../utils/table";
 import "./components/create-edit-user/styles.css";
-import { IsViewUsersVerifiedAtom, UserPermissionsAtom } from "../../states/permissionsStates";
-import { apiRequestAtom, toastMessageAtom } from "../../states/apiRequestState";
+import {
+  IsViewUsersVerifiedAtom,
+  UserPermissionsAtom,
+} from "../../states/permissionsStates";
 import {
   CREATE_USER_PERMISSION,
   DELETE_USER_PERMISSION,
   UPDATE_USER_PERMISSION,
 } from "../../constants/permissions";
+import { useCustomQuery } from "../../hooks/getUsers";
 
 const Users: React.FC = () => {
   const [isAddVerified, setAddVerified] = React.useState(false);
   const [isViewUsersVerified] = useRecoilState(IsViewUsersVerifiedAtom);
   const [userPermissions] = useRecoilState(UserPermissionsAtom);
   const [userList, setUserList] = useRecoilState(userListAtom);
-  const setToastMessage = useSetRecoilState(toastMessageAtom);
-  const setApiSuccess = useSetRecoilState(apiRequestAtom);
   const navigate = useNavigate();
 
-  const { loading } = useQuery(GET_USERS, {
-    onCompleted: (data) => {
-      setUserList(data?.getUsers);
-    },
-    onError: (error: ApolloError) => {
-      setToastMessage(error.message);
-      setApiSuccess(false);
-    },
-    fetchPolicy: "network-only",
-  });
+  const onComplete = (data: any) => {
+    setUserList(data?.getUsers);
+  };
+
+  const { loading } = useCustomQuery(GET_USERS, onComplete);
 
   const onEdit = (id: any) => {
     navigate(`/home/users/add/${id}`);
@@ -118,28 +114,28 @@ const Users: React.FC = () => {
 
   return (
     <>
-{!loading && (
-      <TableList
-        rows={userList}
-        columns={columns}
-        text="All Users"
-        count={userList.length}
-        setItemList={setItemList}
-        onAdd={onAdd}
-        onEdit={onEdit}
-        entity="User"
-        buttonLabel="Add User"
-        searchLabel="Search User"
-        deleteMutation={DELETE_USER}
-        refetchQuery={GET_USERS}
-        handleRowClick={onUserClick}
-        editPermission={UPDATE_USER_PERMISSION}
-        deletePermission={DELETE_USER_PERMISSION}
-        isViewVerified ={isViewUsersVerified}
-        isAddVerified={!isAddVerified}
-        actionFlex={0.23}
-        cursorType="pointer"
-      />
+      {!loading && (
+        <TableList
+          rows={userList}
+          columns={columns}
+          text="All Users"
+          count={userList.length}
+          setItemList={setItemList}
+          onAdd={onAdd}
+          onEdit={onEdit}
+          entity="User"
+          buttonLabel="Add User"
+          searchLabel="Search User"
+          deleteMutation={DELETE_USER}
+          refetchQuery={GET_USERS}
+          handleRowClick={onUserClick}
+          editPermission={UPDATE_USER_PERMISSION}
+          deletePermission={DELETE_USER_PERMISSION}
+          isViewVerified={isViewUsersVerified}
+          isAddVerified={!isAddVerified}
+          actionFlex={0.23}
+          cursorType="pointer"
+        />
       )}
     </>
   );
