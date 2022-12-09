@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+
+import { ApolloError, useMutation } from "@apollo/client";
 import { useNavigate, useParams } from "react-router-dom";
 import { FieldValues } from "react-hook-form";
 import { useRecoilValue, useSetRecoilState } from "recoil";
@@ -39,7 +41,6 @@ import { GET_USERS } from "../../../users/services/queries";
 import { CustomAvatar } from "../../../../components/custom-avatar/CustomAvatar";
 import { ReactComponent as CrossIcon } from "../../../../assets/cross-icon.svg";
 import { useCustomQuery } from "../../../../hooks/useQuery";
-import { useCustomMutation } from "../../../../hooks/useMutation";
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
@@ -93,18 +94,34 @@ const CreateOrEditGroup = () => {
   useEffect(() => {
     setAllUsers(usersResponse);
   }, [usersResponse]);
-
-  const [updateGroup, { data: updatedGroupData }] =
-    useCustomMutation(UPDATE_GROUP);
-
-  const [createGroup, { data: createdGroupData }] =
-    useCustomMutation(CREATE_GROUP);
-
-  const [updateGroupRoles, { data: updatedGroupRolesData }] =
-    useCustomMutation(UPDATE_GROUP_ROLES);
-
+  const [updateGroup, { data: updatedGroupData }] = useMutation(UPDATE_GROUP, {
+    onError: (error: ApolloError) => {
+      setApiSuccess(false);
+      setToastMessage(error.message);
+    },
+  });
+  const [createGroup, { data: createdGroupData }] = useMutation(CREATE_GROUP, {
+    onError: (error: ApolloError) => {
+      setApiSuccess(false);
+      setToastMessage(error.message);
+    },
+  });
+  const [updateGroupRoles, { data: updatedGroupRolesData }] = useMutation(
+    UPDATE_GROUP_ROLES,
+    {
+      onError: (error: ApolloError) => {
+        setApiSuccess(false);
+        setToastMessage(error.message);
+      },
+    }
+  );
   const [updateGroupPermissions, { data: updatedGroupPermissionsData }] =
-    useCustomMutation(UPDATE_GROUP_PERMISSIONS);
+    useMutation(UPDATE_GROUP_PERMISSIONS, {
+      onError: (error: ApolloError) => {
+        setApiSuccess(false);
+        setToastMessage(error.message);
+      },
+    });
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);

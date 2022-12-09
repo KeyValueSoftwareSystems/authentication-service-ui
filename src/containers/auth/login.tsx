@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { ApolloError, useMutation } from "@apollo/client";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { FieldValues } from "react-hook-form";
 
@@ -14,7 +15,6 @@ import PasswordConfirmation from "./PasswordConfirmation";
 import { apiRequestAtom, toastMessageAtom } from "../../states/apiRequestState";
 import Toast from "../../components/toast";
 import { PASSWORD_SET_MESSAGE } from "../../constants/messages";
-import { useCustomMutation } from "../../hooks/useMutation";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -23,10 +23,21 @@ const Login: React.FC = () => {
   const setUserPermissions = useSetRecoilState(UserPermissionsAtom);
   const setCurrentUserDetails = useSetRecoilState(currentUserAtom);
 
-  const [userLogin, { data }] = useCustomMutation(LOGIN);
-
-  const [setPassword, { data: passwordCreatedData }] =
-    useCustomMutation(SET_PASSWORD);
+  const [userLogin, { data }] = useMutation(LOGIN, {
+    onError: (error: ApolloError) => {
+      setApiSuccess(false);
+      setToastMessage(error.message);
+    },
+  });
+  const [setPassword, { data: passwordCreatedData }] = useMutation(
+    SET_PASSWORD,
+    {
+      onError: (error: ApolloError) => {
+        setApiSuccess(false);
+        setToastMessage(error.message);
+      },
+    }
+  );
 
   const setApiSuccess = useSetRecoilState(apiRequestAtom);
   const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom);

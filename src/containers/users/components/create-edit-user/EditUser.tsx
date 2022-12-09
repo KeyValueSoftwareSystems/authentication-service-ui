@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { ApolloError, useMutation } from "@apollo/client";
 
 import {
   UPDATE_USER,
@@ -19,7 +20,6 @@ import {
 } from "../../../../states/apiRequestState";
 import { USER_UPDATE_SUCCESS_MESSAGE } from "../../../../constants/messages";
 import { Group } from "../../../../types/group";
-import { useCustomMutation } from "../../../../hooks/useMutation";
 
 const EditUser: React.FC = () => {
   const { id } = useParams();
@@ -29,27 +29,40 @@ const EditUser: React.FC = () => {
   const [currentUserDetails, setCurrentUserDetails] =
     useRecoilState(currentUserAtom);
 
-  const onUpdateUserCompleted = (data: any) => {
-    if (currentUserDetails.id === id) {
-      setCurrentUserDetails(data.updateUser);
+  const [updateUser, { error: userUpdateError }] = useMutation(UPDATE_USER, {
+    onCompleted: (data) => {
+      if (currentUserDetails.id === id) {
+        setCurrentUserDetails(data.updateUser);
+      }
+    },
+    onError: (error: ApolloError) => {
+      setApiSuccess(false);
+      setToastMessage(error.message);
+    },
+  });
+  const [updateUserGroups, { error: groupUpdateError }] = useMutation(
+    UPDATE_USER_GROUPS,
+    {
+      onError: (error: ApolloError) => {
+        setApiSuccess(false);
+        setToastMessage(error.message);
+      },
     }
-  };
-  const [updateUser, { error: userUpdateError }] = useCustomMutation(
-    UPDATE_USER,
-    onUpdateUserCompleted
   );
-  const [updateUserGroups, { error: groupUpdateError }] =
-    useCustomMutation(UPDATE_USER_GROUPS);
-  const onUpdateUserPermissionsCompleted = (data: any) => {
-    if (currentUserDetails.id === id) {
-      setUserPermissions(data.updateUserPermissions);
+  const [updateUserPermissions, { error: permissionUpdateError }] = useMutation(
+    UPDATE_USER_PERMISSIONS,
+    {
+      onCompleted: (data) => {
+        if (currentUserDetails.id === id) {
+          setUserPermissions(data.updateUserPermissions);
+        }
+      },
+      onError: (error: ApolloError) => {
+        setApiSuccess(false);
+        setToastMessage(error.message);
+      },
     }
-  };
-  const [updateUserPermissions, { error: permissionUpdateError }] =
-    useCustomMutation(
-      UPDATE_USER_PERMISSIONS,
-      onUpdateUserPermissionsCompleted
-    );
+  );
   const navigate = useNavigate();
 
   const onUpdateUser = (

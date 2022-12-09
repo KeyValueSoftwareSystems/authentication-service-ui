@@ -1,28 +1,10 @@
-import {
-  useQuery,
-  ApolloError,
-  DocumentNode,
-  BaseMutationOptions,
-  OperationVariables,
-  DefaultContext,
-  ApolloCache,
-} from "@apollo/client";
+import { useQuery, ApolloError } from "@apollo/client";
 import { useSetRecoilState } from "recoil";
 import { apiRequestAtom, toastMessageAtom } from "../states/apiRequestState";
 
 export const useCustomQuery = (
-  query: DocumentNode,
-  onComplete: (
-    data: any,
-    clientOptions?:
-      | BaseMutationOptions<
-          any,
-          OperationVariables,
-          DefaultContext,
-          ApolloCache<any>
-        >
-      | undefined
-  ) => void,
+  query: any,
+  onComplete: any,
   variables?: any,
   skip?: boolean | undefined
 ) => {
