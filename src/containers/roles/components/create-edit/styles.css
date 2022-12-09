@@ -73,3 +73,9 @@
   height: 90%;
   background-color: white;
 }
+.role-permissions {
+  margin-top: 40px;
+  font-family: "Manrope";
+  font-weight: 600;
+  line-height: 20px;
+}
