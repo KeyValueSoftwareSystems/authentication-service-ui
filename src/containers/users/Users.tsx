@@ -26,7 +26,7 @@ import {
   DELETE_USER_PERMISSION,
   UPDATE_USER_PERMISSION,
 } from "../../constants/permissions";
-import { useCustomQuery } from "../../hooks/getUsers";
+import { useCustomQuery } from "../../hooks/useQuery";
 
 const Users: React.FC = () => {
   const [isAddVerified, setAddVerified] = React.useState(false);

@@ -18,7 +18,7 @@ import {
   DELETE_ROLE_PERMISSION,
   UPDATE_ROLE_PERMISSION,
 } from "../../../../constants/permissions";
-import { useCustomQuery } from "../../../../hooks/getUsers";
+import { useCustomQuery } from "../../../../hooks/useQuery";
 
 const Roles: React.FC = () => {
   const navigate = useNavigate();

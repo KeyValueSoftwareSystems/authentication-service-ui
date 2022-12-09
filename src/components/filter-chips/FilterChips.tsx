@@ -6,7 +6,7 @@ import "./styles.css";
 import { GET_PERMISSIONS } from "../../containers/permissions/services/queries";
 import { Permission } from "../../types/user";
 import { RemovedPermissions } from "../../containers/permissions/constants";
-import { useCustomQuery } from "../../hooks/getUsers";
+import { useCustomQuery } from "../../hooks/useQuery";
 
 interface FilterChipsProps {
   selectedPermissions: Permission[];

@@ -40,7 +40,7 @@ import { AvatarChecklistComponent } from "../../../../components/avatar-checklis
 import { GET_USERS } from "../../../users/services/queries";
 import { CustomAvatar } from "../../../../components/custom-avatar/CustomAvatar";
 import { ReactComponent as CrossIcon } from "../../../../assets/cross-icon.svg";
-import { useCustomQuery } from "../../../../hooks/getUsers";
+import { useCustomQuery } from "../../../../hooks/useQuery";
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;

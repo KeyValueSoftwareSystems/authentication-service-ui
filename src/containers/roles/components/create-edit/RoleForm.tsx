@@ -10,7 +10,7 @@ import "./styles.css";
 import FormInputText from "../../../../components/inputText";
 import { Role } from "../../../../types/role";
 import { GET_ROLE } from "../../services/queries";
-import { useCustomQuery } from "../../../../hooks/getUsers";
+import { useCustomQuery } from "../../../../hooks/useQuery";
 
 interface RoleFormProps {
   name: string;

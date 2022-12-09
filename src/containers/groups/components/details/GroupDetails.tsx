@@ -15,7 +15,7 @@ import {
   apiRequestAtom,
   toastMessageAtom,
 } from "../../../../states/apiRequestState";
-import { useCustomQuery } from "../../../../hooks/getUsers";
+import { useCustomQuery } from "../../../../hooks/useQuery";
 
 const GroupDetails: React.FC = () => {
   const { id } = useParams();

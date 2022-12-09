@@ -23,7 +23,7 @@ import {
   ROLE_CREATE_SUCCESS_MESSAGE,
   ROLE_UPDATE_SUCCESS_MESSAGE,
 } from "../../../../constants/messages";
-import { useCustomQuery } from "../../../../hooks/getUsers";
+import { useCustomQuery } from "../../../../hooks/useQuery";
 
 const CreateOrEditRole = () => {
   const { id } = useParams();

@@ -25,7 +25,7 @@ import {
   toastMessageAtom,
 } from "../../../../states/apiRequestState";
 import BottomFormController from "../../../../components/bottom-form-controller";
-import { useCustomQuery } from "../../../../hooks/getUsers";
+import { useCustomQuery } from "../../../../hooks/useQuery";
 
 interface UserProps {
   isEdit?: boolean;

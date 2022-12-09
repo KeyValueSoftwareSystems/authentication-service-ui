@@ -27,7 +27,7 @@ import { ReactComponent as EditIcon } from "../../assets/edit.svg";
 import { ReactComponent as LineIcon } from "../../assets/line.svg";
 import { ReactComponent as DeleteIcon } from "../../assets/trash.svg";
 import DialogBox from "../dialog-box";
-import { useCustomQuery } from "../../hooks/getUsers";
+import { useCustomQuery } from "../../hooks/useQuery";
 
 const TableList: FC<TableProps> = ({
   rows,

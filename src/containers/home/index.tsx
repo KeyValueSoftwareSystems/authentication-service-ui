@@ -32,7 +32,7 @@ import {
   VIEW_ROLE_PERMISSION,
   VIEW_USER_PERMISSION,
 } from "../../constants/permissions";
-import { useCustomQuery } from "../../hooks/getUsers";
+import { useCustomQuery } from "../../hooks/useQuery";
 
 const HomePage = () => {
   const setGroupList = useSetRecoilState(groupListAtom);

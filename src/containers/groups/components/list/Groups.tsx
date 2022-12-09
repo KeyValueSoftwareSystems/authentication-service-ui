@@ -19,7 +19,7 @@ import {
   DELETE_GROUP_PERMISSION,
   UPDATE_GROUP_PERMISSION,
 } from "../../../../constants/permissions";
-import { useCustomQuery } from "../../../../hooks/getUsers";
+import { useCustomQuery } from "../../../../hooks/useQuery";
 
 const GroupList: React.FC = () => {
   const navigate = useNavigate();
