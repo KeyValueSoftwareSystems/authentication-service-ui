@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useRecoilState } from "recoil";
-import { GridColumns, GridRowId, GridRowParams } from "@mui/x-data-grid";
+import { GridColumns, GridRowId } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
 
 import "./styles.css";
@@ -76,10 +76,6 @@ const GroupList: React.FC = () => {
     },
   ];
 
-  const onGroupClick = (params: GridRowParams) => {
-    navigate(`./${params.id}`);
-  };
-
   const onAddGroup = () => {
     navigate("add");
   };
@@ -117,13 +113,12 @@ const GroupList: React.FC = () => {
           refetchQuery={GET_GROUPS}
           onAdd={onAddGroup}
           onEdit={onEditGroup}
-          handleRowClick={onGroupClick}
           editPermission={UPDATE_GROUP_PERMISSION}
           deletePermission={DELETE_GROUP_PERMISSION}
           isViewVerified={isViewGroupsVerified}
           isAddVerified={!isAddVerified}
           actionFlex={0.3}
-          cursorType="pointer"
+          cursorType="default"
         />
       )}
     </>

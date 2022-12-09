@@ -125,7 +125,7 @@ const Users: React.FC = () => {
           onEdit={onEdit}
           entity="User"
           buttonLabel="Add User"
-          searchLabel="Search User"
+          searchLabel="Search by First Name or Email"
           deleteMutation={DELETE_USER}
           refetchQuery={GET_USERS}
           handleRowClick={onUserClick}

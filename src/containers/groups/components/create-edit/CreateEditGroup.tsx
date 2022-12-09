@@ -23,7 +23,7 @@ import { GET_GROUP, GET_GROUP_PERMISSIONS } from "../../services/queries";
 import { Role } from "../../../../types/role";
 import apolloClient from "../../../../services/apolloClient";
 import { EntityPermissionsDetails } from "../../../../types/generic";
-import FilterChips from "../../../../components/filter-chips/FilterChips";
+import PermissionCards from "../../../../components/permission-cards/PermissionCards";
 import { Permission, User } from "../../../../types/user";
 import { Group } from "../../../../types/group";
 import { allUsersAtom } from "../../../../states/userStates";
@@ -87,9 +87,10 @@ const CreateOrEditGroup = () => {
   const [allRoles, setAllRoles] = useState<Role[]>([]);
   const [status, setStatus] = useState<boolean>(false);
 
-  const [selectedPermissions, setSelectedPermissions] = useState<Permission[]>(
-    []
-  );
+  const [userSelectedPermissions, setUserSelectedPermissions] = useState<
+    Permission[]
+  >([]);
+
   useEffect(() => {
     setAllUsers(usersResponse);
   }, [usersResponse]);
@@ -146,7 +147,7 @@ const CreateOrEditGroup = () => {
 
   const onGetGroupPermissionsComplete = (data: any) => {
     const permissionList = data?.getGroupPermissions;
-    setSelectedPermissions(permissionList);
+    setUserSelectedPermissions(permissionList);
   };
 
   useCustomQuery(
@@ -155,20 +156,6 @@ const CreateOrEditGroup = () => {
     { id },
     !id
   );
-
-  const handleClick = (permission: Permission) => {
-    if (
-      selectedPermissions.some(
-        (selected_permission) => selected_permission.id === permission.id
-      )
-    ) {
-      setSelectedPermissions(
-        selectedPermissions.filter(
-          (selected_permission) => selected_permission.id !== permission.id
-        )
-      );
-    } else setSelectedPermissions([...selectedPermissions, permission]);
-  };
 
   const removeItem = ({
     roleId,
@@ -272,7 +259,9 @@ const CreateOrEditGroup = () => {
         variables: {
           id: createdGroupData?.createGroup?.id,
           input: {
-            permissions: selectedPermissions.map((permission) => permission.id),
+            permissions: userSelectedPermissions.map(
+              (permission) => permission.id
+            ),
           },
         },
       });
@@ -316,7 +305,9 @@ const CreateOrEditGroup = () => {
       variables: {
         id: id,
         input: {
-          permissions: selectedPermissions.map((permission) => permission.id),
+          permissions: userSelectedPermissions.map(
+            (permission) => permission.id
+          ),
         },
       },
     });
@@ -368,7 +359,6 @@ const CreateOrEditGroup = () => {
       <div>
         <Box
           sx={{
-            borderColor: "divider",
             display: "flex",
             width: "98.7%",
             marginBottom: "20px",
@@ -391,19 +381,20 @@ const CreateOrEditGroup = () => {
         </Box>
         <TabPanel value={value} index={0}>
           {!loading && (
-            <>
+            <div className="roles-checklist">
               <RoleCardsChecklist
                 roleList={roleData?.getRoles}
                 currentCheckedItems={roles}
                 onChange={onChange}
               />
-            </>
+            </div>
           )}
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <FilterChips
-            selectedPermissions={selectedPermissions}
-            handleClick={handleClick}
+          <PermissionCards
+            userSelectedPermissions={userSelectedPermissions}
+            roles={roles}
+            setUserSelectedPermissions={setUserSelectedPermissions}
           />
         </TabPanel>
         <TabPanel value={value} index={2}>

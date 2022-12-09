@@ -1,20 +1,23 @@
 import styled from "@emotion/styled";
 import { Checkbox } from "@mui/material";
 import { FC, useState } from "react";
+
 import { Role } from "../../types/role";
 import RoleCard from "../role-card/RoleCard";
 import { ReactComponent as DownArrowIcon } from "../../assets/icons/Stroke 1.svg";
 import { getUniquePermissionsFromRoles } from "../../utils/permissions";
-import { Entity } from "../../types/generic";
 import { ReactComponent as UnCheckedIcon } from "../../assets/icons/uncheckedicon.svg";
 import { ReactComponent as CheckedIcon } from "../../assets/icons/checkedicon.svg";
 
 import "../checklist/styles.css";
+import { Group } from "../../types/group";
 
 interface GroupCardProps {
   group: any;
-  currentCheckedItems: Entity[];
-  onChange: (event: React.ChangeEvent<HTMLInputElement>, item?: any) => void;
+  currentCheckedItems?: Group[];
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>, item?: any) => void;
+  showCheckBox?: Boolean;
+  isViewPage?: Boolean;
 }
 interface TabProps {
   checked?: boolean;
@@ -70,25 +73,31 @@ const GroupCard: FC<GroupCardProps> = ({
   group,
   currentCheckedItems,
   onChange,
+  showCheckBox = true,
+  isViewPage = false,
 }) => {
   const [showRoles, setShowRoles] = useState<boolean>(false);
 
   const isChecked = (id: string) => {
-    return currentCheckedItems.some((item) => item.id === id);
+    return Boolean(
+      currentCheckedItems?.some((item) => item.id === id) || isViewPage
+    );
   };
 
   return (
     <Container>
       <CheckBoxComponent key={group.id} showRoles={showRoles}>
         <div className="checkbox-label">
-          <Checkbox
-            key={group.id}
-            checked={isChecked(group.id)}
-            onChange={(e) => onChange(e, group)}
-            className="custom-checkbox"
-            icon={<UnCheckedIcon />}
-            checkedIcon={<CheckedIcon />}
-          />
+          {showCheckBox && (
+            <Checkbox
+              key={group.id}
+              checked={isChecked(group.id)}
+              onChange={(e) => onChange && onChange(e, group)}
+              className="custom-checkbox"
+              icon={<UnCheckedIcon />}
+              checkedIcon={<CheckedIcon />}
+            />
+          )}
           <span className="checklistLabel">{group?.name}</span>
         </div>
         <div className="roles-permissions-dropdown">
