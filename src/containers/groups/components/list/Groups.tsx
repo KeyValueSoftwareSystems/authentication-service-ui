@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { GridColumns, GridRowId } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
+import CircularProgress from "@mui/material/CircularProgress";
 
 import "./styles.css";
 import { DELETE_GROUP } from "../../services/mutations";
@@ -99,7 +100,7 @@ const GroupList: React.FC = () => {
 
   return (
     <>
-      {!loading && (
+      {!loading ? (
         <TableList
           rows={groupList}
           columns={columns}
@@ -120,6 +121,8 @@ const GroupList: React.FC = () => {
           actionFlex={0.3}
           cursorType="default"
         />
+      ) : (
+        <CircularProgress />
       )}
     </>
   );

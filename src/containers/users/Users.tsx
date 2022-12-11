@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { Tooltip } from "@mui/material";
 import { ReactComponent as RefreshIcon } from "../../assets/refresh.svg";
 import { ReactComponent as ContentCopyIcon } from "../../assets/copy.svg";
+import CircularProgress from "@mui/material/CircularProgress";
 
 import { GET_USERS } from "./services/queries";
 import { REFRESH_INVITE_TOKEN } from "../auth/services/mutations";
@@ -114,7 +115,7 @@ const Users: React.FC = () => {
 
   return (
     <>
-      {!loading && (
+      {!loading ? (
         <TableList
           rows={userList}
           columns={columns}
@@ -136,6 +137,8 @@ const Users: React.FC = () => {
           actionFlex={0.23}
           cursorType="pointer"
         />
+      ) : (
+        <CircularProgress />
       )}
     </>
   );

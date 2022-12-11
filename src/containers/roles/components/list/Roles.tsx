@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { GridColumns, GridRowId } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
+import CircularProgress from "@mui/material/CircularProgress";
 
 import "./roles.css";
 import { GET_ROLES } from "../../services/queries";
@@ -86,7 +87,7 @@ const Roles: React.FC = () => {
 
   return (
     <>
-      {!loading && (
+      {!loading ? (
         <TableList
           rows={roleList}
           columns={columns}
@@ -107,6 +108,8 @@ const Roles: React.FC = () => {
           actionFlex={0.3}
           cursorType="default"
         />
+      ) : (
+        <CircularProgress />
       )}
     </>
   );
