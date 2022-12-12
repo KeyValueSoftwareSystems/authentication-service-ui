@@ -46,6 +46,7 @@ const SearchBar: FC<SearchBarProps> = ({
           onChange={(e) => {
             handleChange(e);
           }}
+          sx={{ width: "87%", ml: "30px" }}
         />
       </div>
       <div className="search-icon" style={customIconStyle}>
