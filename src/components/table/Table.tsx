@@ -130,9 +130,9 @@ const TableList: FC<TableProps> = ({
     const [pageValue, setPageValue] = useState(1);
     return (
       <>
-        <div className="pagination-count">{`Total ${count} item${
-          count > 1 && "s"
-        }`}</div>
+        <div className="pagination-count">
+          Total {`${count}`} item{count > 1 && `s`}
+        </div>
         <Pagination
           color="primary"
           variant="outlined"
@@ -266,34 +266,34 @@ const TableList: FC<TableProps> = ({
 
   return (
     <div className="table-component">
-{isViewVerified ? (
-  <>
-      <TableToolBar
-        text={text}
-        buttonLabel={buttonLabel}
-        searchLabel={searchLabel}
-        setItemList={setItemList}
-        searchQuery={refetchQuery}
-        isAddVerified={isAddVerified}
-        onAdd={onAdd}
-      />
-      <DataGrid
-        rows={rows}
-        columns={final_columns}
-        style={{
-          borderRadius: "0px 0px 5px 5px",
-          cursor: cursorType,
-        }}
-        disableSelectionOnClick
-        onRowClick={handleRowClick}
-        disableColumnMenu
-        pageSize={8}
-        rowsPerPageOptions={[5]}
-        components={{
-          Pagination: CustomPagination,
-        }}
-      />
-       </>
+      {isViewVerified ? (
+        <>
+          <TableToolBar
+            text={text}
+            buttonLabel={buttonLabel}
+            searchLabel={searchLabel}
+            setItemList={setItemList}
+            searchQuery={refetchQuery}
+            isAddVerified={isAddVerified}
+            onAdd={onAdd}
+          />
+          <DataGrid
+            rows={rows}
+            columns={final_columns}
+            style={{
+              borderRadius: "0px 0px 5px 5px",
+              cursor: cursorType,
+            }}
+            disableSelectionOnClick
+            onRowClick={handleRowClick}
+            disableColumnMenu
+            pageSize={8}
+            rowsPerPageOptions={[5]}
+            components={{
+              Pagination: CustomPagination,
+            }}
+          />
+        </>
       ) : (
         <AccessDenied />
       )}

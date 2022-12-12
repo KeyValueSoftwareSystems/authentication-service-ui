@@ -32,7 +32,7 @@ export const GET_USER = gql`
 `;
 
 export const GET_USERS = gql`
-  query getUsers($value: String) {
+  query getUsers($value: String, $filter: FilterInput, $sort: SortInput) {
     getUsers(
       input: {
         search: {
@@ -43,6 +43,8 @@ export const GET_USERS = gql`
             email: { contains: $value }
           }
         }
+        filter: $filter
+        sort: $sort
       }
     ) {
       id

@@ -5,6 +5,15 @@ import { ReactComponent as SearchIcon } from "../../assets/search.svg";
 
 import { SearchBarProps } from "./types";
 import "./styles.css";
+import { useRecoilState } from "recoil";
+import {
+  groupFilterAtom,
+  searchAtom,
+  sortCountAtom,
+  statusFilterAtom,
+} from "../../states/searchSortFilterStates";
+import { searchFilterSort } from "../../utils/searchFilterSort";
+import { GET_USERS } from "../../containers/users/services/queries";
 
 const SearchBar: FC<SearchBarProps> = ({
   searchLabel,
@@ -14,14 +23,13 @@ const SearchBar: FC<SearchBarProps> = ({
   customBarStyle,
   customIconStyle,
 }) => {
-  const [searchValue, setSearchValue] = useState("");
-
-  const [searchItemQuery] = useLazyQuery(searchQuery, {
-    variables: {
-      value: searchValue,
-    },
+  const [searchValue, setSearchValue] = useRecoilState(searchAtom);
+  const [checkedStatus] = useRecoilState(statusFilterAtom);
+  const [checkedGroups] = useRecoilState(groupFilterAtom);
+  const [count] = useRecoilState(sortCountAtom);
+  const [filterQuery] = useLazyQuery(GET_USERS, {
     onCompleted: (data) => {
-      setItemList(data);
+      setItemList(data?.getUsers);
     },
   });
 
@@ -35,7 +43,14 @@ const SearchBar: FC<SearchBarProps> = ({
   };
 
   useEffect(() => {
-    if (searchValue.length !== 0) searchItemQuery(); // eslint-disable-next-line
+    if (searchValue.length !== 0)
+      searchFilterSort(
+        count,
+        checkedGroups,
+        checkedStatus,
+        filterQuery,
+        searchValue
+      ); // eslint-disable-next-line
   }, [searchValue]);
 
   return (

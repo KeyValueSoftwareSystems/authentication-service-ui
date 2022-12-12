@@ -6,7 +6,7 @@ import Checkbox from "@mui/material/Checkbox";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { useRecoilState } from "recoil";
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 
 import { TableToolBarProps } from "./types";
 import "./styles.css";
@@ -16,6 +16,16 @@ import { ReactComponent as SortIcon } from "../../assets/sort.svg";
 import { ReactComponent as FilterIcon } from "../../assets/filter.svg";
 import { ReactComponent as LeftArrowIcon } from "../../assets/arrow-left.svg";
 import { groupListAtom } from "../../states/groupStates";
+import { GET_USERS } from "../../containers/users/services/queries";
+import { useLazyQuery } from "@apollo/client";
+import { userListAtom } from "../../states/userStates";
+import {
+  groupFilterAtom,
+  searchAtom,
+  sortCountAtom,
+  statusFilterAtom,
+} from "../../states/searchSortFilterStates";
+import { searchFilterSort } from "../../utils/searchFilterSort";
 
 const TableToolBar: FC<TableToolBarProps> = ({
   text,
@@ -30,8 +40,10 @@ const TableToolBar: FC<TableToolBarProps> = ({
   const [viewStatusFilter, setStatusFilter] = useState(true);
   const [viewGroupFilter, setGroupFilter] = useState(false);
   const open = Boolean(anchorEl);
-  const statusList = ["Active", "Inactive", "Invited"];
+  const statusList = ["ACTIVE", "INACTIVE", "INVITED"];
   const [groupList] = useRecoilState(groupListAtom);
+  const [userList, setUserList] = useRecoilState(userListAtom);
+  const [count, setCount] = useRecoilState(sortCountAtom);
   const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
     setCurrentCheckedStatus(checkedStatus);
@@ -41,8 +53,9 @@ const TableToolBar: FC<TableToolBarProps> = ({
     setAnchorEl(null);
     handleCancel();
   };
-  const [checkedStatus, setCheckedStatus] = useState([]);
-  const [checkedGroups, setCheckedGroups] = useState([]);
+  const [searchValue] = useRecoilState(searchAtom);
+  const [checkedStatus, setCheckedStatus] = useRecoilState(statusFilterAtom);
+  const [checkedGroups, setCheckedGroups] = useRecoilState(groupFilterAtom);
   const [currentCheckedStatus, setCurrentCheckedStatus] = useState([]);
   const [currentCheckedGroups, setCurrentCheckedGroups] = useState([]);
 
@@ -83,8 +96,34 @@ const TableToolBar: FC<TableToolBarProps> = ({
 
   const handleSave = () => {
     setAnchorEl(null);
+    searchFilterSort(
+      count,
+      checkedGroups,
+      checkedStatus,
+      filterQuery,
+      searchValue
+    );
   };
 
+  const [filterQuery] = useLazyQuery(GET_USERS, {
+    onCompleted: (data) => {
+      setUserList(data?.getUsers);
+    },
+  });
+  useEffect(() => {
+    searchFilterSort(
+      count,
+      checkedGroups,
+      checkedStatus,
+      filterQuery,
+      searchValue
+    );
+  }, [count]);
+
+  const onSort = () => {
+    if (count === 2) setCount(0);
+    else setCount(count + 1);
+  };
   return (
     <div className="table-toolbar">
       <div className="search-sort-filter">
@@ -93,7 +132,7 @@ const TableToolBar: FC<TableToolBarProps> = ({
           setItemList={setItemList}
           searchQuery={searchQuery}
         />
-        <div className="sort-button">
+        <div className="sort-button" onClick={onSort}>
           <SortIcon id="sort-filter-icon" />
           Sort by
         </div>
@@ -272,15 +311,15 @@ const TableToolBar: FC<TableToolBarProps> = ({
                         sx={{ color: "#7E818D" }}
                         onChange={(e) => {
                           onAddFilter(
-                            group.name,
+                            group.id,
                             e,
                             checkedGroups,
                             setCheckedGroups
                           );
                         }}
-                        checked={handleCheckedItems(group.name, checkedGroups)}
+                        checked={handleCheckedItems(group.id, checkedGroups)}
                         className={
-                          handleCheckedItems(group.name, checkedGroups) === true
+                          handleCheckedItems(group.id, checkedGroups) === true
                             ? "checked"
                             : "unchecked"
                         }
