@@ -12,12 +12,14 @@ import { Group } from "../../types/group";
 import { useCustomQuery } from "../../hooks/useQuery";
 
 interface PermissionCardsProps {
-  userSelectedPermissions: Permission[];
+  userSelectedPermissions?: Permission[];
   roles?: Role[];
   groups?: Group[];
   setUserSelectedPermissions?: React.Dispatch<
     React.SetStateAction<Permission[]>
   >;
+  userPermissions?: Permission[];
+  isViewPage?: boolean;
 }
 
 const Container = styled.div`
@@ -27,11 +29,14 @@ const Container = styled.div`
   margin-top: 20px;
 `;
 
-const PermissionCards: React.FC<PermissionCardsProps> = (
-  props: PermissionCardsProps
-) => {
-  const { userSelectedPermissions, roles, groups, setUserSelectedPermissions } =
-    props;
+const PermissionCards: React.FC<PermissionCardsProps> = ({
+  userSelectedPermissions = [],
+  roles = [],
+  groups = [],
+  setUserSelectedPermissions = () => null,
+  userPermissions = [],
+  isViewPage = false,
+}) => {
   const [entities, setEntities] = useState<Entity[]>([]);
   const onCompleted = (data: any) => {
     setEntities(data?.getEntities);
@@ -47,6 +52,8 @@ const PermissionCards: React.FC<PermissionCardsProps> = (
           groups={groups}
           userSelectedPermissions={userSelectedPermissions}
           setUserSelectedPermissions={setUserSelectedPermissions}
+          userPermissions={userPermissions}
+          isViewPage={isViewPage}
         />
       ))}
     </Container>
