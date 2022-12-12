@@ -4,6 +4,7 @@ import { useForm, FormProvider, FieldValues } from "react-hook-form";
 import { Box, Tab, Tabs, Typography } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useSetRecoilState } from "recoil";
+import CircularProgress from "@mui/material/CircularProgress";
 
 import {
   GET_GROUPS,
@@ -131,7 +132,10 @@ const UserForm = (props: UserProps) => {
     setAllGroups([...groups]);
   };
 
-  const { data: groupData } = useCustomQuery(GET_GROUPS, onGetGroupsComplete);
+  const { data: groupData, loading: groupsLoading } = useCustomQuery(
+    GET_GROUPS,
+    onGetGroupsComplete
+  );
 
   const onGetUserComplete = (data: any) => {
     setUser(data?.getUser);
@@ -267,7 +271,7 @@ const UserForm = (props: UserProps) => {
           </form>
         </FormProvider>
         <div>
-          <Box>
+          <Box sx={{ height: "100%" }}>
             <Box sx={{ display: "flex" }}>
               <Tabs
                 value={value}
@@ -278,17 +282,21 @@ const UserForm = (props: UserProps) => {
                 <Tab label="Permissions" />
               </Tabs>
             </Box>
-            <TabPanel value={value} index={0}>
-              <div id="groups-permissions">
-                <div id="user-groups">
-                  <ChecklistComponent
-                    mapList={groupData?.getGroups}
-                    currentCheckedItems={userGroups}
-                    onChange={handleChange}
-                  />
+            {!groupsLoading ? (
+              <TabPanel value={value} index={0}>
+                <div id="groups-permissions">
+                  <div id="user-groups">
+                    <ChecklistComponent
+                      mapList={groupData?.getGroups}
+                      currentCheckedItems={userGroups}
+                      onChange={handleChange}
+                    />
+                  </div>
                 </div>
-              </div>
-            </TabPanel>
+              </TabPanel>
+            ) : (
+              <CircularProgress sx={{ top: "208% !important" }} />
+            )}
             <TabPanel value={value} index={1}>
               <PermissionCards
                 userSelectedPermissions={userSelectedPermissions}

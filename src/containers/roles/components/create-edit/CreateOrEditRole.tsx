@@ -2,6 +2,7 @@ import { ApolloError, useMutation } from "@apollo/client";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
+import CircularProgress from "@mui/material/CircularProgress";
 
 import { GET_ROLE } from "../../services/queries";
 import {
@@ -121,8 +122,10 @@ const CreateOrEditRole = () => {
       )}
       <div className="role-permissions">
         <div className="permission-header"> Permissions</div>
-        {!loading && (
+        {!loading ? (
           <PermissionCards userSelectedPermissions={rolePermissions} />
+        ) : (
+          <CircularProgress />
         )}
       </div>
     </div>

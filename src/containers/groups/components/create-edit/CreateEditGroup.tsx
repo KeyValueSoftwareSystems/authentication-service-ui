@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { FieldValues } from "react-hook-form";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { Box, Tab, Tabs, Typography, Grid, Divider } from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress";
 
 import {
   GET_ROLES,
@@ -131,7 +132,10 @@ const CreateOrEditGroup = () => {
     setAllRoles(data?.getRoles);
   };
 
-  const { data: roleData } = useCustomQuery(GET_ROLES, onGetRolesComplete);
+  const { data: roleData, loading: rolesLoading } = useCustomQuery(
+    GET_ROLES,
+    onGetRolesComplete
+  );
 
   const onGetGroupComplete = (data: any) => {
     setGroup(data?.getGroup);
@@ -356,7 +360,7 @@ const CreateOrEditGroup = () => {
           editGroup={onEditGroup}
         />
       )}
-      <div>
+      <div style={{ height: "55%" }}>
         <Box
           sx={{
             display: "flex",
@@ -379,8 +383,8 @@ const CreateOrEditGroup = () => {
             />
           </Tabs>
         </Box>
-        <TabPanel value={value} index={0}>
-          {!loading && (
+        {!rolesLoading ? (
+          <TabPanel value={value} index={0}>
             <div className="roles-checklist">
               <RoleCardsChecklist
                 roleList={roleData?.getRoles}
@@ -388,8 +392,10 @@ const CreateOrEditGroup = () => {
                 onChange={onChange}
               />
             </div>
-          )}
-        </TabPanel>
+          </TabPanel>
+        ) : (
+          <CircularProgress />
+        )}
         <TabPanel value={value} index={1}>
           <PermissionCards
             userSelectedPermissions={userSelectedPermissions}
