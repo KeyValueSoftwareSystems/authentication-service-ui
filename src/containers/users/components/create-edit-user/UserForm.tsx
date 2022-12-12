@@ -1,22 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm, FormProvider, FieldValues } from "react-hook-form";
 import { Box, Tab, Tabs, Typography } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useSetRecoilState } from "recoil";
+import CircularProgress from "@mui/material/CircularProgress";
 
-import {
-  GET_GROUPS,
-  GET_GROUP_PERMISSIONS,
-} from "../../../groups/services/queries";
-import { ApolloError, useQuery } from "@apollo/client";
+import { GET_GROUPS } from "../../../groups/services/queries";
 import FormInputText from "../../../../components/inputText";
 import { ChecklistComponent } from "../../../../components/checklist/CheckList";
 import { GET_USER, GET_USER_PERMISSIONS } from "../../services/queries";
 import { Permission, User } from "../../../../types/user";
 import "./styles.css";
-import apolloClient from "../../../../services/apolloClient";
-import { EntityPermissionsDetails } from "../../../../types/permission";
 import { AddUserformSchema, EditUserformSchema } from "../../userSchema";
 import PermissionCards from "../../../../components/permission-cards/PermissionCards";
 import {
@@ -24,6 +19,7 @@ import {
   toastMessageAtom,
 } from "../../../../states/apiRequestState";
 import BottomFormController from "../../../../components/bottom-form-controller";
+import { useCustomQuery } from "../../../../hooks/useQuery";
 import { Group } from "../../../../types/group";
 
 interface UserProps {
@@ -75,93 +71,44 @@ const UserForm = (props: UserProps) => {
   const navigate = useNavigate();
   const [user, setUser] = useState<User>();
   const [userGroups, setUserGroups] = useState<Group[]>([]);
-  const [groupPermissions, setGroupPermissions] = useState<
-    EntityPermissionsDetails[]
-  >([]);
   const [allGroups, setAllGroups] = useState<Group[]>([]);
   const [userSelectedPermissions, setUserSelectedPermissions] = useState<
     Permission[]
   >([]);
-  const [status, setStatus] = useState<boolean>(false);
   const setToastMessage = useSetRecoilState(toastMessageAtom);
   const setApiSuccess = useSetRecoilState(apiRequestAtom);
 
-  useEffect(() => {
-    if (
-      (groupPermissions.length === 0 && !status) ||
-      allGroups?.length === userGroups?.length
-    ) {
-      userGroups.forEach((group: Group) => {
-        handlePermissions(group);
-      });
-    } // eslint-disable-next-line
-  }, [userGroups]);
-
-  const handlePermissions = async (group: Group) => {
-    setStatus(true);
-    try {
-      const response = await apolloClient.query({
-        query: GET_GROUP_PERMISSIONS,
-        variables: {
-          id: group.id,
-        },
-      });
-      if (response) {
-        if (!groupPermissions.some((groupObj) => groupObj.id === group.id))
-          setGroupPermissions((previousState) => [
-            ...previousState,
-            {
-              id: group.id,
-              name: group.name,
-              permissions: response?.data?.getGroupPermissions,
-            },
-          ]);
-      }
-    } catch (exception: ApolloError | any) {
-      setToastMessage(exception.message);
-      setApiSuccess(false);
-    } finally {
-      setStatus(false);
-    }
+  const onGetGroupsComplete = (data: any) => {
+    const groups = data?.getGroups.map((group: Group) => group);
+    setAllGroups([...groups]);
   };
 
-  const { data: groupData } = useQuery(GET_GROUPS, {
-    onCompleted: (data) => {
-      const groups = data?.getGroups.map((group: Group) => group);
-      setAllGroups([...groups]);
-    },
-    onError: (error: ApolloError) => {
-      setToastMessage(error.message);
-      setApiSuccess(false);
-    },
-  });
+  const { data: groupData, loading: groupsLoading } = useCustomQuery(
+    GET_GROUPS,
+    onGetGroupsComplete
+  );
 
-  const { loading } = useQuery(GET_USER, {
-    skip: !id,
-    variables: { id: id },
-    onCompleted: (data) => {
-      setUser(data?.getUser);
-      setUserGroups(data?.getUser.groups);
-    },
-    onError: (error: ApolloError) => {
-      setToastMessage(error.message);
-      setApiSuccess(false);
-    },
-    fetchPolicy: "network-only",
-  });
+  const onGetUserComplete = (data: any) => {
+    setUser(data?.getUser);
+    setUserGroups(data?.getUser.groups);
+  };
+  const { loading } = useCustomQuery(
+    GET_USER,
+    onGetUserComplete,
+    { id: id },
+    !id
+  );
 
-  useQuery(GET_USER_PERMISSIONS, {
-    skip: !id,
-    variables: { id: id },
-    onCompleted: (data) => {
-      setUserSelectedPermissions(data?.getUserPermissions);
-    },
-    onError: (error: ApolloError) => {
-      setToastMessage(error.message);
-      setApiSuccess(false);
-    },
-    fetchPolicy: "network-only",
-  });
+  const onGetUserPermissionsComplete = (data: any) => {
+    setUserSelectedPermissions(data?.getUserPermissions);
+  };
+
+  useCustomQuery(
+    GET_USER_PERMISSIONS,
+    onGetUserPermissionsComplete,
+    { id: id },
+    !id
+  );
 
   const methods = useForm({
     resolver: yupResolver(userformSchema),
@@ -179,9 +126,6 @@ const UserForm = (props: UserProps) => {
     setUserGroups(
       userGroups.filter((groupDetails) => groupDetails.id !== group.id)
     );
-    setGroupPermissions(
-      groupPermissions.filter((permission) => permission.id !== group.id)
-    );
   };
 
   const handleChange = (
@@ -195,13 +139,11 @@ const UserForm = (props: UserProps) => {
       } else {
         if (group) {
           setUserGroups([...userGroups, group]);
-          handlePermissions(group);
         }
       }
     } else {
       if (value === "all") {
         setUserGroups([]);
-        setGroupPermissions([]);
       }
       if (group) removeGroup(group);
     }
@@ -261,7 +203,7 @@ const UserForm = (props: UserProps) => {
           </form>
         </FormProvider>
         <div>
-          <Box>
+          <Box sx={{ height: "100%" }}>
             <Box sx={{ display: "flex" }}>
               <Tabs
                 value={value}
@@ -272,17 +214,21 @@ const UserForm = (props: UserProps) => {
                 <Tab label="Permissions" />
               </Tabs>
             </Box>
-            <TabPanel value={value} index={0}>
-              <div id="groups-permissions">
-                <div id="user-groups">
-                  <ChecklistComponent
-                    mapList={groupData?.getGroups}
-                    currentCheckedItems={userGroups}
-                    onChange={handleChange}
-                  />
+            {!groupsLoading ? (
+              <TabPanel value={value} index={0}>
+                <div id="groups-permissions">
+                  <div className="checklist-container">
+                    <ChecklistComponent
+                      mapList={groupData?.getGroups}
+                      currentCheckedItems={userGroups}
+                      onChange={handleChange}
+                    />
+                  </div>
                 </div>
-              </div>
-            </TabPanel>
+              </TabPanel>
+            ) : (
+              <CircularProgress sx={{ top: "208% !important" }} />
+            )}
             <TabPanel value={value} index={1}>
               <PermissionCards
                 userSelectedPermissions={userSelectedPermissions}
