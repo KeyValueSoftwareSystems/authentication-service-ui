@@ -14,6 +14,7 @@ import {
 } from "../../states/searchSortFilterStates";
 import { searchFilterSort } from "../../utils/searchFilterSort";
 import { GET_USERS } from "../../containers/users/services/queries";
+import { useUsersFetch } from "../../hooks/usersFetch";
 
 const SearchBar: FC<SearchBarProps> = ({
   searchLabel,
@@ -24,14 +25,23 @@ const SearchBar: FC<SearchBarProps> = ({
   customIconStyle,
 }) => {
   const [searchValue, setSearchValue] = useRecoilState(searchAtom);
-  const [checkedStatus] = useRecoilState(statusFilterAtom);
-  const [checkedGroups] = useRecoilState(groupFilterAtom);
-  const [count] = useRecoilState(sortCountAtom);
-  const [filterQuery] = useLazyQuery(GET_USERS, {
-    onCompleted: (data) => {
-      setItemList(data?.getUsers);
-    },
+  const [field, setField] = useState("");
+  useEffect(() => {
+    if (searchLabel.includes("First Name")) {
+      setField("firstName");
+    } else {
+      setField("name");
+    }
+  }, []);
+  const fetchUsers = useUsersFetch({
+    userParams: { setList: setItemList, query: searchQuery, field: field },
   });
+
+  useEffect(() => {
+    fetchUsers({
+      userParams: { setList: setItemList, query: searchQuery, field: field },
+    });
+  }, [searchValue]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -41,17 +51,7 @@ const SearchBar: FC<SearchBarProps> = ({
     }, 1000);
     return () => clearTimeout(delayDebounce);
   };
-
-  useEffect(() => {
-    if (searchValue.length !== 0)
-      searchFilterSort(
-        count,
-        checkedGroups,
-        checkedStatus,
-        filterQuery,
-        searchValue
-      ); // eslint-disable-next-line
-  }, [searchValue]);
+  // useUsersFetch({userParams:{}})
 
   return (
     <div className="search" style={customSearchStyle}>

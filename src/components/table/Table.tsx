@@ -30,6 +30,7 @@ import DialogBox from "../dialog-box";
 import { useCustomQuery } from "../../hooks/useQuery";
 
 const TableList: FC<TableProps> = ({
+  field,
   rows,
   columns,
   text,
@@ -265,6 +266,7 @@ const TableList: FC<TableProps> = ({
             searchQuery={refetchQuery}
             isAddVerified={isAddVerified}
             onAdd={onAdd}
+            field={field}
           />
           <DataGrid
             rows={rows}

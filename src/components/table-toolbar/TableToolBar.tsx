@@ -20,14 +20,17 @@ import { GET_USERS } from "../../containers/users/services/queries";
 import { useLazyQuery } from "@apollo/client";
 import { userListAtom } from "../../states/userStates";
 import {
+  filterApplyAtom,
   groupFilterAtom,
   searchAtom,
   sortCountAtom,
   statusFilterAtom,
 } from "../../states/searchSortFilterStates";
 import { searchFilterSort } from "../../utils/searchFilterSort";
+import { useUsersFetch } from "../../hooks/usersFetch";
 
 const TableToolBar: FC<TableToolBarProps> = ({
+  field,
   text,
   searchLabel,
   buttonLabel,
@@ -56,6 +59,7 @@ const TableToolBar: FC<TableToolBarProps> = ({
   const [searchValue] = useRecoilState(searchAtom);
   const [checkedStatus, setCheckedStatus] = useRecoilState(statusFilterAtom);
   const [checkedGroups, setCheckedGroups] = useRecoilState(groupFilterAtom);
+  const [isApply, setApply] = useRecoilState(filterApplyAtom);
   const [currentCheckedStatus, setCurrentCheckedStatus] = useState([]);
   const [currentCheckedGroups, setCurrentCheckedGroups] = useState([]);
 
@@ -96,13 +100,8 @@ const TableToolBar: FC<TableToolBarProps> = ({
 
   const handleSave = () => {
     setAnchorEl(null);
-    searchFilterSort(
-      count,
-      checkedGroups,
-      checkedStatus,
-      filterQuery,
-      searchValue
-    );
+    setApply(true);
+    fetchUsers({ userParams: { setList: setItemList, query: searchQuery } });
   };
 
   const [filterQuery] = useLazyQuery(GET_USERS, {
@@ -110,18 +109,17 @@ const TableToolBar: FC<TableToolBarProps> = ({
       setUserList(data?.getUsers);
     },
   });
+  const fetchUsers = useUsersFetch({
+    userParams: { setList: setItemList, query: searchQuery },
+  });
   useEffect(() => {
-    searchFilterSort(
-      count,
-      checkedGroups,
-      checkedStatus,
-      filterQuery,
-      searchValue
-    );
+    fetchUsers({
+      userParams: { setList: setItemList, query: searchQuery, field: field },
+    });
   }, [count]);
 
   const onSort = () => {
-    if (count === 2) setCount(0);
+    if (count === 2) setCount(1);
     else setCount(count + 1);
   };
   return (
