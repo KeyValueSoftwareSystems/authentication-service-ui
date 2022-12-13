@@ -1,19 +1,11 @@
 import { InputBase } from "@mui/material";
 import { FC, useEffect, useState } from "react";
-import { useLazyQuery } from "@apollo/client";
 import { ReactComponent as SearchIcon } from "../../assets/search.svg";
 
 import { SearchBarProps } from "./types";
 import "./styles.css";
 import { useRecoilState } from "recoil";
-import {
-  groupFilterAtom,
-  searchAtom,
-  sortCountAtom,
-  statusFilterAtom,
-} from "../../states/searchSortFilterStates";
-import { searchFilterSort } from "../../utils/searchFilterSort";
-import { GET_USERS } from "../../containers/users/services/queries";
+import { searchAtom } from "../../states/searchSortFilterStates";
 import { useUsersFetch } from "../../hooks/usersFetch";
 
 const SearchBar: FC<SearchBarProps> = ({
@@ -38,9 +30,7 @@ const SearchBar: FC<SearchBarProps> = ({
   });
 
   useEffect(() => {
-    fetchUsers({
-      userParams: { setList: setItemList, query: searchQuery, field: field },
-    });
+    fetchUsers();
   }, [searchValue]);
 
   const handleChange = (
@@ -51,7 +41,6 @@ const SearchBar: FC<SearchBarProps> = ({
     }, 1000);
     return () => clearTimeout(delayDebounce);
   };
-  // useUsersFetch({userParams:{}})
 
   return (
     <div className="search" style={customSearchStyle}>

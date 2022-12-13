@@ -16,17 +16,11 @@ import { ReactComponent as SortIcon } from "../../assets/sort.svg";
 import { ReactComponent as FilterIcon } from "../../assets/filter.svg";
 import { ReactComponent as LeftArrowIcon } from "../../assets/arrow-left.svg";
 import { groupListAtom } from "../../states/groupStates";
-import { GET_USERS } from "../../containers/users/services/queries";
-import { useLazyQuery } from "@apollo/client";
-import { userListAtom } from "../../states/userStates";
 import {
-  filterApplyAtom,
   groupFilterAtom,
-  searchAtom,
   sortCountAtom,
   statusFilterAtom,
 } from "../../states/searchSortFilterStates";
-import { searchFilterSort } from "../../utils/searchFilterSort";
 import { useUsersFetch } from "../../hooks/usersFetch";
 
 const TableToolBar: FC<TableToolBarProps> = ({
@@ -45,7 +39,6 @@ const TableToolBar: FC<TableToolBarProps> = ({
   const open = Boolean(anchorEl);
   const statusList = ["ACTIVE", "INACTIVE", "INVITED"];
   const [groupList] = useRecoilState(groupListAtom);
-  const [userList, setUserList] = useRecoilState(userListAtom);
   const [count, setCount] = useRecoilState(sortCountAtom);
   const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
@@ -56,10 +49,9 @@ const TableToolBar: FC<TableToolBarProps> = ({
     setAnchorEl(null);
     handleCancel();
   };
-  const [searchValue] = useRecoilState(searchAtom);
+
   const [checkedStatus, setCheckedStatus] = useRecoilState(statusFilterAtom);
   const [checkedGroups, setCheckedGroups] = useRecoilState(groupFilterAtom);
-  const [isApply, setApply] = useRecoilState(filterApplyAtom);
   const [currentCheckedStatus, setCurrentCheckedStatus] = useState([]);
   const [currentCheckedGroups, setCurrentCheckedGroups] = useState([]);
 
@@ -100,22 +92,14 @@ const TableToolBar: FC<TableToolBarProps> = ({
 
   const handleSave = () => {
     setAnchorEl(null);
-    setApply(true);
-    fetchUsers({ userParams: { setList: setItemList, query: searchQuery } });
+    fetchUsers();
   };
 
-  const [filterQuery] = useLazyQuery(GET_USERS, {
-    onCompleted: (data) => {
-      setUserList(data?.getUsers);
-    },
-  });
   const fetchUsers = useUsersFetch({
-    userParams: { setList: setItemList, query: searchQuery },
+    userParams: { setList: setItemList, query: searchQuery, field: field },
   });
   useEffect(() => {
-    fetchUsers({
-      userParams: { setList: setItemList, query: searchQuery, field: field },
-    });
+    fetchUsers();
   }, [count]);
 
   const onSort = () => {

@@ -1,22 +1,12 @@
-import {
-  useQuery,
-  ApolloError,
-  useLazyQuery,
-  DocumentNode,
-} from "@apollo/client";
-import { useEffect, useState } from "react";
-import { SetterOrUpdater, useRecoilState, useSetRecoilState } from "recoil";
-import { GET_USERS } from "../containers/users/services/queries";
+import { useLazyQuery, DocumentNode } from "@apollo/client";
+import { SetterOrUpdater, useRecoilState } from "recoil";
 import { FilterConditions, SortDirection } from "../services/constants";
-import { apiRequestAtom, toastMessageAtom } from "../states/apiRequestState";
 import {
-  filterApplyAtom,
   groupFilterAtom,
   searchAtom,
   sortCountAtom,
   statusFilterAtom,
 } from "../states/searchSortFilterStates";
-import { userListAtom } from "../states/userStates";
 
 interface userParamsProps {
   setList: SetterOrUpdater<never[]>;
@@ -29,7 +19,7 @@ interface usersFetchProps {
 }
 
 export const useUsersFetch = (usersFetchProps: usersFetchProps) => {
-  const [searchValue, setSearchValue] = useRecoilState(searchAtom);
+  const [searchValue] = useRecoilState(searchAtom);
   const [checkedStatus] = useRecoilState(statusFilterAtom);
   const [checkedGroups] = useRecoilState(groupFilterAtom);
   const [count] = useRecoilState(sortCountAtom);
@@ -38,10 +28,10 @@ export const useUsersFetch = (usersFetchProps: usersFetchProps) => {
       usersFetchProps.userParams.setList(data);
     },
   });
-  const fetchUsers = (usersFetch: usersFetchProps) => {
+  const fetchUsers = () => {
     let search = {};
     if (searchValue.length !== 0) {
-      if (usersFetch.userParams.field === "name")
+      if (usersFetchProps.userParams.field === "name")
         search = { or: { name: { contains: searchValue } } };
       else {
         search = {
@@ -55,23 +45,17 @@ export const useUsersFetch = (usersFetchProps: usersFetchProps) => {
       }
     }
     let sort = {};
-    if (count === 1) {
+    if (count !== 0) {
       let direction = {
-        field: usersFetch.userParams.field,
-        direction: SortDirection.ASC,
-      };
-      sort = { ...sort, ...direction };
-    } else if (count === 2) {
-      let direction = {
-        field: usersFetch.userParams.field,
-        direction: SortDirection.DESC,
+        field: usersFetchProps.userParams.field,
+        direction: count === 1 ? SortDirection.ASC : SortDirection.DESC,
       };
       sort = { ...sort, ...direction };
     }
     let operands = [];
     if (checkedStatus.length > 0) {
       let status = {
-        condition: FilterConditions.EQUALS,
+        condition: FilterConditions.IN,
         field: "status",
         value: checkedStatus,
       };
@@ -79,7 +63,7 @@ export const useUsersFetch = (usersFetchProps: usersFetchProps) => {
     }
     if (checkedGroups.length > 0) {
       let groups = {
-        condition: FilterConditions.EQUALS,
+        condition: FilterConditions.IN,
         field: "group",
         value: checkedGroups,
       };
@@ -96,7 +80,6 @@ export const useUsersFetch = (usersFetchProps: usersFetchProps) => {
     if (Object.keys(search).length > 0) {
       variables = { ...variables, search: search };
     }
-    console.log(variables);
     filterQuery({ variables: variables });
   };
 

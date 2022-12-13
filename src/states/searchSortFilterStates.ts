@@ -19,8 +19,3 @@ export const searchAtom = atom({
   key: "search",
   default: "",
 });
-
-export const filterApplyAtom = atom({
-  key: "filter",
-  default: false,
-});
