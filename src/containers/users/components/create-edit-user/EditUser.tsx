@@ -8,18 +8,15 @@ import {
 } from "../../services/mutations";
 import UserForm from "./UserForm";
 import "./styles.css";
-import { Permission } from "../../../../types/user";
+import { Permission } from "types/user";
 import { FieldValues } from "react-hook-form";
-import { currentUserAtom } from "../../../../states/loginStates";
+import { currentUserAtom } from "states/loginStates";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { UserPermissionsAtom } from "../../../../states/permissionsStates";
-import {
-  apiRequestAtom,
-  toastMessageAtom,
-} from "../../../../states/apiRequestState";
-import { USER_UPDATE_SUCCESS_MESSAGE } from "../../../../constants/messages";
-import { Group } from "../../../../types/group";
-import { useCustomMutation } from "../../../../hooks/useMutation";
+import { UserPermissionsAtom } from "states/permissionsStates";
+import { apiRequestAtom, toastMessageAtom } from "states/apiRequestState";
+import { USER_UPDATE_SUCCESS_MESSAGE } from "constants/messages";
+import { Group } from "types/group";
+import { useCustomMutation } from "hooks/useMutation";
 
 const EditUser: React.FC = () => {
   const { id } = useParams();

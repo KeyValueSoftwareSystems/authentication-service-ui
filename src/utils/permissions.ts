@@ -1,6 +1,6 @@
-import { Group } from "../types/group";
-import { EntityPermissionsDetails, Permission } from "../types/permission";
-import { Role } from "../types/role";
+import { Group } from "types/group";
+import { EntityPermissionsDetails, Permission } from "types/permission";
+import { Role } from "types/role";
 
 export const getOverallPermissions = (
   permissions: EntityPermissionsDetails[]
@@ -30,7 +30,7 @@ export const getUniquePermissionsFromRoles = (roles: Role[]) => {
 
 export const getUniquePermissionsFromGroups = (groups: Group[]) => {
   const permissionsList = groups?.reduce((acc: Permission[], cur) => {
-    acc.push(...cur.allPermissions);
+    cur.allPermissions && acc.push(...cur.allPermissions);
     return acc;
   }, []);
   return [
