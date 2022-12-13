@@ -11,17 +11,17 @@ import React, { FC, useEffect, useState } from "react";
 import { TableToolBarProps } from "./types";
 import "./styles.css";
 import SearchBar from "../search-bar/SearchBar";
-import { ReactComponent as PlusIcon } from "../../assets/plus.svg";
-import { ReactComponent as SortIcon } from "../../assets/sort.svg";
-import { ReactComponent as FilterIcon } from "../../assets/filter.svg";
-import { ReactComponent as LeftArrowIcon } from "../../assets/arrow-left.svg";
-import { groupListAtom } from "../../states/groupStates";
+import { ReactComponent as PlusIcon } from "assets/plus.svg";
+import { ReactComponent as SortIcon } from "assets/sort.svg";
+import { ReactComponent as FilterIcon } from "assets/filter.svg";
+import { ReactComponent as LeftArrowIcon } from "assets/arrow-left.svg";
+import { groupListAtom } from "states/groupStates";
 import {
   groupFilterAtom,
   sortCountAtom,
   statusFilterAtom,
-} from "../../states/searchSortFilterStates";
-import { useUsersFetch } from "../../hooks/usersFetch";
+} from "states/searchSortFilterStates";
+import { useUsersFetch } from "hooks/usersFetch";
 
 const TableToolBar: FC<TableToolBarProps> = ({
   field,
