@@ -229,7 +229,13 @@ const UserForm = (props: UserProps) => {
                         onChange={handleChange}
                       />
                     ) : (
-                      <AccessDenied customStyle={{ fontSize: 16 }} />
+                      <AccessDenied
+                        customStyle={{ fontSize: 16 }}
+                        altMessage="Access Denied"
+                        image="./assets/access-denied.png"
+                        heading="Access Denied"
+                        description="Sorry, you are not allowed to view this page."
+                      />
                     )}
                   </div>
                 </div>

@@ -91,7 +91,7 @@ const Roles: React.FC = () => {
   if (!isViewRolesVerified && !loading)
     return (
       <div className="table-component">
-        <AccessDenied />
+        <AccessDenied altMessage="Access Denied" image="./assets/access-denied.png" heading="Access Denied" description="Sorry, you are not allowed to view this page." />
       </div>
     );
   return (

@@ -283,7 +283,7 @@ const TableList: FC<TableProps> = ({
           />
         </>
       ) : (
-        <AccessDenied />
+        <AccessDenied altMessage="Access Denied" image="./assets/access-denied.png" heading="Access Denied" description="Sorry, you are not allowed to view this page." />
       )}
     </div>
   );

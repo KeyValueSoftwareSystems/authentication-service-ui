@@ -14,6 +14,7 @@ import {
   UPDATE_GROUP_ROLES,
 } from "../../services/mutations";
 import {
+  IsViewPermissionsVerifiedAtom,
   IsViewRolesVerifiedAtom,
   IsViewUsersVerifiedAtom,
 } from "states/permissionsStates";
@@ -71,6 +72,7 @@ const CreateOrEditGroup = () => {
   const setToastMessage = useSetRecoilState(toastMessageAtom);
   const usersResponse = useRecoilValue(allUsersAtom);
   const [isViewRolesVerified] = useRecoilState(IsViewRolesVerifiedAtom);
+  const [isViewPermissionsVerified] = useRecoilState(IsViewPermissionsVerifiedAtom);
   const [isViewUsersVerified] = useRecoilState(IsViewUsersVerifiedAtom);
 
   const [value, setValue] = useState(0);
@@ -329,7 +331,7 @@ const CreateOrEditGroup = () => {
                   onChange={onChange}
                 />
               ) : (
-                <AccessDenied customStyle={{ fontSize: 16 }} />
+                <AccessDenied customStyle={{ fontSize: 16 }} altMessage="Access Denied" image="./assets/access-denied.png" heading="Access Denied" description="Sorry, you are not allowed to view this page." />
               )}
             </div>
           </TabPanel>
@@ -337,11 +339,15 @@ const CreateOrEditGroup = () => {
           <CircularProgress />
         )}
         <TabPanel value={value} index={1}>
-          <PermissionCards
-            userSelectedPermissions={userSelectedPermissions}
-            roles={roles}
-            setUserSelectedPermissions={setUserSelectedPermissions}
-          />
+          {isViewRolesVerified ? (
+                <PermissionCards
+                userSelectedPermissions={userSelectedPermissions}
+                roles={roles}
+                setUserSelectedPermissions={setUserSelectedPermissions}
+              />
+              ) : (
+                <AccessDenied customStyle={{ fontSize: 16 }} altMessage="Access Denied" image="./assets/access-denied.png" heading="Access Denied" description="Sorry, you are not allowed to view this page." />
+              )}
         </TabPanel>
         <TabPanel value={value} index={2}>
           <div className="add-members">
@@ -387,7 +393,7 @@ const CreateOrEditGroup = () => {
                 </Grid>
               </Grid>
             ) : (
-              <AccessDenied customStyle={{ fontSize: 16 }} />
+              <AccessDenied customStyle={{ fontSize: 16 }} altMessage="Access Denied" image="./assets/access-denied.png" heading="Access Denied" description="Sorry, you are not allowed to view this page." />
             )}
           </div>
         </TabPanel>
