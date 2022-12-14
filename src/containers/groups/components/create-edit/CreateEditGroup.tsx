@@ -43,10 +43,11 @@ interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
   value: number;
+  style?: any;
 }
 
 function TabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props;
+  const { children, value, index, style = {}, ...other } = props;
 
   return (
     <div
@@ -54,6 +55,7 @@ function TabPanel(props: TabPanelProps) {
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
+      style={style}
       {...other}
     >
       {value === index && (
@@ -72,7 +74,9 @@ const CreateOrEditGroup = () => {
   const setToastMessage = useSetRecoilState(toastMessageAtom);
   const usersResponse = useRecoilValue(allUsersAtom);
   const [isViewRolesVerified] = useRecoilState(IsViewRolesVerifiedAtom);
-  const [isViewPermissionsVerified] = useRecoilState(IsViewPermissionsVerifiedAtom);
+  const [isViewPermissionsVerified] = useRecoilState(
+    IsViewPermissionsVerifiedAtom
+  );
   const [isViewUsersVerified] = useRecoilState(IsViewUsersVerifiedAtom);
 
   const [value, setValue] = useState(0);
@@ -322,7 +326,11 @@ const CreateOrEditGroup = () => {
           </Tabs>
         </Box>
         {!rolesLoading ? (
-          <TabPanel value={value} index={0}>
+          <TabPanel
+            value={value}
+            index={0}
+            style={{ height: "120%", overflowY: "scroll" }}
+          >
             <div className="roles-checklist">
               {isViewRolesVerified ? (
                 <RoleCardsChecklist
@@ -331,7 +339,13 @@ const CreateOrEditGroup = () => {
                   onChange={onChange}
                 />
               ) : (
-                <AccessDenied customStyle={{ fontSize: 16 }} altMessage="Access Denied" image="./assets/access-denied.png" heading="Access Denied" description="Sorry, you are not allowed to view this page." />
+                <AccessDenied
+                  customStyle={{ fontSize: 16 }}
+                  altMessage="Access Denied"
+                  image="./assets/access-denied.png"
+                  heading="Access Denied"
+                  description="Sorry, you are not allowed to view this page."
+                />
               )}
             </div>
           </TabPanel>
@@ -340,14 +354,20 @@ const CreateOrEditGroup = () => {
         )}
         <TabPanel value={value} index={1}>
           {isViewRolesVerified ? (
-                <PermissionCards
-                userSelectedPermissions={userSelectedPermissions}
-                roles={roles}
-                setUserSelectedPermissions={setUserSelectedPermissions}
-              />
-              ) : (
-                <AccessDenied customStyle={{ fontSize: 16 }} altMessage="Access Denied" image="./assets/access-denied.png" heading="Access Denied" description="Sorry, you are not allowed to view this page." />
-              )}
+            <PermissionCards
+              userSelectedPermissions={userSelectedPermissions}
+              roles={roles}
+              setUserSelectedPermissions={setUserSelectedPermissions}
+            />
+          ) : (
+            <AccessDenied
+              customStyle={{ fontSize: 16 }}
+              altMessage="Access Denied"
+              image="./assets/access-denied.png"
+              heading="Access Denied"
+              description="Sorry, you are not allowed to view this page."
+            />
+          )}
         </TabPanel>
         <TabPanel value={value} index={2}>
           <div className="add-members">
@@ -393,7 +413,13 @@ const CreateOrEditGroup = () => {
                 </Grid>
               </Grid>
             ) : (
-              <AccessDenied customStyle={{ fontSize: 16 }} altMessage="Access Denied" image="./assets/access-denied.png" heading="Access Denied" description="Sorry, you are not allowed to view this page." />
+              <AccessDenied
+                customStyle={{ fontSize: 16 }}
+                altMessage="Access Denied"
+                image="./assets/access-denied.png"
+                heading="Access Denied"
+                description="Sorry, you are not allowed to view this page."
+              />
             )}
           </div>
         </TabPanel>
