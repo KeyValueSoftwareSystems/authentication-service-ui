@@ -18,7 +18,7 @@ import {
   IsViewRolesVerifiedAtom,
   IsViewUsersVerifiedAtom,
 } from "states/permissionsStates";
-import AccessDenied from "components/access-denied";
+import DisplayMessage from "components/display-message";
 import "./styles.css";
 import GroupForm from "./GroupForm";
 import { GET_GROUP, GET_GROUP_PERMISSIONS } from "../../services/queries";
@@ -339,7 +339,7 @@ const CreateOrEditGroup = () => {
                   onChange={onChange}
                 />
               ) : (
-                <AccessDenied
+                <DisplayMessage
                   customStyle={{ fontSize: 16 }}
                   altMessage="Access Denied"
                   image="./assets/access-denied.png"
@@ -360,7 +360,7 @@ const CreateOrEditGroup = () => {
               setUserSelectedPermissions={setUserSelectedPermissions}
             />
           ) : (
-            <AccessDenied
+            <DisplayMessage
               customStyle={{ fontSize: 16 }}
               altMessage="Access Denied"
               image="./assets/access-denied.png"
@@ -413,7 +413,7 @@ const CreateOrEditGroup = () => {
                 </Grid>
               </Grid>
             ) : (
-              <AccessDenied
+              <DisplayMessage
                 customStyle={{ fontSize: 16 }}
                 altMessage="Access Denied"
                 image="./assets/access-denied.png"

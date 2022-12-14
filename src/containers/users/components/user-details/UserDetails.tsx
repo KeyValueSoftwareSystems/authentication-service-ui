@@ -17,7 +17,7 @@ import PermissionCards from "components/permission-cards/PermissionCards";
 import { UPDATE_USER_PERMISSION } from "constants/permissions";
 import { useCustomQuery } from "hooks/useQuery";
 import If from "components/If/If";
-import AccessDenied from "components/access-denied";
+import DisplayMessage from "components/display-message";
 
 const UserDetails = () => {
   const navigate = useNavigate();
@@ -141,7 +141,7 @@ const UserDetails = () => {
                 </div>
               </div>
             ) : (
-              <AccessDenied
+              <DisplayMessage
                 customStyle={{ fontSize: 16 }}
                 altMessage="No groups to show"
                 image="./assets/nothing-to-show.png"
@@ -153,7 +153,10 @@ const UserDetails = () => {
             )}
           </TabPanel>
           <TabPanel value={value} index={1}>
-            {user?.permissions && (user?.permissions).length > 0 ?<PermissionCards userPermissions={user?.permissions} isViewPage />:<AccessDenied
+            {user?.permissions && (user?.permissions).length > 0 ? (
+              <PermissionCards userPermissions={user?.permissions} isViewPage />
+            ) : (
+              <DisplayMessage
                 customStyle={{ fontSize: 16 }}
                 altMessage="No permissions to show"
                 image="./assets/nothing-to-show.png"
@@ -161,7 +164,8 @@ const UserDetails = () => {
                 description="Sorry, there are no permissions associated with this user."
                 imageStyles={{ width: "27%" }}
                 containerStyles={{ marginTop: "83px" }}
-              />}
+              />
+            )}
           </TabPanel>
         </Box>
       </div>
