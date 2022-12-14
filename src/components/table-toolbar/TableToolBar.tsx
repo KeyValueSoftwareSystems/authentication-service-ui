@@ -255,7 +255,9 @@ const TableToolBar: FC<TableToolBarProps> = ({
                 {statusList.map((status: string, index: number) => (
                   <FormControlLabel
                     key={`${index}_${status}`}
-                    label={status}
+                    label={status[0].concat(
+                      status.slice(1, status.length).toLowerCase()
+                    )}
                     name={status}
                     control={
                       <Checkbox

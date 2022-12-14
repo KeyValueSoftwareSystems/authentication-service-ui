@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { GridColumns, GridRowId } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -21,6 +21,7 @@ import {
 } from "constants/permissions";
 import AccessDenied from "components/access-denied";
 import { useCustomQuery } from "hooks/useQuery";
+import { searchAtom } from "states/searchSortFilterStates";
 
 const Roles: React.FC = () => {
   const navigate = useNavigate();
@@ -28,7 +29,7 @@ const Roles: React.FC = () => {
   const [isAddVerified, setAddVerified] = React.useState(false);
   const [isViewRolesVerified] = useRecoilState(IsViewRolesVerifiedAtom);
   const [userPermissions] = useRecoilState(UserPermissionsAtom);
-
+  const setSearchValue = useSetRecoilState(searchAtom);
   const [roleList, setRoleList] = useRecoilState(RolesListAtom);
 
   const onGetRolesComplete = (data: any) => {
@@ -81,10 +82,12 @@ const Roles: React.FC = () => {
   ];
 
   const onAddRole = () => {
+    setSearchValue("");
     navigate("add");
   };
 
   const onEditRole = (id: GridRowId) => {
+    setSearchValue("");
     navigate(`edit/${id}`);
   };
 

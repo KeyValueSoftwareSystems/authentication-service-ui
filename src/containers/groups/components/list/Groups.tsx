@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { GridColumns, GridRowId } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -22,6 +22,7 @@ import {
 } from "constants/permissions";
 import { useCustomQuery } from "hooks/useQuery";
 import AccessDenied from "components/access-denied";
+import { searchAtom } from "states/searchSortFilterStates";
 
 const GroupList: React.FC = () => {
   const navigate = useNavigate();
@@ -30,6 +31,7 @@ const GroupList: React.FC = () => {
   const [isViewGroupsVerified] = useRecoilState(IsViewGroupsVerifiedAtom);
   const [userPermissions] = useRecoilState(UserPermissionsAtom);
   const [groupList, setGroupList] = useRecoilState(groupListAtom);
+  const setSearchValue = useSetRecoilState(searchAtom);
 
   const onGetGroupsComplete = (data: any) => {
     setGroupList(data?.getGroups);
@@ -84,10 +86,12 @@ const GroupList: React.FC = () => {
   ];
 
   const onAddGroup = () => {
+    setSearchValue("");
     navigate("add");
   };
 
   const onEditGroup = (id: GridRowId) => {
+    setSearchValue("");
     navigate(`edit/${id}`);
   };
 

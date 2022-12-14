@@ -30,12 +30,14 @@ import {
 import { useCustomQuery } from "hooks/useQuery";
 import { useCustomMutation } from "hooks/useMutation";
 import AccessDenied from "components/access-denied";
+import { searchAtom } from "states/searchSortFilterStates";
 
 const Users: React.FC = () => {
   const [isAddVerified, setAddVerified] = React.useState(false);
   const [isViewUsersVerified] = useRecoilState(IsViewUsersVerifiedAtom);
   const [userPermissions] = useRecoilState(UserPermissionsAtom);
   const [userList, setUserList] = useRecoilState(userListAtom);
+  const setSearchValue = useSetRecoilState(searchAtom);
   const navigate = useNavigate();
   const setUsers = useSetRecoilState(allUsersAtom);
   const onComplete = (data: any) => {
@@ -51,10 +53,12 @@ const Users: React.FC = () => {
   );
 
   const onEdit = (id: any) => {
+    setSearchValue("");
     navigate(`/home/users/add/${id}`);
   };
 
   const onAdd = () => {
+    setSearchValue("");
     navigate(`/home/users/add`);
   };
 
@@ -118,6 +122,7 @@ const Users: React.FC = () => {
   ];
 
   const onUserClick = (params: any) => {
+    setSearchValue("");
     navigate(`./${params.id}`);
   };
   if (!isViewUsersVerified && !loading)
