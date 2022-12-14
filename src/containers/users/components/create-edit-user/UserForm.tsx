@@ -3,7 +3,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useForm, FormProvider, FieldValues } from "react-hook-form";
 import { Box, Tab, Tabs, Typography } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useSetRecoilState } from "recoil";
 import CircularProgress from "@mui/material/CircularProgress";
 
 import { GET_GROUPS } from "../../../groups/services/queries";
@@ -14,7 +13,6 @@ import { Permission, User } from "types/user";
 import "./styles.css";
 import { AddUserformSchema, EditUserformSchema } from "../../userSchema";
 import PermissionCards from "components/permission-cards/PermissionCards";
-import { apiRequestAtom, toastMessageAtom } from "states/apiRequestState";
 import BottomFormController from "components/bottom-form-controller";
 import { useCustomQuery } from "hooks/useQuery";
 import { Group } from "types/group";
@@ -72,8 +70,6 @@ const UserForm = (props: UserProps) => {
   const [userSelectedPermissions, setUserSelectedPermissions] = useState<
     Permission[]
   >([]);
-  const setToastMessage = useSetRecoilState(toastMessageAtom);
-  const setApiSuccess = useSetRecoilState(apiRequestAtom);
 
   const onGetGroupsComplete = (data: any) => {
     const groups = data?.getGroups.map((group: Group) => group);

@@ -35,6 +35,9 @@ const Users: React.FC = () => {
   const [userPermissions] = useRecoilState(UserPermissionsAtom);
   const [userList, setUserList] = useRecoilState(userListAtom);
   const navigate = useNavigate();
+  useEffect(() => {
+    console.log(userList);
+  }, [userList]);
 
   const onComplete = (data: any) => {
     setUserList(data?.getUsers);
