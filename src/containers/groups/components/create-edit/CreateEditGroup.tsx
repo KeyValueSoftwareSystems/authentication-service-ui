@@ -355,6 +355,8 @@ const CreateOrEditGroup = () => {
                   image="./assets/access-denied.png"
                   heading="Access Denied"
                   description="Sorry, you are not allowed to view this page."
+                  // className="access-denied-mini"
+                  containerStyles={{ marginTop: "50px", marginLeft: "15px" }}
                 />
               )}
             </div>
@@ -376,6 +378,7 @@ const CreateOrEditGroup = () => {
               image="./assets/access-denied.png"
               heading="Access Denied"
               description="Sorry, you are not allowed to view this page."
+              className="access-denied-mini"
             />
           )}
         </TabPanel>
@@ -429,6 +432,7 @@ const CreateOrEditGroup = () => {
                 image="./assets/access-denied.png"
                 heading="Access Denied"
                 description="Sorry, you are not allowed to view this page."
+                className="access-denied-mini"
               />
             )}
           </div>

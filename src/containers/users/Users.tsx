@@ -136,7 +136,7 @@ const Users: React.FC = () => {
   };
   if (!isViewUsersVerified)
     return (
-      <div className="table-component">
+      <div className="denied-table-component">
         <DisplayMessage
           altMessage="Access Denied"
           image="./assets/access-denied.png"

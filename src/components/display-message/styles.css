@@ -6,7 +6,6 @@
   justify-content: center;
 }
 
-
 #display-message-heading {
   font-size: 22px;
   letter-spacing: 1px;
@@ -36,4 +35,13 @@
   .display-message {
     align-items: normal;
   }
+}
+
+.access-denied-mini {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 70px;
 }

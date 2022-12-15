@@ -3,6 +3,12 @@
   background-color: white;
 }
 
+.denied-table-component {
+  height: 96.5%;
+  background-color: white;
+  border-radius: 6px;
+}
+
 .table-list-header {
   font-size: 16px;
   font-weight: bolder !important;

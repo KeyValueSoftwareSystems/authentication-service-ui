@@ -67,7 +67,6 @@ const TableToolBar: FC<TableToolBarProps> = ({
   });
   useEffect(() => {
     fetchUsers();
-    console.log(count)
   }, [count]);
 
   const onSort = () => {

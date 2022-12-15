@@ -3,7 +3,7 @@ import { Box, Button, Divider, Tab, Tabs, Chip } from "@mui/material";
 import "./styles.css";
 import { useState, useEffect } from "react";
 import GroupCard from "components/group-card/GroupCard";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import {
   IsViewEntitiesVerifiedAtom,
   IsViewGroupsVerifiedAtom,
@@ -22,6 +22,12 @@ import { UPDATE_USER_PERMISSION } from "constants/permissions";
 import If from "components/If/If";
 import DisplayMessage from "components/display-message";
 import { useCustomQuery } from "hooks/useQuery";
+import {
+  groupFilterAtom,
+  searchAtom,
+  sortCountAtom,
+  statusFilterAtom,
+} from "states/searchSortFilterStates";
 
 const UserDetails = () => {
   const navigate = useNavigate();
@@ -30,10 +36,18 @@ const UserDetails = () => {
   const [isViewGroupsVerified] = useRecoilState(IsViewGroupsVerifiedAtom);
   const [isViewEntitiesVerified] = useRecoilState(IsViewEntitiesVerifiedAtom);
   const [userPermissions] = useRecoilState(UserPermissionsAtom);
+  const setCheckedStatus = useSetRecoilState(statusFilterAtom);
+  const setCheckedGroups = useSetRecoilState(groupFilterAtom);
+  const setCount = useSetRecoilState(sortCountAtom);
+  const setSearchValue = useSetRecoilState(searchAtom);
 
   const [user, setUser] = useState<User>();
   const [value, setValue] = useState(0);
   const onBackNavigation = (e: React.MouseEvent<HTMLElement>) => {
+    setCheckedGroups([]);
+    setCheckedStatus([]);
+    setCount(0);
+    setSearchValue("");
     navigate(-1);
   };
   const onRedirectToEdit = (e: React.MouseEvent<HTMLElement>) => {
@@ -158,6 +172,8 @@ const UserDetails = () => {
                   image="./assets/access-denied.png"
                   heading="Access Denied"
                   description="Sorry, you are not allowed to view this page."
+                  imageStyles={{ width: "33%" }}
+                  className="access-denied-mini"
                 />
               )
             ) : (
@@ -165,27 +181,34 @@ const UserDetails = () => {
             )}
           </TabPanel>
           <TabPanel value={value} index={1}>
-            {isViewEntitiesVerified?
-            (user?.permissions && (user?.permissions).length > 0 ? (
-              <PermissionCards userPermissions={user?.permissions} isViewPage />
+            {isViewEntitiesVerified ? (
+              user?.permissions && (user?.permissions).length > 0 ? (
+                <PermissionCards
+                  userPermissions={user?.permissions}
+                  isViewPage
+                />
+              ) : (
+                <DisplayMessage
+                  customStyle={{ fontSize: 16 }}
+                  altMessage="No permissions to show"
+                  image="./assets/no-permissions.png"
+                  heading="No Permissions to Show"
+                  description="Sorry, there are no permissions associated with this user."
+                  imageStyles={{ width: "17%" }}
+                  containerStyles={{ marginTop: "83px" }}
+                />
+              )
             ) : (
               <DisplayMessage
                 customStyle={{ fontSize: 16 }}
-                altMessage="No permissions to show"
-                image="./assets/no-permissions.png"
-                heading="No Permissions to Show"
-                description="Sorry, there are no permissions associated with this user."
-                imageStyles={{ width: "17%" }}
-                containerStyles={{ marginTop: "83px" }}
+                altMessage="Access Denied"
+                image="./assets/access-denied.png"
+                heading="Access Denied"
+                description="Sorry, you are not allowed to view this page."
+                imageStyles={{ width: "33%" }}
+                className="access-denied-mini"
               />
-            )):(
-              <DisplayMessage
-              customStyle={{ fontSize: 16 }}
-              altMessage="Access Denied"
-              image="./assets/access-denied.png"
-              heading="Access Denied"
-              description="Sorry, you are not allowed to view this page."
-            />)}
+            )}
           </TabPanel>
         </Box>
       </div>

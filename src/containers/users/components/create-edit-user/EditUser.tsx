@@ -17,12 +17,22 @@ import { apiRequestAtom, toastMessageAtom } from "states/apiRequestState";
 import { USER_UPDATE_SUCCESS_MESSAGE } from "constants/messages";
 import { Group } from "types/group";
 import { useCustomMutation } from "hooks/useMutation";
+import {
+  statusFilterAtom,
+  groupFilterAtom,
+  sortCountAtom,
+  searchAtom,
+} from "states/searchSortFilterStates";
 
 const EditUser: React.FC = () => {
   const { id } = useParams();
   const setApiSuccess = useSetRecoilState(apiRequestAtom);
   const setToastMessage = useSetRecoilState(toastMessageAtom);
   const setUserPermissions = useSetRecoilState(UserPermissionsAtom);
+  const setCheckedStatus = useSetRecoilState(statusFilterAtom);
+  const setCheckedGroups = useSetRecoilState(groupFilterAtom);
+  const setCount = useSetRecoilState(sortCountAtom);
+  const setSearchValue = useSetRecoilState(searchAtom);
   const [currentUserDetails, setCurrentUserDetails] =
     useRecoilState(currentUserAtom);
 
@@ -84,6 +94,10 @@ const EditUser: React.FC = () => {
       },
       onCompleted: () => {
         if (!userUpdateError && !groupUpdateError && !permissionUpdateError) {
+          setCheckedGroups([]);
+          setCheckedStatus([]);
+          setCount(0);
+          setSearchValue("");
           navigate("/home/users");
           setApiSuccess(true);
           setToastMessage(USER_UPDATE_SUCCESS_MESSAGE);
