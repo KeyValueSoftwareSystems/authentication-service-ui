@@ -57,8 +57,8 @@ const TableList: FC<TableProps> = ({
   handleRowClick,
   entity,
 }) => {
-  const [isEditVerified, setEditVerified] = React.useState(true);
-  const [isDeleteVerified, setDeleteVerified] = React.useState(true);
+  const [isEditVerified, setEditVerified] = React.useState(false);
+  const [isDeleteVerified, setDeleteVerified] = React.useState(false);
   const setApiSuccess = useSetRecoilState(apiRequestAtom);
   const setToastMessage = useSetRecoilState(toastMessageAtom);
   const [userPermissions] = useRecoilState(UserPermissionsAtom);

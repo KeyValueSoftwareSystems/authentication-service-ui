@@ -19,7 +19,7 @@ export const RolePermissionsAtom = atom<Permission[]>({
   default: [],
 });
 
-export const UserPermissionsAtom = atom<userPermission[]>({
+export const UserPermissionsAtom = atom<Permission[]>({
   key: "UserPermissions",
   default: [],
   effects_UNSTABLE: [persistAtom],

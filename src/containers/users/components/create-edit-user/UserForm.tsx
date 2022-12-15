@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 
 import { useForm, FormProvider, FieldValues } from "react-hook-form";
 import { Box, Tab, Tabs, Typography } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
 import CircularProgress from "@mui/material/CircularProgress";
-import { IsViewGroupsVerifiedAtom } from "states/permissionsStates";
+import {
+  IsViewGroupsVerifiedAtom,
+  UserPermissionsAtom,
+} from "states/permissionsStates";
 import { GET_GROUPS } from "../../../groups/services/queries";
 import FormInputText from "components/inputText";
 import { ChecklistComponent } from "components/checklist/CheckList";
@@ -19,6 +22,8 @@ import BottomFormController from "components/bottom-form-controller";
 import { useCustomQuery } from "hooks/useQuery";
 import { Group } from "types/group";
 import DisplayMessage from "components/display-message";
+import { currentUserAtom } from "states/loginStates";
+import { groupFilterAtom, searchAtom, sortCountAtom, statusFilterAtom } from "states/searchSortFilterStates";
 
 interface UserProps {
   isEdit?: boolean;
@@ -71,6 +76,13 @@ const UserForm = (props: UserProps) => {
   const [userGroups, setUserGroups] = useState<Group[]>([]);
   const [allGroups, setAllGroups] = useState<Group[]>([]);
   const [isViewGroupsVerified] = useRecoilState(IsViewGroupsVerifiedAtom);
+  const [currentUserDetails] = useRecoilState(currentUserAtom);
+  const setCurrentUserPermissions =
+    useSetRecoilState(UserPermissionsAtom);
+    const setCheckedStatus = useSetRecoilState(statusFilterAtom);
+  const setCheckedGroups = useSetRecoilState(groupFilterAtom);
+  const setCount = useSetRecoilState(sortCountAtom);
+  const setSearchValue = useSetRecoilState(searchAtom);
 
   const [userSelectedPermissions, setUserSelectedPermissions] = useState<
     Permission[]
@@ -117,8 +129,12 @@ const UserForm = (props: UserProps) => {
   const { handleSubmit } = methods;
 
   const onSubmitForm = (inputs: FieldValues) => {
-    if (updateUser) updateUser(inputs, userGroups, userSelectedPermissions);
-    else if (createUser)
+    if (updateUser) {
+      updateUser(inputs, userGroups, userSelectedPermissions);
+      if (user?.id === currentUserDetails.id) {
+        setCurrentUserPermissions(userSelectedPermissions);
+      }
+    } else if (createUser)
       createUser(inputs, userGroups, userSelectedPermissions);
   };
 
@@ -150,6 +166,10 @@ const UserForm = (props: UserProps) => {
   };
 
   const onBackNavigation = () => {
+    setCheckedGroups([]);
+    setCheckedStatus([]);
+    setCount(0);
+    setSearchValue("");
     navigate("/home/users");
   };
 

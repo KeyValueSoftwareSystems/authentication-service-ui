@@ -56,7 +56,7 @@ const Login: React.FC = () => {
       navigate("/home/users");
     } // eslint-disable-next-line
   }, [data]);
-
+  
   useEffect(() => {
     if (passwordCreatedData) navigate("/"); // eslint-disable-next-line
   }, [passwordCreatedData]);

@@ -22,6 +22,7 @@ import {
 } from "constants/messages";
 import { useCustomQuery } from "hooks/useQuery";
 import { useCustomMutation } from "hooks/useMutation";
+import { groupFilterAtom, searchAtom, sortCountAtom, statusFilterAtom } from "states/searchSortFilterStates";
 
 const CreateOrEditRole = () => {
   const { id } = useParams();
@@ -30,6 +31,10 @@ const CreateOrEditRole = () => {
   const setToastMessage = useSetRecoilState(toastMessageAtom);
   const [role, setRole] = useState<Role>();
   const [rolePermissions, setRolePermissions] = useState<Permission[]>([]);
+  const setCheckedStatus = useSetRecoilState(statusFilterAtom);
+  const setCheckedGroups = useSetRecoilState(groupFilterAtom);
+  const setCount = useSetRecoilState(sortCountAtom);
+  const setSearchValue = useSetRecoilState(searchAtom);
 
   const [createRole, { data: createdRoleData }] =
     useCustomMutation(CREATE_ROLE);
@@ -72,6 +77,10 @@ const CreateOrEditRole = () => {
 
   useEffect(() => {
     if (updatedRoleData && updatedRolePermissionsData) {
+      setCheckedGroups([]);
+      setCheckedStatus([]);
+      setCount(0);
+      setSearchValue("");
       navigate("/home/roles");
       setToastMessage(ROLE_UPDATE_SUCCESS_MESSAGE);
       setApiSuccess(true);
