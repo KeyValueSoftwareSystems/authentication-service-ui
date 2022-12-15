@@ -86,7 +86,7 @@ const TableToolBar: FC<TableToolBarProps> = ({
           onClick={onSort}
         >
           <SortIcon id={count > 0 ? "sort-icon-enabled" : "sort-filter-icon"} />
-          Sort by
+          Sort by Name
         </div>
 
         {field === "firstName" && (

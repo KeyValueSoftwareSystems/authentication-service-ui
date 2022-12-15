@@ -43,7 +43,7 @@
   border-radius: 26px;
   cursor: pointer;
   margin-right: 18px;
-  width: 110px;
+  width: 152px;
 }
 
 .search-sort-filter {
@@ -52,6 +52,10 @@
 }
 
 #sort-filter-icon {
+  margin-right: 6px;
+}
+
+#sort-icon-enabled {
   margin-right: 6px;
 }
 
@@ -64,7 +68,7 @@
   border-radius: 26px;
   cursor: pointer;
   margin-right: 18px;
-  width: 110px;
+  width: 152px;
   border: 1px solid #2653f1;
 }
 
