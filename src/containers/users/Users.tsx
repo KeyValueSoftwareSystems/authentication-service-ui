@@ -30,12 +30,21 @@ import {
 import { useCustomQuery } from "hooks/useQuery";
 import { useCustomMutation } from "hooks/useMutation";
 import DisplayMessage from "components/display-message";
+import {
+  groupFilterAtom,
+  statusFilterAtom,
+} from "states/searchSortFilterStates";
+import { groupListAtom } from "states/groupStates";
 
 const Users: React.FC = () => {
   const [isAddVerified, setAddVerified] = React.useState(false);
   const [isViewUsersVerified] = useRecoilState(IsViewUsersVerifiedAtom);
   const [userPermissions] = useRecoilState(UserPermissionsAtom);
   const [userList, setUserList] = useRecoilState(userListAtom);
+  const [checkedStatus, setCheckedStatus] = useRecoilState(statusFilterAtom);
+  const [checkedGroups, setCheckedGroups] = useRecoilState(groupFilterAtom);
+  const statusList = ["ACTIVE", "INACTIVE", "INVITED"];
+  const [groupList] = useRecoilState(groupListAtom);
   const navigate = useNavigate();
   const setUsers = useSetRecoilState(allUsersAtom);
   const onComplete = (data: any) => {
@@ -155,6 +164,13 @@ const Users: React.FC = () => {
           actionFlex={0.23}
           cursorType="pointer"
           field="firstName"
+          filterList={[statusList, groupList]}
+          firstFilter={checkedStatus}
+          setFirstFilter={setCheckedStatus}
+          secondFilter={checkedGroups}
+          setSecondFilter={setCheckedGroups}
+          firstFilterName="Status"
+          secondFilterName="Groups"
         />
       ) : (
         <CircularProgress />
