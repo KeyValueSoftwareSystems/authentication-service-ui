@@ -81,8 +81,11 @@ const TableToolBar: FC<TableToolBarProps> = ({
           setItemList={setItemList}
           searchQuery={searchQuery}
         />
-        <div className="sort-button" onClick={onSort}>
-          <SortIcon id="sort-filter-icon" />
+        <div
+          className={count > 0 ? "sort-button-enabled" : "sort-button"}
+          onClick={onSort}
+        >
+          <SortIcon id={count > 0 ? "sort-icon-enabled" : "sort-filter-icon"} />
           Sort by
         </div>
 
@@ -123,22 +126,24 @@ const TableToolBar: FC<TableToolBarProps> = ({
           </Button>
         </div>
       )}
-      <FilterDropdown
-        field={field}
-        searchQuery={searchQuery}
-        setItemList={setItemList}
-        filterList={filterList}
-        firstFilter={firstFilter}
-        secondFilter={secondFilter}
-        setFirstFilter={setFirstFilter}
-        setSecondFilter={setSecondFilter}
-        open={open}
-        anchorEl={anchorEl}
-        onApply={onApply}
-        firstFilterName={firstFilterName as unknown as string}
-        secondFilterName={secondFilterName as unknown as string}
-        currentFilters={[currentFirstFilter, currentSecondFilter]}
-      />
+      {filterList && (
+        <FilterDropdown
+          field={field}
+          searchQuery={searchQuery}
+          setItemList={setItemList}
+          filterList={filterList}
+          firstFilter={firstFilter}
+          secondFilter={secondFilter}
+          setFirstFilter={setFirstFilter}
+          setSecondFilter={setSecondFilter}
+          open={open}
+          anchorEl={anchorEl}
+          onApply={onApply}
+          firstFilterName={firstFilterName as unknown as string}
+          secondFilterName={secondFilterName as unknown as string}
+          currentFilters={[currentFirstFilter, currentSecondFilter]}
+        />
+      )}
     </div>
   );
 };

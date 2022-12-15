@@ -59,31 +59,6 @@
   padding: 13px 17px 13px 17px;
 }
 
-.filter-button {
-  background-color: white;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 26px;
-  cursor: pointer;
-  margin-right: 18px;
-  min-width: 125px;
-}
-
-.filter-count {
-  background-color: white;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 26px;
-  cursor: pointer;
-  margin-right: 18px;
-  width: 157px;
-  border: 1px solid #2653f1;
-}
-
 #clear-all {
   color: #f64040;
   margin-right: -6px;
