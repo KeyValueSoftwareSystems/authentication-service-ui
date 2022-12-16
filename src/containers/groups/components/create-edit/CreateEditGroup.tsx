@@ -26,7 +26,6 @@ import { Role } from "types/role";
 import PermissionCards from "components/permission-cards/PermissionCards";
 import { Permission, User } from "types/user";
 import { Group } from "types/group";
-import { allUsersAtom } from "states/userStates";
 import { apiRequestAtom, toastMessageAtom } from "states/apiRequestState";
 import {
   GROUP_CREATE_SUCCESS_MESSAGE,
@@ -39,6 +38,7 @@ import { CustomAvatar } from "components/custom-avatar/CustomAvatar";
 import { ReactComponent as CrossIcon } from "assets/cross-icon.svg";
 import { useCustomQuery } from "hooks/useQuery";
 import { useCustomMutation } from "hooks/useMutation";
+import { useLazyQuery } from "@apollo/client";
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
@@ -72,7 +72,6 @@ const CreateOrEditGroup = () => {
   const navigate = useNavigate();
   const setApiSuccess = useSetRecoilState(apiRequestAtom);
   const setToastMessage = useSetRecoilState(toastMessageAtom);
-  const usersResponse = useRecoilValue(allUsersAtom);
   const [isViewRolesVerified] = useRecoilState(IsViewRolesVerifiedAtom);
   const [isViewPermissionsVerified] = useRecoilState(
     IsViewPermissionsVerifiedAtom
@@ -82,7 +81,7 @@ const CreateOrEditGroup = () => {
   const [value, setValue] = useState(0);
   const [group, setGroup] = useState<Group>();
   const [roles, setRoles] = useState<Role[]>([]);
-  const [allUsers, setAllUsers] = useState<User[]>(usersResponse);
+  const [allUsers, setAllUsers] = useState<User[]>([]);
 
   const [users, setUsers] = useState<User[]>([]);
 
@@ -92,9 +91,6 @@ const CreateOrEditGroup = () => {
     Permission[]
   >([]);
 
-  useEffect(() => {
-    setAllUsers(usersResponse);
-  }, [usersResponse]);
   const [updateGroup, { data: updatedGroupData }] =
     useCustomMutation(UPDATE_GROUP);
   const [createGroup, { data: createdGroupData }] =
@@ -142,6 +138,17 @@ const CreateOrEditGroup = () => {
     { id },
     !id
   );
+
+  const onGetUsersComplete = (data: any) => {
+    setAllUsers(data?.getUsers?.results);
+  };
+
+  const [getUsers] = useLazyQuery(GET_USERS, {
+    onCompleted: (data) => {
+      onGetUsersComplete(data);
+    },
+    fetchPolicy: "network-only",
+  });
 
   const removeItem = ({
     roleId,
@@ -292,6 +299,12 @@ const CreateOrEditGroup = () => {
       },
     });
   };
+
+  useEffect(() => {
+    if (isViewUsersVerified) {
+      getUsers();
+    }
+  }, [isViewUsersVerified]);
 
   return (
     <div className="access-settings">
