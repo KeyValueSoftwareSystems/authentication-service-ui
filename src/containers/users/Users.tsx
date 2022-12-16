@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { Avatar, Chip } from "@mui/material";
 import { GridColumns } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
@@ -17,7 +17,6 @@ import TableList from "components/table/Table";
 import TableChipElement from "components/table-chip-element";
 import { stringAvatar } from "utils/table";
 import "./components/create-edit-user/styles.css";
-import { allUsersAtom } from "states/userStates";
 import {
   IsViewUsersVerifiedAtom,
   UserPermissionsAtom,
@@ -47,11 +46,9 @@ const Users: React.FC = () => {
   const statusList = ["ACTIVE", "INACTIVE", "INVITED"];
   const [groupList] = useRecoilState(groupListAtom);
   const navigate = useNavigate();
-  const setUsers = useSetRecoilState(allUsersAtom);
 
   const onComplete = (data: any) => {
     setUserList(data?.getUsers?.results);
-    setUsers(data?.getUsers?.results);
     setUsersCount(data?.getUsers?.totalCount);
   };
 
