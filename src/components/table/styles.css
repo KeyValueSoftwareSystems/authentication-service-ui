@@ -84,6 +84,12 @@
   width: 76px;
 }
 
+#go-button:hover {
+  background-color: #2f6fed;
+  color: white;
+  box-shadow: 2px 2px 0px rgb(0 0 0 / 14%);
+}
+
 .MuiDataGrid-cell:focus {
   outline: none !important;
 }

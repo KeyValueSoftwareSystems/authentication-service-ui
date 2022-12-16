@@ -10,6 +10,13 @@ import FormInputText from "components/inputText";
 import { Role } from "types/role";
 import { GET_ROLE } from "../../services/queries";
 import { useCustomQuery } from "hooks/useQuery";
+import { useSetRecoilState } from "recoil";
+import {
+  statusFilterAtom,
+  groupFilterAtom,
+  sortCountAtom,
+  searchAtom,
+} from "states/searchSortFilterStates";
 
 interface RoleFormProps {
   name: string;
@@ -21,6 +28,10 @@ const RoleForm: FC<RoleFormProps> = ({ name, createRole, editRole }) => {
   const navigate = useNavigate();
 
   const { id } = useParams();
+  const setCheckedStatus = useSetRecoilState(statusFilterAtom);
+  const setCheckedGroups = useSetRecoilState(groupFilterAtom);
+  const setCount = useSetRecoilState(sortCountAtom);
+  const setSearchValue = useSetRecoilState(searchAtom);
   const [role, setRole] = useState<Role>();
 
   const onGetRoleComplete = (data: any) => {
@@ -49,6 +60,10 @@ const RoleForm: FC<RoleFormProps> = ({ name, createRole, editRole }) => {
   };
 
   const onBackNavigation = () => {
+    setCheckedGroups([]);
+    setCheckedStatus([]);
+    setCount(0);
+    setSearchValue("");
     navigate("/home/roles");
   };
 

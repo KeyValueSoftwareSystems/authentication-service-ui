@@ -31,12 +31,6 @@
   }
 }
 
-@media screen and (max-width: 593px) {
-  .display-message {
-    align-items: normal;
-  }
-}
-
 .access-denied-mini {
   height: 100%;
   display: flex;

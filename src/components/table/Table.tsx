@@ -154,6 +154,7 @@ const TableList: FC<TableProps> = ({
                 minWidth: "32px !important",
                 height: "35px !important",
               }}
+              id="go-button"
               onClick={() => apiRef.current.setPage(pageValue - 1)}
             >
               Go
