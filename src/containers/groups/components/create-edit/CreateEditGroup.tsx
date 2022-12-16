@@ -38,12 +38,6 @@ import { CustomAvatar } from "components/custom-avatar/CustomAvatar";
 import { ReactComponent as CrossIcon } from "assets/cross-icon.svg";
 import { useCustomQuery } from "hooks/useQuery";
 import { useCustomMutation } from "hooks/useMutation";
-import {
-  groupFilterAtom,
-  searchAtom,
-  sortCountAtom,
-  statusFilterAtom,
-} from "states/searchSortFilterStates";
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
@@ -79,10 +73,6 @@ const CreateOrEditGroup = () => {
   const setToastMessage = useSetRecoilState(toastMessageAtom);
   const usersResponse = useRecoilValue(allUsersAtom);
   const [isViewRolesVerified] = useRecoilState(IsViewRolesVerifiedAtom);
-  const setCheckedStatus = useSetRecoilState(statusFilterAtom);
-  const setCheckedGroups = useSetRecoilState(groupFilterAtom);
-  const setCount = useSetRecoilState(sortCountAtom);
-  const setSearchValue = useSetRecoilState(searchAtom);
   const [isViewUsersVerified] = useRecoilState(IsViewUsersVerifiedAtom);
 
   const [value, setValue] = useState(0);
@@ -257,10 +247,6 @@ const CreateOrEditGroup = () => {
   useEffect(() => {
     if ((createdGroupData && updatedGroupData) || updatedGroupData) {
       if (updatedGroupRolesData && updatedGroupPermissionsData) {
-        setCheckedGroups([]);
-        setCheckedStatus([]);
-        setCount(0);
-        setSearchValue("");
         navigate("/home/groups");
         setApiSuccess(true);
         createdGroupData

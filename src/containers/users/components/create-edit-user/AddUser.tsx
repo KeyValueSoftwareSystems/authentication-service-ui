@@ -16,12 +16,6 @@ import { apiRequestAtom, toastMessageAtom } from "states/apiRequestState";
 import { USER_CREATE_SUCCESS_MESSAGE } from "constants/messages";
 import { Group } from "types/group";
 import { useCustomMutation } from "hooks/useMutation";
-import {
-  statusFilterAtom,
-  groupFilterAtom,
-  sortCountAtom,
-  searchAtom,
-} from "states/searchSortFilterStates";
 
 const AddUser: React.FC = () => {
   const navigate = useNavigate();
@@ -32,10 +26,6 @@ const AddUser: React.FC = () => {
   >([]);
   const [userGroups, setUserGroups] = useState<Group[]>([]);
   const [permissions, setPermissions] = useState<string[]>([]);
-  const setCheckedStatus = useSetRecoilState(statusFilterAtom);
-  const setCheckedGroups = useSetRecoilState(groupFilterAtom);
-  const setCount = useSetRecoilState(sortCountAtom);
-  const setSearchValue = useSetRecoilState(searchAtom);
   const [createUser, { error: createUserError, data }] =
     useCustomMutation(CREATE_USER);
   const [updateUserGroups, { error: groupUpdateError }] =
@@ -85,10 +75,6 @@ const AddUser: React.FC = () => {
 
       onCompleted: () => {
         if (!createUserError && !groupUpdateError && !permissionUpdateError) {
-          setCheckedGroups([]);
-          setCheckedStatus([]);
-          setCount(0);
-          setSearchValue("");
           navigate("/home/users");
           setApiSuccess(true);
           setToastMessage(USER_CREATE_SUCCESS_MESSAGE);

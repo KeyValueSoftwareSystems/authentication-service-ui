@@ -60,7 +60,7 @@ const DialogBox: React.FC<DialogProps> = ({
       <DialogContentText sx={{ fontFamily: "Inter" }}>
         <>want to delete the {entity?.toLowerCase()}?</>
       </DialogContentText>
-      <DialogActions sx={{ mt: "14px" }}>
+      <DialogActions sx={{ mt: "27px" }}>
         <Button
           onClick={handleClose}
           sx={{

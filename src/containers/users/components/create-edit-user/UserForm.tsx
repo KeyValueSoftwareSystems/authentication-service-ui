@@ -24,12 +24,6 @@ import { useCustomQuery } from "hooks/useQuery";
 import { Group } from "types/group";
 import DisplayMessage from "components/display-message";
 import { currentUserAtom } from "states/loginStates";
-import {
-  groupFilterAtom,
-  searchAtom,
-  sortCountAtom,
-  statusFilterAtom,
-} from "states/searchSortFilterStates";
 
 interface UserProps {
   isEdit?: boolean;
@@ -85,11 +79,6 @@ const UserForm = (props: UserProps) => {
   const [isViewEntitiesVerified] = useRecoilState(IsViewEntitiesVerifiedAtom);
   const [currentUserDetails] = useRecoilState(currentUserAtom);
   const setCurrentUserPermissions = useSetRecoilState(UserPermissionsAtom);
-  const setCheckedStatus = useSetRecoilState(statusFilterAtom);
-  const setCheckedGroups = useSetRecoilState(groupFilterAtom);
-  const setCount = useSetRecoilState(sortCountAtom);
-  const setSearchValue = useSetRecoilState(searchAtom);
-
   const [userSelectedPermissions, setUserSelectedPermissions] = useState<
     Permission[]
   >([]);
@@ -172,10 +161,6 @@ const UserForm = (props: UserProps) => {
   };
 
   const onBackNavigation = () => {
-    setCheckedGroups([]);
-    setCheckedStatus([]);
-    setCount(0);
-    setSearchValue("");
     navigate("/home/users");
   };
 
