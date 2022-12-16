@@ -22,7 +22,12 @@ import {
 } from "constants/messages";
 import { useCustomQuery } from "hooks/useQuery";
 import { useCustomMutation } from "hooks/useMutation";
-import { groupFilterAtom, searchAtom, sortCountAtom, statusFilterAtom } from "states/searchSortFilterStates";
+import {
+  groupFilterAtom,
+  searchAtom,
+  sortCountAtom,
+  statusFilterAtom,
+} from "states/searchSortFilterStates";
 
 const CreateOrEditRole = () => {
   const { id } = useParams();
@@ -111,6 +116,8 @@ const CreateOrEditRole = () => {
           name={role?.name || ""}
           createRole={onCreateRole}
           editRole={onEditRole}
+          role={role}
+          loading={loading}
         />
       )}
       <div className="role-permissions">

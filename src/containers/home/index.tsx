@@ -62,7 +62,7 @@ const HomePage = () => {
     IsViewEntitiesVerifiedAtom
   );
   const onGetGroupsComplete = (data: any) => {
-    setGroupList(data?.getGroups);
+    setGroupList(data?.getGroups?.results);
   };
 
   const [getGroups, { loading }] = useLazyQuery(GET_GROUPS, {
