@@ -7,6 +7,7 @@ import { Tooltip } from "@mui/material";
 import { ReactComponent as RefreshIcon } from "assets/refresh.svg";
 import { ReactComponent as ContentCopyIcon } from "assets/copy.svg";
 import CircularProgress from "@mui/material/CircularProgress";
+import { useLazyQuery } from "@apollo/client";
 
 import { GET_USERS } from "./services/queries";
 import { REFRESH_INVITE_TOKEN } from "../auth/services/mutations";
@@ -33,7 +34,6 @@ import {
   statusFilterAtom,
 } from "states/searchSortFilterStates";
 import { groupListAtom } from "states/groupStates";
-import { useLazyQuery } from "@apollo/client";
 
 const Users: React.FC = () => {
   const [isAddVerified, setAddVerified] = useState(false);
