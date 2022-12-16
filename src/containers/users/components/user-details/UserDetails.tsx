@@ -3,7 +3,7 @@ import { Box, Button, Divider, Tab, Tabs, Chip } from "@mui/material";
 import "./styles.css";
 import { useState, useEffect } from "react";
 import GroupCard from "components/group-card/GroupCard";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import {
   IsViewEntitiesVerifiedAtom,
   IsViewGroupsVerifiedAtom,
@@ -22,12 +22,6 @@ import { UPDATE_USER_PERMISSION } from "constants/permissions";
 import If from "components/If/If";
 import DisplayMessage from "components/display-message";
 import { useCustomQuery } from "hooks/useQuery";
-import {
-  groupFilterAtom,
-  searchAtom,
-  sortCountAtom,
-  statusFilterAtom,
-} from "states/searchSortFilterStates";
 
 const UserDetails = () => {
   const navigate = useNavigate();
@@ -36,18 +30,10 @@ const UserDetails = () => {
   const [isViewGroupsVerified] = useRecoilState(IsViewGroupsVerifiedAtom);
   const [isViewEntitiesVerified] = useRecoilState(IsViewEntitiesVerifiedAtom);
   const [userPermissions] = useRecoilState(UserPermissionsAtom);
-  const setCheckedStatus = useSetRecoilState(statusFilterAtom);
-  const setCheckedGroups = useSetRecoilState(groupFilterAtom);
-  const setCount = useSetRecoilState(sortCountAtom);
-  const setSearchValue = useSetRecoilState(searchAtom);
 
   const [user, setUser] = useState<User>();
   const [value, setValue] = useState(0);
   const onBackNavigation = (e: React.MouseEvent<HTMLElement>) => {
-    setCheckedGroups([]);
-    setCheckedStatus([]);
-    setCount(0);
-    setSearchValue("");
     navigate(-1);
   };
   const onRedirectToEdit = (e: React.MouseEvent<HTMLElement>) => {

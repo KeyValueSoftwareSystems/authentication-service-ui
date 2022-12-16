@@ -8,13 +8,6 @@ import { RoleFormSchema } from "../../roleSchema";
 import "./styles.css";
 import FormInputText from "components/inputText";
 import { Role } from "types/role";
-import { useSetRecoilState } from "recoil";
-import {
-  statusFilterAtom,
-  groupFilterAtom,
-  sortCountAtom,
-  searchAtom,
-} from "states/searchSortFilterStates";
 
 interface RoleFormProps {
   name: string;
@@ -35,11 +28,6 @@ const RoleForm: FC<RoleFormProps> = ({
 
   const { id } = useParams();
 
-  const setCheckedStatus = useSetRecoilState(statusFilterAtom);
-  const setCheckedGroups = useSetRecoilState(groupFilterAtom);
-  const setCount = useSetRecoilState(sortCountAtom);
-  const setSearchValue = useSetRecoilState(searchAtom);
-
   const initialValues = {
     name: name,
   };
@@ -55,10 +43,6 @@ const RoleForm: FC<RoleFormProps> = ({
   };
 
   const onBackNavigation = () => {
-    setCheckedGroups([]);
-    setCheckedStatus([]);
-    setCount(0);
-    setSearchValue("");
     navigate("/home/roles");
   };
 

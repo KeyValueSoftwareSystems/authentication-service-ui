@@ -34,12 +34,6 @@ import {
   VIEW_PERMISSIONS_PERMISSION,
 } from "constants/permissions";
 import { useCustomMutation } from "hooks/useMutation";
-import {
-  groupFilterAtom,
-  searchAtom,
-  sortCountAtom,
-  statusFilterAtom,
-} from "states/searchSortFilterStates";
 
 const HomePage = () => {
   const setGroupList = useSetRecoilState(groupListAtom);
@@ -48,10 +42,6 @@ const HomePage = () => {
   const [userPermissions] = useRecoilState(UserPermissionsAtom);
   const [currentUserDetails] = useRecoilState(currentUserAtom);
 
-  const setCheckedStatus = useSetRecoilState(statusFilterAtom);
-  const setCheckedGroups = useSetRecoilState(groupFilterAtom);
-  const setCount = useSetRecoilState(sortCountAtom);
-  const setSearchValue = useSetRecoilState(searchAtom);
   const setIsViewUsersVerified = useSetRecoilState(IsViewUsersVerifiedAtom);
   const setIsViewGroupsVerified = useSetRecoilState(IsViewGroupsVerifiedAtom);
   const setIsViewRolesVerified = useSetRecoilState(IsViewRolesVerifiedAtom);
@@ -72,44 +62,24 @@ const HomePage = () => {
   });
   useEffect(() => {
     if (userPermissions) {
-      let userFlag = false;
-      let groupFlag = false;
-      let roleFlag = false;
-      let entityFlag = false;
       userPermissions.forEach((item: any) => {
         if (item?.name.includes(VIEW_USER_PERMISSION)) {
           setIsViewUsersVerified(true);
-          userFlag = true;
         }
         if (item?.name.includes(VIEW_GROUP_PERMISSION)) {
           setIsViewGroupsVerified(true);
           getGroups();
-          groupFlag = true;
         }
         if (item?.name.includes(VIEW_ROLE_PERMISSION)) {
           setIsViewRolesVerified(true);
-          roleFlag = true;
         }
         if (item?.name.includes(VIEW_PERMISSIONS_PERMISSION)) {
           setIsViewPermissionsVerified(true);
         }
         if (item?.name.includes(VIEW_ENTITY_PERMISSION)) {
           setisViewEntitiesVerified(true);
-          entityFlag = true;
         }
       });
-      if (userFlag === false) {
-        setIsViewUsersVerified(false);
-      }
-      if (groupFlag === false) {
-        setIsViewGroupsVerified(false);
-      }
-      if (roleFlag === false) {
-        setIsViewRolesVerified(false);
-      }
-      if (entityFlag === false) {
-        setisViewEntitiesVerified(false);
-      }
     }
   }, [
     userPermissions,
@@ -123,11 +93,6 @@ const HomePage = () => {
 
   const onLogoutCompleted = () => {
     CustomerAuth.clearTokens();
-
-    setCheckedGroups([]);
-    setCheckedStatus([]);
-    setCount(0);
-    setSearchValue("");
     setIsViewGroupsVerified(false);
     setIsViewUsersVerified(false);
     setIsViewPermissionsVerified(false);
