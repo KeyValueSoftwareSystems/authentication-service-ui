@@ -51,16 +51,6 @@ const HomePage = () => {
   });
 
   useEffect(() => {
-    if (userPermissions) {
-      userPermissions.forEach((item: any) => {
-        if (item?.name.includes(VIEW_USER_PERMISSION)) {
-          setIsViewUsersVerified(true);
-        }
-      });
-    }
-  }, [userPermissions]);
-
-  useEffect(() => {
     getCurrentUser();
   }, []);
   const setGroupList = useSetRecoilState(groupListAtom);
