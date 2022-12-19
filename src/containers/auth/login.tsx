@@ -8,11 +8,7 @@ import { LOGIN, SET_PASSWORD } from "./services/mutations";
 import CustomerAuth from "../../services/auth";
 import "./styles.css";
 import LoginPassword from "./loginPassword";
-import {
-  UserPermissionsAtom,
-  IsViewUsersVerifiedAtom,
-} from "states/permissionsStates";
-import { currentUserAtom } from "states/loginStates";
+import { IsViewUsersVerifiedAtom } from "states/permissionsStates";
 import PasswordConfirmation from "./PasswordConfirmation";
 import { apiRequestAtom, toastMessageAtom } from "states/apiRequestState";
 import Toast from "components/toast";
@@ -42,7 +38,6 @@ const Login: React.FC = () => {
         accessToken: accessToken,
         refreshToken: refreshToken,
       });
-      // setUserPermissions(user?.permissions);
       if (user?.permissions) {
         user?.permissions.forEach((item: any) => {
           if (item?.name.includes(VIEW_USER_PERMISSION)) {
@@ -50,7 +45,6 @@ const Login: React.FC = () => {
           }
         });
       }
-      // setCurrentUserDetails(user);
       navigate("/home/users");
     } // eslint-disable-next-line
   }, [data]);
