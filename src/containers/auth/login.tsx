@@ -26,8 +26,6 @@ const Login: React.FC = () => {
   const setIsViewUsersVerified = useSetRecoilState(IsViewUsersVerifiedAtom);
 
   const inviteToken: string | null = searchParams.get("token");
-  const setUserPermissions = useSetRecoilState(UserPermissionsAtom);
-  const setCurrentUserDetails = useSetRecoilState(currentUserAtom);
 
   const [userLogin, { data }] = useCustomMutation(LOGIN);
 
@@ -44,7 +42,7 @@ const Login: React.FC = () => {
         accessToken: accessToken,
         refreshToken: refreshToken,
       });
-      setUserPermissions(user?.permissions);
+      // setUserPermissions(user?.permissions);
       if (user?.permissions) {
         user?.permissions.forEach((item: any) => {
           if (item?.name.includes(VIEW_USER_PERMISSION)) {
@@ -52,7 +50,7 @@ const Login: React.FC = () => {
           }
         });
       }
-      setCurrentUserDetails(user);
+      // setCurrentUserDetails(user);
       navigate("/home/users");
     } // eslint-disable-next-line
   }, [data]);
