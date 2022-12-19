@@ -34,12 +34,37 @@ import {
   VIEW_PERMISSIONS_PERMISSION,
 } from "constants/permissions";
 import { useCustomMutation } from "hooks/useMutation";
+import { GET_CURRENT_USER } from "containers/auth/services/queries";
 
 const HomePage = () => {
+  const [currentUser, setCurrentUserDetails] = useRecoilState(currentUserAtom);
+
+  const [getCurrentUser] = useLazyQuery(GET_CURRENT_USER, {
+    onCompleted: (data) => {
+      setCurrentUserDetails(data.getCurrentUser);
+    },
+    fetchPolicy: "network-only",
+  });
+
+  useEffect(() => {
+    setUserPermissions(currentUser?.permissions);
+    if (currentUser?.permissions) {
+      currentUser?.permissions.forEach((item: any) => {
+        if (item?.name.includes(VIEW_USER_PERMISSION)) {
+          setIsViewUsersVerified(true);
+        }
+      });
+    }
+  }, [currentUser]);
+
+  useEffect(() => {
+    getCurrentUser();
+  }, []);
   const setGroupList = useSetRecoilState(groupListAtom);
   const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom);
   const navigate = useNavigate();
-  const [userPermissions] = useRecoilState(UserPermissionsAtom);
+  const [userPermissions, setUserPermissions] =
+    useRecoilState(UserPermissionsAtom);
   const [currentUserDetails] = useRecoilState(currentUserAtom);
 
   const setIsViewUsersVerified = useSetRecoilState(IsViewUsersVerifiedAtom);
