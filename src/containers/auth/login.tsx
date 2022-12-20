@@ -8,18 +8,15 @@ import { LOGIN, SET_PASSWORD } from "./services/mutations";
 import CustomerAuth from "../../services/auth";
 import "./styles.css";
 import LoginPassword from "./loginPassword";
-import { IsViewUsersVerifiedAtom } from "states/permissionsStates";
 import PasswordConfirmation from "./PasswordConfirmation";
 import { apiRequestAtom, toastMessageAtom } from "states/apiRequestState";
 import Toast from "components/toast";
 import { PASSWORD_SET_MESSAGE } from "constants/messages";
 import { useCustomMutation } from "hooks/useMutation";
-import { VIEW_USER_PERMISSION } from "constants/permissions";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const setIsViewUsersVerified = useSetRecoilState(IsViewUsersVerifiedAtom);
 
   const inviteToken: string | null = searchParams.get("token");
 
@@ -38,13 +35,6 @@ const Login: React.FC = () => {
         accessToken: accessToken,
         refreshToken: refreshToken,
       });
-      if (user?.permissions) {
-        user?.permissions.forEach((item: any) => {
-          if (item?.name.includes(VIEW_USER_PERMISSION)) {
-            setIsViewUsersVerified(true);
-          }
-        });
-      }
       navigate("/home/users");
     } // eslint-disable-next-line
   }, [data]);

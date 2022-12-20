@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { Avatar, Chip } from "@mui/material";
 import { GridColumns } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
@@ -45,7 +45,6 @@ const Users: React.FC = () => {
   const [userList, setUserList] = useRecoilState(userListAtom);
   const [checkedStatus, setCheckedStatus] = useRecoilState(statusFilterAtom);
   const [checkedGroups, setCheckedGroups] = useRecoilState(groupFilterAtom);
-  const statusList = ["ACTIVE", "INACTIVE", "INVITED"];
   const [groupList] = useRecoilState(groupListAtom);
   const navigate = useNavigate();
 
@@ -62,10 +61,10 @@ const Users: React.FC = () => {
   });
 
   useEffect(() => {
-    if (isViewUsersVerified && usersCount === 0) {
+    if (isViewUsersVerified === true) {
       getUsers({ variables: { pagination: { limit: 8, offset: 0 } } });
     }
-  }, [isViewUsersVerified, getUsers, usersCount]);
+  }, [isViewUsersVerified, getUsers]);
 
   const onEdit = (id: any) => {
     navigate(`/home/users/add/${id}`);
@@ -172,7 +171,7 @@ const Users: React.FC = () => {
           actionFlex={0.23}
           cursorType="pointer"
           field="firstName"
-          filterList={[statusList, groupList]}
+          filterList={groupList}
           firstFilter={checkedStatus}
           setFirstFilter={setCheckedStatus}
           secondFilter={checkedGroups}

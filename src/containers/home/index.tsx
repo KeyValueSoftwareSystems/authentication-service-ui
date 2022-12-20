@@ -42,13 +42,16 @@ const HomePage = () => {
   const [userPermissions, setUserPermissions] =
     useRecoilState(UserPermissionsAtom);
 
-  const [getCurrentUser] = useLazyQuery(GET_CURRENT_USER, {
-    onCompleted: (data) => {
-      setCurrentUserDetails(data.getCurrentUser);
-      setUserPermissions(data.getCurrentUser?.permissions);
-    },
-    fetchPolicy: "network-only",
-  });
+  const [getCurrentUser, { loading: currentUserLoading }] = useLazyQuery(
+    GET_CURRENT_USER,
+    {
+      onCompleted: (data) => {
+        setCurrentUserDetails(data.getCurrentUser);
+        setUserPermissions(data.getCurrentUser?.permissions);
+      },
+      fetchPolicy: "network-only",
+    }
+  );
 
   useEffect(() => {
     getCurrentUser();
@@ -57,7 +60,9 @@ const HomePage = () => {
   const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom);
   const navigate = useNavigate();
 
-  const setIsViewUsersVerified = useSetRecoilState(IsViewUsersVerifiedAtom);
+  const [IsViewUsersVerified, setIsViewUsersVerified] = useRecoilState(
+    IsViewUsersVerifiedAtom
+  );
   const setIsViewGroupsVerified = useSetRecoilState(IsViewGroupsVerifiedAtom);
   const setIsViewRolesVerified = useSetRecoilState(IsViewRolesVerifiedAtom);
   const setIsViewPermissionsVerified = useSetRecoilState(
@@ -186,19 +191,21 @@ const HomePage = () => {
               <SideBar />
               <div>
                 <Divider />
-                <div className="userdetails">
-                  <Avatar
-                    {...stringAvatar(
-                      `${currentUserDetails.firstName} ${currentUserDetails.lastName}`?.toUpperCase()
-                    )}
-                  />
-                  <div className="name-logout">
-                    <div className="username">{`${currentUserDetails.firstName} ${currentUserDetails.lastName}`}</div>
-                    <div onClick={onLogout} className="logout">
-                      Logout
+                {currentUserDetails.firstName && (
+                  <div className="userdetails">
+                    <Avatar
+                      {...stringAvatar(
+                        `${currentUserDetails.firstName} ${currentUserDetails.lastName}`?.toUpperCase()
+                      )}
+                    />
+                    <div className="name-logout">
+                      <div className="username">{`${currentUserDetails.firstName} ${currentUserDetails.lastName}`}</div>
+                      <div onClick={onLogout} className="logout">
+                        Logout
+                      </div>
                     </div>
                   </div>
-                </div>
+                )}
               </div>
             </div>
           </div>
@@ -211,7 +218,7 @@ const HomePage = () => {
             </div>
             <div className="outlet">
               {CustomerAuth?.isAuthenticated ? (
-                !loading ? (
+                !loading && !currentUserLoading ? (
                   <Outlet />
                 ) : (
                   <CircularProgress />
