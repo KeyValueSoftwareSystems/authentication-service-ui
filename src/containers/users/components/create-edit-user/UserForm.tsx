@@ -24,6 +24,11 @@ import { useCustomQuery } from "hooks/useQuery";
 import { Group } from "types/group";
 import DisplayMessage from "components/display-message";
 import { currentUserAtom } from "states/loginStates";
+import { AddEntity, UpdateEntity } from "types/generic";
+import {
+  ACCESS_DENIED_DESCRIPTION,
+  ACCESS_DENIED_MESSAGE,
+} from "constants/messages";
 
 interface UserProps {
   isEdit?: boolean;
@@ -240,10 +245,10 @@ const UserForm = (props: UserProps) => {
                     ) : (
                       <DisplayMessage
                         customStyle={{ fontSize: 16 }}
-                        altMessage="Access Denied"
+                        altMessage={ACCESS_DENIED_MESSAGE}
                         image="./assets/access-denied.png"
-                        heading="Access Denied"
-                        description="Sorry, you are not allowed to view this page."
+                        heading={ACCESS_DENIED_MESSAGE}
+                        description={ACCESS_DENIED_DESCRIPTION}
                         className="access-denied-mini"
                       />
                     )}
@@ -263,10 +268,10 @@ const UserForm = (props: UserProps) => {
               ) : (
                 <DisplayMessage
                   customStyle={{ fontSize: 16 }}
-                  altMessage="Access Denied"
+                  altMessage={ACCESS_DENIED_MESSAGE}
                   image="./assets/access-denied.png"
-                  heading="Access Denied"
-                  description="Sorry, you are not allowed to view this page."
+                  heading={ACCESS_DENIED_MESSAGE}
+                  description={ACCESS_DENIED_DESCRIPTION}
                   className="access-denied-mini"
                 />
               )}
@@ -275,7 +280,9 @@ const UserForm = (props: UserProps) => {
         </div>
       </div>
       <BottomFormController
-        primarybuttonLabel={isEdit ? "Update User" : "Add User"}
+        primarybuttonLabel={
+          isEdit ? UpdateEntity.UPDATE_USER : AddEntity.CREATE_USER
+        }
         primaryButtonType="submit"
         formId="add-user-form"
         onSubmit={() => handleSubmit(onSubmitForm)()}

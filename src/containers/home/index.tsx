@@ -35,6 +35,7 @@ import {
 } from "constants/permissions";
 import { useCustomMutation } from "hooks/useMutation";
 import { GET_CURRENT_USER } from "containers/auth/services/queries";
+import { UserActions } from "types/generic";
 
 const HomePage = () => {
   const [currentUserDetails, setCurrentUserDetails] =
@@ -195,7 +196,7 @@ const HomePage = () => {
                   <div className="name-logout">
                     <div className="username">{`${currentUserDetails.firstName} ${currentUserDetails.lastName}`}</div>
                     <div onClick={onLogout} className="logout">
-                      Logout
+                      {UserActions.LOGOUT}
                     </div>
                   </div>
                 </div>

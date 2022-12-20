@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { useNavigate, useParams } from "react-router-dom";
 import { FieldValues } from "react-hook-form";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { Box, Tab, Tabs, Typography, Grid, Divider } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 
@@ -27,6 +27,8 @@ import { Permission, User } from "types/user";
 import { Group } from "types/group";
 import { apiRequestAtom, toastMessageAtom } from "states/apiRequestState";
 import {
+  ACCESS_DENIED_DESCRIPTION,
+  ACCESS_DENIED_MESSAGE,
   GROUP_CREATE_SUCCESS_MESSAGE,
   GROUP_UPDATE_SUCCESS_MESSAGE,
 } from "constants/messages";
@@ -350,11 +352,10 @@ const CreateOrEditGroup = () => {
               ) : (
                 <DisplayMessage
                   customStyle={{ fontSize: 16 }}
-                  altMessage="Access Denied"
+                  altMessage={ACCESS_DENIED_MESSAGE}
                   image="./assets/access-denied.png"
-                  heading="Access Denied"
-                  description="Sorry, you are not allowed to view this page."
-                  // className="access-denied-mini"
+                  heading={ACCESS_DENIED_MESSAGE}
+                  description={ACCESS_DENIED_DESCRIPTION}
                   containerStyles={{ marginTop: "50px", marginLeft: "15px" }}
                 />
               )}
@@ -373,10 +374,10 @@ const CreateOrEditGroup = () => {
           ) : (
             <DisplayMessage
               customStyle={{ fontSize: 16 }}
-              altMessage="Access Denied"
+              altMessage={ACCESS_DENIED_MESSAGE}
               image="./assets/access-denied.png"
-              heading="Access Denied"
-              description="Sorry, you are not allowed to view this page."
+              heading={ACCESS_DENIED_MESSAGE}
+              description={ACCESS_DENIED_DESCRIPTION}
               className="access-denied-mini"
             />
           )}
@@ -427,10 +428,10 @@ const CreateOrEditGroup = () => {
             ) : (
               <DisplayMessage
                 customStyle={{ fontSize: 16 }}
-                altMessage="Access Denied"
+                altMessage={ACCESS_DENIED_MESSAGE}
                 image="./assets/access-denied.png"
-                heading="Access Denied"
-                description="Sorry, you are not allowed to view this page."
+                heading={ACCESS_DENIED_MESSAGE}
+                description={ACCESS_DENIED_DESCRIPTION}
                 className="access-denied-mini"
               />
             )}
