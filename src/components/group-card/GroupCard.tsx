@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { Checkbox } from "@mui/material";
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 
 import { Role } from "types/role";
 import RoleCard from "../role-card/RoleCard";
@@ -28,14 +28,14 @@ const Container = styled.div`
   font-family: "Manrope";
 `;
 
-const CheckBoxComponent = styled.div<{ showroles: string }>`
+const CheckBoxComponent = styled.div<{ roles: string }>`
   display: flex;
   align-items: center;
   justify-content: space-between;
   border: 1px solid #d2d5dd;
   box-sizing: border-box;
   border-radius: ${(props) =>
-    props.showroles === "true" ? "6px 6px 0px 0px" : "6px"};
+    props.roles === "true" ? "6px 6px 0px 0px" : "6px"};
   padding: 24px;
   width: 100%;
   height: 76px;
@@ -56,13 +56,13 @@ const RolesPermissionsTab = styled.div<TabProps>`
   font-family: "Manrope";
 `;
 
-const StyledDownArrowIcon = styled(DownArrowIcon)<{ showroles: string }>`
-  transform: ${(props) => (props.showroles === "true" ? "rotate(180deg)" : "")};
+const StyledDownArrowIcon = styled(DownArrowIcon)<{ roles: string }>`
+  transform: ${(props) => (props.roles === "true" ? "rotate(180deg)" : "")};
   cursor: pointer;
 `;
 
-const RoleCards = styled.div<{ showroles: string }>`
-  display: ${(props) => (props.showroles === "true" ? "flex" : "none")};
+const RoleCards = styled.div<{ roles: string }>`
+  display: ${(props) => (props.roles === "true" ? "flex" : "none")};
   flex-direction: column;
   padding: 0px 24px 24px 24px;
   border: 1px solid #d2d5dd;
@@ -97,7 +97,7 @@ const GroupCard: FC<GroupCardProps> = ({
   return (
     <>
       <Container>
-        <CheckBoxComponent key={group.id} showroles={showRoles.toString()}>
+        <CheckBoxComponent key={group.id} roles={showRoles.toString()}>
           <div className="checkbox-label">
             {showCheckBox && (
               <Checkbox
@@ -119,11 +119,11 @@ const GroupCard: FC<GroupCardProps> = ({
             </RolesPermissionsTab>
             <StyledDownArrowIcon
               onClick={() => setShowRoles(!showRoles)}
-              showroles={showRoles.toString()}
+              roles={showRoles.toString()}
             />
           </div>
         </CheckBoxComponent>
-        <RoleCards showroles={showRoles.toString()}>
+        <RoleCards roles={showRoles.toString()}>
           <div className="roles-title">Roles</div>
           <div className="role-cards">
             {group?.roles?.map((role: Role) => (

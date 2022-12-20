@@ -47,13 +47,12 @@ const FormInputText = ({
           helperText={error ? error.message : null}
           error={!!error}
           onChange={onChange}
-          value={defaultText ? (value ? value : defaultText) : value}
           fullWidth
           type={type}
           label={label}
           variant="outlined"
           className={className}
-          // defaultValue={!value&&defaultText}
+          defaultValue={value ? value : defaultText}
           autoComplete={autoComplete}
         />
       )}
