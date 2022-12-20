@@ -15,7 +15,7 @@ import { User } from "types/user";
 import { useParams } from "react-router-dom";
 import "./styles.css";
 import { CustomAvatar } from "components/custom-avatar/CustomAvatar";
-import { TabPanel } from "../create-edit-user/UserForm";
+import TabPanel from "components/tab-panel/TabPanel";
 import PermissionCards from "components/permission-cards/PermissionCards";
 import { UPDATE_USER_PERMISSION } from "constants/permissions";
 import If from "components/If/If";

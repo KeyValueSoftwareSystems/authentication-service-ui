@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilState, useSetRecoilState } from "recoil";
 
 import { useForm, FormProvider, FieldValues } from "react-hook-form";
-import { Box, Tab, Tabs, Typography } from "@mui/material";
+import { Box, Tab, Tabs } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
 import CircularProgress from "@mui/material/CircularProgress";
 import {
@@ -29,6 +29,7 @@ import {
   ACCESS_DENIED_DESCRIPTION,
   ACCESS_DENIED_MESSAGE,
 } from "constants/messages";
+import TabPanel from "components/tab-panel/TabPanel";
 
 interface UserProps {
   isEdit?: boolean;
@@ -42,34 +43,6 @@ interface UserProps {
     userGroups: Group[],
     userPermissions: Permission[]
   ) => void;
-}
-
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: number;
-  value: number;
-  style?: any;
-}
-
-export function TabPanel(props: TabPanelProps) {
-  const { children, value, index, style = {}, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      style={style}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box>
-          <Typography component={"span"}>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
 }
 
 const UserForm = (props: UserProps) => {
