@@ -37,28 +37,23 @@ const FormInputText = ({
   autoComplete,
 }: FormInputProps) => {
   const { control } = useFormContext();
-
   return (
     <Controller
       name={name}
       control={control}
-      render={({
-        field: { onChange, value },
-        fieldState: { error },
-        formState,
-      }) => (
+      render={({ field: { onChange, value }, fieldState: { error } }) => (
         <StyledTextField
           name={name}
           helperText={error ? error.message : null}
           error={!!error}
           onChange={onChange}
-          value={value}
+          value={defaultText ? (value ? value : defaultText) : value}
           fullWidth
           type={type}
           label={label}
           variant="outlined"
           className={className}
-          defaultValue={defaultText}
+          // defaultValue={!value&&defaultText}
           autoComplete={autoComplete}
         />
       )}

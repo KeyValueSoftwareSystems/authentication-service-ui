@@ -22,7 +22,6 @@ interface FilterDropdownProps {
   filterList?: any;
   open: boolean;
   anchorEl: any;
-  setCount?: (val?: number) => void;
   onApply: (count: number) => void;
   firstFilterName: string;
   secondFilterName: string;
@@ -35,7 +34,6 @@ const FilterDropdown: FC<FilterDropdownProps> = ({
   secondFilter,
   setSecondFilter,
   searchQuery,
-  setCount,
   setItemList,
   field,
   filterList,
