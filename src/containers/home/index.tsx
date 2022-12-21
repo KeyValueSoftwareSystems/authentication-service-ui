@@ -24,7 +24,7 @@ import {
 } from "states/permissionsStates";
 import SideBar from "components/side-bar";
 import { groupListAtom } from "states/groupStates";
-import { GET_GROUPS } from "../../services/queries/groupQueries";
+import { GET_GROUPS } from "services/queries/groupQueries";
 import { ReactComponent as ArrowIcon } from "assets/arrow.svg";
 import {
   VIEW_GROUP_PERMISSION,

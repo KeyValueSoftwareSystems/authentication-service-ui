@@ -5,7 +5,7 @@ import { FieldValues } from "react-hook-form";
 
 import { LOGIN_URL } from "../../../config";
 import { LOGIN, SET_PASSWORD } from "services/mutations/authMutations";
-import CustomerAuth from "../../../services/auth";
+import CustomerAuth from "services/auth";
 import "./styles.css";
 import LoginPassword from "./loginPassword";
 import { IsViewUsersVerifiedAtom } from "states/permissionsStates";

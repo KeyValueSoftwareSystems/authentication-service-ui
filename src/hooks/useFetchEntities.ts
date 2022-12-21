@@ -1,6 +1,6 @@
 import { useLazyQuery, DocumentNode } from "@apollo/client";
 import { SetterOrUpdater, useRecoilState, useSetRecoilState } from "recoil";
-import { FilterConditions, SortDirection } from "../services/constants";
+import { FilterConditions, SortDirection } from "services/constants";
 import {
   groupFilterAtom,
   searchAtom,
