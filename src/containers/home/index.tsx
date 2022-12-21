@@ -38,6 +38,7 @@ import { UserActions } from "types/generic";
 import { getHeader } from "utils/routes";
 import { RoutePaths } from "constants/routes";
 import { useCustomLazyQuery } from "hooks/useLazyQuery";
+import If from "components/If/If";
 
 const HomePage = () => {
   const [currentUserDetails, setCurrentUserDetails] =
@@ -48,9 +49,7 @@ const HomePage = () => {
   const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom);
   const navigate = useNavigate();
 
-  const setIsViewUsersVerified = useSetRecoilState(
-    IsViewUsersVerifiedAtom
-  );
+  const setIsViewUsersVerified = useSetRecoilState(IsViewUsersVerifiedAtom);
   const setIsViewGroupsVerified = useSetRecoilState(IsViewGroupsVerifiedAtom);
   const setIsViewRolesVerified = useSetRecoilState(IsViewRolesVerifiedAtom);
   const setIsViewPermissionsVerified = useSetRecoilState(
@@ -176,7 +175,7 @@ const HomePage = () => {
               <SideBar />
               <div>
                 <Divider />
-                {currentUserDetails.firstName && (
+                <If condition={currentUserDetails.firstName}>
                   <div className="userdetails">
                     <Avatar
                       {...stringAvatar(
@@ -190,7 +189,7 @@ const HomePage = () => {
                       </div>
                     </div>
                   </div>
-                )}
+                </If>
               </div>
             </div>
           </div>
