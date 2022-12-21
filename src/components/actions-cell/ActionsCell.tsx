@@ -3,9 +3,9 @@ import { GridActionsCellItem, GridRowId } from "@mui/x-data-grid";
 import { Tooltip } from "@mui/material";
 import { useSetRecoilState } from "recoil";
 
-import { ReactComponent as EditIcon } from "assets/edit.svg";
-import { ReactComponent as LineIcon } from "assets/line.svg";
-import { ReactComponent as DeleteIcon } from "assets/trash.svg";
+import { ReactComponent as EditIcon } from "assets/table-actions-icons/edit.svg";
+import { ReactComponent as LineIcon } from "assets/table-actions-icons/line.svg";
+import { ReactComponent as DeleteIcon } from "assets/table-actions-icons/trash.svg";
 import DialogBox from "../dialog-box";
 import { ActionsCellProps } from "./types";
 import { apiRequestAtom, toastMessageAtom } from "states/apiRequestState";

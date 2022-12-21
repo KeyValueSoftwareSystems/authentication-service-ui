@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
-import { useLazyQuery } from "@apollo/client";
 
 import { GET_USERS } from "./services/queries";
 import "./styles.css";
@@ -33,6 +32,7 @@ import {
   ACCESS_DENIED_DESCRIPTION,
   ACCESS_DENIED_MESSAGE,
 } from "constants/messages";
+import { useCustomLazyQuery } from "hooks/useLazyQuery";
 
 const Users: React.FC = () => {
   const [isAddVerified, setAddVerified] = useState(false);
@@ -51,12 +51,10 @@ const Users: React.FC = () => {
     setUsersCount(data?.getUsers?.totalCount);
   };
 
-  const [getUsers, { loading }] = useLazyQuery(GET_USERS, {
-    onCompleted: (data) => {
-      onComplete(data);
-    },
-    fetchPolicy: "network-only",
-  });
+  const { lazyQuery: getUsers, loading } = useCustomLazyQuery(
+    GET_USERS,
+    onComplete
+  );
 
   useEffect(() => {
     if (isViewUsersVerified === true) {
