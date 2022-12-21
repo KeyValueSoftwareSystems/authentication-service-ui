@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { Outlet, Navigate, useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import { Avatar, Divider } from "@mui/material";
+
 import { useRecoilState } from "recoil";
 import CircularProgress from "@mui/material/CircularProgress";
 import { LOGO_URL } from "../../config";
@@ -21,7 +22,6 @@ import {
   IsViewEntitiesVerifiedAtom,
   UserPermissionsAtom,
 } from "states/permissionsStates";
-import { ReactComponent as MenuIcon } from "assets/menu.svg";
 import SideBar from "components/side-bar";
 import { groupListAtom } from "states/groupStates";
 import { GET_GROUPS } from "../groups/services/queries";
@@ -35,27 +35,15 @@ import {
 } from "constants/permissions";
 import { useCustomMutation } from "hooks/useMutation";
 import { GET_CURRENT_USER } from "containers/auth/services/queries";
+import { UserActions } from "types/generic";
+import { getHeader } from "utils/routes";
+import { RoutePaths } from "constants/routes";
 
 const HomePage = () => {
   const [currentUserDetails, setCurrentUserDetails] =
     useRecoilState(currentUserAtom);
   const [userPermissions, setUserPermissions] =
     useRecoilState(UserPermissionsAtom);
-
-  const [getCurrentUser, { loading: currentUserLoading }] = useLazyQuery(
-    GET_CURRENT_USER,
-    {
-      onCompleted: (data) => {
-        setCurrentUserDetails(data.getCurrentUser);
-        setUserPermissions(data.getCurrentUser?.permissions);
-      },
-      fetchPolicy: "network-only",
-    }
-  );
-
-  useEffect(() => {
-    getCurrentUser();
-  }, []);
   const setGroupList = useSetRecoilState(groupListAtom);
   const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom);
   const navigate = useNavigate();
@@ -80,6 +68,21 @@ const HomePage = () => {
       onGetGroupsComplete(data);
     },
   });
+  const [getCurrentUser, { loading: currentUserLoading }] = useLazyQuery(
+    GET_CURRENT_USER,
+    {
+      onCompleted: (data) => {
+        setCurrentUserDetails(data.getCurrentUser);
+        setUserPermissions(data.getCurrentUser?.permissions);
+      },
+      fetchPolicy: "network-only",
+    }
+  );
+
+  useEffect(() => {
+    getCurrentUser();
+  }, []);
+
   useEffect(() => {
     if (userPermissions) {
       userPermissions.forEach((item: any) => {
@@ -120,7 +123,7 @@ const HomePage = () => {
     setIsViewPermissionsVerified(false);
     setisViewEntitiesVerified(false);
     setIsViewRolesVerified(false);
-    navigate("/login");
+    navigate(RoutePaths.login);
   };
   const [logout] = useCustomMutation(LOGOUT, onLogoutCompleted);
 
@@ -134,22 +137,7 @@ const HomePage = () => {
         : redirectUrl;
     navigate(redirectUrl);
   };
-  const getHeader = () => {
-    const pathnameArray = window?.location?.hash
-      ?.split("home")?.[1]
-      ?.split("/");
-    if (pathnameArray?.length === 4) {
-      return `Modify ${pathnameArray[1]}`;
-    } else if (pathnameArray[2] === "add") {
-      return `Add ${pathnameArray[1]}`;
-    } else if (pathnameArray?.length === 3 && pathnameArray[2] !== "add") {
-      return `View ${pathnameArray[1]}`;
-    } else if (pathnameArray?.length === 2) {
-      return (
-        pathnameArray[1]?.charAt(0).toUpperCase() + pathnameArray[1].slice(1)
-      );
-    }
-  };
+
   const getSubHeader = () => {
     const pathnameArray = window?.location?.hash
       ?.split("home")?.[1]
@@ -170,6 +158,7 @@ const HomePage = () => {
       );
     } else return null;
   };
+
   const onLogout = () => {
     logout();
   };
@@ -177,6 +166,7 @@ const HomePage = () => {
   const onCloseToast = () => {
     setToastMessage("");
   };
+
   return (
     <>
       <div className="wrapperContainer">
@@ -201,7 +191,7 @@ const HomePage = () => {
                     <div className="name-logout">
                       <div className="username">{`${currentUserDetails.firstName} ${currentUserDetails.lastName}`}</div>
                       <div onClick={onLogout} className="logout">
-                        Logout
+                        {UserActions.LOGOUT}
                       </div>
                     </div>
                   </div>
@@ -224,7 +214,7 @@ const HomePage = () => {
                   <CircularProgress />
                 )
               ) : (
-                <Navigate replace to="/login" />
+                <Navigate replace to={RoutePaths.login} />
               )}
             </div>
           </div>

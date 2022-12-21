@@ -4,16 +4,17 @@ import { useNavigate, useParams } from "react-router-dom";
 import { FieldValues, FormProvider, useForm } from "react-hook-form";
 import BottomFormController from "components/bottom-form-controller";
 
-import { RoleFormSchema } from "../../roleSchema";
+import { RoleFormSchema } from "utils/roles";
 import "./styles.css";
 import FormInputText from "components/inputText";
 import { Role } from "types/role";
+import { AddEntity, UpdateEntity } from "types/generic";
 
 interface RoleFormProps {
   name: string;
   createRole: (inputs: FieldValues) => void;
   editRole: (inputs: FieldValues) => void;
-  role?: Role;
+  role: Role;
   loading: boolean;
 }
 
@@ -70,7 +71,9 @@ const RoleForm: FC<RoleFormProps> = ({
         </FormProvider>
       </div>
       <BottomFormController
-        primarybuttonLabel={id ? "Update Role" : "Create Role"}
+        primarybuttonLabel={
+          id ? UpdateEntity.UPDATE_ROLE : AddEntity.CREATE_ROLE
+        }
         primaryButtonType="submit"
         formId="role-form"
         onSubmit={() => handleSubmit(onSubmitForm)()}

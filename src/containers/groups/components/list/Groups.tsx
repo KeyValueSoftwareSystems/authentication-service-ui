@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
-import { GridColumns, GridRowId } from "@mui/x-data-grid";
+import { GridRowId } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 
@@ -9,12 +9,10 @@ import { DELETE_GROUP } from "../../services/mutations";
 import { GET_GROUPS } from "../../services/queries";
 import TableList from "components/table";
 import { groupListAtom } from "states/groupStates";
-import TableChipElement from "components/table-chip-element";
 import {
   IsViewGroupsVerifiedAtom,
   UserPermissionsAtom,
 } from "states/permissionsStates";
-import AvatarList from "components/avatar-list/AvatarList";
 import {
   CREATE_GROUP_PERMISSION,
   DELETE_GROUP_PERMISSION,
@@ -22,6 +20,12 @@ import {
 } from "constants/permissions";
 import DisplayMessage from "components/display-message";
 import { useLazyQuery } from "@apollo/client";
+import { AddEntity, SearchEntity } from "types/generic";
+import {
+  ACCESS_DENIED_DESCRIPTION,
+  ACCESS_DENIED_MESSAGE,
+} from "constants/messages";
+import { columns } from "utils/groups";
 
 const GroupList: React.FC = () => {
   const navigate = useNavigate();
@@ -50,47 +54,6 @@ const GroupList: React.FC = () => {
     }
   }, [isViewGroupsVerified, getGroups, groupCount]);
 
-  const columns: GridColumns = [
-    {
-      field: "name",
-      headerName: "Group",
-      headerClassName: "user-list-header",
-      headerAlign: "left",
-      width: 280,
-      sortable: false,
-    },
-    {
-      field: "roles",
-      headerName: "Roles",
-      headerClassName: "user-list-header",
-      flex: 0.6,
-      renderCell: (params) => (
-        <div className="role-list">
-          <TableChipElement
-            rowItems={params}
-            columnName="roles"
-            defaultSize={3}
-          />
-        </div>
-      ),
-      headerAlign: "left",
-      sortable: false,
-    },
-    {
-      field: "users",
-      headerName: "Members",
-      headerClassName: "user-list-header",
-      flex: 0.5,
-      renderCell: (params) => (
-        <div className="role-list">
-          <AvatarList {...params} />
-        </div>
-      ),
-      headerAlign: "left",
-      sortable: false,
-    },
-  ];
-
   const onAddGroup = () => {
     navigate("add");
   };
@@ -115,10 +78,10 @@ const GroupList: React.FC = () => {
     return (
       <div className="denied-table-component">
         <DisplayMessage
-          altMessage="Access Denied"
+          altMessage={ACCESS_DENIED_MESSAGE}
           image="./assets/access-denied.png"
-          heading="Access Denied"
-          description="Sorry, you are not allowed to view this page."
+          heading={ACCESS_DENIED_MESSAGE}
+          description={ACCESS_DENIED_DESCRIPTION}
         />
       </div>
     );
@@ -129,8 +92,8 @@ const GroupList: React.FC = () => {
           rows={groupList}
           columns={columns}
           count={groupCount}
-          buttonLabel="Add Group"
-          searchLabel="Search Group"
+          buttonLabel={AddEntity.ADD_GROUP}
+          searchLabel={SearchEntity.SEARCH_GROUP}
           setItemList={setItemList}
           entity="Group"
           deleteMutation={DELETE_GROUP}

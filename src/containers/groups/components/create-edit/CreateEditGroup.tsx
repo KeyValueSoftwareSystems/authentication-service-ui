@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { useNavigate, useParams } from "react-router-dom";
 import { FieldValues } from "react-hook-form";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { Box, Tab, Tabs, Typography, Grid, Divider } from "@mui/material";
+import { useSetRecoilState } from "recoil";
+import { Box, Tab, Tabs, Grid, Divider } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
+import { useLazyQuery } from "@apollo/client";
 
 import { GET_ROLES } from "containers/roles/services/queries";
 import {
@@ -17,7 +18,6 @@ import {
   IsViewRolesVerifiedAtom,
   IsViewUsersVerifiedAtom,
 } from "states/permissionsStates";
-import DisplayMessage from "components/display-message";
 import "./styles.css";
 import GroupForm from "./GroupForm";
 import { GET_GROUP, GET_GROUP_PERMISSIONS } from "../../services/queries";
@@ -37,34 +37,8 @@ import { CustomAvatar } from "components/custom-avatar/CustomAvatar";
 import { ReactComponent as CrossIcon } from "assets/cross-icon.svg";
 import { useCustomQuery } from "hooks/useQuery";
 import { useCustomMutation } from "hooks/useMutation";
-import { useLazyQuery } from "@apollo/client";
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: number;
-  value: number;
-  style?: any;
-}
-
-function TabPanel(props: TabPanelProps) {
-  const { children, value, index, style = {}, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      style={style}
-      {...other}
-    >
-      {value === index && (
-        <Box>
-          <Typography component={"span"}>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
+import TabPanel from "components/tab-panel/TabPanel";
+import { renderAccessDenied } from "utils/generic";
 
 const CreateOrEditGroup = () => {
   const { id } = useParams();
@@ -145,82 +119,11 @@ const CreateOrEditGroup = () => {
     },
     fetchPolicy: "network-only",
   });
-
-  const removeItem = ({
-    roleId,
-    userId,
-  }: {
-    roleId?: string;
-    userId?: string;
-  }) => {
-    if (roleId) {
-      setRoles(roles.filter((role: Role) => role.id !== roleId));
+  useEffect(() => {
+    if (isViewUsersVerified) {
+      getUsers();
     }
-
-    if (userId) {
-      setUsers(users.filter((user: User) => user.id !== userId));
-    }
-  };
-
-  const onChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    item?: Role
-  ) => {
-    const value = event.target.value;
-    if (event.target.checked) {
-      if (value === "all") {
-        setRoles(allRoles);
-        return;
-      }
-      if (item) {
-        // handlePermissions(item);
-        if (roles[0] === null) {
-          setRoles([item]);
-        } else {
-          setRoles([...roles, item]);
-        }
-      }
-    } else {
-      if (value === "all") {
-        setRoles([]);
-        return;
-      }
-      removeItem({ roleId: item?.id as string });
-    }
-  };
-
-  const onChangeUsers = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    item: User
-  ) => {
-    const value = event.target.value;
-
-    if (event.target.checked) {
-      if (value === "all") {
-        setUsers(allUsers);
-        return;
-      }
-      if (users[0] === null) {
-        setUsers([item]);
-      } else {
-        setUsers([...users, item]);
-      }
-    } else {
-      if (value === "all") {
-        setUsers([]);
-        return;
-      }
-      removeItem({ userId: item?.id as string });
-    }
-  };
-
-  const onCreateGroup = (inputs: FieldValues) => {
-    createGroup({
-      variables: {
-        input: inputs,
-      },
-    });
-  };
+  }, [getUsers, isViewUsersVerified]);
 
   useEffect(() => {
     if (createdGroupData) {
@@ -269,6 +172,81 @@ const CreateOrEditGroup = () => {
     updatedGroupPermissionsData,
   ]);
 
+  const removeItem = ({
+    roleId,
+    userId,
+  }: {
+    roleId?: string;
+    userId?: string;
+  }) => {
+    if (roleId) {
+      setRoles(roles.filter((role: Role) => role.id !== roleId));
+    }
+
+    if (userId) {
+      setUsers(users.filter((user: User) => user.id !== userId));
+    }
+  };
+
+  const onChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    item?: Role
+  ) => {
+    const value = event.target.value;
+    if (event.target.checked) {
+      if (value === "all") {
+        setRoles(allRoles);
+        return;
+      }
+      if (item) {
+        if (roles[0] === null) {
+          setRoles([item]);
+        } else {
+          setRoles([...roles, item]);
+        }
+      }
+    } else {
+      if (value === "all") {
+        setRoles([]);
+        return;
+      }
+      removeItem({ roleId: item?.id as string });
+    }
+  };
+
+  const onChangeUsers = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    item: User
+  ) => {
+    const value = event.target.value;
+
+    if (event.target.checked) {
+      if (value === "all") {
+        setUsers(allUsers);
+        return;
+      }
+      if (users[0] === null) {
+        setUsers([item]);
+      } else {
+        setUsers([...users, item]);
+      }
+    } else {
+      if (value === "all") {
+        setUsers([]);
+        return;
+      }
+      removeItem({ userId: item?.id as string });
+    }
+  };
+
+  const onCreateGroup = (inputs: FieldValues) => {
+    createGroup({
+      variables: {
+        input: inputs,
+      },
+    });
+  };
+
   const onEditGroup = (inputs: FieldValues) => {
     updateGroup({
       variables: {
@@ -295,12 +273,6 @@ const CreateOrEditGroup = () => {
       },
     });
   };
-
-  useEffect(() => {
-    if (isViewUsersVerified) {
-      getUsers();
-    }
-  }, [isViewUsersVerified]);
 
   return (
     <div className="access-settings">
@@ -348,15 +320,7 @@ const CreateOrEditGroup = () => {
                   onChange={onChange}
                 />
               ) : (
-                <DisplayMessage
-                  customStyle={{ fontSize: 16 }}
-                  altMessage="Access Denied"
-                  image="./assets/access-denied.png"
-                  heading="Access Denied"
-                  description="Sorry, you are not allowed to view this page."
-                  // className="access-denied-mini"
-                  containerStyles={{ marginTop: "50px", marginLeft: "15px" }}
-                />
+                <>{renderAccessDenied()}</>
               )}
             </div>
           </TabPanel>
@@ -371,14 +335,7 @@ const CreateOrEditGroup = () => {
               setUserSelectedPermissions={setUserSelectedPermissions}
             />
           ) : (
-            <DisplayMessage
-              customStyle={{ fontSize: 16 }}
-              altMessage="Access Denied"
-              image="./assets/access-denied.png"
-              heading="Access Denied"
-              description="Sorry, you are not allowed to view this page."
-              className="access-denied-mini"
-            />
+            <>{renderAccessDenied()}</>
           )}
         </TabPanel>
         <TabPanel value={value} index={2}>
@@ -425,14 +382,7 @@ const CreateOrEditGroup = () => {
                 </Grid>
               </Grid>
             ) : (
-              <DisplayMessage
-                customStyle={{ fontSize: 16 }}
-                altMessage="Access Denied"
-                image="./assets/access-denied.png"
-                heading="Access Denied"
-                description="Sorry, you are not allowed to view this page."
-                className="access-denied-mini"
-              />
+              <>{renderAccessDenied()}</>
             )}
           </div>
         </TabPanel>

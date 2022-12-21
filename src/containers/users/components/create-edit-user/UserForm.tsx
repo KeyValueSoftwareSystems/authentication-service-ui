@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilState, useSetRecoilState } from "recoil";
-
 import { useForm, FormProvider, FieldValues } from "react-hook-form";
-import { Box, Tab, Tabs, Typography } from "@mui/material";
+import { Box, Tab, Tabs } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
 import CircularProgress from "@mui/material/CircularProgress";
+
 import {
   IsViewEntitiesVerifiedAtom,
   IsViewGroupsVerifiedAtom,
@@ -17,13 +17,15 @@ import { ChecklistComponent } from "components/checklist/CheckList";
 import { GET_USER, GET_USER_PERMISSIONS } from "../../services/queries";
 import { Permission, User } from "types/user";
 import "./styles.css";
-import { AddUserformSchema, EditUserformSchema } from "../../userSchema";
+import { AddUserformSchema, EditUserformSchema } from "utils/user";
 import PermissionCards from "components/permission-cards/PermissionCards";
 import BottomFormController from "components/bottom-form-controller";
 import { useCustomQuery } from "hooks/useQuery";
 import { Group } from "types/group";
-import DisplayMessage from "components/display-message";
 import { currentUserAtom } from "states/loginStates";
+import { AddEntity, UpdateEntity } from "types/generic";
+import TabPanel from "components/tab-panel/TabPanel";
+import { renderAccessDenied } from "utils/generic";
 
 interface UserProps {
   isEdit?: boolean;
@@ -37,34 +39,6 @@ interface UserProps {
     userGroups: Group[],
     userPermissions: Permission[]
   ) => void;
-}
-
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: number;
-  value: number;
-  style?: any;
-}
-
-export function TabPanel(props: TabPanelProps) {
-  const { children, value, index, style = {}, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      style={style}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box>
-          <Typography component={"span"}>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
 }
 
 const UserForm = (props: UserProps) => {
@@ -238,14 +212,7 @@ const UserForm = (props: UserProps) => {
                         onChange={handleChange}
                       />
                     ) : (
-                      <DisplayMessage
-                        customStyle={{ fontSize: 16 }}
-                        altMessage="Access Denied"
-                        image="./assets/access-denied.png"
-                        heading="Access Denied"
-                        description="Sorry, you are not allowed to view this page."
-                        className="access-denied-mini"
-                      />
+                      <>{renderAccessDenied()}</>
                     )}
                   </div>
                 </div>
@@ -261,21 +228,16 @@ const UserForm = (props: UserProps) => {
                   groups={userGroups}
                 />
               ) : (
-                <DisplayMessage
-                  customStyle={{ fontSize: 16 }}
-                  altMessage="Access Denied"
-                  image="./assets/access-denied.png"
-                  heading="Access Denied"
-                  description="Sorry, you are not allowed to view this page."
-                  className="access-denied-mini"
-                />
+                <>{renderAccessDenied()}</>
               )}
             </TabPanel>
           </Box>
         </div>
       </div>
       <BottomFormController
-        primarybuttonLabel={isEdit ? "Update User" : "Add User"}
+        primarybuttonLabel={
+          isEdit ? UpdateEntity.UPDATE_USER : AddEntity.CREATE_USER
+        }
         primaryButtonType="submit"
         formId="add-user-form"
         onSubmit={() => handleSubmit(onSubmitForm)()}
