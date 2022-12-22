@@ -3,9 +3,9 @@ import { useRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 
-import { GET_USERS } from "../../../services/queries/userQueries";
+import { GET_USERS } from "services/queries/userQueries";
 import "./styles.css";
-import { DELETE_USER } from "../../../services/mutations/userMutations";
+import { DELETE_USER } from "services/mutations/userMutations";
 import { userListAtom } from "states/userStates";
 import TableList from "components/table/Table";
 import { columns } from "utils/user";
