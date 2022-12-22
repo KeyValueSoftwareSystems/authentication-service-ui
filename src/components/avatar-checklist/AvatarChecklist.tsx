@@ -4,7 +4,7 @@ import Checkbox from "@mui/material/Checkbox";
 import "./styles.css";
 import { ReactComponent as UnCheckedIcon } from "assets/checkbox-icons/uncheckedicon.svg";
 import { ReactComponent as CheckedIcon } from "assets/checkbox-icons/checkedicon.svg";
-import { CustomAvatar } from "../custom-avatar/CustomAvatar";
+import CustomAvatar from "components/custom-avatar";
 import SearchBar from "../search-bar/SearchBar";
 import { ChecklistProps } from "./types";
 

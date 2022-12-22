@@ -3,8 +3,8 @@ import styled from "@emotion/styled";
 import { useRecoilState } from "recoil";
 
 import "./styles.css";
-import PermissionsCard from "../permission-card/PermissionCard";
-import { GET_ENTITIES } from "containers/entities/services/queries";
+import PermissionsCard from "../permission-card";
+import { GET_ENTITIES } from "services/queries/entityQueries";
 import { Entity } from "types/generic";
 import { useCustomQuery } from "hooks/useQuery";
 import DisplayMessage from "components/display-message";

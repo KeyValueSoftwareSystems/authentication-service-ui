@@ -10,8 +10,8 @@ import {
   getUniquePermissionsFromGroups,
   getUniquePermissionsFromRoles,
 } from "utils/permissions";
-import If from "../if/If";
-import { RemovedPermissions } from "containers/permissions/constants";
+import If from "../if";
+import { RemovedPermissions } from "constants/permissions";
 import { PermissionCardProps } from "./types";
 
 const Container = styled.div<{ show: boolean }>`
