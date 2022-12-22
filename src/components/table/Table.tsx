@@ -80,7 +80,7 @@ const TableList: FC<TableProps> = ({
       setCurrentPage(1);
       setCount(0);
       setSearchValue("");
-    };
+    }; // eslint-disable-next-line
   }, []);
 
   function CustomPagination() {

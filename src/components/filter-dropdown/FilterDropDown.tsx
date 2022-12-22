@@ -48,7 +48,7 @@ const FilterDropdown: FC<FilterDropdownProps> = ({
   const [viewFirstFilter, setViewFirstFilter] = useState(true);
   const [viewSecondFilter, setViewSecondFilter] = useState(false);
   const handleClose = () => {
-    let totalLength = 0;
+    let totalLength = 0; // eslint-disable-next-line
     currentFilters.map((item: never[]) => {
       totalLength = totalLength + item.length;
     });

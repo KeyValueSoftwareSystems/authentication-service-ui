@@ -1,3 +1,3 @@
-import FormInputText from "./InputText";
+import FormInputText from "./FormInputText";
 
 export default FormInputText;

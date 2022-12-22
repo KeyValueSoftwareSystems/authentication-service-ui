@@ -83,7 +83,7 @@ const PermissionsCard: FC<PermissionCardProps> = ({
 
   useEffect(() => {
     setRolePermissions(getUniquePermissionsFromRoles(roles));
-    setGroupPermissions(getUniquePermissionsFromGroups(groups));
+    setGroupPermissions(getUniquePermissionsFromGroups(groups)); // eslint-disable-next-line
   }, []);
 
   const IsChecked = (id: string) => {
