@@ -2,10 +2,11 @@ import { useEffect } from "react";
 import { Outlet, Navigate, useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import { Avatar, Divider } from "@mui/material";
-
 import { useRecoilState } from "recoil";
 import CircularProgress from "@mui/material/CircularProgress";
-import { LOGO_URL } from "../../config";
+import { useMediaQuery } from 'react-responsive'
+
+import { LOGO_URL, MINI_LOGO_URL } from "../../config";
 import CustomerAuth from "services/auth";
 import "./styles.css";
 import { LOGOUT } from "services/mutations/authMutations";
@@ -76,6 +77,9 @@ const HomePage = () => {
   useEffect(() => {
     getCurrentUser(); // eslint-disable-next-line
   }, []);
+
+  const isDesktopScreen = useMediaQuery({ query: '(min-width: 1200px)' })
+  const isTabletScreen = useMediaQuery({ query: '(max-width: 1180px)' })
 
   useEffect(() => {
     if (userPermissions) {
@@ -168,7 +172,8 @@ const HomePage = () => {
           <div className="sideBar">
             <div className="navBar">
               <div className="navLogo">
-                <img alt="logo" src={LOGO_URL} style={{ width: "170px" }} />
+                {isDesktopScreen&& <img alt="logo" src={LOGO_URL} style={{ width: "170px" }} />}
+                {isTabletScreen&& <img alt="logo" src={MINI_LOGO_URL} style={{width: "65%"}} />}
               </div>
             </div>
             <div className="nav-user-details">
@@ -182,12 +187,12 @@ const HomePage = () => {
                         `${currentUserDetails.firstName} ${currentUserDetails.lastName}`?.toUpperCase()
                       )}
                     />
-                    <div className="name-logout">
+                    {isDesktopScreen&& <div className="name-logout">
                       <div className="username">{`${currentUserDetails.firstName} ${currentUserDetails.lastName}`}</div>
                       <div onClick={onLogout} className="logout">
                         {UserActions.LOGOUT}
                       </div>
-                    </div>
+                    </div>}
                   </div>
                 </If>
               </div>

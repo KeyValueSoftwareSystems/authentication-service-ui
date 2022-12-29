@@ -170,3 +170,13 @@
   .MuiDataGrid-iconButtonContainer {
   display: none;
 }
+
+@media screen and (max-width: 1180px) {
+ .MuiDataGrid-columnHeaderTitle{
+  font-size: 15px !important;
+ }
+
+ .MuiDataGrid-columnHeaders{
+  height: 49px !important;
+ }
+}

@@ -1,10 +1,4 @@
-import {
-  DataGrid,
-  GridColumns,
-  gridPageSelector,
-  useGridApiContext,
-  useGridSelector,
-} from "@mui/x-data-grid";
+import { DataGrid, GridColumns } from "@mui/x-data-grid";
 import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
 import { FC, useEffect, useState } from "react";
@@ -131,17 +125,19 @@ const TableList: FC<TableProps> = ({
             <Button
               id="go-button"
               onClick={() => {
-                if (pageValue > pageCount) setCurrentPage(pageCount);
-                else if (pageValue < 1) setCurrentPage(1);
-                else setCurrentPage(Number(pageValue));
-                fetchEntities({
-                  page:
-                    pageValue > pageCount
-                      ? pageCount - 1
-                      : pageValue < 1
-                      ? 0
-                      : pageValue - 1,
-                });
+                if (!isNaN(pageValue)) {
+                  if (pageValue > pageCount) setCurrentPage(pageCount);
+                  else if (pageValue < 1) setCurrentPage(1);
+                  else setCurrentPage(Number(pageValue));
+                  fetchEntities({
+                    page:
+                      pageValue > pageCount
+                        ? pageCount - 1
+                        : pageValue < 1
+                        ? 0
+                        : pageValue - 1,
+                  });
+                }
               }}
             >
               Go

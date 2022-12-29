@@ -125,3 +125,26 @@
   height: 419px;
   overflow: auto;
 }
+
+@media screen and (max-width: 1180px) {
+  .sort-button {
+    font-size: 15px;
+    height: 38px !important;
+  }
+
+  .filter-button {
+    width: 129px !important;
+    font-size: 15px;
+    height: 38px !important;
+  }
+
+  #add-button {
+    height: 42px !important;
+    width: 122px !important;
+    font-size: 15px !important;
+  }
+
+  .table-toolbar {
+    padding-bottom: 26px !important;
+  }
+}
