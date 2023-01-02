@@ -9,7 +9,7 @@ import { ReactComponent as RolesIcon } from "assets/sidebar-icons/roles.svg";
 import { Entities } from "types/generic";
 
 const SideBar: FC = () => {
-  const isDesktopScreen = useMediaQuery({ query: '(min-width: 1200px)' })
+  const isDesktopScreen = useMediaQuery({ query: "(min-width: 1240px)" });
   return (
     <nav>
       <div className="sideBarContainer">
@@ -20,7 +20,7 @@ const SideBar: FC = () => {
           }
         >
           <UsersIcon className="sidebar-icon" />
-          {isDesktopScreen&& Entities.USERS}
+          {isDesktopScreen && Entities.USERS}
         </NavLink>
         <NavLink
           to="/home/groups"
@@ -29,7 +29,7 @@ const SideBar: FC = () => {
           }
         >
           <GroupsIcon className="sidebar-icon" />
-          {isDesktopScreen&& Entities.GROUPS}
+          {isDesktopScreen && Entities.GROUPS}
         </NavLink>
 
         <NavLink
@@ -39,7 +39,7 @@ const SideBar: FC = () => {
           }
         >
           <RolesIcon className="sidebar-icon" />
-          {isDesktopScreen&& Entities.ROLES}
+          {isDesktopScreen && Entities.ROLES}
         </NavLink>
       </div>
     </nav>

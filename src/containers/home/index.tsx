@@ -4,7 +4,7 @@ import { useSetRecoilState } from "recoil";
 import { Avatar, Divider } from "@mui/material";
 import { useRecoilState } from "recoil";
 import CircularProgress from "@mui/material/CircularProgress";
-import { useMediaQuery } from 'react-responsive'
+import { useMediaQuery } from "react-responsive";
 
 import { LOGO_URL, MINI_LOGO_URL } from "../../config";
 import CustomerAuth from "services/auth";
@@ -78,8 +78,8 @@ const HomePage = () => {
     getCurrentUser(); // eslint-disable-next-line
   }, []);
 
-  const isDesktopScreen = useMediaQuery({ query: '(min-width: 1200px)' })
-  const isTabletScreen = useMediaQuery({ query: '(max-width: 1180px)' })
+  const isDesktopScreen = useMediaQuery({ query: "(min-width: 1240px)" });
+  //const isTabletScreen = useMediaQuery({ query: '(max-height: 820px)' })
 
   useEffect(() => {
     if (userPermissions) {
@@ -172,8 +172,16 @@ const HomePage = () => {
           <div className="sideBar">
             <div className="navBar">
               <div className="navLogo">
-                {isDesktopScreen&& <img alt="logo" src={LOGO_URL} style={{ width: "170px" }} />}
-                {isTabletScreen&& <img alt="logo" src={MINI_LOGO_URL} style={{width: "65%"}} />}
+                {isDesktopScreen && (
+                  <img alt="logo" src={LOGO_URL} style={{ width: "170px" }} />
+                )}
+                {!isDesktopScreen && (
+                  <img
+                    alt="logo"
+                    src={MINI_LOGO_URL}
+                    style={{ width: "24%" }}
+                  />
+                )}
               </div>
             </div>
             <div className="nav-user-details">
@@ -186,13 +194,23 @@ const HomePage = () => {
                       {...stringAvatar(
                         `${currentUserDetails.firstName} ${currentUserDetails.lastName}`?.toUpperCase()
                       )}
+                      className={
+                        !isDesktopScreen
+                          ? "user-avatar-tablet"
+                          : "user-avatar-dekstop"
+                      }
+                      onClick={() => {
+                        if (!isDesktopScreen) onLogout();
+                      }}
                     />
-                    {isDesktopScreen&& <div className="name-logout">
-                      <div className="username">{`${currentUserDetails.firstName} ${currentUserDetails.lastName}`}</div>
-                      <div onClick={onLogout} className="logout">
-                        {UserActions.LOGOUT}
+                    {isDesktopScreen && (
+                      <div className="name-logout">
+                        <div className="username">{`${currentUserDetails.firstName} ${currentUserDetails.lastName}`}</div>
+                        <div onClick={onLogout} className="logout">
+                          {UserActions.LOGOUT}
+                        </div>
                       </div>
-                    </div>}
+                    )}
                   </div>
                 </If>
               </div>

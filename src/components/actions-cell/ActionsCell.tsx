@@ -11,6 +11,7 @@ import { ActionsCellProps } from "./types";
 import { apiRequestAtom, toastMessageAtom } from "states/apiRequestState";
 import { useCustomMutation } from "hooks/useMutation";
 import { paginationAtom } from "states/searchSortFilterStates";
+import "./styles.css";
 
 const ActionsCell: FC<ActionsCellProps> = ({
   isEditVerified,

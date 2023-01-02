@@ -7,7 +7,6 @@ import "./styles.css";
 import { useSetRecoilState } from "recoil";
 import { searchAtom } from "states/searchSortFilterStates";
 import { useFetchEntities } from "hooks/useFetchEntities";
-import { useMediaQuery } from "react-responsive";
 
 const SearchBar: FC<SearchBarProps> = ({
   searchLabel,
@@ -20,8 +19,6 @@ const SearchBar: FC<SearchBarProps> = ({
   const setSearchValue = useSetRecoilState(searchAtom);
   const [field, setField] = useState("");
 
-  const isTabletScreen = useMediaQuery({ query: '(max-width: 1180px)' })
-  
   useEffect(() => {
     if (
       searchLabel.includes("First Name") ||
@@ -61,7 +58,7 @@ const SearchBar: FC<SearchBarProps> = ({
         />
       </div>
       <div className="search-icon" style={customIconStyle}>
-        <SearchIcon id="search-icon"/>
+        <SearchIcon id="search-icon" />
       </div>
     </div>
   );

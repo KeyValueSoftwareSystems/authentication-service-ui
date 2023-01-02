@@ -5,6 +5,7 @@
 }
 
 .navBar {
+  width: 320px;
   height: 85px;
   display: flex;
   align-items: center;
@@ -14,7 +15,6 @@
 
 .sideBar {
   background-color: white;
-  width: 25%;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -33,7 +33,7 @@
   margin-top: 30px;
   margin-bottom: 0px;
   background-color: transparent;
-  overflow: auto;
+  overflow: hidden;
   height: 99%;
 }
 
@@ -137,18 +137,32 @@
   position: relative;
 }
 
-@media screen and (max-width: 1180px) {
-  .sideBar{
-    width: 6%;
+@media screen and (max-height: 820px) {
+  .sideBar {
+    width: 80px;
   }
 
-  .outlet{
+  .outlet {
     margin-top: 23px;
+  }
+
+  .nav-header-wrap {
+    margin-left: 30px;
+  }
+
+  .nav-header {
+    font-size: 21px;
+  }
+
+  .user-avatar-tablet {
+    width: 37px !important;
+    height: 37px !important;
+    font-size: 1rem !important;
   }
 }
 
-@media screen and (max-width: 820px) {
-  .sideBar{
-    width: 9%;
+@media screen and (max-width: 1240px) {
+  .sideBar {
+    width: 80px;
   }
 }
