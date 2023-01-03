@@ -4,6 +4,7 @@ import PaginationItem from "@mui/material/PaginationItem";
 import { FC, useEffect, useState } from "react";
 import { Button, TextField } from "@mui/material";
 import { useSetRecoilState, useRecoilState } from "recoil";
+import { useMediaQuery } from "react-responsive";
 
 import { UserPermissionsAtom } from "states/permissionsStates";
 import { TableProps } from "./types";
@@ -61,6 +62,9 @@ const TableList: FC<TableProps> = ({
   const fetchEntities = useFetchEntities({
     userParams: { setList: setItemList, query: refetchQuery, field: field },
   });
+
+  const isPortrait = useMediaQuery({ orientation: "portrait" });
+
   useEffect(() => {
     if (userPermissions)
       userPermissions.forEach((item: any) => {
@@ -201,6 +205,9 @@ const TableList: FC<TableProps> = ({
             isViewFilterVerified={isViewFilterVerified}
           />
           <DataGrid
+            columnVisibilityModel={{
+              groups: isPortrait ? false : true,
+            }}
             rows={rows}
             columns={final_columns}
             style={{

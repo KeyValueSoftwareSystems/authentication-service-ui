@@ -138,10 +138,6 @@
 }
 
 @media screen and (max-height: 820px) {
-  .sideBar {
-    width: 80px;
-  }
-
   .outlet {
     margin-top: 23px;
   }

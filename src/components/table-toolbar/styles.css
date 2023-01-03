@@ -115,7 +115,8 @@
 }
 
 @media screen and (max-width: 1310px) and (max-height: 820px) {
-  .sort-button {
+  .sort-button,
+  .sort-button-enabled {
     font-size: 14px;
     height: 38px !important;
   }
@@ -158,6 +159,6 @@
   }
 
   #sort-filter-icon {
-    margin-right: 0px;
+    margin-right: 0px !important;
   }
 }

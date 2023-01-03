@@ -115,6 +115,10 @@
   .pagination-count {
     display: none;
   }
+
+  .MuiPagination-root {
+    min-width: 120% !important;
+  }
 }
 
 @media screen and (max-width: 1180px) and (max-height: 820px) {
