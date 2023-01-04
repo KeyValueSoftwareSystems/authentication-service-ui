@@ -114,9 +114,12 @@ const GroupCard: FC<GroupCardProps> = ({
           </div>
           <div className="roles-permissions-dropdown">
             <RolesPermissionsTab checked={isChecked(group.id)}>
-              {`${group?.roles?.length} Roles & ${
+              {`${group?.roles?.length} Role`}
+              {group?.roles?.length !== 1 && "s"}{" "}
+              {`& ${
                 getUniquePermissionsFromRoles(group?.roles).length
-              } Permissions`}
+              } Permission`}
+              {getUniquePermissionsFromRoles(group?.roles).length !== 1 && "s"}
             </RolesPermissionsTab>
             <StyledDownArrowIcon
               onClick={() => setShowRoles(!showRoles)}

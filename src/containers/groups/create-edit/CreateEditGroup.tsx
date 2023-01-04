@@ -282,7 +282,7 @@ const CreateOrEditGroup = () => {
     <div className="create-edit-group-container">
       {!loading && (
         <GroupForm
-          name={group?.name as string}
+          name={(group?.name as string) || ""}
           createGroup={onCreateGroup}
           editGroup={onEditGroup}
         />
@@ -331,7 +331,11 @@ const CreateOrEditGroup = () => {
         ) : (
           <CircularProgress />
         )}
-        <TabPanel value={value} index={1}>
+        <TabPanel
+          value={value}
+          index={1}
+          style={{ overflow: "auto", height: "135%" }}
+        >
           {isViewRolesVerified ? (
             <PermissionCards
               userSelectedPermissions={userSelectedPermissions}
