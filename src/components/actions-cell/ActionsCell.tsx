@@ -6,12 +6,12 @@ import { useRecoilState, useSetRecoilState } from "recoil";
 import { ReactComponent as EditIcon } from "assets/table-actions-icons/edit.svg";
 import { ReactComponent as LineIcon } from "assets/table-actions-icons/line.svg";
 import { ReactComponent as DeleteIcon } from "assets/table-actions-icons/trash.svg";
-import DialogBox from "../dialog-box";
-import { ActionsCellProps } from "./types";
 import { apiRequestAtom, toastMessageAtom } from "states/apiRequestState";
 import { useCustomMutation } from "hooks/useMutation";
 import { paginationAtom } from "states/searchSortFilterStates";
 import "./styles.css";
+import DialogBox from "../dialog-box";
+import { ActionsCellProps } from "./types";
 
 const ActionsCell: FC<ActionsCellProps> = ({
   isEditVerified,

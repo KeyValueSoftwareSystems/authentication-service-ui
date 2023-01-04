@@ -2,11 +2,11 @@ import { InputBase } from "@mui/material";
 import { FC, useEffect, useState } from "react";
 import { ReactComponent as SearchIcon } from "assets/toolbar-icons/search.svg";
 
-import { SearchBarProps } from "./types";
-import "./styles.css";
 import { useSetRecoilState } from "recoil";
 import { searchAtom } from "states/searchSortFilterStates";
 import { useFetchEntities } from "hooks/useFetchEntities";
+import { SearchBarProps } from "./types";
+import "./styles.css";
 
 const SearchBar: FC<SearchBarProps> = ({
   searchLabel,
@@ -29,6 +29,7 @@ const SearchBar: FC<SearchBarProps> = ({
       setField("name");
     }
   }, []);
+
   const fetchEntities = useFetchEntities({
     userParams: { setList: setItemList, query: searchQuery, field: field },
   });
