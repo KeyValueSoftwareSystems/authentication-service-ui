@@ -60,13 +60,13 @@ const Users: React.FC = () => {
 
   useEffect(() => {
     if (isViewUsersVerified) {
-      getUsers({ variables: { pagination: { limit: 8, offset: 0 } } });
+      getUsers({ variables: { pagination: { limit: 10, offset: 0 } } });
     }
   }, [isViewUsersVerified, getUsers]);
 
   useEffect(() => {
     if (isPortrait) {
-      columns[0].flex = 0.5;
+      columns[0].flex = 0.4;
     } else {
       columns[0].flex = 0.3;
     }

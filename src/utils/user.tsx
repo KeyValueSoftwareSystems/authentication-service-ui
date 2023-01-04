@@ -8,7 +8,7 @@ import TableChipElement from "components/table-chip-element";
 import StatusChip from "components/status-chip";
 import { stringAvatar } from "utils/table";
 
-const UserDetails = styled.div<{ desktopScreen: boolean }>`
+export const UserDetails = styled.div<{ desktopScreen: boolean }>`
   margin-left: ${(props) => !props.desktopScreen && "-5px"};
   margin-top: ${(props) => !props.desktopScreen && "-3px"};
 `;
