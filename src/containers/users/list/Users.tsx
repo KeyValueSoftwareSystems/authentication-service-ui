@@ -66,11 +66,7 @@ const Users: React.FC = () => {
   }, [isViewUsersVerified, getUsers]);
 
   useEffect(() => {
-    if (isPortrait) {
-      columns[0].flex = 0.4;
-    } else {
-      columns[0].flex = 0.3;
-    }
+    columns[0].flex = isPortrait ? 0.4 : 0.3;
   }, [isPortrait]);
 
   const onEdit = (id: any) => {

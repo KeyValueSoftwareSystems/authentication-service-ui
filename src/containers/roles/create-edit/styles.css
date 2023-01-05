@@ -61,3 +61,15 @@
   height: 85%;
   overflow: auto;
 }
+
+@media screen and (max-height: 768px) {
+  .role-permissions {
+    height: 76%;
+  }
+}
+
+@media screen and (max-height: 820px) {
+  .role-permissions {
+    height: 75%;
+  }
+}

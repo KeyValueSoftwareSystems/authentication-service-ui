@@ -24,3 +24,9 @@
   width: 121px;
   font-family: "Inter" !important;
 }
+
+@media screen and (min-width: 1180px) and (max-height: 820px) {
+  .bottom-wrapper {
+    padding: 24.5px 60px;
+  }
+}
