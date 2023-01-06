@@ -124,6 +124,12 @@ const GroupCard: FC<GroupCardProps> = ({
             <StyledDownArrowIcon
               onClick={() => setShowRoles(!showRoles)}
               roles={showRoles.toString()}
+              style={{
+                visibility:
+                  group?.permissions.length === 0 && group?.roles.length === 0
+                    ? "hidden"
+                    : "visible",
+              }}
             />
           </div>
         </CheckBoxComponent>

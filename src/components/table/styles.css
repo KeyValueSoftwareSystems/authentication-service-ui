@@ -177,3 +177,9 @@
     height: 92%;
   }
 }
+
+@media screen and (min-width: 820px) and (min-height: 1180px) {
+  .table-component {
+    height: 93%;
+  }
+}
