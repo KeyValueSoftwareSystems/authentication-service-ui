@@ -130,6 +130,11 @@ const HomePage = () => {
 
   const [logout] = useCustomMutation(LOGOUT, onLogoutCompleted);
 
+  const navLogo = {
+    image: isDesktopScreen ? LOGO_URL : MINI_LOGO_URL,
+    width: isDesktopScreen ? "170px" : "24%",
+  };
+
   const handleRedirection = (path: string) => {
     let redirectUrl = RoutePaths.usersUrl;
     redirectUrl =
@@ -184,15 +189,11 @@ const HomePage = () => {
           <div className="sideBar">
             <div className="navBar">
               <div className="navLogo">
-                {isDesktopScreen ? (
-                  <img alt="logo" src={LOGO_URL} style={{ width: "170px" }} />
-                ) : (
-                  <img
-                    alt="logo"
-                    src={MINI_LOGO_URL}
-                    style={{ width: "24%" }}
-                  />
-                )}
+                <img
+                  alt="logo"
+                  src={navLogo.image}
+                  style={{ width: navLogo.width }}
+                />
               </div>
             </div>
             <div className="nav-user-details">

@@ -96,6 +96,10 @@ const GroupCard: FC<GroupCardProps> = ({
       currentCheckedItems?.some((item) => item.id === id) || isViewPage
     );
   };
+
+  const isManyRoles = () => {
+    if (group?.roles?.length !== 1) return "s";
+  };
   return (
     <>
       <Container>
@@ -115,7 +119,7 @@ const GroupCard: FC<GroupCardProps> = ({
           <div className="roles-permissions-dropdown">
             <RolesPermissionsTab checked={isChecked(group.id)}>
               {`${group?.roles?.length} Role`}
-              {group?.roles?.length !== 1 && "s"}{" "}
+              {isManyRoles()}{" "}
               {`& ${
                 getUniquePermissionsFromRoles(group?.roles).length
               } Permission`}
