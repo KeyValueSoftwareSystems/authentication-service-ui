@@ -1,12 +1,13 @@
 import { FC, useEffect, useState } from "react";
 import Checkbox from "@mui/material/Checkbox";
+import { useParams } from "react-router-dom";
 
 import { ReactComponent as UnCheckedIcon } from "assets/checkbox-icons/uncheckedicon.svg";
 import { ReactComponent as CheckedIcon } from "assets/checkbox-icons/checkedicon.svg";
 import { Group } from "types/group";
 import "./styles.css";
 import GroupCard from "../group-card";
-import { useParams } from "react-router-dom";
+
 interface ChecklistProps {
   mapList: Group[];
   currentCheckedItems: Group[];

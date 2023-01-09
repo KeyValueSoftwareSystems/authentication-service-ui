@@ -5,7 +5,6 @@ import { useForm, FormProvider, FieldValues } from "react-hook-form";
 import { Box, Tab, Tabs } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
 import CircularProgress from "@mui/material/CircularProgress";
-import { useMediaQuery } from "react-responsive";
 
 import {
   IsViewEntitiesVerifiedAtom,

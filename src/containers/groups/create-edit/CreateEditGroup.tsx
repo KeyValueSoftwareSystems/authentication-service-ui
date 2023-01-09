@@ -5,7 +5,6 @@ import { FieldValues } from "react-hook-form";
 import { useSetRecoilState } from "recoil";
 import { Box, Tab, Tabs, Grid, Divider } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
-import { useMediaQuery } from "react-responsive";
 
 import { GET_ROLES } from "services/queries/roleQueries";
 import {
