@@ -66,11 +66,6 @@ const CreateOrEditGroup = () => {
     Permission[]
   >([]);
 
-  const isTabletScreen = useMediaQuery({
-    minWidth: "768px",
-    maxWidth: "1180px",
-  });
-
   const [updateGroup, { data: updatedGroupData }] =
     useCustomMutation(UPDATE_GROUP);
   const [createGroup, { data: createdGroupData }] =

@@ -61,11 +61,6 @@ const UserForm = (props: UserProps) => {
     Permission[]
   >([]);
 
-  const isTabletScreen = useMediaQuery({
-    minWidth: "768px",
-    maxWidth: "1180px",
-  });
-
   const onGetGroupsComplete = (data: any) => {
     const groups = data?.getGroups?.results?.map((group: Group) => group);
     setAllGroups([...groups]);
