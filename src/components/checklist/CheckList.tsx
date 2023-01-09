@@ -6,6 +6,7 @@ import { ReactComponent as CheckedIcon } from "assets/checkbox-icons/checkedicon
 import { Group } from "types/group";
 import "./styles.css";
 import GroupCard from "../group-card";
+import { useParams } from "react-router-dom";
 interface ChecklistProps {
   mapList: Group[];
   currentCheckedItems: Group[];
@@ -17,6 +18,9 @@ export const ChecklistComponent: FC<ChecklistProps> = ({
   currentCheckedItems,
   onChange,
 }) => {
+  const { id } = useParams();
+  const containerHeight = id ? "calc(100vh - 410px)" : "calc(100vh - 490px)";
+
   const [selectAll, setSelectAll] = useState<boolean>(false);
 
   const handleSelectAll = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,7 +36,7 @@ export const ChecklistComponent: FC<ChecklistProps> = ({
   }, [mapList, currentCheckedItems]);
 
   return (
-    <div id="add-items-checklist">
+    <div id="add-items-checklist" style={{ height: containerHeight }}>
       <div id="titlebar">
         <div id="selectall">
           <Checkbox

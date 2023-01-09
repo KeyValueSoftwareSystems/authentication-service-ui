@@ -321,7 +321,7 @@ const CreateOrEditGroup = () => {
             value={value}
             index={0}
             style={{
-              height: isTabletScreen ? "114%" : "128%",
+              height: "calc(100vh - 400px)",
               overflowY: "auto",
             }}
           >
@@ -343,7 +343,7 @@ const CreateOrEditGroup = () => {
         <TabPanel
           value={value}
           index={1}
-          style={{ overflow: "auto", height: isTabletScreen ? "118%" : "135%" }}
+          style={{ overflowY: "scroll", height: "calc(100vh - 400px)" }}
         >
           {isViewRolesVerified ? (
             <PermissionCards

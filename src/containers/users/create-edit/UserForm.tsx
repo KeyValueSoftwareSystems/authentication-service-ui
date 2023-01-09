@@ -232,7 +232,7 @@ const UserForm = (props: UserProps) => {
               index={1}
               style={{
                 overflow: "auto",
-                height: isTabletScreen ? "50%" : "73%",
+                height: id ? "calc(100vh - 390px)" : "calc(100vh - 470px)",
               }}
             >
               {isViewEntitiesVerified ? (
