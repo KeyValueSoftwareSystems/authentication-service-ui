@@ -145,6 +145,7 @@ const FilterDropdown: FC<FilterDropdownProps> = ({
                   cursor: "default",
                 },
               }}
+              disableRipple
             >
               <div id="filter-heading">Filters</div>
               <Avatar
@@ -199,7 +200,15 @@ const FilterDropdown: FC<FilterDropdownProps> = ({
             )}
           </div>
           <div style={{ position: "fixed", top: "382px" }}>
-            <MenuItem>
+            <MenuItem
+              disableRipple
+              sx={{
+                "&:hover": {
+                  backgroundColor: "transparent",
+                  cursor: "default",
+                },
+              }}
+            >
               <Button
                 id="filter-button"
                 sx={{
