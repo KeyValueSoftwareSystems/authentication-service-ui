@@ -126,8 +126,8 @@ const TableList: FC<TableProps> = ({
             fetchEntities({ page: value - 1 });
           }}
         />
-        <If condition={count > 15}>
-          <div className="go-to-page">
+        <div className="go-to-page">
+          <If condition={count > 15}>
             <div id="pagination-text">Go to Page</div>
             <div>
               <TextField
@@ -148,8 +148,8 @@ const TableList: FC<TableProps> = ({
                 Go
               </Button>
             </div>
-          </div>
-        </If>
+          </If>
+        </div>
       </>
     );
   }
