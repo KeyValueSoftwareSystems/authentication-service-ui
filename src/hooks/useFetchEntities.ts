@@ -73,9 +73,8 @@ export const useFetchEntities = (usersFetchProps: usersFetchProps) => {
         direction: countParams === 1 ? SortDirection.DESC : SortDirection.ASC,
       };
       sort = { ...sort, ...direction };
-    } else {
-      sort = {};
     }
+
     let operands = [];
     if (checkedStatus.length > 0) {
       let status = {
