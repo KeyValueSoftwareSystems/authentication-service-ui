@@ -22,7 +22,7 @@ const Toast: React.FC<ToastProps> = ({ isOpen, message, handleClose }) => {
       <Snackbar
         open={isOpen}
         onClose={closeHandler}
-        autoHideDuration={6000}
+        //autoHideDuration={6000}
         anchorOrigin={{
           vertical: "top",
           horizontal: "center",

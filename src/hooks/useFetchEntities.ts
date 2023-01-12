@@ -66,13 +66,15 @@ export const useFetchEntities = (usersFetchProps: usersFetchProps) => {
       }
     }
     let sort = {};
-    if (count !== 0 || countValue !== 0) {
+    if (countValue !== 0) {
       const countParams = countValue !== 0 ? countValue : count;
       let direction = {
         field: usersFetchProps.userParams.field,
         direction: countParams === 1 ? SortDirection.DESC : SortDirection.ASC,
       };
       sort = { ...sort, ...direction };
+    } else {
+      sort = {};
     }
     let operands = [];
     if (checkedStatus.length > 0) {
