@@ -24,6 +24,7 @@ import {
   ACCESS_DENIED_MESSAGE,
 } from "constants/messages";
 import ActionsCell from "components/actions-cell";
+import If from "components/if";
 
 const TableList: FC<TableProps> = ({
   field,
@@ -125,28 +126,30 @@ const TableList: FC<TableProps> = ({
             fetchEntities({ page: value - 1 });
           }}
         />
-        <div className="go-to-page">
-          <div id="pagination-text">Go to Page</div>
-          <div>
-            <TextField
-              type="number"
-              defaultValue={currentPage}
-              onChange={(e: any) => {
-                setPageValue(e.target.value);
-              }}
-              inputProps={{
-                min: 0,
-                style: { textAlign: "center", padding: 0 },
-              }}
-              sx={{ ml: "9px", mr: "9px" }}
-            />
+        <If condition={count > 15}>
+          <div className="go-to-page">
+            <div id="pagination-text">Go to Page</div>
+            <div>
+              <TextField
+                type="number"
+                defaultValue={currentPage}
+                onChange={(e: any) => {
+                  setPageValue(e.target.value);
+                }}
+                inputProps={{
+                  min: 0,
+                  style: { textAlign: "center", padding: 0 },
+                }}
+                sx={{ ml: "9px", mr: "9px" }}
+              />
+            </div>
+            <div>
+              <Button id="go-button" onClick={onClickGo}>
+                Go
+              </Button>
+            </div>
           </div>
-          <div>
-            <Button id="go-button" onClick={onClickGo}>
-              Go
-            </Button>
-          </div>
-        </div>
+        </If>
       </>
     );
   }
