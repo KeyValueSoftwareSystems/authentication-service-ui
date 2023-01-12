@@ -32,6 +32,7 @@ const EditUser: React.FC = () => {
   const onGetCurrentUserCompleted = (data: any) => {
     setCurrentUserDetails(data.getCurrentUser);
     setUserPermissions(data.getCurrentUser?.permissions);
+    navigate(RoutePaths.usersUrl);
   };
 
   const { lazyQuery: getCurrentUser } = useCustomLazyQuery(
@@ -81,16 +82,18 @@ const EditUser: React.FC = () => {
         },
       },
       onCompleted: () => {
-        if (currentUserDetails.id === id) {
-          getCurrentUser();
-        }
         if (!userUpdateError && !groupUpdateError && !permissionUpdateError) {
-          navigate(RoutePaths.usersUrl);
+          if (currentUserDetails.id !== id) {
+            navigate(RoutePaths.usersUrl);
+          }
           setApiSuccess(true);
           setToastMessage(USER_UPDATE_SUCCESS_MESSAGE);
         }
       },
     });
+    if (currentUserDetails.id === id) {
+      getCurrentUser();
+    }
   };
 
   return <UserForm isEdit updateUser={onUpdateUser} />;
