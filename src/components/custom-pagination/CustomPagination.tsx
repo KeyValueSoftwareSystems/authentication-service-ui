@@ -16,11 +16,12 @@ const CustomPagination: FC<CustomPaginationProps> = ({
   fetchEntities,
   count,
 }) => {
-  const [pageValue, setPageValue] = useState(1);
+  const [currentPage, setCurrentPage] = useRecoilState(paginationAtom);
+
+  const [pageValue, setPageValue] = useState(currentPage);
   const [pageCount] = useState(
     count % 15 > 0 ? Math.floor(count / 15) + 1 : Math.floor(count / 15)
   );
-  const [currentPage, setCurrentPage] = useRecoilState(paginationAtom);
   const onClickGo = () => {
     if (!isNaN(pageValue)) {
       if (pageValue > pageCount) setCurrentPage(pageCount);
