@@ -89,11 +89,11 @@ const EditUser: React.FC = () => {
           setApiSuccess(true);
           setToastMessage(USER_UPDATE_SUCCESS_MESSAGE);
         }
+        if (currentUserDetails.id === id) {
+          getCurrentUser();
+        }
       },
     });
-    if (currentUserDetails.id === id) {
-      getCurrentUser();
-    }
   };
 
   return <UserForm isEdit updateUser={onUpdateUser} />;
