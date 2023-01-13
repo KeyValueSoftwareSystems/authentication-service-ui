@@ -88,13 +88,6 @@ const PermissionsCard: FC<PermissionCardProps> = ({
   useEffect(() => {
     setRolePermissions(getUniquePermissionsFromRoles(roles));
     setGroupPermissions(getUniquePermissionsFromGroups(groups)); // eslint-disable-next-line
-    entity.permissions.sort((permission1, permission2) =>
-      permission1.name < permission2.name
-        ? 1
-        : permission1.name > permission2.name
-        ? -1
-        : 0
-    );
   }, []);
 
   const IsChecked = (id: string) => {
