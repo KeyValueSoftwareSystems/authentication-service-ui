@@ -9,92 +9,84 @@ import { useMediaQuery } from "react-responsive";
 import Filter from "components/filter/Filter";
 import { ReactComponent as LeftArrowIcon } from "assets/toolbar-icons/arrow-left.svg";
 import { useFetchEntities } from "hooks/useFetchEntities";
-import { statusList } from "constants/filters";
 import "./styles.css";
 import { FilterDropdownProps } from "./types";
 
 const FilterDropdown: FC<FilterDropdownProps> = ({
-  firstFilter,
-  setFirstFilter,
-  secondFilter,
-  setSecondFilter,
   filterQuery,
   setItemList,
   field,
-  filterList,
   open,
   anchorEl,
   onApply,
   filterName,
   currentFilters,
-  isViewFilterVerified,
+  filters,
+  checkedFilters,
+  setCheckedFilters,
+  viewFiltersVerified,
 }) => {
-  const [viewFirstFilter, setViewFirstFilter] = useState(true);
-  const [viewSecondFilter, setViewSecondFilter] = useState(false);
   const isPortrait = useMediaQuery({ orientation: "portrait" });
 
+  const [viewFilter, setViewFilter] = useState<number>(0);
+
   const handleClose = () => {
-    let totalLength = 0; // eslint-disable-next-line
-    currentFilters.map((item: never[]) => {
-      totalLength = totalLength + item.length;
-    });
-    onApply(totalLength);
-  };
-  const switchFilter = (first: boolean, second: boolean) => {
-    setViewFirstFilter(first);
-    setViewSecondFilter(second);
+    onApply(currentFilters.reduce((sum, filter) => sum + filter.length, 0));
+    setViewFilter(0);
   };
 
   const onAddFilter = (
     name: string,
     e: React.ChangeEvent<HTMLInputElement>,
-    checkedItems: never[],
-    setCheckedItems: React.Dispatch<React.SetStateAction<never[]>>
+    checkedItems: string[],
+    setCheckedItems: SetterOrUpdater<string[]>
   ) => {
     const isChecked = e.target.checked;
     if (isChecked) {
-      setCheckedItems(checkedItems.concat(name as unknown as never[]));
+      setCheckedItems(checkedItems.concat(name));
     } else {
       setCheckedItems(checkedItems.filter((x) => x !== name));
     }
   };
 
-  const handleCheckedItems = (item: string, checkedItems: never[]) => {
-    if (checkedItems.includes(item as unknown as never)) return true;
+  const handleCheckedItems = (item: string, checkedItems: string[]) => {
+    if (checkedItems.includes(item)) return true;
     else return false;
   };
 
   const handleClearAll = () => {
-    if (
-      typeof setSecondFilter !== "undefined" &&
-      typeof setFirstFilter !== "undefined"
-    ) {
-      setSecondFilter([]);
-      setFirstFilter([]);
+    if (setCheckedFilters) {
+      setCheckedFilters.forEach((setFilter: SetterOrUpdater<string[]>) => {
+        setFilter([]);
+      });
     }
   };
 
   const handleCancel = () => {
-    if (
-      typeof setSecondFilter !== "undefined" &&
-      typeof setFirstFilter !== "undefined"
-    ) {
-      setFirstFilter(currentFilters[0]);
-      setSecondFilter(currentFilters[1]);
+    if (setCheckedFilters) {
+      setCheckedFilters.forEach(
+        (setFilter: SetterOrUpdater<string[]>, index: number) => {
+          setFilter(currentFilters[index]);
+        }
+      );
     }
     handleClose();
   };
+
+  const getFilterCount = () => {
+    return checkedFilters.reduce((sum, filter) => sum + filter.length, 0);
+  };
+
+  const handleSave = () => {
+    onApply(getFilterCount());
+    fetchEntities({});
+    setViewFilter(0);
+  };
+
   const fetchEntities = useFetchEntities({
     userParams: { setList: setItemList, query: filterQuery, field: field },
   });
 
-  const handleSave = () => {
-    onApply(
-      (firstFilter as unknown as never[]).length +
-        (secondFilter as unknown as never[]).length
-    );
-    fetchEntities({});
-  };
   return (
     <Menu
       anchorEl={anchorEl}
@@ -114,21 +106,9 @@ const FilterDropdown: FC<FilterDropdownProps> = ({
       anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
     >
       <div className="filter">
-        <div
-          className="filter-by"
-          style={viewSecondFilter ? { width: "348px" } : { width: "318px" }}
-        >
+        <div className="filter-by">
           <div style={{ position: "fixed" }}>
-            <MenuItem
-              id="heading-clear-all"
-              sx={{
-                "&:hover": {
-                  backgroundColor: "transparent",
-                  cursor: "default",
-                },
-              }}
-              disableRipple
-            >
+            <MenuItem id="heading-clear-all" disableRipple>
               <div id="filter-heading">Filters</div>
               <Avatar
                 id="filter-avatar"
@@ -137,115 +117,58 @@ const FilterDropdown: FC<FilterDropdownProps> = ({
                   mr: "112px",
                 }}
               >
-                {(firstFilter as unknown as never[]).length +
-                  (secondFilter as unknown as never[]).length}
+                {getFilterCount()}
               </Avatar>
               <div id="clear-all" onClick={handleClearAll}>
                 Clear All
               </div>
             </MenuItem>
-            <MenuItem
-              id="filter-by-options"
-              onClick={() => switchFilter(true, false)}
-            >
-              <div>{filterName[0]}</div>
-              <div id="avatar-arrow">
-                <Avatar
-                  id="filter-avatar"
-                  sx={{
-                    mr: "12px !important",
-                  }}
-                >
-                  {(firstFilter as unknown as never[]).length}
-                </Avatar>
-                <LeftArrowIcon />
-              </div>
-            </MenuItem>
-            {isViewFilterVerified && (
-              <MenuItem
-                id="filter-by-options"
-                onClick={() => switchFilter(false, true)}
-              >
-                <div>{filterName[1]}</div>
-                <div id="avatar-arrow">
-                  <Avatar
-                    id="filter-avatar"
-                    sx={{
-                      mr: "12px !important",
+            {filterName.map(
+              (filter: string, index: number) =>
+                viewFiltersVerified[index] && (
+                  <MenuItem
+                    key={filter}
+                    id="filter-by-options"
+                    onClick={() => {
+                      setViewFilter(index);
                     }}
                   >
-                    {(secondFilter as unknown as never[]).length}
-                  </Avatar>
-                  <LeftArrowIcon />
-                </div>
-              </MenuItem>
+                    <div>{filterName[index]}</div>
+                    <div id="avatar-arrow">
+                      <Avatar
+                        id="filter-avatar"
+                        sx={{
+                          mr: "12px !important",
+                        }}
+                      >
+                        {(checkedFilters[index] as unknown as never[]).length}
+                      </Avatar>
+                      <LeftArrowIcon />
+                    </div>
+                  </MenuItem>
+                )
             )}
           </div>
           <div style={{ position: "fixed", top: "382px" }}>
-            <MenuItem
-              disableRipple
-              sx={{
-                "&:hover": {
-                  backgroundColor: "transparent",
-                  cursor: "default",
-                },
-              }}
-            >
-              <Button
-                id="filter-button"
-                sx={{
-                  color: "#2653F1",
-                  border: "1px solid #2653F1",
-                  mr: "8px",
-                  "&:hover": {
-                    border: "1px solid #2653F1",
-                    color: "#2653F1",
-                  },
-                }}
-                onClick={handleCancel}
-              >
+            <MenuItem disableRipple id="filter-buttons">
+              <Button id="filter-button-cancel" onClick={handleCancel}>
                 Cancel
               </Button>
-              <Button
-                id="filter-button"
-                sx={{
-                  backgroundColor: "#2653F1",
-                  color: "white",
-                  ml: "8px",
-                  "&:hover": {
-                    backgroundColor: "#2653F1",
-                    color: "white",
-                  },
-                }}
-                onClick={handleSave}
-              >
+              <Button id="filter-button-apply" onClick={handleSave}>
                 Apply
               </Button>
             </MenuItem>
           </div>
         </div>
-        {viewFirstFilter && (
+        <div id="filter-items">
           <Filter
-            itemList={statusList}
-            checkedItems={firstFilter as unknown as never[]}
+            itemList={filters[viewFilter]}
+            checkedItems={checkedFilters[viewFilter]}
             handleCheckedItems={handleCheckedItems}
-            setCheckedItems={
-              setFirstFilter as unknown as SetterOrUpdater<never[]>
-            }
+            setCheckedItems={setCheckedFilters[viewFilter]}
             onAddFilter={onAddFilter}
           />
-        )}
-        {viewSecondFilter && (
-          <Filter
-            itemList={filterList as unknown as never[]}
-            checkedItems={secondFilter as unknown as never[]}
-            handleCheckedItems={handleCheckedItems}
-            setCheckedItems={
-              setSecondFilter as unknown as SetterOrUpdater<never[]>
-            }
-            onAddFilter={onAddFilter}
-          />
-        )}
+        </div>
       </div>
     </Menu>
   );

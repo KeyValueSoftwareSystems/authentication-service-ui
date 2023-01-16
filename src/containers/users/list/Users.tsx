@@ -34,16 +34,22 @@ import { useCustomLazyQuery } from "hooks/useLazyQuery";
 import "../create-edit/styles.css";
 import "./styles.css";
 import { RoutePaths } from "constants/routes";
+import { statusList } from "constants/filters";
 
 const Users: React.FC = () => {
   const [isAddVerified, setAddVerified] = useState(false);
   const [usersCount, setUsersCount] = useState(0);
+  const [currentFirstFilter, setCurrentFirstFilter] = useState<string[]>([]);
+  const [currentSecondFilter, setCurrentSecondFilter] = useState<string[]>([]);
+
   const [isViewUsersVerified] = useRecoilState(IsViewUsersVerifiedAtom);
   const [isViewGroupsVerified] = useRecoilState(IsViewGroupsVerifiedAtom);
   const [userPermissions] = useRecoilState(UserPermissionsAtom);
   const [userList, setUserList] = useRecoilState(userListAtom);
-  const [checkedStatus, setCheckedStatus] = useRecoilState(statusFilterAtom);
-  const [checkedGroups, setCheckedGroups] = useRecoilState(groupFilterAtom);
+  const [checkedStatus, setCheckedStatus] =
+    useRecoilState<string[]>(statusFilterAtom);
+  const [checkedGroups, setCheckedGroups] =
+    useRecoilState<string[]>(groupFilterAtom);
   const [groupList] = useRecoilState(groupListAtom);
   const navigate = useNavigate();
 
@@ -69,13 +75,12 @@ const Users: React.FC = () => {
     columns[0].flex = isPortrait ? 0.4 : 0.3;
   }, [isPortrait]);
 
-  const onEdit = (id: any) => {
-    navigate(`${RoutePaths.usersUrl}/add/${id}`);
-  };
-
-  const onAdd = () => {
-    navigate(`${RoutePaths.usersUrl}/add`);
-  };
+  useEffect(() => {
+    return () => {
+      setCheckedGroups([]);
+      setCheckedStatus([]);
+    }; // eslint-disable-next-line
+  }, []);
 
   useEffect(() => {
     if (userPermissions)
@@ -85,6 +90,23 @@ const Users: React.FC = () => {
         }
       });
   }, [userPermissions]);
+
+  const onEdit = (id: any) => {
+    navigate(`${RoutePaths.usersUrl}/add/${id}`);
+  };
+
+  const onAdd = () => {
+    navigate(`${RoutePaths.usersUrl}/add`);
+  };
+
+  const handleClickFilter = (
+    event: any,
+    setAnchorEl: (value: React.SetStateAction<null>) => void
+  ) => {
+    setAnchorEl(event.currentTarget);
+    setCurrentFirstFilter(checkedStatus);
+    setCurrentSecondFilter(checkedGroups);
+  };
 
   const setItemList = (data: any) => {
     setUserList(data?.getUsers?.results);
@@ -127,13 +149,13 @@ const Users: React.FC = () => {
           isViewVerified={isViewUsersVerified}
           isAddVerified={!isAddVerified}
           field="firstName"
-          filterList={groupList}
-          firstFilter={checkedStatus}
-          setFirstFilter={setCheckedStatus}
-          secondFilter={checkedGroups}
-          setSecondFilter={setCheckedGroups}
           filterName={["Status", "Groups"]}
-          isViewFilterVerified={isViewGroupsVerified}
+          handleClickFilter={handleClickFilter}
+          currentFilters={[currentFirstFilter, currentSecondFilter]}
+          filters={[statusList, groupList]}
+          checkedFilters={[checkedStatus, checkedGroups]}
+          setCheckedFilters={[setCheckedStatus, setCheckedGroups]}
+          viewFiltersVerified={[true, isViewGroupsVerified]}
         />
       ) : (
         <CircularProgress />

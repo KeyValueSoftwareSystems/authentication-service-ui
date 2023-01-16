@@ -7,12 +7,12 @@ export const sortCountAtom = atom({
 
 export const statusFilterAtom = atom({
   key: "statusFilter",
-  default: [],
+  default: [""],
 });
 
 export const groupFilterAtom = atom({
   key: "groupFilter",
-  default: [],
+  default: [""],
 });
 
 export const searchAtom = atom({

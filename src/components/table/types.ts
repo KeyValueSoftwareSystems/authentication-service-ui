@@ -21,14 +21,20 @@ export interface TableProps {
   deletePermission?: string;
   isViewVerified?: boolean;
   isAddVerified?: boolean;
-  filterList?: never[];
   filterName?: string[];
-  firstFilter?: never[];
-  isViewFilterVerified?: boolean;
-  setFirstFilter?: SetterOrUpdater<never[]>;
-  secondFilter?: never[];
-  setSecondFilter?: SetterOrUpdater<never[]>;
   handleRowClick?: (params: GridRowParams) => void;
   onAdd: () => void;
   onEdit: (id: GridRowId) => void;
+  currentFilters?: string[][];
+  handleClickFilter?: (
+    event: any,
+    setAnchorEl: (value: React.SetStateAction<null>) => void
+  ) => void;
+  handleCancel?: (
+    setAnchorEl: (value: React.SetStateAction<null>) => void
+  ) => void;
+  filters?: string[][];
+  checkedFilters?: string[][];
+  setCheckedFilters?: SetterOrUpdater<string[]>[];
+  viewFiltersVerified?: boolean[];
 }

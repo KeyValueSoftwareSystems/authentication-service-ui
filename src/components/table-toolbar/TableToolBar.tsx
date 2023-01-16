@@ -1,5 +1,5 @@
 import { Button } from "@mui/material";
-import { useRecoilState } from "recoil";
+import { SetterOrUpdater, useRecoilState } from "recoil";
 import { FC, useState } from "react";
 import { Avatar } from "@mui/material";
 import { useMediaQuery } from "react-responsive";
@@ -17,19 +17,19 @@ import SearchBar from "../search-bar/SearchBar";
 
 const TableToolBar: FC<TableToolBarProps> = ({
   field,
-  filterList,
-  firstFilter,
   filterName,
-  setFirstFilter,
-  secondFilter,
-  setSecondFilter,
   searchLabel,
   buttonLabel,
   setItemList,
   searchQuery,
   isAddVerified,
-  isViewFilterVerified,
   onAdd,
+  currentFilters,
+  filters,
+  checkedFilters,
+  setCheckedFilters,
+  viewFiltersVerified,
+  handleClickFilter,
 }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -41,30 +41,10 @@ const TableToolBar: FC<TableToolBarProps> = ({
   };
 
   const handleClick = (event: any) => {
-    setAnchorEl(event.currentTarget);
-    setCurrentFirstFilter(firstFilter as unknown as never[]);
-    setCurrentSecondFilter(secondFilter as unknown as never[]);
+    if (handleClickFilter) handleClickFilter(event, setAnchorEl);
   };
 
-  const handleClose = () => {
-    setAnchorEl(null);
-    handleCancel();
-  };
-
-  const [currentFirstFilter, setCurrentFirstFilter] = useState([]);
-  const [currentSecondFilter, setCurrentSecondFilter] = useState([]);
   const isPortrait = useMediaQuery({ query: "(max-width: 980px)" });
-
-  const handleCancel = () => {
-    if (
-      typeof setSecondFilter !== "undefined" &&
-      typeof setFirstFilter !== "undefined"
-    ) {
-      setFirstFilter(currentFirstFilter);
-      setSecondFilter(currentSecondFilter);
-    }
-    handleClose();
-  };
 
   const fetchEntities = useFetchEntities({
     userParams: { setList: setItemList, query: searchQuery, field: field },
@@ -129,22 +109,20 @@ const TableToolBar: FC<TableToolBarProps> = ({
           </Button>
         </div>
       )}
-      {filterList && (
+      {filters && (
         <FilterDropdown
           field={field}
           filterQuery={searchQuery}
           setItemList={setItemList}
-          filterList={filterList}
-          firstFilter={firstFilter}
-          secondFilter={secondFilter}
-          setFirstFilter={setFirstFilter}
-          setSecondFilter={setSecondFilter}
           open={open}
           anchorEl={anchorEl}
           onApply={onApply}
-          filterName={filterName as unknown as string[]}
-          currentFilters={[currentFirstFilter, currentSecondFilter]}
-          isViewFilterVerified={isViewFilterVerified}
+          filterName={filterName ?? []}
+          filters={filters}
+          currentFilters={currentFilters ?? []}
+          checkedFilters={checkedFilters ?? []}
+          setCheckedFilters={setCheckedFilters ?? []}
+          viewFiltersVerified={viewFiltersVerified ?? []}
         />
       )}
     </div>

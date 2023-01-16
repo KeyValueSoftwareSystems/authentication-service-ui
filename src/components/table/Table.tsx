@@ -10,8 +10,6 @@ import TableToolBar from "../table-toolbar/TableToolBar";
 import "./styles.css";
 import DisplayMessage from "../display-message";
 import {
-  statusFilterAtom,
-  groupFilterAtom,
   sortCountAtom,
   searchAtom,
   paginationAtom,
@@ -29,13 +27,7 @@ const TableList: FC<TableProps> = ({
   rows,
   columns,
   count,
-  filterList,
-  firstFilter,
   filterName,
-  setFirstFilter,
-  secondFilter,
-  setSecondFilter,
-  isViewFilterVerified,
   setItemList,
   onAdd,
   onEdit,
@@ -48,12 +40,16 @@ const TableList: FC<TableProps> = ({
   isViewVerified,
   isAddVerified,
   handleRowClick,
+  currentFilters,
+  filters,
+  checkedFilters,
+  setCheckedFilters,
+  viewFiltersVerified,
+  handleClickFilter,
 }) => {
   const [isEditVerified, setEditVerified] = useState(false);
   const [isDeleteVerified, setDeleteVerified] = useState(false);
   const [userPermissions] = useRecoilState(UserPermissionsAtom);
-  const setCheckedStatus = useSetRecoilState(statusFilterAtom);
-  const setCheckedGroups = useSetRecoilState(groupFilterAtom);
   const setCount = useSetRecoilState(sortCountAtom);
   const setSearchValue = useSetRecoilState(searchAtom);
 
@@ -78,8 +74,6 @@ const TableList: FC<TableProps> = ({
 
   useEffect(() => {
     return () => {
-      setCheckedGroups([]);
-      setCheckedStatus([]);
       setCurrentPage(1);
       setCount(0);
       setSearchValue("");
@@ -98,13 +92,13 @@ const TableList: FC<TableProps> = ({
             isAddVerified={isAddVerified}
             onAdd={onAdd}
             field={field}
-            filterList={filterList}
-            firstFilter={firstFilter}
-            secondFilter={secondFilter}
-            setFirstFilter={setFirstFilter}
-            setSecondFilter={setSecondFilter}
             filterName={filterName}
-            isViewFilterVerified={isViewFilterVerified}
+            handleClickFilter={handleClickFilter}
+            currentFilters={currentFilters}
+            filters={filters}
+            checkedFilters={checkedFilters}
+            setCheckedFilters={setCheckedFilters}
+            viewFiltersVerified={viewFiltersVerified}
           />
           <DataGrid
             columnVisibilityModel={{

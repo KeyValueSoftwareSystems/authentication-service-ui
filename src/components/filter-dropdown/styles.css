@@ -11,12 +11,19 @@
   font-weight: 500;
 }
 
+#heading-clear-all:hover,
+#filter-buttons:hover {
+  background-color: transparent;
+  cursor: default;
+}
+
 .filter-by {
   font-family: "Inter" !important;
   border-right: 2px solid #bdbcbc14;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  min-width: 313px;
 }
 
 #filter-by-options {
@@ -40,7 +47,8 @@
   }
 }
 
-#filter-button {
+#filter-button-cancel,
+#filter-button-apply {
   text-transform: none;
   font-family: "Inter";
   font-size: 14px;
@@ -52,6 +60,28 @@
   width: 135px;
   border-radius: 6px;
   padding: 13px 17px 13px 17px;
+}
+
+#filter-button-cancel {
+  color: #2653f1;
+  border: 1px solid #2653f1;
+  margin-right: 8px;
+}
+
+#filter-button-cancel:hover {
+  border: 1px solid #2653f1;
+  color: #2653f1;
+}
+
+#filter-button-apply {
+  background-color: #2653f1;
+  color: white;
+  margin-left: 8px;
+}
+
+#filter-button-apply:hover {
+  background-color: #2653f1;
+  color: white;
 }
 
 #clear-all {
