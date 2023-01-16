@@ -5,10 +5,10 @@ export interface FilterProps {
   onAddFilter: (
     name: string,
     e: React.ChangeEvent<HTMLInputElement>,
-    checkedItems: never[],
-    setCheckedItems: React.Dispatch<React.SetStateAction<never[]>>
+    checkedItems: string[],
+    setCheckedItems: React.Dispatch<React.SetStateAction<string[]>>
   ) => void;
-  checkedItems: never[];
-  setCheckedItems: SetterOrUpdater<never[]>;
-  handleCheckedItems: (item: string, checkedItems: never[]) => boolean;
+  checkedItems: string[];
+  setCheckedItems: SetterOrUpdater<string[]>;
+  handleCheckedItems: (item: string, checkedItems: string[]) => boolean;
 }

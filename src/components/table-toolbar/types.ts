@@ -6,7 +6,7 @@ export interface TableToolBarProps {
   buttonLabel: string;
   searchLabel: string;
   searchQuery: DocumentNode;
-  currentFilters?: never[][];
+  currentFilters?: string[][];
   handleClickFilter?: (
     event: any,
     setAnchorEl: (value: React.SetStateAction<null>) => void
@@ -14,9 +14,9 @@ export interface TableToolBarProps {
   handleCancel?: (
     setAnchorEl: (value: React.SetStateAction<null>) => void
   ) => void;
-  filters?: (string | never)[][];
-  checkedFilters?: never[][];
-  setCheckedFilters?: SetterOrUpdater<never[]>[];
+  filters?: string[][];
+  checkedFilters?: string[][];
+  setCheckedFilters?: SetterOrUpdater<string[]>[];
   viewFiltersVerified?: boolean[];
   setItemList: any;
   filterName?: string[];

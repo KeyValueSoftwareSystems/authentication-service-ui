@@ -39,15 +39,17 @@ import { statusList } from "constants/filters";
 const Users: React.FC = () => {
   const [isAddVerified, setAddVerified] = useState(false);
   const [usersCount, setUsersCount] = useState(0);
-  const [currentFirstFilter, setCurrentFirstFilter] = useState([]);
-  const [currentSecondFilter, setCurrentSecondFilter] = useState([]);
+  const [currentFirstFilter, setCurrentFirstFilter] = useState<string[]>([]);
+  const [currentSecondFilter, setCurrentSecondFilter] = useState<string[]>([]);
 
   const [isViewUsersVerified] = useRecoilState(IsViewUsersVerifiedAtom);
   const [isViewGroupsVerified] = useRecoilState(IsViewGroupsVerifiedAtom);
   const [userPermissions] = useRecoilState(UserPermissionsAtom);
   const [userList, setUserList] = useRecoilState(userListAtom);
-  const [checkedStatus, setCheckedStatus] = useRecoilState(statusFilterAtom);
-  const [checkedGroups, setCheckedGroups] = useRecoilState(groupFilterAtom);
+  const [checkedStatus, setCheckedStatus] =
+    useRecoilState<string[]>(statusFilterAtom);
+  const [checkedGroups, setCheckedGroups] =
+    useRecoilState<string[]>(groupFilterAtom);
   const [groupList] = useRecoilState(groupListAtom);
   const navigate = useNavigate();
 

@@ -9,9 +9,9 @@ export interface FilterDropdownProps {
   anchorEl: any;
   onApply: (count: number) => void;
   filterName: string[];
-  currentFilters: never[][];
-  filters: (string | never)[][];
-  checkedFilters: never[][];
-  setCheckedFilters: SetterOrUpdater<never[]>[];
+  currentFilters: string[][];
+  filters: string[][];
+  checkedFilters: string[][];
+  setCheckedFilters: SetterOrUpdater<string[]>[];
   viewFiltersVerified: boolean[];
 }

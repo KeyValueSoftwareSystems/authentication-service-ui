@@ -1,7 +1,7 @@
 import { DataGrid } from "@mui/x-data-grid";
 import { FC, useEffect, useState } from "react";
 import { Stack } from "@mui/material";
-import { useSetRecoilState, useRecoilState, SetterOrUpdater } from "recoil";
+import { useSetRecoilState, useRecoilState } from "recoil";
 import { useMediaQuery } from "react-responsive";
 
 import { UserPermissionsAtom } from "states/permissionsStates";
@@ -96,10 +96,8 @@ const TableList: FC<TableProps> = ({
             handleClickFilter={handleClickFilter}
             currentFilters={currentFilters}
             filters={filters as unknown as string[][]}
-            checkedFilters={checkedFilters as unknown as never[][]}
-            setCheckedFilters={
-              setCheckedFilters as unknown as SetterOrUpdater<never[]>[]
-            }
+            checkedFilters={checkedFilters as unknown as string[][]}
+            setCheckedFilters={setCheckedFilters}
             viewFiltersVerified={viewFiltersVerified as unknown as boolean[]}
           />
           <DataGrid

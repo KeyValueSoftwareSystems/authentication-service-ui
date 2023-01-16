@@ -38,8 +38,8 @@ const FilterDropdown: FC<FilterDropdownProps> = ({
   const onAddFilter = (
     name: string,
     e: React.ChangeEvent<HTMLInputElement>,
-    checkedItems: never[],
-    setCheckedItems: React.Dispatch<React.SetStateAction<never[]>>
+    checkedItems: string[],
+    setCheckedItems: SetterOrUpdater<string[]>
   ) => {
     const isChecked = e.target.checked;
     if (isChecked) {
@@ -49,14 +49,14 @@ const FilterDropdown: FC<FilterDropdownProps> = ({
     }
   };
 
-  const handleCheckedItems = (item: string, checkedItems: never[]) => {
-    if (checkedItems.includes(item as unknown as never)) return true;
+  const handleCheckedItems = (item: string, checkedItems: string[]) => {
+    if (checkedItems.includes(item)) return true;
     else return false;
   };
 
   const handleClearAll = () => {
     if (setCheckedFilters) {
-      setCheckedFilters.forEach((setFilter: SetterOrUpdater<never[]>) => {
+      setCheckedFilters.forEach((setFilter: SetterOrUpdater<string[]>) => {
         setFilter([]);
       });
     }
@@ -65,7 +65,7 @@ const FilterDropdown: FC<FilterDropdownProps> = ({
   const handleCancel = () => {
     if (setCheckedFilters) {
       setCheckedFilters.forEach(
-        (setFilter: SetterOrUpdater<never[]>, index: number) => {
+        (setFilter: SetterOrUpdater<string[]>, index: number) => {
           setFilter(currentFilters[index]);
         }
       );
@@ -73,8 +73,12 @@ const FilterDropdown: FC<FilterDropdownProps> = ({
     handleClose();
   };
 
+  const getFilterCount = () => {
+    return checkedFilters.reduce((sum, filter) => sum + filter.length, 0);
+  };
+
   const handleSave = () => {
-    onApply(checkedFilters.reduce((sum, filter) => sum + filter.length, 0));
+    onApply(getFilterCount());
     fetchEntities({});
     setViewFilter(0);
   };
@@ -113,7 +117,7 @@ const FilterDropdown: FC<FilterDropdownProps> = ({
                   mr: "112px",
                 }}
               >
-                {checkedFilters.reduce((sum, filter) => sum + filter.length, 0)}
+                {getFilterCount()}
               </Avatar>
               <div id="clear-all" onClick={handleClearAll}>
                 Clear All
@@ -123,6 +127,7 @@ const FilterDropdown: FC<FilterDropdownProps> = ({
               (filter: string, index: number) =>
                 viewFiltersVerified[index] && (
                   <MenuItem
+                    key={filter}
                     id="filter-by-options"
                     onClick={() => {
                       setViewFilter(index);
@@ -158,13 +163,9 @@ const FilterDropdown: FC<FilterDropdownProps> = ({
         <div id="filter-items">
           <Filter
             itemList={filters[viewFilter]}
-            checkedItems={checkedFilters[viewFilter] as unknown as never[]}
+            checkedItems={checkedFilters[viewFilter]}
             handleCheckedItems={handleCheckedItems}
-            setCheckedItems={
-              setCheckedFilters[viewFilter] as unknown as SetterOrUpdater<
-                never[]
-              >
-            }
+            setCheckedItems={setCheckedFilters[viewFilter]}
             onAddFilter={onAddFilter}
           />
         </div>

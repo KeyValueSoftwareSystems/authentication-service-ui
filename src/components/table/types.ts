@@ -25,7 +25,7 @@ export interface TableProps {
   handleRowClick?: (params: GridRowParams) => void;
   onAdd: () => void;
   onEdit: (id: GridRowId) => void;
-  currentFilters?: never[][];
+  currentFilters?: string[][];
   handleClickFilter?: (
     event: any,
     setAnchorEl: (value: React.SetStateAction<null>) => void
@@ -33,8 +33,8 @@ export interface TableProps {
   handleCancel?: (
     setAnchorEl: (value: React.SetStateAction<null>) => void
   ) => void;
-  filters?: (string | never)[][];
-  checkedFilters?: never[][];
-  setCheckedFilters?: SetterOrUpdater<never[]>[];
+  filters?: string[][];
+  checkedFilters?: string[][];
+  setCheckedFilters?: SetterOrUpdater<string[]>[];
   viewFiltersVerified?: boolean[];
 }

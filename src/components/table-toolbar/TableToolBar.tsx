@@ -119,10 +119,10 @@ const TableToolBar: FC<TableToolBarProps> = ({
           onApply={onApply}
           filterName={filterName as unknown as string[]}
           filters={filters as unknown as string[][]}
-          currentFilters={currentFilters as unknown as never[][]}
-          checkedFilters={checkedFilters as unknown as never[][]}
+          currentFilters={currentFilters as unknown as string[][]}
+          checkedFilters={checkedFilters as unknown as string[][]}
           setCheckedFilters={
-            setCheckedFilters as unknown as SetterOrUpdater<never[]>[]
+            setCheckedFilters as unknown as SetterOrUpdater<string[]>[]
           }
           viewFiltersVerified={viewFiltersVerified as unknown as boolean[]}
         />
