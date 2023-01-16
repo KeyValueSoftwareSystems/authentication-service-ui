@@ -1,7 +1,7 @@
 import { DataGrid } from "@mui/x-data-grid";
 import { FC, useEffect, useState } from "react";
 import { Stack } from "@mui/material";
-import { useSetRecoilState, useRecoilState } from "recoil";
+import { useSetRecoilState, useRecoilState, SetterOrUpdater } from "recoil";
 import { useMediaQuery } from "react-responsive";
 
 import { UserPermissionsAtom } from "states/permissionsStates";
@@ -10,8 +10,6 @@ import TableToolBar from "../table-toolbar/TableToolBar";
 import "./styles.css";
 import DisplayMessage from "../display-message";
 import {
-  statusFilterAtom,
-  groupFilterAtom,
   sortCountAtom,
   searchAtom,
   paginationAtom,
@@ -29,13 +27,7 @@ const TableList: FC<TableProps> = ({
   rows,
   columns,
   count,
-  filterList,
-  firstFilter,
   filterName,
-  setFirstFilter,
-  secondFilter,
-  setSecondFilter,
-  isViewFilterVerified,
   setItemList,
   onAdd,
   onEdit,
@@ -48,12 +40,16 @@ const TableList: FC<TableProps> = ({
   isViewVerified,
   isAddVerified,
   handleRowClick,
+  currentFilters,
+  filters,
+  checkedFilters,
+  setCheckedFilters,
+  viewFiltersVerified,
+  handleClickFilter,
 }) => {
   const [isEditVerified, setEditVerified] = useState(false);
   const [isDeleteVerified, setDeleteVerified] = useState(false);
   const [userPermissions] = useRecoilState(UserPermissionsAtom);
-  const setCheckedStatus = useSetRecoilState(statusFilterAtom);
-  const setCheckedGroups = useSetRecoilState(groupFilterAtom);
   const setCount = useSetRecoilState(sortCountAtom);
   const setSearchValue = useSetRecoilState(searchAtom);
 
@@ -78,8 +74,6 @@ const TableList: FC<TableProps> = ({
 
   useEffect(() => {
     return () => {
-      setCheckedGroups([]);
-      setCheckedStatus([]);
       setCurrentPage(1);
       setCount(0);
       setSearchValue("");
@@ -98,13 +92,15 @@ const TableList: FC<TableProps> = ({
             isAddVerified={isAddVerified}
             onAdd={onAdd}
             field={field}
-            filterList={filterList}
-            firstFilter={firstFilter}
-            secondFilter={secondFilter}
-            setFirstFilter={setFirstFilter}
-            setSecondFilter={setSecondFilter}
             filterName={filterName}
-            isViewFilterVerified={isViewFilterVerified}
+            handleClickFilter={handleClickFilter}
+            currentFilters={currentFilters}
+            filters={filters as unknown as string[][]}
+            checkedFilters={checkedFilters as unknown as never[][]}
+            setCheckedFilters={
+              setCheckedFilters as unknown as SetterOrUpdater<never[]>[]
+            }
+            viewFiltersVerified={viewFiltersVerified as unknown as boolean[]}
           />
           <DataGrid
             columnVisibilityModel={{

@@ -8,6 +8,12 @@
   color: #2653f1 !important;
 }
 
+.css-j204z7-MuiFormControlLabel-root .MuiFormControlLabel-label {
+  max-width: 282px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 @media screen and (max-width: 1310px) and (max-height: 820px) {
   .css-ahj2mt-MuiTypography-root {
     font-size: 15px !important;

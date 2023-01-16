@@ -18,6 +18,7 @@ const Filter: FC<FilterProps> = ({
       <FormGroup>
         {itemList.map((item: string | any, index: number) => (
           <FormControlLabel
+            id="filter-list-items"
             key={`${index}_${item}`}
             label={
               typeof item === "string"
