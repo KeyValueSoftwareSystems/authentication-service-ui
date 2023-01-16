@@ -95,10 +95,10 @@ const TableList: FC<TableProps> = ({
             filterName={filterName}
             handleClickFilter={handleClickFilter}
             currentFilters={currentFilters}
-            filters={filters as unknown as string[][]}
-            checkedFilters={checkedFilters as unknown as string[][]}
+            filters={filters}
+            checkedFilters={checkedFilters}
             setCheckedFilters={setCheckedFilters}
-            viewFiltersVerified={viewFiltersVerified as unknown as boolean[]}
+            viewFiltersVerified={viewFiltersVerified}
           />
           <DataGrid
             columnVisibilityModel={{
