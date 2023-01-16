@@ -43,7 +43,7 @@ const FilterDropdown: FC<FilterDropdownProps> = ({
   ) => {
     const isChecked = e.target.checked;
     if (isChecked) {
-      setCheckedItems(checkedItems.concat(name as unknown as never[]));
+      setCheckedItems(checkedItems.concat(name));
     } else {
       setCheckedItems(checkedItems.filter((x) => x !== name));
     }
