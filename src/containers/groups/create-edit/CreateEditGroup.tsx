@@ -43,6 +43,7 @@ import { renderAccessDenied } from "utils/generic";
 import { useCustomLazyQuery } from "hooks/useLazyQuery";
 import "./styles.css";
 import GroupForm from "./GroupForm";
+import { submitAtom } from "states/submitStates";
 
 const CreateOrEditGroup = () => {
   const { id } = useParams();
@@ -51,6 +52,7 @@ const CreateOrEditGroup = () => {
   const setToastMessage = useSetRecoilState(toastMessageAtom);
   const [isViewRolesVerified] = useRecoilState(IsViewRolesVerifiedAtom);
   const [isViewUsersVerified] = useRecoilState(IsViewUsersVerifiedAtom);
+  const setSubmitButton = useSetRecoilState(submitAtom);
 
   const [value, setValue] = useState(0);
   const [group, setGroup] = useState<Group>();
@@ -196,6 +198,7 @@ const CreateOrEditGroup = () => {
     event: React.ChangeEvent<HTMLInputElement>,
     item?: Role
   ) => {
+    setSubmitButton(true);
     const value = event.target.value;
     if (event.target.checked) {
       if (value === "all") {
@@ -223,7 +226,7 @@ const CreateOrEditGroup = () => {
     item: User
   ) => {
     const value = event.target.value;
-
+    setSubmitButton(true);
     if (event.target.checked) {
       if (value === "all") {
         setUsers(allUsers);
