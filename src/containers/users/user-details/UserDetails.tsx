@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useRecoilState } from "recoil";
 import { useParams } from "react-router-dom";
+import { useMediaQuery } from "react-responsive";
 
 import GroupCard from "components/group-card";
 import CustomAvatar from "components/custom-avatar";
@@ -37,6 +38,8 @@ const UserDetails = () => {
   const [isViewGroupsVerified] = useRecoilState(IsViewGroupsVerifiedAtom);
   const [isViewEntitiesVerified] = useRecoilState(IsViewEntitiesVerifiedAtom);
   const [userPermissions] = useRecoilState(UserPermissionsAtom);
+  const isPortrait = useMediaQuery({ orientation: "portrait" });
+  const isTabletScreen = useMediaQuery({ query: "(max-height: 820px)" });
 
   const [user, setUser] = useState<User>();
   const [value, setValue] = useState(0);
@@ -139,7 +142,15 @@ const UserDetails = () => {
           <TabPanel
             value={value}
             index={0}
-            style={{ height: "125%", overflowY: "auto" }}
+            style={{
+              height: isPortrait
+                ? "calc(100vh - 378px)"
+                : isTabletScreen
+                ? "calc(100vh - 303px)"
+                : "calc(100vh - 312px)",
+              overflowY: "auto",
+              overflowX: "hidden",
+            }}
           >
             {!loading ? (
               isViewGroupsVerified ? (
