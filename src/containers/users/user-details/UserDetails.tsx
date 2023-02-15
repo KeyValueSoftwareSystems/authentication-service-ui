@@ -25,11 +25,10 @@ import {
 } from 'constants/messages';
 import { RoutePaths } from 'constants/routes';
 import { renderAccessDenied } from 'utils/generic';
+
 import './styles.css';
 
 const UserDetails = () => {
-  const navigate = useNavigate();
-  const { id } = useParams();
   const [isEditVerified, setEditVerified] = useState(false);
   const [isViewGroupsVerified] = useRecoilState(IsViewGroupsVerifiedAtom);
   const [isViewEntitiesVerified] = useRecoilState(IsViewEntitiesVerifiedAtom);
@@ -39,6 +38,9 @@ const UserDetails = () => {
 
   const [user, setUser] = useState<User>();
   const [value, setValue] = useState(0);
+
+  const navigate = useNavigate();
+  const { id } = useParams();
 
   const onBackNavigation = () => {
     navigate(-1);

@@ -9,6 +9,7 @@ import FormInputText from 'components/input-text';
 import { RoutePaths } from 'constants/routes';
 import { Role } from 'types/role';
 import { AddEntity, UpdateEntity } from 'types/generic';
+
 import './styles.css';
 
 interface RoleFormProps {
@@ -21,7 +22,6 @@ interface RoleFormProps {
 
 const RoleForm: FC<RoleFormProps> = ({ name, createRole, editRole, role, loading }) => {
   const navigate = useNavigate();
-
   const { id } = useParams();
 
   const initialValues = {

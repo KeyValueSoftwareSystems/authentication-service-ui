@@ -8,7 +8,8 @@ import { useCustomQuery } from 'hooks/useQuery';
 import DisplayMessage from 'components/display-message';
 import { IsViewEntitiesVerifiedAtom } from 'states/permissionsStates';
 import { ACCESS_DENIED_DESCRIPTION, ACCESS_DENIED_MESSAGE } from 'constants/messages';
-import PermissionsCard from '../permission-card';
+import PermissionsCard from 'components/permission-card';
+
 import { PermissionCardsProps } from './types';
 import './styles.css';
 
@@ -29,8 +30,9 @@ const PermissionCards: React.FC<PermissionCardsProps> = ({
   userPermissions = [],
   isViewPage = false
 }) => {
-  const [entities, setEntities] = useState<Entity[]>([]);
   const [isViewEntitiesVerified] = useRecoilState(IsViewEntitiesVerifiedAtom);
+
+  const [entities, setEntities] = useState<Entity[]>([]);
 
   const onCompleted = (data: any) => {
     setEntities(data?.getEntities);

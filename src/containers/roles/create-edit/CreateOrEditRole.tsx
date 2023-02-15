@@ -14,17 +14,19 @@ import { ROLE_CREATE_SUCCESS_MESSAGE, ROLE_UPDATE_SUCCESS_MESSAGE } from 'consta
 import { useCustomQuery } from 'hooks/useQuery';
 import { useCustomMutation } from 'hooks/useMutation';
 import RoleForm from './RoleForm';
-import './styles.css';
 import { RoutePaths } from 'constants/routes';
 
+import './styles.css';
+
 const CreateOrEditRole = () => {
-  const { id } = useParams();
-  const navigate = useNavigate();
   const setApiSuccess = useSetRecoilState(apiRequestAtom);
   const setToastMessage = useSetRecoilState(toastMessageAtom);
+
   const [role, setRole] = useState<Role>();
   const [rolePermissions, setRolePermissions] = useState<Permission[]>([]);
 
+  const { id } = useParams();
+  const navigate = useNavigate();
   const [createRole, { data: createdRoleData }] = useCustomMutation(CREATE_ROLE);
   const [updateRole, { data: updatedRoleData }] = useCustomMutation(UPDATE_ROLE);
   const [updateRolePermissions, { data: updatedRolePermissionsData }] = useCustomMutation(UPDATE_ROLE_PERMISSIONS);

@@ -32,13 +32,15 @@ import { useCustomQuery } from 'hooks/useQuery';
 import { useCustomMutation } from 'hooks/useMutation';
 import { renderAccessDenied } from 'utils/generic';
 import { useCustomLazyQuery } from 'hooks/useLazyQuery';
-import './styles.css';
 import GroupForm from './GroupForm';
 import { submitAtom } from 'states/submitStates';
+
+import './styles.css';
 
 const CreateOrEditGroup = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+
   const setApiSuccess = useSetRecoilState(apiRequestAtom);
   const setToastMessage = useSetRecoilState(toastMessageAtom);
   const [isViewRolesVerified] = useRecoilState(IsViewRolesVerifiedAtom);
@@ -49,21 +51,14 @@ const CreateOrEditGroup = () => {
   const [group, setGroup] = useState<Group>();
   const [roles, setRoles] = useState<Role[]>([]);
   const [allUsers, setAllUsers] = useState<User[]>([]);
-
   const [users, setUsers] = useState<User[]>([]);
-
   const [allRoles, setAllRoles] = useState<Role[]>([]);
-
   const [userSelectedPermissions, setUserSelectedPermissions] = useState<Permission[]>([]);
 
   const [updateGroup, { data: updatedGroupData }] = useCustomMutation(UPDATE_GROUP);
   const [createGroup, { data: createdGroupData }] = useCustomMutation(CREATE_GROUP);
   const [updateGroupRoles, { data: updatedGroupRolesData }] = useCustomMutation(UPDATE_GROUP_ROLES);
   const [updateGroupPermissions, { data: updatedGroupPermissionsData }] = useCustomMutation(UPDATE_GROUP_PERMISSIONS);
-
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
-  };
 
   const onGetRolesComplete = (data: any) => {
     setAllRoles(data?.getRoles?.results);
@@ -91,12 +86,10 @@ const CreateOrEditGroup = () => {
     null,
     !isViewRolesVerified
   );
-
   const { loading } = useCustomQuery(GET_GROUP, onGetGroupComplete, { id: id }, !id);
+  const { lazyQuery: getUsers } = useCustomLazyQuery(GET_USERS, onGetUsersComplete);
 
   useCustomQuery(GET_GROUP_PERMISSIONS, onGetGroupPermissionsComplete, { id }, !id);
-
-  const { lazyQuery: getUsers } = useCustomLazyQuery(GET_USERS, onGetUsersComplete);
 
   useEffect(() => {
     if (isViewUsersVerified) getUsers();
@@ -169,6 +162,10 @@ const CreateOrEditGroup = () => {
       }
       removeItem({ roleId: item?.id as string });
     }
+  };
+
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    setValue(newValue);
   };
 
   const onChangeUsers = (event: React.ChangeEvent<HTMLInputElement>, item: User) => {

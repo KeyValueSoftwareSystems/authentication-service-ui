@@ -6,7 +6,7 @@ import CreateOrEditRole from 'containers/roles/create-edit/CreateOrEditRole';
 import AddUser from 'containers/users/create-edit/AddUser';
 import EditUser from 'containers/users/create-edit/EditUser';
 import { RoutePaths } from 'constants/routes';
-import CreateOrEditGroup from '../containers/groups/create-edit/CreateEditGroup';
+import CreateOrEditGroup from 'containers/groups/create-edit/CreateEditGroup';
 
 const NotFound = lazy(() => import('../components/NotFound'));
 const HomePage = lazy(() => import('../containers/home'));

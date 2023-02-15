@@ -15,10 +15,10 @@ import { Group } from 'types/group';
 import { useCustomMutation } from 'hooks/useMutation';
 import { RoutePaths } from 'constants/routes';
 import UserForm from './UserForm';
+
 import './styles.css';
 
 const EditUser: React.FC = () => {
-  const { id } = useParams();
   const setApiSuccess = useSetRecoilState(apiRequestAtom);
   const setToastMessage = useSetRecoilState(toastMessageAtom);
   const setUserPermissions = useSetRecoilState(UserPermissionsAtom);
@@ -30,13 +30,12 @@ const EditUser: React.FC = () => {
     navigate(RoutePaths.usersUrl);
   };
 
-  const { lazyQuery: getCurrentUser } = useCustomLazyQuery(GET_CURRENT_USER, onGetCurrentUserCompleted);
-
+  const { id } = useParams();
+  const navigate = useNavigate();
   const [updateUser, { error: userUpdateError }] = useCustomMutation(UPDATE_USER);
-
   const [updateUserGroups, { error: groupUpdateError }] = useCustomMutation(UPDATE_USER_GROUPS);
   const [updateUserPermissions, { error: permissionUpdateError }] = useCustomMutation(UPDATE_USER_PERMISSIONS);
-  const navigate = useNavigate();
+  const { lazyQuery: getCurrentUser } = useCustomLazyQuery(GET_CURRENT_USER, onGetCurrentUserCompleted);
 
   const onUpdateUser = (inputs: FieldValues, userGroups: Group[], selectedPermissions: Permission[]) => {
     updateUserGroups({

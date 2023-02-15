@@ -6,10 +6,11 @@ import Divider from '@mui/material/Divider';
 import Logout from '@mui/icons-material/Logout';
 import { FC } from 'react';
 
-import './styles.css';
 import { UserDetails } from 'utils/user';
 import { useCustomMutation } from 'hooks/useMutation';
 import { LOGOUT } from 'services/mutations/authMutations';
+
+import './styles.css';
 
 interface SettingsProps {
   fullName: string;

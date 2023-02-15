@@ -21,8 +21,9 @@ import { AddUserformSchema, EditUserformSchema } from 'utils/user';
 import { renderAccessDenied } from 'utils/generic';
 import { useCustomQuery } from 'hooks/useQuery';
 import { RoutePaths } from 'constants/routes';
-import './styles.css';
 import { submitAtom } from 'states/submitStates';
+
+import './styles.css';
 
 interface UserProps {
   isEdit?: boolean;
@@ -35,22 +36,24 @@ const UserForm = (props: UserProps) => {
 
   const userformSchema = isEdit ? EditUserformSchema : AddUserformSchema;
 
-  const { id } = useParams();
-  const navigate = useNavigate();
-  const [user, setUser] = useState<User>();
-  const [userGroups, setUserGroups] = useState<Group[]>([]);
-  const [allGroups, setAllGroups] = useState<Group[]>([]);
   const [isViewGroupsVerified] = useRecoilState(IsViewGroupsVerifiedAtom);
   const [isViewEntitiesVerified] = useRecoilState(IsViewEntitiesVerifiedAtom);
   const setSubmitButton = useSetRecoilState(submitAtom);
+
+  const [user, setUser] = useState<User>();
+  const [value, setValue] = useState(0);
+  const [userGroups, setUserGroups] = useState<Group[]>([]);
+  const [allGroups, setAllGroups] = useState<Group[]>([]);
   const [userSelectedPermissions, setUserSelectedPermissions] = useState<Permission[]>([]);
+
+  const { id } = useParams();
+  const navigate = useNavigate();
 
   const onGetGroupsComplete = (data: any) => {
     const groups = data?.getGroups?.results?.map((group: Group) => group);
 
     setAllGroups([...groups]);
   };
-
   const { data: groupData, loading: groupsLoading } = useCustomQuery(
     GET_GROUPS,
     onGetGroupsComplete,
@@ -102,8 +105,6 @@ const UserForm = (props: UserProps) => {
   const onBackNavigation = () => {
     navigate(RoutePaths.usersUrl);
   };
-
-  const [value, setValue] = useState(0);
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);

@@ -3,7 +3,7 @@ import { FC, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 
 import { Role } from 'types/role';
-import RoleCard from '../role-card';
+import RoleCard from 'components/role-card';
 import { ReactComponent as UnCheckedIcon } from 'assets/checkbox-icons/uncheckedicon.svg';
 import { ReactComponent as CheckedIcon } from 'assets/checkbox-icons/checkedicon.svg';
 
@@ -37,6 +37,11 @@ const CardsContainer = styled.div`
 const RoleCardsChecklist: FC<Props> = ({ roleList, currentCheckedItems, onChange = () => null }) => {
   const [selectAll, setSelectAll] = useState<boolean>(false);
 
+  useEffect(() => {
+    if (roleList?.length === currentCheckedItems?.length) setSelectAll(true);
+    else setSelectAll(false);
+  }, [roleList, currentCheckedItems]);
+
   const handleSelectAll = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) setSelectAll(true);
     else setSelectAll(false);
@@ -46,11 +51,6 @@ const RoleCardsChecklist: FC<Props> = ({ roleList, currentCheckedItems, onChange
   const isChecked = (id: string) => {
     return currentCheckedItems.some((item) => item.id === id);
   };
-
-  useEffect(() => {
-    if (roleList?.length === currentCheckedItems?.length) setSelectAll(true);
-    else setSelectAll(false);
-  }, [roleList, currentCheckedItems]);
 
   return (
     <Container>

@@ -5,6 +5,7 @@ import { ReactComponent as SearchIcon } from 'assets/toolbar-icons/search.svg';
 import { useSetRecoilState } from 'recoil';
 import { searchAtom } from 'states/searchSortFilterStates';
 import { useFetchEntities } from 'hooks/useFetchEntities';
+
 import { SearchBarProps } from './types';
 import './styles.css';
 
@@ -17,16 +18,17 @@ const SearchBar: FC<SearchBarProps> = ({
   customIconStyle
 }) => {
   const setSearchValue = useSetRecoilState(searchAtom);
+
   const [field, setField] = useState('');
+
+  const fetchEntities = useFetchEntities({
+    userParams: { setList: setItemList, query: searchQuery, field: field }
+  });
 
   useEffect(() => {
     if (searchLabel.includes('First Name') || searchLabel.includes('Search Members')) setField('firstName');
     else setField('name');
   }, []);
-
-  const fetchEntities = useFetchEntities({
-    userParams: { setList: setItemList, query: searchQuery, field: field }
-  });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const delayedSearch = (text?: string) => {

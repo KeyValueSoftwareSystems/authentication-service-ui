@@ -40,24 +40,32 @@ import { getHeader } from 'utils/routes';
 import { RoutePaths } from 'constants/routes';
 import { useCustomLazyQuery } from 'hooks/useLazyQuery';
 import Settings from 'components/settings';
-import { LOGO_URL, MINI_LOGO_URL } from '../../config';
+import { LOGO_URL, MINI_LOGO_URL } from 'config';
+
 import './styles.css';
 
 const HomePage = () => {
   const [currentUserDetails, setCurrentUserDetails] = useRecoilState(currentUserAtom);
   const [userPermissions, setUserPermissions] = useRecoilState(UserPermissionsAtom);
-  const setGroupList = useSetRecoilState(groupListAtom);
   const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom);
-  const navigate = useNavigate();
-
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
-
+  const setGroupList = useSetRecoilState(groupListAtom);
   const setIsViewUsersVerified = useSetRecoilState(IsViewUsersVerifiedAtom);
   const setIsViewGroupsVerified = useSetRecoilState(IsViewGroupsVerifiedAtom);
   const setIsViewRolesVerified = useSetRecoilState(IsViewRolesVerifiedAtom);
   const setIsViewPermissionsVerified = useSetRecoilState(IsViewPermissionsVerifiedAtom);
   const setisViewEntitiesVerified = useSetRecoilState(IsViewEntitiesVerifiedAtom);
+
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  const navigate = useNavigate();
+  const isDesktopScreen = useMediaQuery({ query: '(min-width: 1200px)' });
+
+  const open = Boolean(anchorEl);
+  const navLogo = {
+    image: isDesktopScreen ? LOGO_URL : MINI_LOGO_URL,
+    width: isDesktopScreen ? '170px' : '24%'
+  };
+
   const onGetGroupsComplete = (data: any) => {
     setGroupList(data?.getGroups?.results);
   };
@@ -66,6 +74,19 @@ const HomePage = () => {
     setUserPermissions(data.getCurrentUser?.permissions);
   };
 
+  const onLogoutCompleted = () => {
+    CustomerAuth.clearTokens();
+    setCurrentUserDetails([]);
+    setUserPermissions([]);
+    setIsViewGroupsVerified(false);
+    setIsViewUsersVerified(false);
+    setIsViewPermissionsVerified(false);
+    setisViewEntitiesVerified(false);
+    setIsViewRolesVerified(false);
+    navigate(RoutePaths.login);
+  };
+
+  const [logout] = useCustomMutation(LOGOUT, onLogoutCompleted);
   const { lazyQuery: getGroups, loading } = useCustomLazyQuery(GET_GROUPS, onGetGroupsComplete);
   const { lazyQuery: getCurrentUser, loading: currentUserLoading } = useCustomLazyQuery(
     GET_CURRENT_USER,
@@ -75,8 +96,6 @@ const HomePage = () => {
   useEffect(() => {
     getCurrentUser(); // eslint-disable-next-line
   }, []);
-
-  const isDesktopScreen = useMediaQuery({ query: '(min-width: 1200px)' });
 
   useEffect(() => {
     if (userPermissions)
@@ -102,25 +121,6 @@ const HomePage = () => {
     setisViewEntitiesVerified,
     setIsViewRolesVerified
   ]);
-
-  const onLogoutCompleted = () => {
-    CustomerAuth.clearTokens();
-    setCurrentUserDetails([]);
-    setUserPermissions([]);
-    setIsViewGroupsVerified(false);
-    setIsViewUsersVerified(false);
-    setIsViewPermissionsVerified(false);
-    setisViewEntitiesVerified(false);
-    setIsViewRolesVerified(false);
-    navigate(RoutePaths.login);
-  };
-
-  const [logout] = useCustomMutation(LOGOUT, onLogoutCompleted);
-
-  const navLogo = {
-    image: isDesktopScreen ? LOGO_URL : MINI_LOGO_URL,
-    width: isDesktopScreen ? '170px' : '24%'
-  };
 
   const handleRedirection = (path: string) => {
     let redirectUrl = RoutePaths.usersUrl;

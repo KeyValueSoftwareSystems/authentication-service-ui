@@ -18,32 +18,32 @@ import { AddEntity, SearchEntity } from 'types/generic';
 import { ACCESS_DENIED_DESCRIPTION, ACCESS_DENIED_MESSAGE } from 'constants/messages';
 import { useCustomLazyQuery } from 'hooks/useLazyQuery';
 import '../create-edit/styles.css';
-import './styles.css';
 import { RoutePaths } from 'constants/routes';
 import { statusList } from 'constants/filters';
 
-const Users: React.FC = () => {
-  const [isAddVerified, setAddVerified] = useState(false);
-  const [usersCount, setUsersCount] = useState(0);
-  const [currentFirstFilter, setCurrentFirstFilter] = useState<string[]>([]);
-  const [currentSecondFilter, setCurrentSecondFilter] = useState<string[]>([]);
+import './styles.css';
 
+const Users: React.FC = () => {
+  const [groupList] = useRecoilState(groupListAtom);
   const [isViewUsersVerified] = useRecoilState(IsViewUsersVerifiedAtom);
   const [isViewGroupsVerified] = useRecoilState(IsViewGroupsVerifiedAtom);
   const [userPermissions] = useRecoilState(UserPermissionsAtom);
   const [userList, setUserList] = useRecoilState(userListAtom);
   const [checkedStatus, setCheckedStatus] = useRecoilState<string[]>(statusFilterAtom);
   const [checkedGroups, setCheckedGroups] = useRecoilState<string[]>(groupFilterAtom);
-  const [groupList] = useRecoilState(groupListAtom);
-  const navigate = useNavigate();
 
+  const [isAddVerified, setAddVerified] = useState(false);
+  const [usersCount, setUsersCount] = useState(0);
+  const [currentFirstFilter, setCurrentFirstFilter] = useState<string[]>([]);
+  const [currentSecondFilter, setCurrentSecondFilter] = useState<string[]>([]);
+
+  const navigate = useNavigate();
   const isPortrait = useMediaQuery({ orientation: 'portrait' });
 
   const onComplete = (data: any) => {
     setUserList(data?.getUsers?.results);
     setUsersCount(data?.getUsers?.totalCount);
   };
-
   const { lazyQuery: getUsers, loading } = useCustomLazyQuery(GET_USERS, onComplete);
 
   useEffect(() => {

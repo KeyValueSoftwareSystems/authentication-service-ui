@@ -12,24 +12,24 @@ import { PASSWORD_SET_MESSAGE } from 'constants/messages';
 import { useCustomMutation } from 'hooks/useMutation';
 import { VIEW_USER_PERMISSION } from 'constants/permissions';
 import { RoutePaths } from 'constants/routes';
-import { LOGIN_URL } from '../../../config';
-import './styles.css';
+import { LOGIN_URL } from 'config';
 import LoginPassword from './loginPassword';
 import PasswordConfirmation from './PasswordConfirmation';
+
+import './styles.css';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const setIsViewUsersVerified = useSetRecoilState(IsViewUsersVerifiedAtom);
 
-  const inviteToken: string | null = searchParams.get('token');
+  const setIsViewUsersVerified = useSetRecoilState(IsViewUsersVerifiedAtom);
+  const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom);
+  const setApiSuccess = useSetRecoilState(apiRequestAtom);
 
   const [userLogin, { data }] = useCustomMutation(LOGIN);
-
   const [setPassword, { data: passwordCreatedData }] = useCustomMutation(SET_PASSWORD);
 
-  const setApiSuccess = useSetRecoilState(apiRequestAtom);
-  const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom);
+  const inviteToken: string | null = searchParams.get('token');
 
   useEffect(() => {
     if (data) {

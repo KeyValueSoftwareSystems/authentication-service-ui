@@ -3,12 +3,15 @@ import { AvatarGroup } from '@mui/material';
 import { useMediaQuery } from 'react-responsive';
 
 import { stringAvatar } from 'utils/table';
+
 import './styles.css';
 
 const AvatarList = (avatarList: any) => {
-  const { row } = avatarList;
-  const isPortrait = useMediaQuery({ orientation: 'portrait' });
   let DEFAULT_SIZE = 9;
+
+  const { row } = avatarList;
+
+  const isPortrait = useMediaQuery({ orientation: 'portrait' });
 
   if (isPortrait) DEFAULT_SIZE = 3;
 

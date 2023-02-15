@@ -4,8 +4,9 @@ import { TextField } from '@mui/material';
 import { useSetRecoilState } from 'recoil';
 import { useEffect } from 'react';
 
-import { FormInputProps } from './types';
 import { submitAtom } from 'states/submitStates';
+
+import { FormInputProps } from './types';
 
 const StyledTextField = styled(TextField)({
   '& label.Mui-focused': {
@@ -23,8 +24,9 @@ const StyledTextField = styled(TextField)({
 });
 
 const FormInputText = ({ name, label, type, className, defaultText, autoComplete }: FormInputProps) => {
-  const { control } = useFormContext();
   const setSubmitButton = useSetRecoilState(submitAtom);
+
+  const { control } = useFormContext();
 
   useEffect(() => {
     return () => setSubmitButton(false);

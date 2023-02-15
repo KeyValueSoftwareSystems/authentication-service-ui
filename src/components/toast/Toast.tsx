@@ -11,11 +11,11 @@ type ToastProps = {
 };
 
 const Toast: React.FC<ToastProps> = ({ isOpen, message, handleClose }) => {
+  const [apiSuccess] = useRecoilState(apiRequestAtom);
+
   const closeHandler = () => {
     handleClose();
   };
-
-  const [apiSuccess] = useRecoilState(apiRequestAtom);
 
   return (
     <div>

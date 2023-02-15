@@ -1,7 +1,7 @@
 import { GridColumns, GridRowId } from '@mui/x-data-grid';
-import ActionsCell from 'components/actions-cell';
-
 import { DocumentNode } from 'graphql';
+
+import ActionsCell from 'components/actions-cell';
 
 export function stringToColor(string: string) {
   let hash = 0;
