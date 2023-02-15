@@ -1,8 +1,8 @@
-import React from "react";
-import { Alert, Snackbar } from "@mui/material";
-import { useRecoilState } from "recoil";
+import React from 'react';
+import { Alert, Snackbar } from '@mui/material';
+import { useRecoilState } from 'recoil';
 
-import { apiRequestAtom } from "states/apiRequestState";
+import { apiRequestAtom } from 'states/apiRequestState';
 
 type ToastProps = {
   isOpen: boolean;
@@ -24,18 +24,14 @@ const Toast: React.FC<ToastProps> = ({ isOpen, message, handleClose }) => {
         onClose={closeHandler}
         autoHideDuration={6000}
         anchorOrigin={{
-          vertical: "top",
-          horizontal: "center",
+          vertical: 'top',
+          horizontal: 'center'
         }}
       >
         <Alert
           onClose={handleClose}
-          severity={apiSuccess === true ? "success" : "error"}
-          sx={
-            apiSuccess === true
-              ? { backgroundColor: "#D5F2C7" }
-              : { backgroundColor: "#ff000069" }
-          }
+          severity={apiSuccess === true ? 'success' : 'error'}
+          sx={apiSuccess === true ? { backgroundColor: '#D5F2C7' } : { backgroundColor: '#ff000069' }}
         >
           {message}
         </Alert>

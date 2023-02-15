@@ -1,5 +1,5 @@
-import { GridRowId, GridRowParams } from "@mui/x-data-grid";
-import { DocumentNode } from "graphql";
+import { GridRowId, GridRowParams } from '@mui/x-data-grid';
+import { DocumentNode } from 'graphql';
 
 export interface ActionsCellProps {
   isEditVerified: boolean;

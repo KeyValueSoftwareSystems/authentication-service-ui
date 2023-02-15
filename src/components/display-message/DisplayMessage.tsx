@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 
-import "./styles.css";
-import { DisplayMessageProps } from "./types";
+import './styles.css';
+import { DisplayMessageProps } from './types';
 
 const DisplayMessage: React.FC<DisplayMessageProps> = ({
   customStyle,
@@ -11,26 +11,19 @@ const DisplayMessage: React.FC<DisplayMessageProps> = ({
   description,
   imageStyles,
   containerStyles,
-  className,
+  className
 }) => {
   return (
-    <div
-      className={className ? `${className}` : "display-message"}
-      style={containerStyles}
-    >
-      <img
-        src={image}
-        alt={altMessage}
-        id="display-message"
-        style={imageStyles}
-      />
-      <p id="display-message-heading" style={customStyle}>
+    <div className={className ? `${className}` : 'display-message'} style={containerStyles}>
+      <img src={image} alt={altMessage} id='display-message' style={imageStyles} />
+      <p id='display-message-heading' style={customStyle}>
         {heading}
       </p>
-      <p id="display-message-description" style={customStyle}>
+      <p id='display-message-description' style={customStyle}>
         {description}
       </p>
     </div>
   );
 };
+
 export default DisplayMessage;

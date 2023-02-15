@@ -1,16 +1,16 @@
-import * as React from "react";
-import { styled } from "@mui/system";
-import TabsUnstyled from "@mui/base/TabsUnstyled";
-import TabsListUnstyled from "@mui/base/TabsListUnstyled";
-import TabPanelUnstyled from "@mui/base/TabPanelUnstyled";
-import { buttonUnstyledClasses } from "@mui/base/ButtonUnstyled";
-import TabUnstyled, { tabUnstyledClasses } from "@mui/base/TabUnstyled";
-import { Chip } from "@mui/material";
+import * as React from 'react';
+import { styled } from '@mui/system';
+import TabsUnstyled from '@mui/base/TabsUnstyled';
+import TabsListUnstyled from '@mui/base/TabsListUnstyled';
+import TabPanelUnstyled from '@mui/base/TabPanelUnstyled';
+import { buttonUnstyledClasses } from '@mui/base/ButtonUnstyled';
+import TabUnstyled, { tabUnstyledClasses } from '@mui/base/TabUnstyled';
+import { Chip } from '@mui/material';
 
-import { getOverallPermissions } from "utils/permissions";
-import { EntityPermissionsDetails } from "types/generic";
-import { Permission } from "types/user";
-import "./styles.css";
+import { getOverallPermissions } from 'utils/permissions';
+import { EntityPermissionsDetails } from 'types/generic';
+import { Permission } from 'types/user';
+import './styles.css';
 
 interface StyledTabsProps {
   permissions: EntityPermissionsDetails[];
@@ -69,22 +69,15 @@ const TabsList = styled(TabsListUnstyled)(`
 const PermissionTabs: React.FC<StyledTabsProps> = ({ permissions }) => {
   const [currentTab, setCurrentTab] = React.useState<any>(0);
 
-  const handleChange = (
-    event: React.SyntheticEvent<Element, Event>,
-    value: any
-  ) => {
+  const handleChange = (event: React.SyntheticEvent<Element, Event>, value: any) => {
     setCurrentTab(value);
   };
 
   const getOverallPermissionsValues = () => {
     return (
-      <div id="permission-list">
+      <div id='permission-list'>
         {getOverallPermissions(permissions)?.map((permission) => (
-          <Chip
-            label={permission}
-            className="permission-chip"
-            key={permission?.id}
-          />
+          <Chip label={permission} className='permission-chip' key={permission?.id} />
         ))}
       </div>
     );
@@ -92,13 +85,14 @@ const PermissionTabs: React.FC<StyledTabsProps> = ({ permissions }) => {
 
   const getPermissionsValues = (permissions: Permission[]) => {
     return (
-      <div id="permission-list">
+      <div id='permission-list'>
         {permissions.map((p: Permission) => (
-          <Chip label={p?.name} className="permission-chip" key={p?.id} />
+          <Chip label={p?.name} className='permission-chip' key={p?.id} />
         ))}
       </div>
     );
   };
+
   return (
     <TabsUnstyled defaultValue={0} value={currentTab} onChange={handleChange}>
       <TabsList>

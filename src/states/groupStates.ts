@@ -1,14 +1,14 @@
-import { atom } from "recoil";
+import { atom } from 'recoil';
 
 export const groupDetailsAtom = atom({
-  key: "GroupDetails",
+  key: 'GroupDetails',
   default: {
-    id: "",
-    name: "",
-  },
+    id: '',
+    name: ''
+  }
 });
 
 export const groupListAtom = atom({
-  key: "GroupList",
-  default: [],
+  key: 'GroupList',
+  default: []
 });

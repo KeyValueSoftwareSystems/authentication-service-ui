@@ -1,3 +1,3 @@
-import DisplayMessage from "./DisplayMessage";
+import DisplayMessage from './DisplayMessage';
 
 export default DisplayMessage;

@@ -1,40 +1,26 @@
-import React, { useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
-import { useNavigate } from "react-router-dom";
-import CircularProgress from "@mui/material/CircularProgress";
-import { useMediaQuery } from "react-responsive";
+import React, { useEffect, useState } from 'react';
+import { useRecoilState } from 'recoil';
+import { useNavigate } from 'react-router-dom';
+import CircularProgress from '@mui/material/CircularProgress';
+import { useMediaQuery } from 'react-responsive';
 
-import { GET_USERS } from "services/queries/userQueries";
-import { DELETE_USER } from "services/mutations/userMutations";
-import TableList from "components/table/Table";
-import DisplayMessage from "components/display-message";
-import { columns } from "utils/user";
-import { userListAtom } from "states/userStates";
-import { groupListAtom } from "states/groupStates";
-import {
-  IsViewGroupsVerifiedAtom,
-  IsViewUsersVerifiedAtom,
-  UserPermissionsAtom,
-} from "states/permissionsStates";
-import {
-  groupFilterAtom,
-  statusFilterAtom,
-} from "states/searchSortFilterStates";
-import {
-  CREATE_USER_PERMISSION,
-  DELETE_USER_PERMISSION,
-  UPDATE_USER_PERMISSION,
-} from "constants/permissions";
-import { AddEntity, SearchEntity } from "types/generic";
-import {
-  ACCESS_DENIED_DESCRIPTION,
-  ACCESS_DENIED_MESSAGE,
-} from "constants/messages";
-import { useCustomLazyQuery } from "hooks/useLazyQuery";
-import "../create-edit/styles.css";
-import "./styles.css";
-import { RoutePaths } from "constants/routes";
-import { statusList } from "constants/filters";
+import { GET_USERS } from 'services/queries/userQueries';
+import { DELETE_USER } from 'services/mutations/userMutations';
+import TableList from 'components/table/Table';
+import DisplayMessage from 'components/display-message';
+import { columns } from 'utils/user';
+import { userListAtom } from 'states/userStates';
+import { groupListAtom } from 'states/groupStates';
+import { IsViewGroupsVerifiedAtom, IsViewUsersVerifiedAtom, UserPermissionsAtom } from 'states/permissionsStates';
+import { groupFilterAtom, statusFilterAtom } from 'states/searchSortFilterStates';
+import { CREATE_USER_PERMISSION, DELETE_USER_PERMISSION, UPDATE_USER_PERMISSION } from 'constants/permissions';
+import { AddEntity, SearchEntity } from 'types/generic';
+import { ACCESS_DENIED_DESCRIPTION, ACCESS_DENIED_MESSAGE } from 'constants/messages';
+import { useCustomLazyQuery } from 'hooks/useLazyQuery';
+import '../create-edit/styles.css';
+import './styles.css';
+import { RoutePaths } from 'constants/routes';
+import { statusList } from 'constants/filters';
 
 const Users: React.FC = () => {
   const [isAddVerified, setAddVerified] = useState(false);
@@ -46,29 +32,22 @@ const Users: React.FC = () => {
   const [isViewGroupsVerified] = useRecoilState(IsViewGroupsVerifiedAtom);
   const [userPermissions] = useRecoilState(UserPermissionsAtom);
   const [userList, setUserList] = useRecoilState(userListAtom);
-  const [checkedStatus, setCheckedStatus] =
-    useRecoilState<string[]>(statusFilterAtom);
-  const [checkedGroups, setCheckedGroups] =
-    useRecoilState<string[]>(groupFilterAtom);
+  const [checkedStatus, setCheckedStatus] = useRecoilState<string[]>(statusFilterAtom);
+  const [checkedGroups, setCheckedGroups] = useRecoilState<string[]>(groupFilterAtom);
   const [groupList] = useRecoilState(groupListAtom);
   const navigate = useNavigate();
 
-  const isPortrait = useMediaQuery({ orientation: "portrait" });
+  const isPortrait = useMediaQuery({ orientation: 'portrait' });
 
   const onComplete = (data: any) => {
     setUserList(data?.getUsers?.results);
     setUsersCount(data?.getUsers?.totalCount);
   };
 
-  const { lazyQuery: getUsers, loading } = useCustomLazyQuery(
-    GET_USERS,
-    onComplete
-  );
+  const { lazyQuery: getUsers, loading } = useCustomLazyQuery(GET_USERS, onComplete);
 
   useEffect(() => {
-    if (isViewUsersVerified) {
-      getUsers({ variables: { pagination: { limit: 15, offset: 0 } } });
-    }
+    if (isViewUsersVerified) getUsers({ variables: { pagination: { limit: 15, offset: 0 } } });
   }, [isViewUsersVerified, getUsers]);
 
   useEffect(() => {
@@ -85,9 +64,7 @@ const Users: React.FC = () => {
   useEffect(() => {
     if (userPermissions)
       userPermissions.forEach((item: any) => {
-        if (item?.name.includes(CREATE_USER_PERMISSION)) {
-          setAddVerified(true);
-        }
+        if (item?.name.includes(CREATE_USER_PERMISSION)) setAddVerified(true);
       });
   }, [userPermissions]);
 
@@ -99,10 +76,7 @@ const Users: React.FC = () => {
     navigate(`${RoutePaths.usersUrl}/add`);
   };
 
-  const handleClickFilter = (
-    event: any,
-    setAnchorEl: (value: React.SetStateAction<null>) => void
-  ) => {
+  const handleClickFilter = (event: any, setAnchorEl: (value: React.SetStateAction<null>) => void) => {
     setAnchorEl(event.currentTarget);
     setCurrentFirstFilter(checkedStatus);
     setCurrentSecondFilter(checkedGroups);
@@ -119,10 +93,10 @@ const Users: React.FC = () => {
 
   if (!isViewUsersVerified && !loading)
     return (
-      <div className="denied-table-component">
+      <div className='denied-table-component'>
         <DisplayMessage
           altMessage={ACCESS_DENIED_MESSAGE}
-          image="./assets/access-denied.png"
+          image='./assets/access-denied.png'
           heading={ACCESS_DENIED_MESSAGE}
           description={ACCESS_DENIED_DESCRIPTION}
         />
@@ -148,8 +122,8 @@ const Users: React.FC = () => {
           deletePermission={DELETE_USER_PERMISSION}
           isViewVerified={isViewUsersVerified}
           isAddVerified={!isAddVerified}
-          field="firstName"
-          filterName={["Status", "Groups"]}
+          field='firstName'
+          filterName={['Status', 'Groups']}
           handleClickFilter={handleClickFilter}
           currentFilters={[currentFirstFilter, currentSecondFilter]}
           filters={[statusList, groupList]}

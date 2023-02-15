@@ -1,13 +1,8 @@
-import { useQuery, ApolloError } from "@apollo/client";
-import { useSetRecoilState } from "recoil";
-import { apiRequestAtom, toastMessageAtom } from "states/apiRequestState";
+import { useQuery, ApolloError } from '@apollo/client';
+import { useSetRecoilState } from 'recoil';
+import { apiRequestAtom, toastMessageAtom } from 'states/apiRequestState';
 
-export const useCustomQuery = (
-  query: any,
-  onComplete?: any,
-  variables?: any,
-  skip?: boolean | undefined
-) => {
+export const useCustomQuery = (query: any, onComplete?: any, variables?: any, skip?: boolean | undefined) => {
   const setToastMessage = useSetRecoilState(toastMessageAtom);
   const setApiSuccess = useSetRecoilState(apiRequestAtom);
   const { loading, data, error } = useQuery(query, {
@@ -20,7 +15,8 @@ export const useCustomQuery = (
       setToastMessage(error.message);
       setApiSuccess(false);
     },
-    fetchPolicy: "network-only",
+    fetchPolicy: 'network-only'
   });
+
   return { loading, data, error };
 };

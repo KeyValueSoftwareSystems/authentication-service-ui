@@ -29,7 +29,7 @@
   width: 37px;
   height: 31px;
   background-color: white;
-  font-family: "Inter" !important;
+  font-family: 'Inter' !important;
   font-size: 15px !important;
 }
 
@@ -51,12 +51,8 @@
   font-size: 14px;
 }
 
-.css-14301sb-MuiDataGrid-root
-  .MuiDataGrid-columnHeader--sorted
-  .MuiDataGrid-iconButtonContainer,
-.css-14301sb-MuiDataGrid-root
-  .MuiDataGrid-columnHeader--filtered
-  .MuiDataGrid-iconButtonContainer {
+.css-14301sb-MuiDataGrid-root .MuiDataGrid-columnHeader--sorted .MuiDataGrid-iconButtonContainer,
+.css-14301sb-MuiDataGrid-root .MuiDataGrid-columnHeader--filtered .MuiDataGrid-iconButtonContainer {
   display: none;
 }
 
@@ -72,8 +68,8 @@
   font-size: 16px;
 }
 
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }

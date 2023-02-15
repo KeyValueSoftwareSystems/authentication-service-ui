@@ -1,3 +1,3 @@
-import PermissionTabs from "./PermissionTabs";
+import PermissionTabs from './PermissionTabs';
 
 export default PermissionTabs;

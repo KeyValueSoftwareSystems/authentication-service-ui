@@ -7,7 +7,7 @@
   justify-content: space-between;
   margin-bottom: 10px;
   margin-left: 10px;
-  font-family: "Inter" !important;
+  font-family: 'Inter' !important;
   font-weight: 500;
 }
 
@@ -18,7 +18,7 @@
 }
 
 .filter-by {
-  font-family: "Inter" !important;
+  font-family: 'Inter' !important;
   border-right: 2px solid #bdbcbc14;
   display: flex;
   flex-direction: column;
@@ -32,7 +32,7 @@
   left: 8px;
   border-radius: 8px;
   padding: 16px;
-  font-family: "Inter" !important;
+  font-family: 'Inter' !important;
   display: flex;
   justify-content: space-between;
 }
@@ -50,7 +50,7 @@
 #filter-button-cancel,
 #filter-button-apply {
   text-transform: none;
-  font-family: "Inter";
+  font-family: 'Inter';
   font-size: 14px;
   font-weight: 500;
   line-height: 14px;

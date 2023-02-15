@@ -1,3 +1,3 @@
-import { CustomAvatar } from "./CustomAvatar";
+import { CustomAvatar } from './CustomAvatar';
 
 export default CustomAvatar;

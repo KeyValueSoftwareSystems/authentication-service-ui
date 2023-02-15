@@ -7,14 +7,14 @@
   width: 162px;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-family: "Manrope";
+  font-family: 'Manrope';
 }
 
 .email {
   width: 187px;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-family: "Manrope";
+  font-family: 'Manrope';
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -31,7 +31,7 @@
   width: 204px;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-family: "Manrope";
+  font-family: 'Manrope';
   opacity: 0.5;
 }
 
@@ -41,7 +41,7 @@
 }
 
 .blurred-email {
-  font-family: "Manrope";
+  font-family: 'Manrope';
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -77,7 +77,7 @@
 
 .css-ahj2mt-MuiTypography-root {
   font-size: 16px !important;
-  font-family: "Manrope" !important;
+  font-family: 'Manrope' !important;
 }
 
 @media screen and (max-width: 1310px) and (max-height: 820px) {

@@ -1,3 +1,3 @@
-import TableToolBar from "./TableToolBar";
+import TableToolBar from './TableToolBar';
 
 export default TableToolBar;

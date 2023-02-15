@@ -1,49 +1,40 @@
-import { useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
-import { useNavigate, useParams } from "react-router-dom";
-import { FieldValues } from "react-hook-form";
-import { useSetRecoilState } from "recoil";
-import { Box, Tab, Tabs, Grid, Divider } from "@mui/material";
-import CircularProgress from "@mui/material/CircularProgress";
+import { useEffect, useState } from 'react';
+import { useRecoilState } from 'recoil';
+import { useNavigate, useParams } from 'react-router-dom';
+import { FieldValues } from 'react-hook-form';
+import { useSetRecoilState } from 'recoil';
+import { Box, Tab, Tabs, Grid, Divider } from '@mui/material';
+import CircularProgress from '@mui/material/CircularProgress';
 
-import { GET_ROLES } from "services/queries/roleQueries";
+import { GET_ROLES } from 'services/queries/roleQueries';
 import {
   CREATE_GROUP,
   UPDATE_GROUP,
   UPDATE_GROUP_PERMISSIONS,
-  UPDATE_GROUP_ROLES,
-} from "services/mutations/groupMutations";
-import { GET_USERS } from "services/queries/userQueries";
-import {
-  GET_GROUP,
-  GET_GROUP_PERMISSIONS,
-} from "services/queries/groupQueries";
-import {
-  IsViewRolesVerifiedAtom,
-  IsViewUsersVerifiedAtom,
-} from "states/permissionsStates";
-import { apiRequestAtom, toastMessageAtom } from "states/apiRequestState";
-import { Role } from "types/role";
-import { Permission, User } from "types/user";
-import { Group } from "types/group";
-import {
-  GROUP_CREATE_SUCCESS_MESSAGE,
-  GROUP_UPDATE_SUCCESS_MESSAGE,
-} from "constants/messages";
-import { RoutePaths } from "constants/routes";
-import RoleCardsChecklist from "components/role-cards-checklist";
-import AvatarChecklistComponent from "components/avatar-checklist";
-import PermissionCards from "components/permission-cards";
-import CustomAvatar from "components/custom-avatar";
-import TabPanel from "components/tab-panel";
-import { ReactComponent as CrossIcon } from "assets/edit-group-icons/cross-icon.svg";
-import { useCustomQuery } from "hooks/useQuery";
-import { useCustomMutation } from "hooks/useMutation";
-import { renderAccessDenied } from "utils/generic";
-import { useCustomLazyQuery } from "hooks/useLazyQuery";
-import "./styles.css";
-import GroupForm from "./GroupForm";
-import { submitAtom } from "states/submitStates";
+  UPDATE_GROUP_ROLES
+} from 'services/mutations/groupMutations';
+import { GET_USERS } from 'services/queries/userQueries';
+import { GET_GROUP, GET_GROUP_PERMISSIONS } from 'services/queries/groupQueries';
+import { IsViewRolesVerifiedAtom, IsViewUsersVerifiedAtom } from 'states/permissionsStates';
+import { apiRequestAtom, toastMessageAtom } from 'states/apiRequestState';
+import { Role } from 'types/role';
+import { Permission, User } from 'types/user';
+import { Group } from 'types/group';
+import { GROUP_CREATE_SUCCESS_MESSAGE, GROUP_UPDATE_SUCCESS_MESSAGE } from 'constants/messages';
+import { RoutePaths } from 'constants/routes';
+import RoleCardsChecklist from 'components/role-cards-checklist';
+import AvatarChecklistComponent from 'components/avatar-checklist';
+import PermissionCards from 'components/permission-cards';
+import CustomAvatar from 'components/custom-avatar';
+import TabPanel from 'components/tab-panel';
+import { ReactComponent as CrossIcon } from 'assets/edit-group-icons/cross-icon.svg';
+import { useCustomQuery } from 'hooks/useQuery';
+import { useCustomMutation } from 'hooks/useMutation';
+import { renderAccessDenied } from 'utils/generic';
+import { useCustomLazyQuery } from 'hooks/useLazyQuery';
+import './styles.css';
+import GroupForm from './GroupForm';
+import { submitAtom } from 'states/submitStates';
 
 const CreateOrEditGroup = () => {
   const { id } = useParams();
@@ -63,18 +54,12 @@ const CreateOrEditGroup = () => {
 
   const [allRoles, setAllRoles] = useState<Role[]>([]);
 
-  const [userSelectedPermissions, setUserSelectedPermissions] = useState<
-    Permission[]
-  >([]);
+  const [userSelectedPermissions, setUserSelectedPermissions] = useState<Permission[]>([]);
 
-  const [updateGroup, { data: updatedGroupData }] =
-    useCustomMutation(UPDATE_GROUP);
-  const [createGroup, { data: createdGroupData }] =
-    useCustomMutation(CREATE_GROUP);
-  const [updateGroupRoles, { data: updatedGroupRolesData }] =
-    useCustomMutation(UPDATE_GROUP_ROLES);
-  const [updateGroupPermissions, { data: updatedGroupPermissionsData }] =
-    useCustomMutation(UPDATE_GROUP_PERMISSIONS);
+  const [updateGroup, { data: updatedGroupData }] = useCustomMutation(UPDATE_GROUP);
+  const [createGroup, { data: createdGroupData }] = useCustomMutation(CREATE_GROUP);
+  const [updateGroupRoles, { data: updatedGroupRolesData }] = useCustomMutation(UPDATE_GROUP_ROLES);
+  const [updateGroupPermissions, { data: updatedGroupPermissionsData }] = useCustomMutation(UPDATE_GROUP_PERMISSIONS);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -86,12 +71,13 @@ const CreateOrEditGroup = () => {
 
   const onGetGroupComplete = (data: any) => {
     setGroup(data?.getGroup);
-    setRoles([...roles, ...data?.getGroup?.roles]);
-    setUsers([...users, ...data?.getGroup?.users]);
+    setRoles([...roles, data?.getGroup?.roles]);
+    setUsers([...users, data?.getGroup?.users]);
   };
 
   const onGetGroupPermissionsComplete = (data: any) => {
     const permissionList = data?.getGroupPermissions;
+
     setUserSelectedPermissions(permissionList);
   };
 
@@ -106,29 +92,14 @@ const CreateOrEditGroup = () => {
     !isViewRolesVerified
   );
 
-  const { loading } = useCustomQuery(
-    GET_GROUP,
-    onGetGroupComplete,
-    { id: id },
-    !id
-  );
+  const { loading } = useCustomQuery(GET_GROUP, onGetGroupComplete, { id: id }, !id);
 
-  useCustomQuery(
-    GET_GROUP_PERMISSIONS,
-    onGetGroupPermissionsComplete,
-    { id },
-    !id
-  );
+  useCustomQuery(GET_GROUP_PERMISSIONS, onGetGroupPermissionsComplete, { id }, !id);
 
-  const { lazyQuery: getUsers } = useCustomLazyQuery(
-    GET_USERS,
-    onGetUsersComplete
-  );
+  const { lazyQuery: getUsers } = useCustomLazyQuery(GET_USERS, onGetUsersComplete);
 
   useEffect(() => {
-    if (isViewUsersVerified) {
-      getUsers();
-    }
+    if (isViewUsersVerified) getUsers();
   }, [getUsers, isViewUsersVerified]);
 
   useEffect(() => {
@@ -136,32 +107,30 @@ const CreateOrEditGroup = () => {
       updateGroup({
         variables: {
           id: createdGroupData?.createGroup?.id,
-          input: { users: users.map((user) => user.id) },
-        },
+          input: { users: users.map((user) => user.id) }
+        }
       });
 
       updateGroupRoles({
         variables: {
           id: createdGroupData?.createGroup?.id,
-          input: { roles: roles.map((role) => role.id) },
-        },
+          input: { roles: roles.map((role) => role.id) }
+        }
       });
 
       updateGroupPermissions({
         variables: {
           id: createdGroupData?.createGroup?.id,
           input: {
-            permissions: userSelectedPermissions.map(
-              (permission) => permission.id
-            ),
-          },
-        },
+            permissions: userSelectedPermissions.map((permission) => permission.id)
+          }
+        }
       });
     } // eslint-disable-next-line
   }, [createdGroupData]);
 
   useEffect(() => {
-    if ((createdGroupData && updatedGroupData) || updatedGroupData) {
+    if ((createdGroupData && updatedGroupData) || updatedGroupData)
       if (updatedGroupRolesData && updatedGroupPermissionsData) {
         navigate(RoutePaths.groupsUrl);
         setApiSuccess(true);
@@ -169,77 +138,55 @@ const CreateOrEditGroup = () => {
           ? setToastMessage(GROUP_CREATE_SUCCESS_MESSAGE)
           : setToastMessage(GROUP_UPDATE_SUCCESS_MESSAGE);
       }
-    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    createdGroupData,
-    updatedGroupData,
-    updatedGroupRolesData,
-    updatedGroupPermissionsData,
-  ]);
+  }, [createdGroupData, updatedGroupData, updatedGroupRolesData, updatedGroupPermissionsData]);
 
-  const removeItem = ({
-    roleId,
-    userId,
-  }: {
-    roleId?: string;
-    userId?: string;
-  }) => {
-    if (roleId) {
-      setRoles(roles.filter((role: Role) => role.id !== roleId));
-    }
+  const removeItem = ({ roleId, userId }: { roleId?: string; userId?: string }) => {
+    if (roleId) setRoles(roles.filter((role: Role) => role.id !== roleId));
 
-    if (userId) {
-      setUsers(users.filter((user: User) => user.id !== userId));
-    }
+    if (userId) setUsers(users.filter((user: User) => user.id !== userId));
   };
 
-  const onChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    item?: Role
-  ) => {
+  const onChange = (event: React.ChangeEvent<HTMLInputElement>, item?: Role) => {
     setSubmitButton(true);
     const value = event.target.value;
+
     if (event.target.checked) {
-      if (value === "all") {
+      if (value === 'all') {
         setRoles(allRoles);
+
         return;
       }
-      if (item) {
-        if (roles[0] === null) {
-          setRoles([item]);
-        } else {
-          setRoles([...roles, item]);
-        }
-      }
+      if (item)
+        if (roles[0] === null) setRoles([item]);
+        else setRoles([...roles, item]);
     } else {
-      if (value === "all") {
+      if (value === 'all') {
         setRoles([]);
+
         return;
       }
       removeItem({ roleId: item?.id as string });
     }
   };
 
-  const onChangeUsers = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    item: User
-  ) => {
+  const onChangeUsers = (event: React.ChangeEvent<HTMLInputElement>, item: User) => {
     const value = event.target.value;
+
     setSubmitButton(true);
     if (event.target.checked) {
-      if (value === "all") {
+      if (value === 'all') {
         setUsers(allUsers);
+
         return;
       }
-      if (users[0] === null) {
-        setUsers([item]);
-      } else {
-        setUsers([...users, item]);
-      }
+      if (users[0] === null) setUsers([item]);
+      else setUsers([...users, item]);
     } else {
-      if (value === "all") {
+      if (value === 'all') {
         setUsers([]);
+
         return;
       }
       removeItem({ userId: item?.id as string });
@@ -249,8 +196,8 @@ const CreateOrEditGroup = () => {
   const onCreateGroup = (inputs: FieldValues) => {
     createGroup({
       variables: {
-        input: inputs,
-      },
+        input: inputs
+      }
     });
   };
 
@@ -258,59 +205,44 @@ const CreateOrEditGroup = () => {
     updateGroup({
       variables: {
         id: id,
-        input: { name: inputs.name, users: users.map((user) => user.id) },
-      },
+        input: { name: inputs.name, users: users.map((user) => user.id) }
+      }
     });
 
     updateGroupRoles({
       variables: {
         id: id,
-        input: { roles: roles.map((role) => role.id) },
-      },
+        input: { roles: roles.map((role) => role.id) }
+      }
     });
 
     updateGroupPermissions({
       variables: {
         id: id,
         input: {
-          permissions: userSelectedPermissions.map(
-            (permission) => permission.id
-          ),
-        },
-      },
+          permissions: userSelectedPermissions.map((permission) => permission.id)
+        }
+      }
     });
   };
 
   return (
-    <div className="create-edit-group-container">
+    <div className='create-edit-group-container'>
       {!loading && (
-        <GroupForm
-          name={(group?.name as string) || ""}
-          createGroup={onCreateGroup}
-          editGroup={onEditGroup}
-        />
+        <GroupForm name={(group?.name as string) || ''} createGroup={onCreateGroup} editGroup={onEditGroup} />
       )}
-      <div style={{ height: "55%" }}>
+      <div style={{ height: '55%' }}>
         <Box
           sx={{
-            display: "flex",
-            width: "98.7%",
-            marginBottom: "20px",
+            display: 'flex',
+            width: '98.7%',
+            marginBottom: '20px'
           }}
         >
-          <Tabs value={value} onChange={handleChange} className="custom-tabs">
-            <Tab
-              label="Roles"
-              sx={{ textTransform: "none", fontSize: "18px" }}
-            />
-            <Tab
-              label="Permissions"
-              sx={{ textTransform: "none", fontSize: "18px" }}
-            />
-            <Tab
-              label="Members"
-              sx={{ textTransform: "none", fontSize: "18px" }}
-            />
+          <Tabs value={value} onChange={handleChange} className='custom-tabs'>
+            <Tab label='Roles' sx={{ textTransform: 'none', fontSize: '18px' }} />
+            <Tab label='Permissions' sx={{ textTransform: 'none', fontSize: '18px' }} />
+            <Tab label='Members' sx={{ textTransform: 'none', fontSize: '18px' }} />
           </Tabs>
         </Box>
         {!rolesLoading ? (
@@ -318,11 +250,11 @@ const CreateOrEditGroup = () => {
             value={value}
             index={0}
             style={{
-              height: "calc(100vh - 400px)",
-              overflowY: "auto",
+              height: 'calc(100vh - 400px)',
+              overflowY: 'auto'
             }}
           >
-            <div className="roles-checklist">
+            <div className='roles-checklist'>
               {isViewRolesVerified ? (
                 <RoleCardsChecklist
                   roleList={roleData?.getRoles?.results}
@@ -337,11 +269,7 @@ const CreateOrEditGroup = () => {
         ) : (
           <CircularProgress />
         )}
-        <TabPanel
-          value={value}
-          index={1}
-          style={{ overflowY: "auto", height: "calc(100vh - 400px)" }}
-        >
+        <TabPanel value={value} index={1} style={{ overflowY: 'auto', height: 'calc(100vh - 400px)' }}>
           {isViewRolesVerified ? (
             <PermissionCards
               userSelectedPermissions={userSelectedPermissions}
@@ -353,9 +281,9 @@ const CreateOrEditGroup = () => {
           )}
         </TabPanel>
         <TabPanel value={value} index={2}>
-          <div className="add-members">
+          <div className='add-members'>
             {isViewUsersVerified ? (
-              <Grid container spacing={1} width="100%">
+              <Grid container spacing={1} width='100%'>
                 <Grid item sm={5.5}>
                   <AvatarChecklistComponent
                     mapList={allUsers}
@@ -365,31 +293,14 @@ const CreateOrEditGroup = () => {
                     searchQuery={GET_USERS}
                   />
                 </Grid>
-                <Divider
-                  orientation="vertical"
-                  flexItem
-                  className="vertical-divider"
-                />
+                <Divider orientation='vertical' flexItem className='vertical-divider' />
                 <Grid item sm={6} sx={{ marginLeft: 2 }}>
-                  <div className="select-member-wrapper">Selected Members</div>
-                  <div className="selected-members">
-                    {users.map((user, index) => (
-                      <div
-                        id={user?.id}
-                        className="selected-items"
-                        key={user?.id}
-                      >
-                        <CustomAvatar
-                          firstName={user?.firstName}
-                          lastName={user?.lastName}
-                          email={user?.email}
-                        />
-                        <CrossIcon
-                          className="cross-icon"
-                          onClick={() =>
-                            removeItem({ userId: user?.id as string })
-                          }
-                        />
+                  <div className='select-member-wrapper'>Selected Members</div>
+                  <div className='selected-members'>
+                    {users.map((user) => (
+                      <div id={user?.id} className='selected-items' key={user?.id}>
+                        <CustomAvatar firstName={user?.firstName} lastName={user?.lastName} email={user?.email} />
+                        <CrossIcon className='cross-icon' onClick={() => removeItem({ userId: user?.id as string })} />
                       </div>
                     ))}
                   </div>

@@ -1,11 +1,11 @@
-import { Checkbox } from "@mui/material";
-import { FC, useEffect, useState } from "react";
-import styled from "@emotion/styled";
+import { Checkbox } from '@mui/material';
+import { FC, useEffect, useState } from 'react';
+import styled from '@emotion/styled';
 
-import { Role } from "types/role";
-import RoleCard from "../role-card";
-import { ReactComponent as UnCheckedIcon } from "assets/checkbox-icons/uncheckedicon.svg";
-import { ReactComponent as CheckedIcon } from "assets/checkbox-icons/checkedicon.svg";
+import { Role } from 'types/role';
+import RoleCard from '../role-card';
+import { ReactComponent as UnCheckedIcon } from 'assets/checkbox-icons/uncheckedicon.svg';
+import { ReactComponent as CheckedIcon } from 'assets/checkbox-icons/checkedicon.svg';
 
 interface Props {
   roleList: Role[];
@@ -18,7 +18,7 @@ const Container = styled.div`
   flex-direction: column;
   row-gap: 10px;
   margin-top: 10px;
-  font-family: "Manrope";
+  font-family: 'Manrope';
 `;
 
 const SelectAll = styled.div`
@@ -34,11 +34,7 @@ const CardsContainer = styled.div`
   row-gap: 18px;
 `;
 
-const RoleCardsChecklist: FC<Props> = ({
-  roleList,
-  currentCheckedItems,
-  onChange = () => null,
-}) => {
+const RoleCardsChecklist: FC<Props> = ({ roleList, currentCheckedItems, onChange = () => null }) => {
   const [selectAll, setSelectAll] = useState<boolean>(false);
 
   const handleSelectAll = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -52,35 +48,25 @@ const RoleCardsChecklist: FC<Props> = ({
   };
 
   useEffect(() => {
-    if (roleList?.length === currentCheckedItems?.length) {
-      setSelectAll(true);
-    } else setSelectAll(false);
+    if (roleList?.length === currentCheckedItems?.length) setSelectAll(true);
+    else setSelectAll(false);
   }, [roleList, currentCheckedItems]);
 
   return (
     <Container>
       <SelectAll>
         <Checkbox
-          value={"all"}
+          value={'all'}
           onChange={handleSelectAll}
           checked={selectAll}
           icon={<UnCheckedIcon />}
           checkedIcon={<CheckedIcon />}
         />
-        <span
-          style={{ marginLeft: "5px", fontSize: "14px", lineHeight: "24px" }}
-        >
-          Select all
-        </span>
+        <span style={{ marginLeft: '5px', fontSize: '14px', lineHeight: '24px' }}>Select all</span>
       </SelectAll>
       <CardsContainer>
         {roleList?.map((role: Role) => (
-          <RoleCard
-            role={role}
-            checked={isChecked(role.id)}
-            onChange={onChange}
-            key={role?.id}
-          />
+          <RoleCard role={role} checked={isChecked(role.id)} onChange={onChange} key={role?.id} />
         ))}
       </CardsContainer>
     </Container>

@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 export const GET_USER = gql`
   query getUser($id: ID!) {
@@ -44,20 +44,8 @@ export const GET_USER = gql`
 `;
 
 export const GET_USERS = gql`
-  query getUsers(
-    $search: UserSearchInput
-    $filter: FilterInput
-    $sort: SortInput
-    $pagination: PaginationInput
-  ) {
-    getUsers(
-      input: {
-        search: $search
-        filter: $filter
-        sort: $sort
-        pagination: $pagination
-      }
-    ) {
+  query getUsers($search: UserSearchInput, $filter: FilterInput, $sort: SortInput, $pagination: PaginationInput) {
+    getUsers(input: { search: $search, filter: $filter, sort: $sort, pagination: $pagination }) {
       totalCount
       results {
         id

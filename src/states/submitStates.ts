@@ -1,6 +1,6 @@
-import { atom } from "recoil";
+import { atom } from 'recoil';
 
 export const submitAtom = atom<boolean>({
-  key: "Submit",
-  default: false,
+  key: 'Submit',
+  default: false
 });

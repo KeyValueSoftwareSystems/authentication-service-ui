@@ -3,7 +3,7 @@
   font-size: 16px;
   background: #eaf1fd;
   border-radius: 6px;
-  font-family: "Manrope";
+  font-family: 'Manrope';
   color: #000000;
 }
 
@@ -12,7 +12,7 @@
   font-size: 16px;
   background: #eaf1fd;
   border-radius: 6px;
-  font-family: "Manrope";
+  font-family: 'Manrope';
   color: #000000;
   opacity: 0.5;
 }
@@ -23,7 +23,7 @@
   background: #2f6fed;
   color: white;
   border-radius: 6px;
-  font-family: "Manrope";
+  font-family: 'Manrope';
   cursor: default;
 }
 
@@ -33,7 +33,7 @@
   background: #2f6fed;
   color: white;
   border-radius: 6px;
-  font-family: "Manrope";
+  font-family: 'Manrope';
   opacity: 0.5;
   cursor: default;
 }

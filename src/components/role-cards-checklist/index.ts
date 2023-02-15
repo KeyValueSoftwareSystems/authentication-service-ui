@@ -1,3 +1,3 @@
-import RoleCardsChecklist from "./RoleCardsChecklist";
+import RoleCardsChecklist from './RoleCardsChecklist';
 
 export default RoleCardsChecklist;

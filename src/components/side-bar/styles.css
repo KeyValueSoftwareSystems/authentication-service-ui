@@ -22,20 +22,17 @@
 }
 
 .text-link .sidebar-icon {
-  filter: invert(54%) sepia(7%) saturate(502%) hue-rotate(191deg)
-    brightness(93%) contrast(86%);
+  filter: invert(54%) sepia(7%) saturate(502%) hue-rotate(191deg) brightness(93%) contrast(86%);
   margin-right: 7px;
   margin-left: -1px;
 }
 
 .text-link:hover .sidebar-icon {
-  filter: invert(96%) sepia(100%) saturate(0%) hue-rotate(120deg)
-    brightness(104%) contrast(107%);
+  filter: invert(96%) sepia(100%) saturate(0%) hue-rotate(120deg) brightness(104%) contrast(107%);
 }
 
 .active-text-link .sidebar-icon {
-  filter: invert(96%) sepia(100%) saturate(0%) hue-rotate(120deg)
-    brightness(104%) contrast(107%);
+  filter: invert(96%) sepia(100%) saturate(0%) hue-rotate(120deg) brightness(104%) contrast(107%);
   margin-right: 7px;
   margin-left: -1px;
 }

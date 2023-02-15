@@ -1,3 +1,3 @@
-import TableChipElement from "./TableChipElement";
+import TableChipElement from './TableChipElement';
 
 export default TableChipElement;

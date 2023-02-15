@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC } from 'react';
 
 interface IfProps {
   condition: boolean | number;
@@ -7,6 +7,7 @@ interface IfProps {
 
 const If: FC<IfProps> = ({ condition, children }) => {
   if (!condition) return null;
+
   return <>{children}</>;
 };
 

@@ -1,3 +1,3 @@
-import { StatusChip } from "./StatusChip";
+import { StatusChip } from './StatusChip';
 
 export default StatusChip;

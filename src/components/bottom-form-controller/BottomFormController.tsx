@@ -1,36 +1,26 @@
-import { Button } from "@mui/material";
-import { useRecoilValue } from "recoil";
+import { Button } from '@mui/material';
+import { useRecoilValue } from 'recoil';
 
-import "./styles.css";
-import { BottomControllerProps } from "./types";
-import { submitAtom } from "states/submitStates";
+import './styles.css';
+import { BottomControllerProps } from './types';
+import { submitAtom } from 'states/submitStates';
 
 const BottomFormController = (props: BottomControllerProps) => {
-  const {
-    primarybuttonLabel,
-    onSubmit,
-    formId,
-    onCancel,
-    secondaryButtonLabel,
-  } = props;
+  const { primarybuttonLabel, onSubmit, formId, onCancel, secondaryButtonLabel } = props;
   const isSubmitButtonEnabled = useRecoilValue(submitAtom);
+
   return (
-    <div className="bottom-wrapper">
-      <Button
-        variant="outlined"
-        className="cancel-button"
-        onClick={onCancel}
-        sx={{ textTransform: "none" }}
-      >
+    <div className='bottom-wrapper'>
+      <Button variant='outlined' className='cancel-button' onClick={onCancel} sx={{ textTransform: 'none' }}>
         {secondaryButtonLabel}
       </Button>
-      <div className="submit-button-style">
+      <div className='submit-button-style'>
         <Button
-          variant="contained"
-          className="submit-button"
+          variant='contained'
+          className='submit-button'
           onClick={onSubmit}
           form={formId}
-          sx={{ textTransform: "none" }}
+          sx={{ textTransform: 'none' }}
           disabled={!isSubmitButtonEnabled}
         >
           {primarybuttonLabel}
