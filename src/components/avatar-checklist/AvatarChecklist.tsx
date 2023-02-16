@@ -7,9 +7,10 @@ import { ReactComponent as UnCheckedIcon } from 'assets/checkbox-icons/unchecked
 import { ReactComponent as CheckedIcon } from 'assets/checkbox-icons/checkedicon.svg';
 import CustomAvatar from 'components/custom-avatar';
 import SearchBar from '../search-bar/SearchBar';
+import { searchAtom } from 'states/searchSortFilterStates';
+
 import { ChecklistProps } from './types';
 import './styles.css';
-import { searchAtom } from 'states/searchSortFilterStates';
 
 export const AvatarChecklistComponent: FC<ChecklistProps> = ({
   mapList,
@@ -18,16 +19,11 @@ export const AvatarChecklistComponent: FC<ChecklistProps> = ({
   setItemList,
   searchQuery
 }) => {
-  const [selectAll, setSelectAll] = useState<boolean>(false);
   const searchValue = useRecoilValue(searchAtom);
 
-  const isTabletScreen = useMediaQuery({ query: '(max-width: 940px)' });
+  const [selectAll, setSelectAll] = useState<boolean>(false);
 
-  const handleSelectAll = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.checked) setSelectAll(true);
-    else setSelectAll(false);
-    onChange(e);
-  };
+  const isTabletScreen = useMediaQuery({ query: '(max-width: 940px)' });
 
   useEffect(() => {
     if (mapList?.length === currentCheckedItems?.length && mapList.length !== 0) setSelectAll(true);
@@ -36,6 +32,12 @@ export const AvatarChecklistComponent: FC<ChecklistProps> = ({
   const getIsChecked = (item: any) => {
     //@ts-ignore ---
     return currentCheckedItems?.findIndex((val: any) => val?.id === item?.id) !== -1;
+  };
+
+  const handleSelectAll = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.checked) setSelectAll(true);
+    else setSelectAll(false);
+    onChange(e);
   };
 
   return (

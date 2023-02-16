@@ -11,9 +11,10 @@ import { sortCountAtom } from 'states/searchSortFilterStates';
 import { useFetchEntities } from 'hooks/useFetchEntities';
 import FilterDropdown from 'components/filter-dropdown';
 import { ADD_FILTER, SORT_BY_NAME } from 'constants/messages';
-import { TableToolBarProps } from './types';
+import SearchBar from 'components/search-bar/SearchBar';
+
 import './styles.css';
-import SearchBar from '../search-bar/SearchBar';
+import { TableToolBarProps } from './types';
 
 const TableToolBar: FC<TableToolBarProps> = ({
   field,

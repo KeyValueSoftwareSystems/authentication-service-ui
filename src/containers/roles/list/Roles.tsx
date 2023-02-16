@@ -4,7 +4,6 @@ import { GridRowId } from '@mui/x-data-grid';
 import { useNavigate } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
 
-import './styles.css';
 import { GET_ROLES } from 'services/queries/roleQueries';
 import { DELETE_ROLE } from 'services/mutations/roleMutations';
 import { RolesListAtom } from 'states/roleStates';
@@ -17,15 +16,17 @@ import { ACCESS_DENIED_DESCRIPTION, ACCESS_DENIED_MESSAGE } from 'constants/mess
 import { columns } from 'utils/roles';
 import { useCustomLazyQuery } from 'hooks/useLazyQuery';
 
+import './styles.css';
+
 const Roles: React.FC = () => {
-  const navigate = useNavigate();
+  const [isViewRolesVerified] = useRecoilState(IsViewRolesVerifiedAtom);
+  const [roleList, setRoleList] = useRecoilState(RolesListAtom);
+  const [userPermissions] = useRecoilState(UserPermissionsAtom);
 
   const [isAddVerified, setAddVerified] = React.useState(false);
   const [roleCount, setRoleCount] = useState(0);
-  const [isViewRolesVerified] = useRecoilState(IsViewRolesVerifiedAtom);
-  const [userPermissions] = useRecoilState(UserPermissionsAtom);
 
-  const [roleList, setRoleList] = useRecoilState(RolesListAtom);
+  const navigate = useNavigate();
 
   const onGetRolesComplete = (data: any) => {
     setRoleList(data?.getRoles?.results);

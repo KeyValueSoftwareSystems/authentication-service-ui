@@ -1,5 +1,6 @@
 import { DocumentNode } from '@apollo/client';
 import { SetterOrUpdater, useRecoilState, useSetRecoilState } from 'recoil';
+
 import { FilterConditions, SortDirection } from 'services/constants';
 import {
   groupFilterAtom,
@@ -35,7 +36,6 @@ export const useFetchEntities = (usersFetchProps: usersFetchProps) => {
   const onCompleted = (data: any) => {
     usersFetchProps.userParams.setList(data);
   };
-
   const { lazyQuery: filterQuery } = useCustomLazyQuery(usersFetchProps.userParams.query, onCompleted);
 
   const fetchEntities = ({ searchText = null, countValue = 0, page = null }: ApiParams) => {

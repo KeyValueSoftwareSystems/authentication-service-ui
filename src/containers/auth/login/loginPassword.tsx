@@ -4,10 +4,11 @@ import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import FormInputText from 'components/input-text';
-import { LoginSchema } from '../authSchema';
-import { LOGO_URL } from '../../../config';
-import './styles.css';
+import { LoginSchema } from 'containers/auth/authSchema';
+import { LOGO_URL } from 'config';
 import { UserActions } from 'types/generic';
+
+import './styles.css';
 
 type Props = {
   onSubmitForm: (data: any) => void;

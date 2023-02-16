@@ -10,10 +10,12 @@ import { ReactComponent as CheckedIcon } from 'assets/checkbox-icons/checkedicon
 import CustomDialog from 'components/custom-dialog';
 import { Group } from 'types/group';
 import CustomChip from 'components/custom-chip';
-import If from '../if';
-import '../checklist/styles.css';
-import RoleCard from '../role-card';
+import If from 'components/if';
+import 'components/checklist/styles.css';
+import RoleCard from 'components/role-card';
+
 import './styles.css';
+
 interface GroupCardProps {
   group: any;
   currentCheckedItems?: Group[];

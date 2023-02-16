@@ -9,6 +9,7 @@ import { useMediaQuery } from 'react-responsive';
 import Filter from 'components/filter/Filter';
 import { ReactComponent as LeftArrowIcon } from 'assets/toolbar-icons/arrow-left.svg';
 import { useFetchEntities } from 'hooks/useFetchEntities';
+
 import './styles.css';
 import { FilterDropdownProps } from './types';
 

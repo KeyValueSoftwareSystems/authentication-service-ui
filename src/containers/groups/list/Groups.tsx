@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useMediaQuery } from 'react-responsive';
 
-import './styles.css';
 import { DELETE_GROUP } from 'services/mutations/groupMutations';
 import { GET_GROUPS } from 'services/queries/groupQueries';
 import TableList from 'components/table';
@@ -18,15 +17,17 @@ import { ACCESS_DENIED_DESCRIPTION, ACCESS_DENIED_MESSAGE } from 'constants/mess
 import { columns } from 'utils/groups';
 import { useCustomLazyQuery } from 'hooks/useLazyQuery';
 
+import './styles.css';
+
 const GroupList: React.FC = () => {
-  const navigate = useNavigate();
+  const [isViewGroupsVerified] = useRecoilState(IsViewGroupsVerifiedAtom);
+  const [groupList, setGroupList] = useRecoilState(groupListAtom);
+  const [userPermissions] = useRecoilState(UserPermissionsAtom);
 
   const [isAddVerified, setAddVerified] = useState(false);
   const [groupCount, setGroupCount] = useState(0);
-  const [isViewGroupsVerified] = useRecoilState(IsViewGroupsVerifiedAtom);
-  const [userPermissions] = useRecoilState(UserPermissionsAtom);
-  const [groupList, setGroupList] = useRecoilState(groupListAtom);
 
+  const navigate = useNavigate();
   const isPortrait = useMediaQuery({ orientation: 'portrait' });
 
   const onGetGroupsComplete = (data: any) => {
@@ -40,14 +41,6 @@ const GroupList: React.FC = () => {
     if (isViewGroupsVerified) getGroups({ variables: { pagination: { limit: 15, offset: 0 } } });
   }, [isViewGroupsVerified, getGroups]);
 
-  const onAddGroup = () => {
-    navigate('add');
-  };
-
-  const onEditGroup = (id: GridRowId) => {
-    navigate(`edit/${id}`);
-  };
-
   useEffect(() => {
     userPermissions.forEach((item: any) => {
       if (item?.name.includes(CREATE_GROUP_PERMISSION)) setAddVerified(true);
@@ -58,6 +51,14 @@ const GroupList: React.FC = () => {
     columns[0].flex = isPortrait ? 0.3 : 0.5;
     columns[2].flex = isPortrait ? 0.35 : 0.5;
   }, [isPortrait]);
+
+  const onAddGroup = () => {
+    navigate('add');
+  };
+
+  const onEditGroup = (id: GridRowId) => {
+    navigate(`edit/${id}`);
+  };
 
   const setItemList = (data: any) => {
     setGroupList(data?.getGroups?.results);

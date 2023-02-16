@@ -1,5 +1,6 @@
 import React from 'react';
 import { Dialog, DialogTitle, styled } from '@mui/material';
+
 import { ReactComponent as CloseIcon } from 'assets/dialog-box-icons/closeIcon.svg';
 
 const StyledDialog = styled(Dialog)`

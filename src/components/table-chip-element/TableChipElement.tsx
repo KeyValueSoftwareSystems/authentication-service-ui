@@ -5,8 +5,10 @@ import { useMediaQuery } from 'react-responsive';
 import CustomChip from 'components/custom-chip';
 import CustomDialog from 'components/custom-dialog';
 import If from 'components/if';
-import './styles.css';
 import { DialogContent } from 'components/group-card/GroupCard';
+
+import './styles.css';
+
 interface TableChipElementProps {
   rowItems: any;
   columnName: string;
@@ -15,6 +17,7 @@ interface TableChipElementProps {
 
 const TableChipElement: FC<TableChipElementProps> = ({ rowItems, columnName, defaultSize }) => {
   const { row } = rowItems;
+
   const [viewMore, setViewMore] = useState('');
   const [openModal, setOpenModal] = useState<boolean>(false);
 

@@ -8,10 +8,11 @@ import { ReactComponent as UnCheckedIcon } from 'assets/checkbox-icons/unchecked
 import { ReactComponent as CheckedIcon } from 'assets/checkbox-icons/checkedicon.svg';
 import { Permission } from 'types/permission';
 import { getUniquePermissionsFromGroups, getUniquePermissionsFromRoles } from 'utils/permissions';
-import If from '../if';
+import If from 'components/if';
 import { RemovedPermissions } from 'constants/permissions';
-import { PermissionCardProps } from './types';
 import { submitAtom } from 'states/submitStates';
+
+import { PermissionCardProps } from './types';
 
 const Container = styled.div<{ show: boolean }>`
   display: ${(props) => (props.show ? 'flex' : 'none')};
@@ -52,9 +53,15 @@ const PermissionsCard: FC<PermissionCardProps> = ({
   userPermissions = [],
   isViewPage = false
 }) => {
+  const setSubmitButton = useSetRecoilState(submitAtom);
+
   const [rolePermissions, setRolePermissions] = useState<Permission[]>([]);
   const [groupPermissions, setGroupPermissions] = useState<Permission[]>([]);
-  const setSubmitButton = useSetRecoilState(submitAtom);
+
+  useEffect(() => {
+    setRolePermissions(getUniquePermissionsFromRoles(roles));
+    setGroupPermissions(getUniquePermissionsFromGroups(groups)); // eslint-disable-next-line
+  }, []);
 
   const onChangePermissions = (e: React.ChangeEvent<HTMLInputElement>, permission: Permission) => {
     if (e.target.checked) {
@@ -72,11 +79,6 @@ const PermissionsCard: FC<PermissionCardProps> = ({
     }
     setSubmitButton(true);
   };
-
-  useEffect(() => {
-    setRolePermissions(getUniquePermissionsFromRoles(roles));
-    setGroupPermissions(getUniquePermissionsFromGroups(groups)); // eslint-disable-next-line
-  }, []);
 
   const IsChecked = (id: string) => {
     return (

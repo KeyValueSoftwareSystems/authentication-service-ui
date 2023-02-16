@@ -1,7 +1,7 @@
 import { FC, useState } from 'react';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { GridActionsCellItem, GridRowId } from '@mui/x-data-grid';
 import { Tooltip } from '@mui/material';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { ReactComponent as EditIcon } from 'assets/table-actions-icons/edit.svg';
 import { ReactComponent as LineIcon } from 'assets/table-actions-icons/line.svg';
@@ -9,10 +9,11 @@ import { ReactComponent as DeleteIcon } from 'assets/table-actions-icons/trash.s
 import { apiRequestAtom, toastMessageAtom } from 'states/apiRequestState';
 import { useCustomMutation } from 'hooks/useMutation';
 import { paginationAtom } from 'states/searchSortFilterStates';
-import './styles.css';
-import DialogBox from '../dialog-box';
-import { ActionsCellProps } from './types';
 import { currentUserAtom } from 'states/loginStates';
+import DialogBox from '../dialog-box';
+
+import { ActionsCellProps } from './types';
+import './styles.css';
 
 const ActionsCell: FC<ActionsCellProps> = ({
   isEditVerified,
@@ -26,6 +27,7 @@ const ActionsCell: FC<ActionsCellProps> = ({
 }) => {
   const [open, setOpen] = useState(false);
   const [entityId, setEntityId] = useState<GridRowId>('');
+
   const setApiSuccess = useSetRecoilState(apiRequestAtom);
   const setToastMessage = useSetRecoilState(toastMessageAtom);
   const [currentPage] = useRecoilState(paginationAtom);

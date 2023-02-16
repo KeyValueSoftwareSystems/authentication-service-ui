@@ -4,16 +4,17 @@ import { Stack } from '@mui/material';
 import { useSetRecoilState, useRecoilState } from 'recoil';
 import { useMediaQuery } from 'react-responsive';
 
-import { UserPermissionsAtom } from 'states/permissionsStates';
-import { TableProps } from './types';
-import TableToolBar from '../table-toolbar/TableToolBar';
-import './styles.css';
-import DisplayMessage from '../display-message';
-import { sortCountAtom, searchAtom, paginationAtom } from 'states/searchSortFilterStates';
 import { useFetchEntities } from 'hooks/useFetchEntities';
+import { UserPermissionsAtom } from 'states/permissionsStates';
+import { sortCountAtom, searchAtom, paginationAtom } from 'states/searchSortFilterStates';
 import { ACCESS_DENIED_DESCRIPTION, ACCESS_DENIED_MESSAGE } from 'constants/messages';
+import TableToolBar from 'components/table-toolbar/TableToolBar';
+import DisplayMessage from 'components/display-message';
 import CustomPagination from 'components/custom-pagination';
 import { getFinalColumns } from 'utils/table';
+
+import './styles.css';
+import { TableProps } from './types';
 
 const TableList: FC<TableProps> = ({
   field,

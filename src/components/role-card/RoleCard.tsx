@@ -7,7 +7,7 @@ import { Role } from 'types/role';
 import CustomChip from 'components/custom-chip';
 import { ReactComponent as UnCheckedIcon } from 'assets/checkbox-icons/uncheckedicon.svg';
 import { ReactComponent as CheckedIcon } from 'assets/checkbox-icons/checkedicon.svg';
-import If from '../if';
+import If from 'components/if';
 import CustomDialog from 'components/custom-dialog';
 
 interface RoleCardProps {

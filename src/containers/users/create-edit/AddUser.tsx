@@ -11,16 +11,19 @@ import { apiRequestAtom, toastMessageAtom } from 'states/apiRequestState';
 import { USER_CREATE_SUCCESS_MESSAGE } from 'constants/messages';
 import { useCustomMutation } from 'hooks/useMutation';
 import { RoutePaths } from 'constants/routes';
-import './styles.css';
 import UserForm from './UserForm';
 
+import './styles.css';
+
 const AddUser: React.FC = () => {
-  const navigate = useNavigate();
   const setApiSuccess = useSetRecoilState(apiRequestAtom);
   const setToastMessage = useSetRecoilState(toastMessageAtom);
+
   const [userPermissions, setUserPermissions] = useState<GroupPermissionsDetails[]>([]);
   const [userGroups, setUserGroups] = useState<Group[]>([]);
   const [permissions, setPermissions] = useState<string[]>([]);
+
+  const navigate = useNavigate();
   const [createUser, { error: createUserError, data }] = useCustomMutation(CREATE_USER);
   const [updateUserGroups, { error: groupUpdateError }] = useCustomMutation(UPDATE_USER_GROUPS);
   const [updateUserPermissions, { error: permissionUpdateError }] = useCustomMutation(UPDATE_USER_PERMISSIONS);
