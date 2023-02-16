@@ -1,51 +1,51 @@
-import { atom } from "recoil";
-import { Permission } from "types/user";
-import { recoilPersist } from "recoil-persist";
+import { atom } from 'recoil';
+import { Permission } from 'types/user';
+import { recoilPersist } from 'recoil-persist';
 
 const { persistAtom } = recoilPersist();
 
 export const permissionsListAtom = atom<Permission[]>({
-  key: "PermissionsList",
-  default: [],
+  key: 'PermissionsList',
+  default: []
 });
 
 export const GroupPermissionsAtom = atom<Permission[]>({
-  key: "GroupPermissionsList",
-  default: [],
+  key: 'GroupPermissionsList',
+  default: []
 });
 
 export const RolePermissionsAtom = atom<Permission[]>({
-  key: "RolePermissions",
-  default: [],
+  key: 'RolePermissions',
+  default: []
 });
 
 export const UserPermissionsAtom = atom<Permission[]>({
-  key: "UserPermissions",
+  key: 'UserPermissions',
   default: [],
-  effects_UNSTABLE: [persistAtom],
+  effects_UNSTABLE: [persistAtom]
 });
 
 export const IsViewUsersVerifiedAtom = atom<boolean>({
-  key: "IsViewUsersVerifiedAtom",
-  default: false,
+  key: 'IsViewUsersVerifiedAtom',
+  default: false
 });
 
 export const IsViewGroupsVerifiedAtom = atom<boolean>({
-  key: "IsViewGroupsVerifiedAtom",
-  default: false,
+  key: 'IsViewGroupsVerifiedAtom',
+  default: false
 });
 
 export const IsViewRolesVerifiedAtom = atom<boolean>({
-  key: "IsViewRolesVerifiedAtom",
-  default: false,
+  key: 'IsViewRolesVerifiedAtom',
+  default: false
 });
 
 export const IsViewPermissionsVerifiedAtom = atom<boolean>({
-  key: "IsViewPermissionsVerifiedAtom",
-  default: false,
+  key: 'IsViewPermissionsVerifiedAtom',
+  default: false
 });
 
 export const IsViewEntitiesVerifiedAtom = atom<boolean>({
-  key: "IsViewEntitiesVerifiedAtom",
-  default: false,
+  key: 'IsViewEntitiesVerifiedAtom',
+  default: false
 });

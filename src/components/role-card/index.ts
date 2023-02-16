@@ -1,3 +1,3 @@
-import RoleCard from "./RoleCard";
+import RoleCard from './RoleCard';
 
 export default RoleCard;

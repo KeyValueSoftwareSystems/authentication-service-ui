@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography } from '@mui/material';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -12,7 +12,7 @@ const TabPanel = (props: TabPanelProps) => {
 
   return (
     <div
-      role="tabpanel"
+      role='tabpanel'
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
@@ -21,7 +21,7 @@ const TabPanel = (props: TabPanelProps) => {
     >
       {value === index && (
         <Box>
-          <Typography component={"span"}>{children}</Typography>
+          <Typography component={'span'}>{children}</Typography>
         </Box>
       )}
     </div>

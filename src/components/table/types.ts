@@ -1,11 +1,6 @@
-import {
-  GridColumns,
-  GridRowId,
-  GridRowParams,
-  GridRowsProp,
-} from "@mui/x-data-grid";
-import { DocumentNode } from "graphql";
-import { SetterOrUpdater } from "recoil";
+import { GridColumns, GridRowId, GridRowParams, GridRowsProp } from '@mui/x-data-grid';
+import { DocumentNode } from 'graphql';
+import { SetterOrUpdater } from 'recoil';
 
 export interface TableProps {
   field: string;
@@ -26,13 +21,8 @@ export interface TableProps {
   onAdd: () => void;
   onEdit: (id: GridRowId) => void;
   currentFilters?: string[][];
-  handleClickFilter?: (
-    event: any,
-    setAnchorEl: (value: React.SetStateAction<null>) => void
-  ) => void;
-  handleCancel?: (
-    setAnchorEl: (value: React.SetStateAction<null>) => void
-  ) => void;
+  handleClickFilter?: (event: any, setAnchorEl: (value: React.SetStateAction<null>) => void) => void;
+  handleCancel?: (setAnchorEl: (value: React.SetStateAction<null>) => void) => void;
   filters?: string[][];
   checkedFilters?: string[][];
   setCheckedFilters?: SetterOrUpdater<string[]>[];

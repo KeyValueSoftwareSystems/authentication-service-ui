@@ -1,3 +1,3 @@
-import GroupCard from "./GroupCard";
+import GroupCard from './GroupCard';
 
 export default GroupCard;

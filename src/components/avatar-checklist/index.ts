@@ -1,3 +1,3 @@
-import { AvatarChecklistComponent } from "./AvatarChecklist";
+import { AvatarChecklistComponent } from './AvatarChecklist';
 
 export default AvatarChecklistComponent;

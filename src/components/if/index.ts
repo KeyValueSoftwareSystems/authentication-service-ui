@@ -1,3 +1,3 @@
-import If from "./If";
+import If from './If';
 
 export default If;

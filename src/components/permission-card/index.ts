@@ -1,3 +1,3 @@
-import PermissionsCard from "./PermissionCard";
+import PermissionsCard from './PermissionCard';
 
 export default PermissionsCard;

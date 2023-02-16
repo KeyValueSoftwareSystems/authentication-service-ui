@@ -1,3 +1,3 @@
-import Roles from "./list/Roles";
+import Roles from './list/Roles';
 
 export default Roles;

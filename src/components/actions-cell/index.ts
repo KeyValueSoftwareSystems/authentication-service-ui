@@ -1,3 +1,3 @@
-import ActionsCell from "./ActionsCell";
+import ActionsCell from './ActionsCell';
 
 export default ActionsCell;

@@ -1,3 +1,3 @@
-import BottomFormController from "./BottomFormController";
+import BottomFormController from './BottomFormController';
 
 export default BottomFormController;

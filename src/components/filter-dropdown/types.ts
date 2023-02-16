@@ -1,5 +1,5 @@
-import { DocumentNode } from "graphql";
-import { SetterOrUpdater } from "recoil";
+import { DocumentNode } from 'graphql';
+import { SetterOrUpdater } from 'recoil';
 
 export interface FilterDropdownProps {
   filterQuery: DocumentNode;

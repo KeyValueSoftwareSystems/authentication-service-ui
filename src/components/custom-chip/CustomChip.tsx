@@ -1,5 +1,5 @@
-import styled from "@emotion/styled";
-import { FC } from "react";
+import styled from '@emotion/styled';
+import { FC } from 'react';
 
 interface ChipProps {
   name: string;
@@ -19,7 +19,7 @@ const Container = styled.div<{ fontSize: string }>`
   text-overflow: ellipsis;
 `;
 
-const CustomChip: FC<ChipProps> = ({ name, fontSize = "14px" }) => {
+const CustomChip: FC<ChipProps> = ({ name, fontSize = '14px' }) => {
   return <Container fontSize={fontSize}>{name}</Container>;
 };
 

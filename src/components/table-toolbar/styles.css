@@ -29,7 +29,7 @@
   height: 46px;
   width: 128px;
   background-color: #2653f1;
-  font-family: "Manrope";
+  font-family: 'Manrope';
   font-size: 16px;
 }
 
@@ -97,7 +97,7 @@
 }
 
 .css-j204z7-MuiFormControlLabel-root .MuiFormControlLabel-label {
-  font-family: "Inter" !important;
+  font-family: 'Inter' !important;
   font-weight: 400 !important;
   line-height: 20px;
   letter-spacing: 0em;

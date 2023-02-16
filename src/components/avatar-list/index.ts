@@ -1,3 +1,3 @@
-import AvatarList from "./AvatarList";
+import AvatarList from './AvatarList';
 
 export default AvatarList;

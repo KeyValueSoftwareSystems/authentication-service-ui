@@ -1,3 +1,3 @@
-import CustomDialog from "./CustomDialog";
+import CustomDialog from './CustomDialog';
 
 export default CustomDialog;

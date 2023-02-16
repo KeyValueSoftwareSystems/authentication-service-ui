@@ -6,6 +6,7 @@ const LocalStorage = {
   },
   getItem(key: string): string | null {
     const value = localStorage.getItem(key) as string;
+
     try {
       return JSON.parse(value);
     } catch (e) {
@@ -18,7 +19,7 @@ const LocalStorage = {
 
   clear(): void {
     localStorage.clear();
-  },
+  }
 };
 
 export default LocalStorage;

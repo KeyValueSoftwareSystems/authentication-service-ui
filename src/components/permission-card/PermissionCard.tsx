@@ -1,23 +1,20 @@
-import { FC, useEffect, useState } from "react";
-import styled from "@emotion/styled";
-import { Checkbox } from "@mui/material";
-import SquareIcon from "@mui/icons-material/Square";
-import { useSetRecoilState } from "recoil";
+import { FC, useEffect, useState } from 'react';
+import styled from '@emotion/styled';
+import { Checkbox } from '@mui/material';
+import SquareIcon from '@mui/icons-material/Square';
+import { useSetRecoilState } from 'recoil';
 
-import { ReactComponent as UnCheckedIcon } from "assets/checkbox-icons/uncheckedicon.svg";
-import { ReactComponent as CheckedIcon } from "assets/checkbox-icons/checkedicon.svg";
-import { Permission } from "types/permission";
-import {
-  getUniquePermissionsFromGroups,
-  getUniquePermissionsFromRoles,
-} from "utils/permissions";
-import If from "../if";
-import { RemovedPermissions } from "constants/permissions";
-import { PermissionCardProps } from "./types";
-import { submitAtom } from "states/submitStates";
+import { ReactComponent as UnCheckedIcon } from 'assets/checkbox-icons/uncheckedicon.svg';
+import { ReactComponent as CheckedIcon } from 'assets/checkbox-icons/checkedicon.svg';
+import { Permission } from 'types/permission';
+import { getUniquePermissionsFromGroups, getUniquePermissionsFromRoles } from 'utils/permissions';
+import If from '../if';
+import { RemovedPermissions } from 'constants/permissions';
+import { PermissionCardProps } from './types';
+import { submitAtom } from 'states/submitStates';
 
 const Container = styled.div<{ show: boolean }>`
-  display: ${(props) => (props.show ? "flex" : "none")};
+  display: ${(props) => (props.show ? 'flex' : 'none')};
   flex-direction: column;
   align-items: flex-start;
   width: 238px;
@@ -27,7 +24,7 @@ const Container = styled.div<{ show: boolean }>`
   border: 1px solid #d2d5dd;
   border-radius: 6px;
   margin-top: 10px;
-  font-family: "Manrope";
+  font-family: 'Manrope';
   padding-left: 10px;
   row-gap: 19px;
 `;
@@ -53,33 +50,24 @@ const PermissionsCard: FC<PermissionCardProps> = ({
   userSelectedPermissions = [],
   setUserSelectedPermissions = () => null,
   userPermissions = [],
-  isViewPage = false,
+  isViewPage = false
 }) => {
   const [rolePermissions, setRolePermissions] = useState<Permission[]>([]);
   const [groupPermissions, setGroupPermissions] = useState<Permission[]>([]);
   const setSubmitButton = useSetRecoilState(submitAtom);
 
-  const onChangePermissions = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    permission: Permission
-  ) => {
+  const onChangePermissions = (e: React.ChangeEvent<HTMLInputElement>, permission: Permission) => {
     if (e.target.checked) {
       setUserSelectedPermissions([...userSelectedPermissions, permission]);
     } else {
       const isUserSelectedPermission = !(
-        rolePermissions.some(
-          (rolePermission) => rolePermission.id === permission.id
-        ) ||
-        groupPermissions.some(
-          (groupPermission) => groupPermission.id === permission.id
-        )
+        rolePermissions.some((rolePermission) => rolePermission.id === permission.id) ||
+        groupPermissions.some((groupPermission) => groupPermission.id === permission.id)
       );
+
       if (isUserSelectedPermission)
         setUserSelectedPermissions(
-          userSelectedPermissions.filter(
-            (userSelectedPermission) =>
-              userSelectedPermission.id !== permission.id
-          )
+          userSelectedPermissions.filter((userSelectedPermission) => userSelectedPermission.id !== permission.id)
         );
     }
     setSubmitButton(true);
@@ -104,11 +92,11 @@ const PermissionsCard: FC<PermissionCardProps> = ({
 
   const showEntityPermissions = (): boolean => {
     const filteredArray = entity.permissions.filter((item1) =>
-      userPermissions.some(
-        (item2) => item2.id === item1.id && item2.name === item1.name
-      )
+      userPermissions.some((item2) => item2.id === item1.id && item2.name === item1.name)
     );
+
     if (isViewPage) return filteredArray.length !== 0;
+
     return true;
   };
 
@@ -116,20 +104,17 @@ const PermissionsCard: FC<PermissionCardProps> = ({
     <Container show={showEntityPermissions()}>
       <CollectionName>{entity.name}</CollectionName>
       {entity.permissions.map((permission) => (
-        <If
-          condition={!RemovedPermissions.includes(permission.name)}
-          key={permission?.id}
-        >
+        <If condition={!RemovedPermissions.includes(permission.name)} key={permission?.id}>
           <If condition={isViewPage && IsUserPermission(permission.id)}>
             <CheckboxContainer>
-              <SquareIcon sx={{ width: 10, fill: "#2F6FED" }} />
+              <SquareIcon sx={{ width: 10, fill: '#2F6FED' }} />
               <div>{permission.label ?? permission.name}</div>
             </CheckboxContainer>
           </If>
           <If condition={!isViewPage}>
             <CheckboxContainer>
               <Checkbox
-                value={"all"}
+                value={'all'}
                 onChange={(e) => onChangePermissions(e, permission)}
                 checked={IsChecked(permission.id)}
                 icon={<UnCheckedIcon />}

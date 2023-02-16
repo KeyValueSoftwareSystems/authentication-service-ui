@@ -1,4 +1,4 @@
-import { SetterOrUpdater } from "recoil";
+import { SetterOrUpdater } from 'recoil';
 
 export interface FilterProps {
   itemList: string[] | never[];

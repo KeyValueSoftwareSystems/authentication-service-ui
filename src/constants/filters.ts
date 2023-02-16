@@ -1,3 +1,3 @@
-const statusList = ["ACTIVE", "INACTIVE", "INVITED"];
+const statusList = ['ACTIVE', 'INACTIVE', 'INVITED'];
 
 export { statusList };

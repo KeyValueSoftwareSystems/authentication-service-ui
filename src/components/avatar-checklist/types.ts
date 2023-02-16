@@ -1,6 +1,6 @@
-import { DocumentNode } from "graphql";
+import { DocumentNode } from 'graphql';
 
-import { User } from "types/user";
+import { User } from 'types/user';
 
 export interface ChecklistProps {
   mapList: User[];

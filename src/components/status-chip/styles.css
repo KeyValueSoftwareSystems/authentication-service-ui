@@ -1,12 +1,10 @@
 .refresh-token-icon {
-  filter: invert(32%) sepia(15%) saturate(1057%) hue-rotate(167deg)
-    brightness(89%) contrast(87%);
+  filter: invert(32%) sepia(15%) saturate(1057%) hue-rotate(167deg) brightness(89%) contrast(87%);
   margin-right: 13px;
 }
 
 .refresh-token-icon:hover {
-  filter: invert(40%) sepia(68%) saturate(4403%) hue-rotate(210deg)
-    brightness(96%) contrast(93%);
+  filter: invert(40%) sepia(68%) saturate(4403%) hue-rotate(210deg) brightness(96%) contrast(93%);
 }
 
 .pending {
@@ -14,7 +12,7 @@
   margin-right: 13px;
   color: #f69a40 !important;
   font-size: 16px !important;
-  font-family: "Manrope" !important;
+  font-family: 'Manrope' !important;
   font-weight: bold !important;
   border-radius: 42px !important;
   opacity: 0.8;
@@ -25,7 +23,7 @@
   margin-right: 13px;
   color: #0aaaa1 !important;
   font-size: 16px !important;
-  font-family: "Manrope" !important;
+  font-family: 'Manrope' !important;
   font-weight: bold !important;
   border-radius: 42px !important;
 }
@@ -35,7 +33,7 @@
   margin-right: 13px;
   color: #cf1322 !important;
   font-size: 16px !important;
-  font-family: "Manrope" !important;
+  font-family: 'Manrope' !important;
   font-weight: bold !important;
   border-radius: 42px !important;
   width: 84px !important;

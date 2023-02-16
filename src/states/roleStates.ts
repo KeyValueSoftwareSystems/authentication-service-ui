@@ -1,24 +1,24 @@
-import { atom } from "recoil";
+import { atom } from 'recoil';
 
 export const RolesListAtom = atom({
-  key: "RolesList",
-  default: [],
+  key: 'RolesList',
+  default: []
 });
 
 export const GroupRolesAtom = atom({
-  key: "GroupRoles",
+  key: 'GroupRoles',
   default: [
     {
-      id: "",
-      name: "",
-    },
-  ],
+      id: '',
+      name: ''
+    }
+  ]
 });
 
 export const RoleDetailsAtom = atom({
-  key: "RoleDetails",
+  key: 'RoleDetails',
   default: {
-    id: "",
-    name: "",
-  },
+    id: '',
+    name: ''
+  }
 });

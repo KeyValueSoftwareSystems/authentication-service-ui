@@ -7,25 +7,21 @@
 }
 
 .blurred-edit:hover {
-  filter: invert(33%) sepia(91%) saturate(3281%) hue-rotate(213deg)
-    brightness(99%) contrast(87%);
+  filter: invert(33%) sepia(91%) saturate(3281%) hue-rotate(213deg) brightness(99%) contrast(87%);
   opacity: 0.5;
 }
 
 .blurred-delete:hover {
-  filter: invert(15%) sepia(97%) saturate(4902%) hue-rotate(349deg)
-    brightness(83%) contrast(96%);
+  filter: invert(15%) sepia(97%) saturate(4902%) hue-rotate(349deg) brightness(83%) contrast(96%);
   opacity: 0.5;
 }
 
 .edit:hover {
-  filter: invert(33%) sepia(91%) saturate(3281%) hue-rotate(213deg)
-    brightness(99%) contrast(87%);
+  filter: invert(33%) sepia(91%) saturate(3281%) hue-rotate(213deg) brightness(99%) contrast(87%);
 }
 
 .delete:hover {
-  filter: invert(15%) sepia(97%) saturate(4902%) hue-rotate(349deg)
-    brightness(83%) contrast(96%);
+  filter: invert(15%) sepia(97%) saturate(4902%) hue-rotate(349deg) brightness(83%) contrast(96%);
 }
 
 .edit-line {
@@ -33,8 +29,7 @@
 }
 
 .edit-line:hover {
-  filter: invert(33%) sepia(91%) saturate(3281%) hue-rotate(213deg)
-    brightness(99%) contrast(87%);
+  filter: invert(33%) sepia(91%) saturate(3281%) hue-rotate(213deg) brightness(99%) contrast(87%);
 }
 
 .blurred-edit-line {
@@ -43,7 +38,6 @@
 }
 
 .blurred-edit-line:hover {
-  filter: invert(33%) sepia(91%) saturate(3281%) hue-rotate(213deg)
-    brightness(99%) contrast(87%);
+  filter: invert(33%) sepia(91%) saturate(3281%) hue-rotate(213deg) brightness(99%) contrast(87%);
   opacity: 0.5;
 }

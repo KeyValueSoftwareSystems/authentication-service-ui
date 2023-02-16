@@ -1,14 +1,8 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 export const GET_GROUPS = gql`
-  query getGroups(
-    $search: GroupSearchInput
-    $sort: SortInput
-    $pagination: PaginationInput
-  ) {
-    getGroups(
-      input: { search: $search, sort: $sort, pagination: $pagination }
-    ) {
+  query getGroups($search: GroupSearchInput, $sort: SortInput, $pagination: PaginationInput) {
+    getGroups(input: { search: $search, sort: $sort, pagination: $pagination }) {
       totalCount
       results {
         id

@@ -1,3 +1,3 @@
-import CustomChip from "./CustomChip";
+import CustomChip from './CustomChip';
 
 export default CustomChip;

@@ -1,14 +1,14 @@
-import { FC } from "react";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { FieldValues, FormProvider, useForm } from "react-hook-form";
-import { useNavigate, useParams } from "react-router-dom";
-import BottomFormController from "components/bottom-form-controller";
+import { FC } from 'react';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { FieldValues, FormProvider, useForm } from 'react-hook-form';
+import { useNavigate, useParams } from 'react-router-dom';
+import BottomFormController from 'components/bottom-form-controller';
 
-import { GroupFormSchema } from "utils/groups";
-import FormInputText from "components/input-text";
-import { RoutePaths } from "constants/routes";
-import { AddEntity, UpdateEntity } from "types/generic";
-import "./styles.css";
+import { GroupFormSchema } from 'utils/groups';
+import FormInputText from 'components/input-text';
+import { RoutePaths } from 'constants/routes';
+import { AddEntity, UpdateEntity } from 'types/generic';
+import './styles.css';
 
 interface GroupFormProps {
   name: string;
@@ -22,12 +22,12 @@ const GroupForm: FC<GroupFormProps> = ({ name, createGroup, editGroup }) => {
   const { id } = useParams();
 
   const initialValues = {
-    name: name,
+    name: name
   };
 
   const methods = useForm({
     resolver: yupResolver(GroupFormSchema),
-    defaultValues: initialValues,
+    defaultValues: initialValues
   });
   const { handleSubmit } = methods;
 
@@ -43,29 +43,17 @@ const GroupForm: FC<GroupFormProps> = ({ name, createGroup, editGroup }) => {
     <>
       <div>
         <FormProvider {...methods}>
-          <form
-            onSubmit={handleSubmit(onSubmitForm)}
-            className="group-form"
-            id="group-form"
-          >
-            <FormInputText
-              name="name"
-              label="Group Name"
-              type="text"
-              className="group-name"
-              defaultText={name}
-            />
+          <form onSubmit={handleSubmit(onSubmitForm)} className='group-form' id='group-form'>
+            <FormInputText name='name' label='Group Name' type='text' className='group-name' defaultText={name} />
           </form>
         </FormProvider>
       </div>
       <BottomFormController
-        primarybuttonLabel={
-          id ? UpdateEntity.UPDATE_GROUP : AddEntity.CREATE_GROUP
-        }
-        formId="group-form"
+        primarybuttonLabel={id ? UpdateEntity.UPDATE_GROUP : AddEntity.CREATE_GROUP}
+        formId='group-form'
         onSubmit={() => handleSubmit(onSubmitForm)()}
         onCancel={onBackNavigation}
-        secondaryButtonLabel="Cancel"
+        secondaryButtonLabel='Cancel'
       />
     </>
   );

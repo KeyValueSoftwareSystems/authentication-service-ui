@@ -1,26 +1,26 @@
-import { atom } from "recoil";
+import { atom } from 'recoil';
 
 export const sortCountAtom = atom({
-  key: "sort",
-  default: 0,
+  key: 'sort',
+  default: 0
 });
 
 export const statusFilterAtom = atom({
-  key: "statusFilter",
-  default: [""],
+  key: 'statusFilter',
+  default: ['']
 });
 
 export const groupFilterAtom = atom({
-  key: "groupFilter",
-  default: [""],
+  key: 'groupFilter',
+  default: ['']
 });
 
 export const searchAtom = atom({
-  key: "search",
-  default: "",
+  key: 'search',
+  default: ''
 });
 
 export const paginationAtom = atom({
-  key: "pagination",
-  default: 1,
+  key: 'pagination',
+  default: 1
 });
