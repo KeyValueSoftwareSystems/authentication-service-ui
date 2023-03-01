@@ -14,7 +14,7 @@ export const getOverallPermissions = (permissions: EntityPermissionsDetails[]) =
 
 export const getUniquePermissionsFromRoles = (roles: Role[]) => {
   const permissionsList = roles?.reduce((acc: Permission[], cur) => {
-    acc.push(...cur.permissions);
+    acc.push(...(cur?.permissions || []));
 
     return acc;
   }, []);
