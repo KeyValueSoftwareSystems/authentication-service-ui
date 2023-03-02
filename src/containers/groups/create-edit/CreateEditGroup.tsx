@@ -41,19 +41,16 @@ const CreateOrEditGroup = () => {
   const navigate = useNavigate();
   const setApiSuccess = useSetRecoilState(apiRequestAtom);
   const setToastMessage = useSetRecoilState(toastMessageAtom);
+  const setSubmitButton = useSetRecoilState(submitAtom);
   const [isViewRolesVerified] = useRecoilState(IsViewRolesVerifiedAtom);
   const [isViewUsersVerified] = useRecoilState(IsViewUsersVerifiedAtom);
-  const setSubmitButton = useSetRecoilState(submitAtom);
 
   const [value, setValue] = useState(0);
   const [group, setGroup] = useState<Group>();
   const [roles, setRoles] = useState<Role[]>([]);
   const [allUsers, setAllUsers] = useState<User[]>([]);
-
   const [users, setUsers] = useState<User[]>([]);
-
   const [allRoles, setAllRoles] = useState<Role[]>([]);
-
   const [userSelectedPermissions, setUserSelectedPermissions] = useState<Permission[]>([]);
 
   const [updateGroup, { data: updatedGroupData }] = useCustomMutation(UPDATE_GROUP);
@@ -71,8 +68,8 @@ const CreateOrEditGroup = () => {
 
   const onGetGroupComplete = (data: any) => {
     setGroup(data?.getGroup);
-    setRoles([...roles, data?.getGroup?.roles]);
-    setUsers([...users, data?.getGroup?.users]);
+    setRoles(data?.getGroup?.roles || []);
+    setUsers(data?.getGroup?.users || []);
   };
 
   const onGetGroupPermissionsComplete = (data: any) => {
