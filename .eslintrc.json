@@ -1,0 +1,196 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["react", "@typescript-eslint", "import", "eslint-plugin-tsdoc", "jsx-a11y", "prettier", "react-hooks"],
+  "extends": [
+    "eslint:recommended",
+    "prettier",
+    "next",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "modules": true,
+      "jsx": true
+    }
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "jest": true,
+    "es6": true
+  },
+  "settings": {
+    "react": {
+      "pragma": "h",
+      "version": "16.0"
+    },
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    }
+  },
+  "rules": {
+    "prettier/prettier": "warn",
+    "react/react-in-jsx-scope": "off",
+    "@typescript-eslint/no-var-requires": 0,
+    "class-methods-use-this": "off",
+    "no-underscore-dangle": "off",
+    "import/prefer-default-export": "off",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "off",
+    "no-debugger": "error",
+    "no-trailing-spaces": "error",
+    "no-multi-spaces": "error",
+    "indent": "off",
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never"
+      }
+    ],
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": true
+      }
+    ],
+    "max-len": [
+      "error",
+      {
+        "code": 150,
+        "tabWidth": 2,
+        "ignoreComments": true,
+        "ignoreUrls": true,
+        "ignoreStrings": true,
+        "ignoreTemplateLiterals": true
+      }
+    ],
+    "arrow-parens": ["error", "always"],
+    "prefer-destructuring": "off",
+    "space-in-parens": ["error", "never"],
+    "keyword-spacing": "error",
+    "comma-dangle": ["error", "never"],
+    "implicit-arrow-linebreak": "off",
+    "lines-between-class-members": "off",
+    "object-curly-newline": "off",
+    "@typescript-eslint/no-this-alias": "off",
+    "no-multiple-empty-lines": [
+      "error",
+      {
+        "max": 2,
+        "maxEOF": 0
+      }
+    ],
+    "radix": "off",
+    "eol-last": ["error", "always"],
+    "comma-spacing": [
+      2,
+      {
+        "before": false,
+        "after": true
+      }
+    ],
+    "no-useless-constructor": "error",
+    "arrow-spacing": "error",
+    "space-infix-ops": "error",
+    "object-curly-spacing": ["error", "always"],
+    "semi": ["error", "always"],
+    "space-before-blocks": "error",
+    "padding-line-between-statements": [
+      "error",
+      {
+        "blankLine": "always",
+        "prev": "*",
+        "next": "return"
+      },
+      {
+        "blankLine": "always",
+        "prev": ["const", "let", "var"],
+        "next": "*"
+      },
+      {
+        "blankLine": "any",
+        "prev": ["const", "let", "var"],
+        "next": ["const", "let", "var"]
+      }
+    ],
+    "curly": ["error", "multi", "consistent"],
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "ignoreRestSiblings": true,
+        "vars": "local"
+      }
+    ],
+    "@typescript-eslint/explicit-member-accessibility": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/indent": "off",
+    "@typescript-eslint/no-empty-function": [
+      "error",
+      {
+        "allow": ["arrowFunctions"]
+      }
+    ],
+    "@typescript-eslint/ban-types": "off",
+    "@typescript-eslint/ban-ts-comment": [
+      "error",
+      {
+        "ts-ignore": "allow-with-description"
+      }
+    ],
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "react/prop-types": "off",
+    "react/display-name": "off",
+    "@next/next/no-img-element": "off",
+    "tsdoc/syntax": "warn",
+    "jsx-a11y/alt-text": "error",
+    "jsx-a11y/aria-role": "error",
+    "jsx-a11y/aria-props": "error",
+    "jsx-a11y/aria-unsupported-elements": "error",
+    "jsx-a11y/role-has-required-aria-props": "error",
+    "jsx-a11y/role-supports-aria-props": "error",
+    "jsx-a11y/tabindex-no-positive": "error",
+    "jsx-a11y/no-redundant-roles": "error",
+    "jsx-a11y/anchor-has-content": "error",
+    "jsx-a11y/anchor-is-valid": "error",
+    "jsx-a11y/img-redundant-alt": "error",
+    "jsx-a11y/interactive-supports-focus": "error",
+    "jsx-a11y/autocomplete-valid": "error",
+    "jsx-a11y/no-static-element-interactions": "error",
+    "jsx-a11y/no-noninteractive-tabindex": "error",
+    "jsx-a11y/mouse-events-have-key-events": "error"
+  },
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx"],
+      "rules": {
+        "@typescript-eslint/explicit-member-accessibility": [
+          "error",
+          {
+            "accessibility": "off",
+            "overrides": {
+              "properties": "explicit"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "files": ["*.test.tsx"],
+      "rules": {
+        "@typescript-eslint/no-unsafe-assignment": "off",
+        "@typescript-eslint/no-unsafe-call": "off"
+      }
+    }
+  ]
+}
