@@ -37,6 +37,7 @@
     "build": "craco build",
     "test": "craco test",
     "eject": "craco eject",
+    "typescript-check": "tsc --noEmit",
     "lint": "eslint src/**/*.{js,jsx,ts,tsx,json}",
     "lint:fix": "eslint --fix 'src/**/*.{js,jsx,ts,tsx,json}'",
     "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc"
@@ -79,11 +80,10 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "lint-staged && npm run lint && npm run typescript-check"
     }
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": "npm run lint",
     "*": "prettier --write"
   }
 }
