@@ -5,8 +5,11 @@ import { useMediaQuery } from 'react-responsive';
 import CustomChip from 'components/custom-chip';
 import CustomDialog from 'components/custom-dialog';
 import If from 'components/if';
-import './styles.css';
 import { DialogContent } from 'components/group-card/GroupCard';
+import { ChipProps } from 'types/generic';
+
+import './styles.css';
+
 interface TableChipElementProps {
   rowItems: any;
   columnName: string;
@@ -37,7 +40,7 @@ const TableChipElement: FC<TableChipElementProps> = ({ rowItems, columnName, def
   return (
     <>
       {row[columnName]?.map(
-        (item: any, i: number) =>
+        (item: ChipProps, i: number) =>
           i < defaultSize && (
             <Chip
               label={item?.label ?? item?.name}

@@ -15,6 +15,7 @@ import { Group } from 'types/group';
 
 import '../checklist/styles.css';
 import './styles.css';
+import { Permission } from 'types/permission';
 
 interface GroupCardProps {
   group: Group;
@@ -156,7 +157,7 @@ const GroupCard: FC<GroupCardProps> = ({
       <If condition={openModal}>
         <CustomDialog title='Permissions' handleClose={() => setOpenModal(false)}>
           <DialogContent>
-            {group?.permissions.map((permission: any) => (
+            {group?.permissions.map((permission: Permission) => (
               <CustomChip name={permission.label ?? permission.name} key={permission?.id} />
             ))}
           </DialogContent>
