@@ -1,6 +1,6 @@
 export interface BottomControllerProps {
   primarybuttonLabel: string;
-  onSubmit: (data: any) => void;
+  onSubmit: () => void;
   formId: string;
   onCancel: () => void;
   secondaryButtonLabel: string;
