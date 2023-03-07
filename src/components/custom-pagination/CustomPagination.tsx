@@ -15,9 +15,9 @@ interface CustomPaginationProps {
 
 const CustomPagination: FC<CustomPaginationProps> = ({ fetchEntities, count }) => {
   const [currentPage, setCurrentPage] = useRecoilState(paginationAtom);
-
   const [pageValue, setPageValue] = useState(currentPage);
   const [pageCount] = useState(count % 15 > 0 ? Math.floor(count / 15) + 1 : Math.floor(count / 15));
+
   const onClickGo = () => {
     if (!isNaN(pageValue)) {
       if (pageValue > pageCount) setCurrentPage(pageCount);
@@ -54,8 +54,8 @@ const CustomPagination: FC<CustomPaginationProps> = ({ fetchEntities, count }) =
           <TextField
             type='number'
             defaultValue={currentPage}
-            onChange={(e: any) => {
-              setPageValue(e.target.value);
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              setPageValue(+e.target.value);
             }}
             inputProps={{
               min: 0,

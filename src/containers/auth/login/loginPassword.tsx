@@ -12,6 +12,7 @@ import { UserActions } from 'types/generic';
 type Props = {
   onSubmitForm: (data: any) => void;
 };
+
 const LoginPassword: React.FC<Props> = ({ onSubmitForm }) => {
   const initialValues = {
     username: '',

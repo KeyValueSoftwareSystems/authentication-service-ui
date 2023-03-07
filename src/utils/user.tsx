@@ -40,7 +40,9 @@ export const getFullName = (firstName: string, lastName: string, middleName?: st
     : `${firstName || ''} ${lastName || ''} `;
 };
 
-const GetFullName = (props: any) => {
+const GetFullName: React.FC<{ row: { firstName: string; lastName: string; email: string; status: string } }> = (
+  props
+) => {
   const { row } = props;
   const isDesktopScreen = useMediaQuery({ query: '(min-height: 980px)' });
 

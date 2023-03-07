@@ -168,7 +168,7 @@ const CreateOrEditGroup = () => {
     }
   };
 
-  const onChangeUsers = (event: React.ChangeEvent<HTMLInputElement>, item: User) => {
+  const onChangeUsers = (event: React.ChangeEvent<HTMLInputElement>, item?: User | undefined) => {
     const value = event.target.value;
 
     setSubmitButton(true);
@@ -178,8 +178,10 @@ const CreateOrEditGroup = () => {
 
         return;
       }
-      if (users[0] === null) setUsers([item]);
-      else setUsers([...users, item]);
+
+      if (item)
+        if (users[0] === null) setUsers([item]);
+        else setUsers([...users, item]);
     } else {
       if (value === 'all') {
         setUsers([]);

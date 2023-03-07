@@ -53,3 +53,9 @@ export enum UserActions {
   LOGOUT = 'Logout',
   SUBMIT = 'Submit'
 }
+
+export interface ChipProps {
+  id: string;
+  name: string;
+  label: string;
+}

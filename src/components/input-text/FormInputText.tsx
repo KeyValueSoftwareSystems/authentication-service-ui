@@ -39,7 +39,7 @@ const FormInputText = ({ name, label, type, className, defaultText, autoComplete
           name={name}
           helperText={error ? error.message : null}
           error={!!error}
-          onChange={(e: any) => {
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             onChange(e);
             setSubmitButton(true);
           }}

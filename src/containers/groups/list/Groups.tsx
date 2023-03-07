@@ -17,6 +17,7 @@ import { AddEntity, SearchEntity } from 'types/generic';
 import { ACCESS_DENIED_DESCRIPTION, ACCESS_DENIED_MESSAGE } from 'constants/messages';
 import { columns } from 'utils/groups';
 import { useCustomLazyQuery } from 'hooks/useLazyQuery';
+import { Permission } from 'types/permission';
 
 const GroupList: React.FC = () => {
   const navigate = useNavigate();
@@ -49,7 +50,7 @@ const GroupList: React.FC = () => {
   };
 
   useEffect(() => {
-    userPermissions.forEach((item: any) => {
+    userPermissions.forEach((item: Permission) => {
       if (item?.name.includes(CREATE_GROUP_PERMISSION)) setAddVerified(true);
     });
   }, [userPermissions]);
