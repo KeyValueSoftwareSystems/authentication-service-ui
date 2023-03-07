@@ -13,6 +13,7 @@ import './styles.css';
 type Props = {
   onSubmitForm: (data: any) => void;
 };
+
 const PasswordConfirmation: React.FC<Props> = ({ onSubmitForm }) => {
   const initialValues = {
     newPassword: '',

@@ -70,7 +70,7 @@ const TableChipElement: FC<TableChipElementProps> = ({ rowItems, columnName, def
           handleClose={() => setOpenModal(false)}
         >
           <DialogContent>
-            {row[columnName]?.map((item: any) => (
+            {row[columnName]?.map((item: ChipProps) => (
               <CustomChip name={item.label ?? item.name} key={item?.id} />
             ))}
           </DialogContent>

@@ -16,6 +16,7 @@ interface StatusChipType {
     inviteToken: string;
   };
 }
+
 export const StatusChip: React.FC<StatusChipType> = ({ row }) => {
   const [isLinkCopied, setIsLinkCopied] = useState(false);
   const [isLinkRefreshed, setIsLinkRefreshed] = useState(false);
