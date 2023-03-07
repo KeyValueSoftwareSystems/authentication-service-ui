@@ -11,7 +11,7 @@ const StyledDialog = styled(Dialog)`
 type DialogProps = {
   title: string;
   handleClose: () => void;
-  children?: any;
+  children?: React.ReactNode;
 };
 
 const DialogBox: React.FC<DialogProps> = ({ title, children, handleClose }) => {

@@ -13,7 +13,7 @@ import CustomDialog from 'components/custom-dialog';
 interface RoleCardProps {
   role: Role;
   checked?: boolean | null;
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>, item?: any) => void;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>, item?: Role) => void;
 }
 
 const Container = styled.div<{ isPortrait: boolean }>`

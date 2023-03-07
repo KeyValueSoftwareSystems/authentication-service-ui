@@ -62,6 +62,7 @@ const UserForm = (props: UserProps) => {
     setUser(data?.getUser);
     setUserGroups(data?.getUser.groups);
   };
+
   const { loading } = useCustomQuery(GET_USER, onGetUserComplete, { id: id }, !id);
 
   const onGetUserPermissionsComplete = (data: any) => {
