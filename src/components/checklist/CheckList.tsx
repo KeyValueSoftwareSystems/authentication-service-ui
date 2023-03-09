@@ -11,7 +11,7 @@ import GroupCard from '../group-card';
 interface ChecklistProps {
   mapList: Group[];
   currentCheckedItems: Group[];
-  onChange: (event: React.ChangeEvent<HTMLInputElement>, item?: any) => void;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>, item?: Group) => void;
 }
 
 export const ChecklistComponent: FC<ChecklistProps> = ({ mapList, currentCheckedItems, onChange }) => {
@@ -47,7 +47,7 @@ export const ChecklistComponent: FC<ChecklistProps> = ({ mapList, currentChecked
         </div>
       </div>
       <div className='group-cards-container'>
-        {mapList?.map((item: any) => {
+        {mapList?.map((item: Group) => {
           return (
             <GroupCard group={item} currentCheckedItems={currentCheckedItems} onChange={onChange} key={item?.id} />
           );

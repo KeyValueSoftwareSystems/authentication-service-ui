@@ -9,9 +9,15 @@ import { ReactComponent as ContentCopyIcon } from 'assets/invite-chip-icons/copy
 import { useCustomMutation } from 'hooks/useMutation';
 import './styles.css';
 
-export const StatusChip: React.FC = (props: any) => {
-  const { row } = props;
+interface StatusChipType {
+  row: {
+    id: string;
+    status: string;
+    inviteToken: string;
+  };
+}
 
+export const StatusChip: React.FC<StatusChipType> = ({ row }) => {
   const [isLinkCopied, setIsLinkCopied] = useState(false);
   const [isLinkRefreshed, setIsLinkRefreshed] = useState(false);
 
@@ -19,7 +25,7 @@ export const StatusChip: React.FC = (props: any) => {
 
   const onCopyInviteLink = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();
-    const inviteLink = `${process.env.REACT_APP_BASE_URL}/#/confirmpassword?token=${props.row.inviteToken}`;
+    const inviteLink = `${process.env.REACT_APP_BASE_URL}/#/confirmpassword?token=${row.inviteToken}`;
 
     navigator.clipboard.writeText(inviteLink);
     setIsLinkCopied(true);
@@ -31,7 +37,7 @@ export const StatusChip: React.FC = (props: any) => {
   const onRefreshInviteLink = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();
     refreshInviteToken({
-      variables: { id: props.row.id }
+      variables: { id: row.id }
     });
     setIsLinkRefreshed(true);
     setTimeout(() => {

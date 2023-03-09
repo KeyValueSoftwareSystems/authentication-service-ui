@@ -10,7 +10,7 @@ import { ReactComponent as CheckedIcon } from 'assets/checkbox-icons/checkedicon
 interface Props {
   roleList: Role[];
   currentCheckedItems: Role[];
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>, item?: any) => void;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>, item?: Role) => void;
 }
 
 const Container = styled.div`

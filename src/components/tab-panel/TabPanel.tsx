@@ -1,10 +1,11 @@
 import { Box, Typography } from '@mui/material';
+import { CSSProperties } from 'react';
 
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
   value: number;
-  style?: any;
+  style?: CSSProperties;
 }
 
 const TabPanel = (props: TabPanelProps) => {

@@ -13,3 +13,7 @@ export interface NewRole {
 export interface RolePermission {
   rolePermission: Permission[];
 }
+
+export interface GetRole {
+  getRole: Role;
+}

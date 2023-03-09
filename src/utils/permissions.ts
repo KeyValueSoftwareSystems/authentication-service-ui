@@ -9,7 +9,7 @@ export const getOverallPermissions = (permissions: EntityPermissionsDetails[]) =
     return acc;
   }, []);
 
-  return [...Array.from(new Set(permissionsList.map((permission: any) => permission.name)))];
+  return [...Array.from(new Set(permissionsList.map((permission: Permission) => permission.name)))];
 };
 
 export const getUniquePermissionsFromRoles = (roles: Role[]) => {
@@ -19,7 +19,7 @@ export const getUniquePermissionsFromRoles = (roles: Role[]) => {
     return acc;
   }, []);
 
-  return [...Array.from(new Set(permissionsList?.map((permission: any) => permission)))];
+  return [...Array.from(new Set(permissionsList?.map((permission: Permission) => permission)))];
 };
 
 export const getUniquePermissionsFromGroups = (groups: Group[]) => {
@@ -29,5 +29,5 @@ export const getUniquePermissionsFromGroups = (groups: Group[]) => {
     return acc;
   }, []);
 
-  return [...Array.from(new Set(permissionsList?.map((permission: any) => permission)))];
+  return [...Array.from(new Set(permissionsList?.map((permission: Permission) => permission)))];
 };

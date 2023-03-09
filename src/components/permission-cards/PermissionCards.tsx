@@ -32,7 +32,7 @@ const PermissionCards: React.FC<PermissionCardsProps> = ({
   const [entities, setEntities] = useState<Entity[]>([]);
   const [isViewEntitiesVerified] = useRecoilState(IsViewEntitiesVerifiedAtom);
 
-  const onCompleted = (data: any) => {
+  const onCompleted = (data: { getEntities: Entity[] }) => {
     setEntities(data?.getEntities);
   };
 

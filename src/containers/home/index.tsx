@@ -42,6 +42,9 @@ import { useCustomLazyQuery } from 'hooks/useLazyQuery';
 import Settings from 'components/settings';
 import { LOGO_URL, MINI_LOGO_URL } from '../../config';
 import './styles.css';
+import { Permission } from 'types/permission';
+import { GetGroups } from 'types/group';
+import { GetCurrentUser } from 'types/user';
 
 const HomePage = () => {
   const [currentUserDetails, setCurrentUserDetails] = useRecoilState(currentUserAtom);
@@ -58,10 +61,11 @@ const HomePage = () => {
   const setIsViewRolesVerified = useSetRecoilState(IsViewRolesVerifiedAtom);
   const setIsViewPermissionsVerified = useSetRecoilState(IsViewPermissionsVerifiedAtom);
   const setisViewEntitiesVerified = useSetRecoilState(IsViewEntitiesVerifiedAtom);
-  const onGetGroupsComplete = (data: any) => {
+
+  const onGetGroupsComplete = (data: GetGroups) => {
     setGroupList(data?.getGroups?.results);
   };
-  const onGetCurrentUserCompleted = (data: any) => {
+  const onGetCurrentUserCompleted = (data: GetCurrentUser) => {
     setCurrentUserDetails(data.getCurrentUser);
     setUserPermissions(data.getCurrentUser?.permissions);
   };
@@ -80,7 +84,7 @@ const HomePage = () => {
 
   useEffect(() => {
     if (userPermissions)
-      userPermissions.forEach((item: any) => {
+      userPermissions.forEach((item: Permission) => {
         if (item?.name.includes(VIEW_USER_PERMISSION)) setIsViewUsersVerified(true);
 
         if (item?.name.includes(VIEW_GROUP_PERMISSION)) {
@@ -158,9 +162,10 @@ const HomePage = () => {
     setToastMessage('');
   };
 
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+  const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -197,12 +202,7 @@ const HomePage = () => {
                     </div>
                   ) : (
                     <div className='userdetails-tablet'>
-                      <SettingsIcon
-                        id='settings-icon'
-                        onClick={(e: any) => {
-                          handleClick(e);
-                        }}
-                      />
+                      <SettingsIcon id='settings-icon' onClick={handleClick} />
                       {open && (
                         <Settings
                           initials={stringAvatar(

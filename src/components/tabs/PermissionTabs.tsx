@@ -77,7 +77,7 @@ const PermissionTabs: React.FC<StyledTabsProps> = ({ permissions }) => {
     return (
       <div id='permission-list'>
         {getOverallPermissions(permissions)?.map((permission) => (
-          <Chip label={permission} className='permission-chip' key={permission?.id} />
+          <Chip label={permission} className='permission-chip' key={permission} />
         ))}
       </div>
     );

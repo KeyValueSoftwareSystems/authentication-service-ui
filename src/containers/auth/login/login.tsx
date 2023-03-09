@@ -16,6 +16,7 @@ import { LOGIN_URL } from '../../../config';
 import './styles.css';
 import LoginPassword from './loginPassword';
 import PasswordConfirmation from './PasswordConfirmation';
+import { Permission } from 'types/permission';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -40,7 +41,7 @@ const Login: React.FC = () => {
         refreshToken: refreshToken
       });
       if (user?.permissions)
-        user?.permissions.forEach((item: any) => {
+        user?.permissions.forEach((item: Permission) => {
           if (item?.name.includes(VIEW_USER_PERMISSION)) setIsViewUsersVerified(true);
         });
 

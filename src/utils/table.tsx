@@ -41,9 +41,9 @@ export function stringSmallAvatar(name: string) {
 }
 
 export interface ApiParams {
-  searchText?: any;
+  searchText?: string | string;
   countValue?: number;
-  page?: any;
+  page?: number;
 }
 
 export function getFinalColumns(

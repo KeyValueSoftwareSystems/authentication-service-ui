@@ -1,10 +1,12 @@
+import { CSSProperties } from 'react';
+
 export interface DisplayMessageProps {
-  customStyle?: any;
+  customStyle?: CSSProperties;
   altMessage: string;
   image: string;
   heading: string;
   description: string;
-  imageStyles?: any;
-  containerStyles?: any;
+  imageStyles?: CSSProperties;
+  containerStyles?: CSSProperties;
   className?: string;
 }

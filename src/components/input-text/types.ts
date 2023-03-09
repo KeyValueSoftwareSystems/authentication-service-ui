@@ -2,8 +2,7 @@ export interface FormInputProps {
   name: string;
   label: string;
   type: string;
-  setValue?: any;
-  className?: any;
+  className?: string;
   defaultText?: string;
   autoComplete?: string;
 }

@@ -21,6 +21,15 @@ import '../create-edit/styles.css';
 import './styles.css';
 import { RoutePaths } from 'constants/routes';
 import { statusList } from 'constants/filters';
+import { GridRowId, GridRowParams } from '@mui/x-data-grid';
+import { Permission } from 'types/user';
+
+interface GetUsers {
+  getUsers: {
+    results: never[];
+    totalCount: number;
+  };
+}
 
 const Users: React.FC = () => {
   const [isAddVerified, setAddVerified] = useState(false);
@@ -39,7 +48,7 @@ const Users: React.FC = () => {
 
   const isPortrait = useMediaQuery({ orientation: 'portrait' });
 
-  const onComplete = (data: any) => {
+  const onComplete = (data: GetUsers) => {
     setUserList(data?.getUsers?.results);
     setUsersCount(data?.getUsers?.totalCount);
   };
@@ -63,12 +72,12 @@ const Users: React.FC = () => {
 
   useEffect(() => {
     if (userPermissions)
-      userPermissions.forEach((item: any) => {
+      userPermissions.forEach((item: Permission) => {
         if (item?.name.includes(CREATE_USER_PERMISSION)) setAddVerified(true);
       });
   }, [userPermissions]);
 
-  const onEdit = (id: any) => {
+  const onEdit = (id: GridRowId) => {
     navigate(`${RoutePaths.usersUrl}/add/${id}`);
   };
 
@@ -82,12 +91,12 @@ const Users: React.FC = () => {
     setCurrentSecondFilter(checkedGroups);
   };
 
-  const setItemList = (data: any) => {
+  const setItemList = (data: GetUsers) => {
     setUserList(data?.getUsers?.results);
     setUsersCount(data?.getUsers?.totalCount);
   };
 
-  const onUserClick = (params: any) => {
+  const onUserClick = (params: GridRowParams) => {
     navigate(`./${params.id}`);
   };
 

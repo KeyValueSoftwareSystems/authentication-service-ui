@@ -14,15 +14,16 @@ import PermissionCards from 'components/permission-cards';
 import BottomFormController from 'components/bottom-form-controller';
 import { GET_USER, GET_USER_PERMISSIONS } from 'services/queries/userQueries';
 import { GET_GROUPS } from 'services/queries/groupQueries';
-import { Permission, User } from 'types/user';
-import { Group } from 'types/group';
+import { GetUser, Permission, User } from 'types/user';
+import { GetGroups, Group } from 'types/group';
 import { AddEntity, UpdateEntity } from 'types/generic';
 import { AddUserformSchema, EditUserformSchema } from 'utils/user';
 import { renderAccessDenied } from 'utils/generic';
 import { useCustomQuery } from 'hooks/useQuery';
 import { RoutePaths } from 'constants/routes';
-import './styles.css';
 import { submitAtom } from 'states/submitStates';
+import './styles.css';
+import { GetUserPermissions } from 'types/permission';
 
 interface UserProps {
   isEdit?: boolean;
@@ -45,7 +46,7 @@ const UserForm = (props: UserProps) => {
   const setSubmitButton = useSetRecoilState(submitAtom);
   const [userSelectedPermissions, setUserSelectedPermissions] = useState<Permission[]>([]);
 
-  const onGetGroupsComplete = (data: any) => {
+  const onGetGroupsComplete = (data: GetGroups) => {
     const groups = data?.getGroups?.results?.map((group: Group) => group);
 
     setAllGroups([...groups]);
@@ -58,13 +59,14 @@ const UserForm = (props: UserProps) => {
     !isViewGroupsVerified
   );
 
-  const onGetUserComplete = (data: any) => {
+  const onGetUserComplete = (data: GetUser) => {
     setUser(data?.getUser);
-    setUserGroups(data?.getUser.groups);
+    setUserGroups(data?.getUser?.groups || []);
   };
+
   const { loading } = useCustomQuery(GET_USER, onGetUserComplete, { id: id }, !id);
 
-  const onGetUserPermissionsComplete = (data: any) => {
+  const onGetUserPermissionsComplete = (data: GetUserPermissions) => {
     setUserSelectedPermissions(data?.getUserPermissions);
   };
 

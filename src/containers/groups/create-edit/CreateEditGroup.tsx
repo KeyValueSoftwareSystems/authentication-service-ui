@@ -35,6 +35,7 @@ import { useCustomLazyQuery } from 'hooks/useLazyQuery';
 import './styles.css';
 import GroupForm from './GroupForm';
 import { submitAtom } from 'states/submitStates';
+import { GetGroupPermissions, GetGroups, GetRoles, GetUsers } from './types';
 
 const CreateOrEditGroup = () => {
   const { id } = useParams();
@@ -62,23 +63,23 @@ const CreateOrEditGroup = () => {
     setValue(newValue);
   };
 
-  const onGetRolesComplete = (data: any) => {
+  const onGetRolesComplete = (data: GetRoles) => {
     setAllRoles(data?.getRoles?.results);
   };
 
-  const onGetGroupComplete = (data: any) => {
+  const onGetGroupComplete = (data: GetGroups) => {
     setGroup(data?.getGroup);
     setRoles(data?.getGroup?.roles || []);
     setUsers(data?.getGroup?.users || []);
   };
 
-  const onGetGroupPermissionsComplete = (data: any) => {
+  const onGetGroupPermissionsComplete = (data: GetGroupPermissions) => {
     const permissionList = data?.getGroupPermissions;
 
     setUserSelectedPermissions(permissionList);
   };
 
-  const onGetUsersComplete = (data: any) => {
+  const onGetUsersComplete = (data: GetUsers) => {
     setAllUsers(data?.getUsers?.results);
   };
 
@@ -168,7 +169,7 @@ const CreateOrEditGroup = () => {
     }
   };
 
-  const onChangeUsers = (event: React.ChangeEvent<HTMLInputElement>, item: User) => {
+  const onChangeUsers = (event: React.ChangeEvent<HTMLInputElement>, item?: User | undefined) => {
     const value = event.target.value;
 
     setSubmitButton(true);
@@ -178,8 +179,10 @@ const CreateOrEditGroup = () => {
 
         return;
       }
-      if (users[0] === null) setUsers([item]);
-      else setUsers([...users, item]);
+
+      if (item)
+        if (users[0] === null) setUsers([item]);
+        else setUsers([...users, item]);
     } else {
       if (value === 'all') {
         setUsers([]);

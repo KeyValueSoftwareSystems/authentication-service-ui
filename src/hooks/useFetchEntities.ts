@@ -21,9 +21,9 @@ interface usersFetchProps {
 }
 
 interface ApiParams {
-  searchText?: any;
+  searchText?: string | null;
   countValue?: number;
-  page?: any;
+  page?: number | null;
 }
 export const useFetchEntities = (usersFetchProps: usersFetchProps) => {
   const [searchValue] = useRecoilState(searchAtom);

@@ -21,7 +21,7 @@ export interface TableProps {
   onAdd: () => void;
   onEdit: (id: GridRowId) => void;
   currentFilters?: string[][];
-  handleClickFilter?: (event: any, setAnchorEl: (value: React.SetStateAction<null>) => void) => void;
+  handleClickFilter?: (event: React.MouseEvent, setAnchorEl: (value: React.SetStateAction<null>) => void) => void;
   handleCancel?: (setAnchorEl: (value: React.SetStateAction<null>) => void) => void;
   filters?: string[][];
   checkedFilters?: string[][];

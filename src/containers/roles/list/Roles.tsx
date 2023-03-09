@@ -16,6 +16,14 @@ import { AddEntity, SearchEntity } from 'types/generic';
 import { ACCESS_DENIED_DESCRIPTION, ACCESS_DENIED_MESSAGE } from 'constants/messages';
 import { columns } from 'utils/roles';
 import { useCustomLazyQuery } from 'hooks/useLazyQuery';
+import { Permission } from 'types/permission';
+
+interface GetRoles {
+  getRoles: {
+    results: never[];
+    totalCount: number;
+  };
+}
 
 const Roles: React.FC = () => {
   const navigate = useNavigate();
@@ -27,7 +35,7 @@ const Roles: React.FC = () => {
 
   const [roleList, setRoleList] = useRecoilState(RolesListAtom);
 
-  const onGetRolesComplete = (data: any) => {
+  const onGetRolesComplete = (data: GetRoles) => {
     setRoleList(data?.getRoles?.results);
     setRoleCount(data?.getRoles?.totalCount);
   };
@@ -39,11 +47,12 @@ const Roles: React.FC = () => {
   }, [isViewRolesVerified, getRoles]);
 
   useEffect(() => {
-    userPermissions.forEach((item: any) => {
+    userPermissions.forEach((item: Permission) => {
       if (item?.name.includes(CREATE_ROLE_PERMISSION)) setAddVerified(true);
     });
   }, [userPermissions]);
-  const setItemList = (data: any) => {
+
+  const setItemList = (data: GetRoles) => {
     setRoleList(data.getRoles?.results);
     setRoleCount(data?.getRoles?.totalCount);
   };

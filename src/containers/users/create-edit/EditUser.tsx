@@ -4,7 +4,7 @@ import { FieldValues } from 'react-hook-form';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 
 import { UPDATE_USER, UPDATE_USER_GROUPS, UPDATE_USER_PERMISSIONS } from 'services/mutations/userMutations';
-import { Permission } from 'types/user';
+import { GetCurrentUser, Permission } from 'types/user';
 import { currentUserAtom } from 'states/loginStates';
 import { UserPermissionsAtom } from 'states/permissionsStates';
 import { GET_CURRENT_USER } from 'services/queries/authQueries';
@@ -24,7 +24,7 @@ const EditUser: React.FC = () => {
   const setUserPermissions = useSetRecoilState(UserPermissionsAtom);
   const [currentUserDetails, setCurrentUserDetails] = useRecoilState(currentUserAtom);
 
-  const onGetCurrentUserCompleted = (data: any) => {
+  const onGetCurrentUserCompleted = (data: GetCurrentUser) => {
     setCurrentUserDetails(data.getCurrentUser);
     setUserPermissions(data.getCurrentUser?.permissions);
     navigate(RoutePaths.usersUrl);

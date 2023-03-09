@@ -14,7 +14,7 @@ import DisplayMessage from 'components/display-message';
 import If from 'components/if';
 import { IsViewEntitiesVerifiedAtom, IsViewGroupsVerifiedAtom, UserPermissionsAtom } from 'states/permissionsStates';
 import { GET_USER } from 'services/queries/userQueries';
-import { User } from 'types/user';
+import { GetUser, Permission, User } from 'types/user';
 import { UPDATE_USER_PERMISSION } from 'constants/permissions';
 import { useCustomQuery } from 'hooks/useQuery';
 import {
@@ -26,6 +26,7 @@ import {
 import { RoutePaths } from 'constants/routes';
 import { renderAccessDenied } from 'utils/generic';
 import './styles.css';
+import { Group } from 'types/group';
 
 const UserDetails = () => {
   const navigate = useNavigate();
@@ -49,12 +50,12 @@ const UserDetails = () => {
 
   useEffect(() => {
     if (userPermissions)
-      userPermissions.forEach((item: any) => {
+      userPermissions.forEach((item: Permission) => {
         if (item?.name.includes(UPDATE_USER_PERMISSION)) setEditVerified(true);
       });
   }, [userPermissions]);
 
-  const onCompleted = (data: any) => {
+  const onCompleted = (data: GetUser) => {
     setUser(data?.getUser);
   };
 
@@ -144,7 +145,7 @@ const UserDetails = () => {
                 user?.groups && user?.groups?.length > 0 ? (
                   <div className='groups-permissions'>
                     <div className='user-groups'>
-                      {user?.groups?.map((item: any) => {
+                      {user?.groups?.map((item: Group) => {
                         return (
                           <div style={{ marginTop: 15 }} key={item?.id}>
                             <GroupCard group={item} showCheckBox={false} isViewPage />
