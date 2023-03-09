@@ -14,7 +14,7 @@ import DisplayMessage from 'components/display-message';
 import If from 'components/if';
 import { IsViewEntitiesVerifiedAtom, IsViewGroupsVerifiedAtom, UserPermissionsAtom } from 'states/permissionsStates';
 import { GET_USER } from 'services/queries/userQueries';
-import { Permission, User } from 'types/user';
+import { GetUser, Permission, User } from 'types/user';
 import { UPDATE_USER_PERMISSION } from 'constants/permissions';
 import { useCustomQuery } from 'hooks/useQuery';
 import {
@@ -55,7 +55,7 @@ const UserDetails = () => {
       });
   }, [userPermissions]);
 
-  const onCompleted = (data: any) => {
+  const onCompleted = (data: GetUser) => {
     setUser(data?.getUser);
   };
 

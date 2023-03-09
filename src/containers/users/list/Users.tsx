@@ -24,6 +24,13 @@ import { statusList } from 'constants/filters';
 import { GridRowId, GridRowParams } from '@mui/x-data-grid';
 import { Permission } from 'types/user';
 
+interface GetUsers {
+  getUsers: {
+    results: never[];
+    totalCount: number;
+  };
+}
+
 const Users: React.FC = () => {
   const [isAddVerified, setAddVerified] = useState(false);
   const [usersCount, setUsersCount] = useState(0);
@@ -41,7 +48,7 @@ const Users: React.FC = () => {
 
   const isPortrait = useMediaQuery({ orientation: 'portrait' });
 
-  const onComplete = (data: any) => {
+  const onComplete = (data: GetUsers) => {
     setUserList(data?.getUsers?.results);
     setUsersCount(data?.getUsers?.totalCount);
   };
@@ -84,7 +91,7 @@ const Users: React.FC = () => {
     setCurrentSecondFilter(checkedGroups);
   };
 
-  const setItemList = (data: any) => {
+  const setItemList = (data: GetUsers) => {
     setUserList(data?.getUsers?.results);
     setUsersCount(data?.getUsers?.totalCount);
   };

@@ -25,3 +25,7 @@ export interface userPermission {
   name: string;
   __typename: string;
 }
+
+export interface GetUser {
+  getUser: User;
+}
