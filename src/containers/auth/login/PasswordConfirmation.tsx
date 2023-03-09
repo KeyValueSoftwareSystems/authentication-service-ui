@@ -11,7 +11,7 @@ import { LOGO_URL } from '../../../config';
 import './styles.css';
 
 type Props = {
-  onSubmitForm: (data: any) => void;
+  onSubmitForm: (data: { newPassword: string; confirmPassword: string }) => void;
 };
 
 const PasswordConfirmation: React.FC<Props> = ({ onSubmitForm }) => {

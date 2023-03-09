@@ -9,7 +9,7 @@ import { CREATE_ROLE, UPDATE_ROLE, UPDATE_ROLE_PERMISSIONS } from 'services/muta
 import { Permission } from 'types/user';
 import PermissionCards from 'components/permission-cards';
 import { apiRequestAtom, toastMessageAtom } from 'states/apiRequestState';
-import { Role } from 'types/role';
+import { GetRole, Role } from 'types/role';
 import { ROLE_CREATE_SUCCESS_MESSAGE, ROLE_UPDATE_SUCCESS_MESSAGE } from 'constants/messages';
 import { useCustomQuery } from 'hooks/useQuery';
 import { useCustomMutation } from 'hooks/useMutation';
@@ -29,7 +29,7 @@ const CreateOrEditRole = () => {
   const [updateRole, { data: updatedRoleData }] = useCustomMutation(UPDATE_ROLE);
   const [updateRolePermissions, { data: updatedRolePermissionsData }] = useCustomMutation(UPDATE_ROLE_PERMISSIONS);
 
-  const onGetRoleComplete = (data: any) => {
+  const onGetRoleComplete = (data: GetRole) => {
     setRole(data?.getRole);
     const permissions = data?.getRole?.permissions.map((permission: Permission) => permission);
 

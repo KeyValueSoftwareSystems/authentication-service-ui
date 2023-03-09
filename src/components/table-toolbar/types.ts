@@ -14,7 +14,7 @@ export interface TableToolBarProps {
   checkedFilters?: string[][];
   setCheckedFilters?: SetterOrUpdater<string[]>[];
   viewFiltersVerified?: boolean[];
-  setItemList: any;
+  setItemList: (data: any) => void;
   filterName?: string[];
   isAddVerified?: boolean;
   onAdd?: () => void;

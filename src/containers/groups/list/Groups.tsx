@@ -18,6 +18,7 @@ import { ACCESS_DENIED_DESCRIPTION, ACCESS_DENIED_MESSAGE } from 'constants/mess
 import { columns } from 'utils/groups';
 import { useCustomLazyQuery } from 'hooks/useLazyQuery';
 import { Permission } from 'types/permission';
+import { GetGroups } from 'types/group';
 
 const GroupList: React.FC = () => {
   const navigate = useNavigate();
@@ -30,7 +31,7 @@ const GroupList: React.FC = () => {
 
   const isPortrait = useMediaQuery({ orientation: 'portrait' });
 
-  const onGetGroupsComplete = (data: any) => {
+  const onGetGroupsComplete = (data: GetGroups) => {
     setGroupList(data?.getGroups?.results);
     setGroupCount(data?.getGroups?.totalCount);
   };
@@ -60,7 +61,7 @@ const GroupList: React.FC = () => {
     columns[2].flex = isPortrait ? 0.35 : 0.5;
   }, [isPortrait]);
 
-  const setItemList = (data: any) => {
+  const setItemList = (data: GetGroups) => {
     setGroupList(data?.getGroups?.results);
     setGroupCount(data?.getGroups?.totalCount);
   };
