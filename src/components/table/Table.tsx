@@ -14,6 +14,7 @@ import { useFetchEntities } from 'hooks/useFetchEntities';
 import { ACCESS_DENIED_DESCRIPTION, ACCESS_DENIED_MESSAGE } from 'constants/messages';
 import CustomPagination from 'components/custom-pagination';
 import { getFinalColumns } from 'utils/table';
+import { Permission } from 'types/permission';
 
 const TableList: FC<TableProps> = ({
   field,
@@ -55,10 +56,10 @@ const TableList: FC<TableProps> = ({
 
   useEffect(() => {
     if (userPermissions)
-      userPermissions.forEach((item: any) => {
-        if (item?.name.includes(editPermission)) setEditVerified(true);
+      userPermissions.forEach((item: Permission) => {
+        if (editPermission && item?.name.includes(editPermission)) setEditVerified(true);
 
-        if (item?.name.includes(deletePermission)) setDeleteVerified(true);
+        if (deletePermission && item?.name.includes(deletePermission)) setDeleteVerified(true);
       });
   }, [editPermission, deletePermission, userPermissions]);
 

@@ -1,4 +1,5 @@
 import { DocumentNode } from 'graphql';
+import { SetStateAction } from 'react';
 import { SetterOrUpdater } from 'recoil';
 
 export interface TableToolBarProps {
@@ -7,7 +8,7 @@ export interface TableToolBarProps {
   searchLabel: string;
   searchQuery: DocumentNode;
   currentFilters?: string[][];
-  handleClickFilter?: (event: any, setAnchorEl: (value: React.SetStateAction<null>) => void) => void;
+  handleClickFilter?: (event: React.MouseEvent, setAnchorEl: (value: React.SetStateAction<null>) => void) => void;
   handleCancel?: (setAnchorEl: (value: React.SetStateAction<null>) => void) => void;
   filters?: string[][];
   checkedFilters?: string[][];

@@ -3,10 +3,10 @@ import { SetterOrUpdater } from 'recoil';
 
 export interface FilterDropdownProps {
   filterQuery: DocumentNode;
-  setItemList: any;
+  setItemList: (data: any) => void;
   field: string;
   open: boolean;
-  anchorEl: any;
+  anchorEl: HTMLElement | null;
   onApply: (count: number) => void;
   filterName: string[];
   currentFilters: string[][];

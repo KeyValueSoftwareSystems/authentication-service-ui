@@ -59,3 +59,7 @@ export interface ChipProps {
   name: string;
   label: string;
 }
+
+export interface StyleType {
+  label: string | number;
+}

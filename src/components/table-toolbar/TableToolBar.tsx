@@ -9,11 +9,11 @@ import { ReactComponent as SortIcon } from 'assets/toolbar-icons/sort.svg';
 import { ReactComponent as FilterIcon } from 'assets/toolbar-icons/filter.svg';
 import { sortCountAtom } from 'states/searchSortFilterStates';
 import { useFetchEntities } from 'hooks/useFetchEntities';
+import SearchBar from 'components/search-bar/SearchBar';
 import FilterDropdown from 'components/filter-dropdown';
 import { ADD_FILTER, SORT_BY_NAME } from 'constants/messages';
 import { TableToolBarProps } from './types';
 import './styles.css';
-import SearchBar from '../search-bar/SearchBar';
 
 const TableToolBar: FC<TableToolBarProps> = ({
   field,
@@ -40,7 +40,7 @@ const TableToolBar: FC<TableToolBarProps> = ({
     setAnchorEl(null);
   };
 
-  const handleClick = (event: any) => {
+  const handleClick = (event: React.MouseEvent) => {
     if (handleClickFilter) handleClickFilter(event, setAnchorEl);
   };
 
