@@ -93,8 +93,14 @@ const TableToolBar: FC<TableToolBarProps> = ({
         )}
       </div>
       {!isAddVerified && (
-        <div className='toolbar-button'>
-          <Button variant='contained' id='add-button' onClick={onAdd} sx={{ textTransform: 'none' }}>
+        <div className='toolbar-button' data-testid='toolbar-button-test-id'>
+          <Button
+            variant='contained'
+            id='add-button'
+            onClick={onAdd}
+            sx={{ textTransform: 'none' }}
+            data-testid='toolbar-button'
+          >
             <PlusIcon />
             {buttonLabel}
           </Button>

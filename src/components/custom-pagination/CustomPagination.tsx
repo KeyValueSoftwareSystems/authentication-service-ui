@@ -1,7 +1,7 @@
 import { FC, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import Pagination from '@mui/material/Pagination';
-// import PaginationItem from '@mui/material/PaginationItem';
+import PaginationItem from '@mui/material/PaginationItem';
 import { TextField, Button } from '@mui/material';
 
 import { paginationAtom } from '@/states/searchSortFilterStates';
@@ -41,7 +41,7 @@ const CustomPagination: FC<CustomPaginationProps> = ({ fetchEntities, count }) =
         data-testid='custom-pagination-test'
         page={currentPage}
         count={pageCount}
-        // renderItem={(props2) => <PaginationItem {...props2} disableRipple />}
+        renderItem={(item) => <PaginationItem {...item} />}
         onChange={(event, value) => {
           setPageValue(value);
           setCurrentPage(value);

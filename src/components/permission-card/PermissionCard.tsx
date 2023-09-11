@@ -102,13 +102,13 @@ const PermissionsCard: FC<PermissionCardProps> = ({
 
   return (
     <Container show={showEntityPermissions()}>
-      <CollectionName>{entity.name}</CollectionName>
+      <CollectionName data-testid='permission-card-entity-name'>{entity.name}</CollectionName>
       {entity.permissions.map((permission) => (
         <If condition={!RemovedPermissions.includes(permission.name)} key={permission?.id}>
           <If condition={isViewPage && IsUserPermission(permission.id)}>
             <CheckboxContainer>
               <SquareIcon sx={{ width: 10, fill: '#2F6FED' }} />
-              <div>{permission.label ?? permission.name}</div>
+              <div data-testid='permission-label-test'>{permission.label ?? permission.name}</div>
             </CheckboxContainer>
           </If>
           <If condition={!isViewPage}>
