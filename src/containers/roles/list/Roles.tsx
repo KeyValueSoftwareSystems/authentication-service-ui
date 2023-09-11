@@ -5,18 +5,18 @@ import { useNavigate } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
 
 import './styles.css';
-import { GET_ROLES } from 'services/queries/roleQueries';
-import { DELETE_ROLE } from 'services/mutations/roleMutations';
-import { RolesListAtom } from 'states/roleStates';
-import TableList from 'components/table';
-import { IsViewRolesVerifiedAtom, UserPermissionsAtom } from 'states/permissionsStates';
-import { CREATE_ROLE_PERMISSION, DELETE_ROLE_PERMISSION, UPDATE_ROLE_PERMISSION } from 'constants/permissions';
-import DisplayMessage from 'components/display-message';
-import { AddEntity, SearchEntity } from 'types/generic';
-import { ACCESS_DENIED_DESCRIPTION, ACCESS_DENIED_MESSAGE } from 'constants/messages';
-import { columns } from 'utils/roles';
-import { useCustomLazyQuery } from 'hooks/useLazyQuery';
-import { Permission } from 'types/permission';
+import { GET_ROLES } from '@/services/queries/roleQueries';
+import { DELETE_ROLE } from '@/services/mutations/roleMutations';
+import { RolesListAtom } from '@/states/roleStates';
+import TableList from '@/components/table';
+import { IsViewRolesVerifiedAtom, UserPermissionsAtom } from '@/states/permissionsStates';
+import { CREATE_ROLE_PERMISSION, DELETE_ROLE_PERMISSION, UPDATE_ROLE_PERMISSION } from '@/constants/permissions';
+import DisplayMessage from '@/components/display-message';
+import { AddEntity, SearchEntity } from '@/types/generic';
+import { ACCESS_DENIED_DESCRIPTION, ACCESS_DENIED_MESSAGE } from '@/constants/messages';
+import { columns } from '@/utils/roles';
+import { useCustomLazyQuery } from '@/hooks/useLazyQuery';
+import { Permission } from '@/types/permission';
 
 interface GetRoles {
   getRoles: {

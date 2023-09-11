@@ -3,20 +3,20 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { FieldValues } from 'react-hook-form';
 
-import { LOGIN, SET_PASSWORD } from 'services/mutations/authMutations';
-import CustomerAuth from 'services/auth';
-import { apiRequestAtom, toastMessageAtom } from 'states/apiRequestState';
-import { IsViewUsersVerifiedAtom } from 'states/permissionsStates';
-import Toast from 'components/toast';
-import { PASSWORD_SET_MESSAGE } from 'constants/messages';
-import { useCustomMutation } from 'hooks/useMutation';
-import { VIEW_USER_PERMISSION } from 'constants/permissions';
-import { RoutePaths } from 'constants/routes';
+import { LOGIN, SET_PASSWORD } from '@/services/mutations/authMutations';
+import CustomerAuth from '@/services/auth';
+import { apiRequestAtom, toastMessageAtom } from '@/states/apiRequestState';
+import { IsViewUsersVerifiedAtom } from '@/states/permissionsStates';
+import Toast from '@/components/toast';
+import { PASSWORD_SET_MESSAGE } from '@/constants/messages';
+import { useCustomMutation } from '@/hooks/useMutation';
+import { VIEW_USER_PERMISSION } from '@/constants/permissions';
+import { RoutePaths } from '@/constants/routes';
 import { LOGIN_URL } from '../../../config';
 import './styles.css';
 import LoginPassword from './loginPassword';
 import PasswordConfirmation from './PasswordConfirmation';
-import { Permission } from 'types/permission';
+import { Permission } from '@/types/permission';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();

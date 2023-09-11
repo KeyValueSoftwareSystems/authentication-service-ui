@@ -1,11 +1,11 @@
 import React, { Suspense, lazy } from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
 
-import UserDetails from 'containers/users/user-details/UserDetails';
-import CreateOrEditRole from 'containers/roles/create-edit/CreateOrEditRole';
-import AddUser from 'containers/users/create-edit/AddUser';
-import EditUser from 'containers/users/create-edit/EditUser';
-import { RoutePaths } from 'constants/routes';
+import UserDetails from '@/containers/users/user-details/UserDetails';
+import CreateOrEditRole from '@/containers/roles/create-edit/CreateOrEditRole';
+import AddUser from '@/containers/users/create-edit/AddUser';
+import EditUser from '@/containers/users/create-edit/EditUser';
+import { RoutePaths } from '@/constants/routes';
 import CreateOrEditGroup from '../containers/groups/create-edit/CreateEditGroup';
 
 const NotFound = lazy(() => import('../components/NotFound'));

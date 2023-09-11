@@ -6,19 +6,19 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { useMediaQuery } from 'react-responsive';
 
 import './styles.css';
-import { DELETE_GROUP } from 'services/mutations/groupMutations';
-import { GET_GROUPS } from 'services/queries/groupQueries';
-import TableList from 'components/table';
-import { groupListAtom } from 'states/groupStates';
-import { IsViewGroupsVerifiedAtom, UserPermissionsAtom } from 'states/permissionsStates';
-import { CREATE_GROUP_PERMISSION, DELETE_GROUP_PERMISSION, UPDATE_GROUP_PERMISSION } from 'constants/permissions';
-import DisplayMessage from 'components/display-message';
-import { AddEntity, SearchEntity } from 'types/generic';
-import { ACCESS_DENIED_DESCRIPTION, ACCESS_DENIED_MESSAGE } from 'constants/messages';
-import { columns } from 'utils/groups';
-import { useCustomLazyQuery } from 'hooks/useLazyQuery';
-import { Permission } from 'types/permission';
-import { GetGroups } from 'types/group';
+import { DELETE_GROUP } from '@/services/mutations/groupMutations';
+import { GET_GROUPS } from '@/services/queries/groupQueries';
+import TableList from '@/components/table';
+import { groupListAtom } from '@/states/groupStates';
+import { IsViewGroupsVerifiedAtom, UserPermissionsAtom } from '@/states/permissionsStates';
+import { CREATE_GROUP_PERMISSION, DELETE_GROUP_PERMISSION, UPDATE_GROUP_PERMISSION } from '@/constants/permissions';
+import DisplayMessage from '@/components/display-message';
+import { AddEntity, SearchEntity } from '@/types/generic';
+import { ACCESS_DENIED_DESCRIPTION, ACCESS_DENIED_MESSAGE } from '@/constants/messages';
+import { columns } from '@/utils/groups';
+import { useCustomLazyQuery } from '@/hooks/useLazyQuery';
+import { Permission } from '@/types/permission';
+import { GetGroups } from '@/types/group';
 
 const GroupList: React.FC = () => {
   const navigate = useNavigate();

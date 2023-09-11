@@ -13,12 +13,14 @@ const Filter: FC<FilterProps> = ({ itemList, onAddFilter, checkedItems, setCheck
         {itemList.map((item: string | any, index: number) => (
           <FormControlLabel
             id='filter-list-items'
+            data-testid='filter-list-item-test-id'
             key={`${index}_${item}`}
             label={typeof item === 'string' ? item[0].concat(item.slice(1, item.length).toLowerCase()) : item.name}
             name={typeof item === 'string' ? item : item.name}
             control={
               <Checkbox
                 sx={{ color: '#7E818D' }}
+                data-testid={`filter-checkbox-test-${index}`}
                 onChange={(e) => {
                   onAddFilter(typeof item === 'string' ? item : item.id, e, checkedItems, setCheckedItems);
                 }}

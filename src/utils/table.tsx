@@ -1,5 +1,5 @@
 import { GridColumns, GridRowId } from '@mui/x-data-grid';
-import ActionsCell from 'components/actions-cell';
+import ActionsCell from '@/components/actions-cell';
 
 import { DocumentNode } from 'graphql';
 

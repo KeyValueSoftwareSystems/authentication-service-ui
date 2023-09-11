@@ -4,9 +4,9 @@ import { Avatar } from '@mui/material';
 import { useMediaQuery } from 'react-responsive';
 import styled from '@emotion/styled';
 
-import TableChipElement from 'components/table-chip-element';
-import StatusChip from 'components/status-chip';
-import { stringAvatar } from 'utils/table';
+import TableChipElement from '@/components/table-chip-element';
+import StatusChip from '@/components/status-chip';
+import { stringAvatar } from '@/utils/table';
 
 export const UserDetails = styled.div<{ desktopScreen: boolean }>`
   margin-left: ${(props) => !props.desktopScreen && '-5px'};

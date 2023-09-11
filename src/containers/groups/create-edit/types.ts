@@ -1,7 +1,7 @@
-import { Group } from 'types/group';
-import { Permission } from 'types/permission';
-import { Role } from 'types/role';
-import { User } from 'types/user';
+import { Group } from '@/types/group';
+import { Permission } from '@/types/permission';
+import { Role } from '@/types/role';
+import { User } from '@/types/user';
 
 export interface GetRoles {
   getRoles: {

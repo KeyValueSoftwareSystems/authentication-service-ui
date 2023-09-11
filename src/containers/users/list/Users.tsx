@@ -4,25 +4,25 @@ import { useNavigate } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useMediaQuery } from 'react-responsive';
 
-import { GET_USERS } from 'services/queries/userQueries';
-import { DELETE_USER } from 'services/mutations/userMutations';
-import TableList from 'components/table/Table';
-import DisplayMessage from 'components/display-message';
-import { columns } from 'utils/user';
-import { userListAtom } from 'states/userStates';
-import { groupListAtom } from 'states/groupStates';
-import { IsViewGroupsVerifiedAtom, IsViewUsersVerifiedAtom, UserPermissionsAtom } from 'states/permissionsStates';
-import { groupFilterAtom, statusFilterAtom } from 'states/searchSortFilterStates';
-import { CREATE_USER_PERMISSION, DELETE_USER_PERMISSION, UPDATE_USER_PERMISSION } from 'constants/permissions';
-import { AddEntity, SearchEntity } from 'types/generic';
-import { ACCESS_DENIED_DESCRIPTION, ACCESS_DENIED_MESSAGE } from 'constants/messages';
-import { useCustomLazyQuery } from 'hooks/useLazyQuery';
+import { GET_USERS } from '@/services/queries/userQueries';
+import { DELETE_USER } from '@/services/mutations/userMutations';
+import TableList from '@/components/table/Table';
+import DisplayMessage from '@/components/display-message';
+import { columns } from '@/utils/user';
+import { userListAtom } from '@/states/userStates';
+import { groupListAtom } from '@/states/groupStates';
+import { IsViewGroupsVerifiedAtom, IsViewUsersVerifiedAtom, UserPermissionsAtom } from '@/states/permissionsStates';
+import { groupFilterAtom, statusFilterAtom } from '@/states/searchSortFilterStates';
+import { CREATE_USER_PERMISSION, DELETE_USER_PERMISSION, UPDATE_USER_PERMISSION } from '@/constants/permissions';
+import { AddEntity, SearchEntity } from '@/types/generic';
+import { ACCESS_DENIED_DESCRIPTION, ACCESS_DENIED_MESSAGE } from '@/constants/messages';
+import { useCustomLazyQuery } from '@/hooks/useLazyQuery';
 import '../create-edit/styles.css';
 import './styles.css';
-import { RoutePaths } from 'constants/routes';
-import { statusList } from 'constants/filters';
+import { RoutePaths } from '@/constants/routes';
+import { statusList } from '@/constants/filters';
 import { GridRowId, GridRowParams } from '@mui/x-data-grid';
-import { Permission } from 'types/user';
+import { Permission } from '@/types/user';
 
 interface GetUsers {
   getUsers: {

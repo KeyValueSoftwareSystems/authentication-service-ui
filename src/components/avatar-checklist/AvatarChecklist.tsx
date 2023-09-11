@@ -3,13 +3,13 @@ import Checkbox from '@mui/material/Checkbox';
 import { useMediaQuery } from 'react-responsive';
 import { useRecoilValue } from 'recoil';
 
-import CustomAvatar from 'components/custom-avatar';
+import CustomAvatar from '@/components/custom-avatar';
 import SearchBar from '../search-bar/SearchBar';
-import { ReactComponent as UnCheckedIcon } from 'assets/checkbox-icons/uncheckedicon.svg';
-import { ReactComponent as CheckedIcon } from 'assets/checkbox-icons/checkedicon.svg';
+import { ReactComponent as UnCheckedIcon } from '@/assets/checkbox-icons/uncheckedicon.svg';
+import { ReactComponent as CheckedIcon } from '@/assets/checkbox-icons/checkedicon.svg';
 import { ChecklistProps } from './types';
-import { searchAtom } from 'states/searchSortFilterStates';
-import { User } from 'types/user';
+import { searchAtom } from '@/states/searchSortFilterStates';
+import { User } from '@/types/user';
 
 import './styles.css';
 

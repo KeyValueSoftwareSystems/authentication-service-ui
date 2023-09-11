@@ -1,5 +1,5 @@
-import { ACCESS_DENIED_DESCRIPTION, ACCESS_DENIED_MESSAGE } from 'constants/messages';
-import DisplayMessage from 'components/display-message';
+import { ACCESS_DENIED_DESCRIPTION, ACCESS_DENIED_MESSAGE } from '@/constants/messages';
+import DisplayMessage from '@/components/display-message';
 
 export const renderAccessDenied = () => (
   <DisplayMessage

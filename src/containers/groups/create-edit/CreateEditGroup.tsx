@@ -6,35 +6,35 @@ import { useSetRecoilState } from 'recoil';
 import { Box, Tab, Tabs, Grid, Divider } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 
-import { GET_ROLES } from 'services/queries/roleQueries';
+import { GET_ROLES } from '@/services/queries/roleQueries';
 import {
   CREATE_GROUP,
   UPDATE_GROUP,
   UPDATE_GROUP_PERMISSIONS,
   UPDATE_GROUP_ROLES
-} from 'services/mutations/groupMutations';
-import { GET_USERS } from 'services/queries/userQueries';
-import { GET_GROUP, GET_GROUP_PERMISSIONS } from 'services/queries/groupQueries';
-import { IsViewRolesVerifiedAtom, IsViewUsersVerifiedAtom } from 'states/permissionsStates';
-import { apiRequestAtom, toastMessageAtom } from 'states/apiRequestState';
-import { Role } from 'types/role';
-import { Permission, User } from 'types/user';
-import { Group } from 'types/group';
-import { GROUP_CREATE_SUCCESS_MESSAGE, GROUP_UPDATE_SUCCESS_MESSAGE } from 'constants/messages';
-import { RoutePaths } from 'constants/routes';
-import RoleCardsChecklist from 'components/role-cards-checklist';
-import AvatarChecklistComponent from 'components/avatar-checklist';
-import PermissionCards from 'components/permission-cards';
-import CustomAvatar from 'components/custom-avatar';
-import TabPanel from 'components/tab-panel';
-import { ReactComponent as CrossIcon } from 'assets/edit-group-icons/cross-icon.svg';
-import { useCustomQuery } from 'hooks/useQuery';
-import { useCustomMutation } from 'hooks/useMutation';
-import { renderAccessDenied } from 'utils/generic';
-import { useCustomLazyQuery } from 'hooks/useLazyQuery';
+} from '@/services/mutations/groupMutations';
+import { GET_USERS } from '@/services/queries/userQueries';
+import { GET_GROUP, GET_GROUP_PERMISSIONS } from '@/services/queries/groupQueries';
+import { IsViewRolesVerifiedAtom, IsViewUsersVerifiedAtom } from '@/states/permissionsStates';
+import { apiRequestAtom, toastMessageAtom } from '@/states/apiRequestState';
+import { Role } from '@/types/role';
+import { Permission, User } from '@/types/user';
+import { Group } from '@/types/group';
+import { GROUP_CREATE_SUCCESS_MESSAGE, GROUP_UPDATE_SUCCESS_MESSAGE } from '@/constants/messages';
+import { RoutePaths } from '@/constants/routes';
+import RoleCardsChecklist from '@/components/role-cards-checklist';
+import AvatarChecklistComponent from '@/components/avatar-checklist';
+import PermissionCards from '@/components/permission-cards';
+import CustomAvatar from '@/components/custom-avatar';
+import TabPanel from '@/components/tab-panel';
+import { ReactComponent as CrossIcon } from '@/assets/edit-group-icons/cross-icon.svg';
+import { useCustomQuery } from '@/hooks/useQuery';
+import { useCustomMutation } from '@/hooks/useMutation';
+import { renderAccessDenied } from '@/utils/generic';
+import { useCustomLazyQuery } from '@/hooks/useLazyQuery';
 import './styles.css';
 import GroupForm from './GroupForm';
-import { submitAtom } from 'states/submitStates';
+import { submitAtom } from '@/states/submitStates';
 import { GetGroupPermissions, GetGroups, GetRoles, GetUsers } from './types';
 
 const CreateOrEditGroup = () => {

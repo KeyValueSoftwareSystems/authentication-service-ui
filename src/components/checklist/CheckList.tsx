@@ -2,9 +2,9 @@ import { FC, useEffect, useState } from 'react';
 import Checkbox from '@mui/material/Checkbox';
 import { useParams } from 'react-router-dom';
 
-import { ReactComponent as UnCheckedIcon } from 'assets/checkbox-icons/uncheckedicon.svg';
-import { ReactComponent as CheckedIcon } from 'assets/checkbox-icons/checkedicon.svg';
-import { Group } from 'types/group';
+import { ReactComponent as UnCheckedIcon } from '@/assets/checkbox-icons/uncheckedicon.svg';
+import { ReactComponent as CheckedIcon } from '@/assets/checkbox-icons/checkedicon.svg';
+import { Group } from '@/types/group';
 import './styles.css';
 import GroupCard from '../group-card';
 
@@ -37,6 +37,7 @@ export const ChecklistComponent: FC<ChecklistProps> = ({ mapList, currentChecked
         <div id='selectall'>
           <Checkbox
             value={'all'}
+            data-testid='checklist-checkbox-test-id'
             onChange={handleSelectAll}
             checked={selectAll}
             icon={<UnCheckedIcon />}

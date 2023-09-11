@@ -7,9 +7,9 @@ import { buttonUnstyledClasses } from '@mui/base/ButtonUnstyled';
 import TabUnstyled, { tabUnstyledClasses } from '@mui/base/TabUnstyled';
 import { Chip } from '@mui/material';
 
-import { getOverallPermissions } from 'utils/permissions';
-import { EntityPermissionsDetails } from 'types/generic';
-import { Permission } from 'types/user';
+import { getOverallPermissions } from '@/utils/permissions';
+import { EntityPermissionsDetails } from '@/types/generic';
+import { Permission } from '@/types/user';
 import './styles.css';
 
 interface StyledTabsProps {

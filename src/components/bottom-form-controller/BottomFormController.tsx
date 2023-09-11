@@ -3,7 +3,7 @@ import { useRecoilValue } from 'recoil';
 
 import './styles.css';
 import { BottomControllerProps } from './types';
-import { submitAtom } from 'states/submitStates';
+import { submitAtom } from '@/states/submitStates';
 
 const BottomFormController = (props: BottomControllerProps) => {
   const { primarybuttonLabel, onSubmit, formId, onCancel, secondaryButtonLabel } = props;

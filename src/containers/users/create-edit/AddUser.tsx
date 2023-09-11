@@ -3,14 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
 import { FieldValues } from 'react-hook-form';
 
-import { CREATE_USER, UPDATE_USER_GROUPS, UPDATE_USER_PERMISSIONS } from 'services/mutations/userMutations';
-import { GroupPermissionsDetails } from 'types/permission';
-import { Permission } from 'types/user';
-import { Group } from 'types/group';
-import { apiRequestAtom, toastMessageAtom } from 'states/apiRequestState';
-import { USER_CREATE_SUCCESS_MESSAGE } from 'constants/messages';
-import { useCustomMutation } from 'hooks/useMutation';
-import { RoutePaths } from 'constants/routes';
+import { CREATE_USER, UPDATE_USER_GROUPS, UPDATE_USER_PERMISSIONS } from '@/services/mutations/userMutations';
+import { GroupPermissionsDetails } from '@/types/permission';
+import { Permission } from '@/types/user';
+import { Group } from '@/types/group';
+import { apiRequestAtom, toastMessageAtom } from '@/states/apiRequestState';
+import { USER_CREATE_SUCCESS_MESSAGE } from '@/constants/messages';
+import { useCustomMutation } from '@/hooks/useMutation';
+import { RoutePaths } from '@/constants/routes';
 import './styles.css';
 import UserForm from './UserForm';
 

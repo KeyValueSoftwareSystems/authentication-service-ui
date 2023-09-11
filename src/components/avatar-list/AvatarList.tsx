@@ -1,9 +1,9 @@
 import { Avatar } from '@mui/material';
 import { AvatarGroup } from '@mui/material';
 import { useMediaQuery } from 'react-responsive';
-import { User } from 'types/user';
+import { User } from '@/types/user';
 
-import { stringAvatar } from 'utils/table';
+import { stringAvatar } from '@/utils/table';
 import './styles.css';
 
 interface AvatarListType {

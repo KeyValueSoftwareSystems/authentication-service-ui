@@ -3,9 +3,9 @@ import { Button } from '@mui/material';
 import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-import FormInputText from 'components/input-text';
-import { SET_PASSWORD } from 'constants/messages';
-import { UserActions } from 'types/generic';
+import FormInputText from '@/components/input-text';
+import { SET_PASSWORD } from '@/constants/messages';
+import { UserActions } from '@/types/generic';
 import { ConfirmPasswordSchema } from '../authSchema';
 import { LOGO_URL } from '../../../config';
 import './styles.css';

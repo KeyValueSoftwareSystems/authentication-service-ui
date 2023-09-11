@@ -1,11 +1,11 @@
 import { FC, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import Pagination from '@mui/material/Pagination';
-import PaginationItem from '@mui/material/PaginationItem';
+// import PaginationItem from '@mui/material/PaginationItem';
 import { TextField, Button } from '@mui/material';
 
-import { paginationAtom } from 'states/searchSortFilterStates';
-import { ApiParams } from 'utils/table';
+import { paginationAtom } from '@/states/searchSortFilterStates';
+import { ApiParams } from '@/utils/table';
 import './styles.css';
 
 interface CustomPaginationProps {
@@ -31,17 +31,17 @@ const CustomPagination: FC<CustomPaginationProps> = ({ fetchEntities, count }) =
 
   return (
     <>
-      <div className='pagination-count'>
+      <div className='pagination-count' data-testid='custom-pagination-count-test'>
         Total {`${count}`} item{count > 1 && `s`}
       </div>
       <Pagination
         color='primary'
         variant='outlined'
         shape='rounded'
+        data-testid='custom-pagination-test'
         page={currentPage}
         count={pageCount}
-        // @ts-expect-error ---
-        renderItem={(props2) => <PaginationItem {...props2} disableRipple />}
+        // renderItem={(props2) => <PaginationItem {...props2} disableRipple />}
         onChange={(event, value) => {
           setPageValue(value);
           setCurrentPage(value);

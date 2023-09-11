@@ -2,20 +2,20 @@ import styled from '@emotion/styled';
 import { Checkbox } from '@mui/material';
 import { FC, useState } from 'react';
 
-import CustomChip from 'components/custom-chip';
-import CustomDialog from 'components/custom-dialog';
-import If from 'components/if';
-import RoleCard from 'components/role-card';
-import { Role } from 'types/role';
-import { ReactComponent as DownArrowIcon } from 'assets/checkbox-icons/Stroke 1.svg';
-import { getUniquePermissionsFromRoles } from 'utils/permissions';
-import { ReactComponent as UnCheckedIcon } from 'assets/checkbox-icons/uncheckedicon.svg';
-import { ReactComponent as CheckedIcon } from 'assets/checkbox-icons/checkedicon.svg';
-import { Group } from 'types/group';
+import CustomChip from '@/components/custom-chip';
+import CustomDialog from '@/components/custom-dialog';
+import If from '@/components/if';
+import RoleCard from '@/components/role-card';
+import { Role } from '@/types/role';
+import { ReactComponent as DownArrowIcon } from '@/assets/checkbox-icons/Stroke 1.svg';
+import { getUniquePermissionsFromRoles } from '@/utils/permissions';
+import { ReactComponent as UnCheckedIcon } from '@/assets/checkbox-icons/uncheckedicon.svg';
+import { ReactComponent as CheckedIcon } from '@/assets/checkbox-icons/checkedicon.svg';
+import { Group } from '@/types/group';
 
 import '../checklist/styles.css';
 import './styles.css';
-import { Permission } from 'types/permission';
+import { Permission } from '@/types/permission';
 
 interface GroupCardProps {
   group: Group;
@@ -23,6 +23,7 @@ interface GroupCardProps {
   onChange?: (event: React.ChangeEvent<HTMLInputElement>, item?: Group) => void;
   showCheckBox?: Boolean;
   isViewPage?: Boolean;
+  dataTestId?: string;
 }
 
 interface TabProps {
@@ -110,6 +111,7 @@ const GroupCard: FC<GroupCardProps> = ({
               <Checkbox
                 key={group.id}
                 checked={isChecked(group.id)}
+                data-testid='group-card-checkbox-test-id'
                 onChange={(e) => onChange && onChange(e, group)}
                 icon={<UnCheckedIcon />}
                 checkedIcon={<CheckedIcon />}

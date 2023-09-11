@@ -6,27 +6,27 @@ import { useRecoilState } from 'recoil';
 import { useParams } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
 
-import GroupCard from 'components/group-card';
-import CustomAvatar from 'components/custom-avatar';
-import TabPanel from 'components/tab-panel';
-import PermissionCards from 'components/permission-cards';
-import DisplayMessage from 'components/display-message';
-import If from 'components/if';
-import { IsViewEntitiesVerifiedAtom, IsViewGroupsVerifiedAtom, UserPermissionsAtom } from 'states/permissionsStates';
-import { GET_USER } from 'services/queries/userQueries';
-import { GetUser, Permission, User } from 'types/user';
-import { UPDATE_USER_PERMISSION } from 'constants/permissions';
-import { useCustomQuery } from 'hooks/useQuery';
+import GroupCard from '@/components/group-card';
+import CustomAvatar from '@/components/custom-avatar';
+import TabPanel from '@/components/tab-panel';
+import PermissionCards from '@/components/permission-cards';
+import DisplayMessage from '@/components/display-message';
+import If from '@/components/if';
+import { IsViewEntitiesVerifiedAtom, IsViewGroupsVerifiedAtom, UserPermissionsAtom } from '@/states/permissionsStates';
+import { GET_USER } from '@/services/queries/userQueries';
+import { GetUser, Permission, User } from '@/types/user';
+import { UPDATE_USER_PERMISSION } from '@/constants/permissions';
+import { useCustomQuery } from '@/hooks/useQuery';
 import {
   NO_GROUPS_DESCRIPTION,
   NO_GROUPS_MESSAGE,
   NO_PERMISSIONS_DESCRIPTION,
   NO_PERMISSIONS_MESSAGE
-} from 'constants/messages';
-import { RoutePaths } from 'constants/routes';
-import { renderAccessDenied } from 'utils/generic';
+} from '@/constants/messages';
+import { RoutePaths } from '@/constants/routes';
+import { renderAccessDenied } from '@/utils/generic';
 import './styles.css';
-import { Group } from 'types/group';
+import { Group } from '@/types/group';
 
 const UserDetails = () => {
   const navigate = useNavigate();

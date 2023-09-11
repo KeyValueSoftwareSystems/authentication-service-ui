@@ -6,11 +6,11 @@ import { useRecoilState } from 'recoil';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useMediaQuery } from 'react-responsive';
 
-import { stringAvatar } from 'utils/table';
-import Toast from 'components/toast';
-import If from 'components/if';
-import SideBar from 'components/side-bar';
-import { toastMessageAtom } from 'states/apiRequestState';
+import { stringAvatar } from '@/utils/table';
+import Toast from '@/components/toast';
+import If from '@/components/if';
+import SideBar from '@/components/side-bar';
+import { toastMessageAtom } from '@/states/apiRequestState';
 import {
   IsViewGroupsVerifiedAtom,
   IsViewPermissionsVerifiedAtom,
@@ -18,33 +18,33 @@ import {
   IsViewUsersVerifiedAtom,
   IsViewEntitiesVerifiedAtom,
   UserPermissionsAtom
-} from 'states/permissionsStates';
-import { groupListAtom } from 'states/groupStates';
-import { currentUserAtom } from 'states/loginStates';
-import { GET_GROUPS } from 'services/queries/groupQueries';
-import CustomerAuth from 'services/auth';
-import { LOGOUT } from 'services/mutations/authMutations';
-import { GET_CURRENT_USER } from 'services/queries/authQueries';
-import { ReactComponent as ArrowIcon } from 'assets/sub-header-icons/arrow.svg';
-import { ReactComponent as SettingsIcon } from 'assets/sidebar-icons/settings.svg';
+} from '@/states/permissionsStates';
+import { groupListAtom } from '@/states/groupStates';
+import { currentUserAtom } from '@/states/loginStates';
+import { GET_GROUPS } from '@/services/queries/groupQueries';
+import CustomerAuth from '@/services/auth';
+import { LOGOUT } from '@/services/mutations/authMutations';
+import { GET_CURRENT_USER } from '@/services/queries/authQueries';
+import { ReactComponent as ArrowIcon } from '@/assets/sub-header-icons/arrow.svg';
+import { ReactComponent as SettingsIcon } from '@/assets/sidebar-icons/settings.svg';
 import {
   VIEW_GROUP_PERMISSION,
   VIEW_ROLE_PERMISSION,
   VIEW_USER_PERMISSION,
   VIEW_ENTITY_PERMISSION,
   VIEW_PERMISSIONS_PERMISSION
-} from 'constants/permissions';
-import { useCustomMutation } from 'hooks/useMutation';
-import { UserActions } from 'types/generic';
-import { getHeader } from 'utils/routes';
-import { RoutePaths } from 'constants/routes';
-import { useCustomLazyQuery } from 'hooks/useLazyQuery';
-import Settings from 'components/settings';
+} from '@/constants/permissions';
+import { useCustomMutation } from '@/hooks/useMutation';
+import { UserActions } from '@/types/generic';
+import { getHeader } from '@/utils/routes';
+import { RoutePaths } from '@/constants/routes';
+import { useCustomLazyQuery } from '@/hooks/useLazyQuery';
+import Settings from '@/components/settings';
 import { LOGO_URL, MINI_LOGO_URL } from '../../config';
 import './styles.css';
-import { Permission } from 'types/permission';
-import { GetGroups } from 'types/group';
-import { GetCurrentUser } from 'types/user';
+import { Permission } from '@/types/permission';
+import { GetGroups } from '@/types/group';
+import { GetCurrentUser } from '@/types/user';
 
 const HomePage = () => {
   const [currentUserDetails, setCurrentUserDetails] = useRecoilState(currentUserAtom);

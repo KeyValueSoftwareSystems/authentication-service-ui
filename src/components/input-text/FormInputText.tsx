@@ -5,7 +5,7 @@ import { useSetRecoilState } from 'recoil';
 import { useEffect } from 'react';
 
 import { FormInputProps } from './types';
-import { submitAtom } from 'states/submitStates';
+import { submitAtom } from '@/states/submitStates';
 
 const StyledTextField = styled(TextField)({
   '& label.Mui-focused': {

@@ -21,7 +21,7 @@ const TabPanel = (props: TabPanelProps) => {
       {...other}
     >
       {value === index && (
-        <Box>
+        <Box data-testid='box'>
           <Typography component={'span'}>{children}</Typography>
         </Box>
       )}

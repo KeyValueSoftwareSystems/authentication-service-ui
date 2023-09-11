@@ -2,11 +2,11 @@ import { Chip, Tooltip } from '@mui/material';
 import { FC, useEffect, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 
-import CustomChip from 'components/custom-chip';
-import CustomDialog from 'components/custom-dialog';
-import If from 'components/if';
-import { DialogContent } from 'components/group-card/GroupCard';
-import { ChipProps } from 'types/generic';
+import CustomChip from '@/components/custom-chip';
+import CustomDialog from '@/components/custom-dialog';
+import If from '@/components/if';
+import { DialogContent } from '@/components/group-card/GroupCard';
+import { ChipProps } from '@/types/generic';
 
 import './styles.css';
 

@@ -3,16 +3,16 @@ import { GridActionsCellItem, GridRowId } from '@mui/x-data-grid';
 import { Tooltip } from '@mui/material';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
-import { ReactComponent as EditIcon } from 'assets/table-actions-icons/edit.svg';
-import { ReactComponent as LineIcon } from 'assets/table-actions-icons/line.svg';
-import { ReactComponent as DeleteIcon } from 'assets/table-actions-icons/trash.svg';
-import { apiRequestAtom, toastMessageAtom } from 'states/apiRequestState';
-import { useCustomMutation } from 'hooks/useMutation';
-import { paginationAtom } from 'states/searchSortFilterStates';
+import { ReactComponent as EditIcon } from '@/assets/table-actions-icons/edit.svg';
+import { ReactComponent as LineIcon } from '@/assets/table-actions-icons/line.svg';
+import { ReactComponent as DeleteIcon } from '@/assets/table-actions-icons/trash.svg';
+import { apiRequestAtom, toastMessageAtom } from '@/states/apiRequestState';
+import { useCustomMutation } from '@/hooks/useMutation';
+import { paginationAtom } from '@/states/searchSortFilterStates';
 import './styles.css';
 import DialogBox from '../dialog-box';
 import { ActionsCellProps } from './types';
-import { currentUserAtom } from 'states/loginStates';
+import { currentUserAtom } from '@/states/loginStates';
 
 const ActionsCell: FC<ActionsCellProps> = ({
   isEditVerified,
@@ -58,7 +58,7 @@ const ActionsCell: FC<ActionsCellProps> = ({
   return (
     <>
       {isEditVerified && (
-        <Tooltip title='Edit' arrow placement='top'>
+        <Tooltip data-testid='actions-cell-test-id' title='Edit' arrow placement='top'>
           <GridActionsCellItem
             icon={
               <>
@@ -73,7 +73,7 @@ const ActionsCell: FC<ActionsCellProps> = ({
         </Tooltip>
       )}
       {isDeleteVerified && currentUserDetails.id !== params.id && (
-        <Tooltip title='Delete' arrow placement='top'>
+        <Tooltip title='Delete' arrow placement='top' data-testid='actions-cell-delete-tooltip'>
           <GridActionsCellItem
             icon={<DeleteIcon className='delete' />}
             label='Delete'

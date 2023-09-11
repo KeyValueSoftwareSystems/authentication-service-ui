@@ -1,10 +1,10 @@
 import { InputBase } from '@mui/material';
 import { FC, useEffect, useState } from 'react';
-import { ReactComponent as SearchIcon } from 'assets/toolbar-icons/search.svg';
+import { ReactComponent as SearchIcon } from '@/assets/toolbar-icons/search.svg';
 
 import { useSetRecoilState } from 'recoil';
-import { searchAtom } from 'states/searchSortFilterStates';
-import { useFetchEntities } from 'hooks/useFetchEntities';
+import { searchAtom } from '@/states/searchSortFilterStates';
+import { useFetchEntities } from '@/hooks/useFetchEntities';
 import { SearchBarProps } from './types';
 import './styles.css';
 

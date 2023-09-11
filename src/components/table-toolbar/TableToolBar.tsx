@@ -4,14 +4,14 @@ import { FC, useState } from 'react';
 import { Avatar } from '@mui/material';
 import { useMediaQuery } from 'react-responsive';
 
-import { ReactComponent as PlusIcon } from 'assets/button-icons/plus.svg';
-import { ReactComponent as SortIcon } from 'assets/toolbar-icons/sort.svg';
-import { ReactComponent as FilterIcon } from 'assets/toolbar-icons/filter.svg';
-import { sortCountAtom } from 'states/searchSortFilterStates';
-import { useFetchEntities } from 'hooks/useFetchEntities';
-import SearchBar from 'components/search-bar/SearchBar';
-import FilterDropdown from 'components/filter-dropdown';
-import { ADD_FILTER, SORT_BY_NAME } from 'constants/messages';
+import { ReactComponent as PlusIcon } from '@/assets/button-icons/plus.svg';
+import { ReactComponent as SortIcon } from '@/assets/toolbar-icons/sort.svg';
+import { ReactComponent as FilterIcon } from '@/assets/toolbar-icons/filter.svg';
+import { sortCountAtom } from '@/states/searchSortFilterStates';
+import { useFetchEntities } from '@/hooks/useFetchEntities';
+import SearchBar from '@/components/search-bar/SearchBar';
+import FilterDropdown from '@/components/filter-dropdown';
+import { ADD_FILTER, SORT_BY_NAME } from '@/constants/messages';
 import { TableToolBarProps } from './types';
 import './styles.css';
 

@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { useRecoilState } from 'recoil';
 
-import { GET_ENTITIES } from 'services/queries/entityQueries';
-import { Entity } from 'types/generic';
-import { useCustomQuery } from 'hooks/useQuery';
-import DisplayMessage from 'components/display-message';
-import { IsViewEntitiesVerifiedAtom } from 'states/permissionsStates';
-import { ACCESS_DENIED_DESCRIPTION, ACCESS_DENIED_MESSAGE } from 'constants/messages';
+import { GET_ENTITIES } from '@/services/queries/entityQueries';
+import { Entity } from '@/types/generic';
+import { useCustomQuery } from '@/hooks/useQuery';
+import DisplayMessage from '@/components/display-message';
+import { IsViewEntitiesVerifiedAtom } from '@/states/permissionsStates';
+import { ACCESS_DENIED_DESCRIPTION, ACCESS_DENIED_MESSAGE } from '@/constants/messages';
 import PermissionsCard from '../permission-card';
 import { PermissionCardsProps } from './types';
 import './styles.css';

@@ -4,18 +4,18 @@ import { useSetRecoilState } from 'recoil';
 import CircularProgress from '@mui/material/CircularProgress';
 import { FieldValues } from 'react-hook-form';
 
-import { GET_ROLE } from 'services/queries/roleQueries';
-import { CREATE_ROLE, UPDATE_ROLE, UPDATE_ROLE_PERMISSIONS } from 'services/mutations/roleMutations';
-import { Permission } from 'types/user';
-import PermissionCards from 'components/permission-cards';
-import { apiRequestAtom, toastMessageAtom } from 'states/apiRequestState';
-import { GetRole, Role } from 'types/role';
-import { ROLE_CREATE_SUCCESS_MESSAGE, ROLE_UPDATE_SUCCESS_MESSAGE } from 'constants/messages';
-import { useCustomQuery } from 'hooks/useQuery';
-import { useCustomMutation } from 'hooks/useMutation';
+import { GET_ROLE } from '@/services/queries/roleQueries';
+import { CREATE_ROLE, UPDATE_ROLE, UPDATE_ROLE_PERMISSIONS } from '@/services/mutations/roleMutations';
+import { Permission } from '@/types/user';
+import PermissionCards from '@/components/permission-cards';
+import { apiRequestAtom, toastMessageAtom } from '@/states/apiRequestState';
+import { GetRole, Role } from '@/types/role';
+import { ROLE_CREATE_SUCCESS_MESSAGE, ROLE_UPDATE_SUCCESS_MESSAGE } from '@/constants/messages';
+import { useCustomQuery } from '@/hooks/useQuery';
+import { useCustomMutation } from '@/hooks/useMutation';
 import RoleForm from './RoleForm';
 import './styles.css';
-import { RoutePaths } from 'constants/routes';
+import { RoutePaths } from '@/constants/routes';
 
 const CreateOrEditRole = () => {
   const { id } = useParams();

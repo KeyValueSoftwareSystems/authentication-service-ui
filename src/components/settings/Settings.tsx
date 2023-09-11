@@ -7,9 +7,9 @@ import Logout from '@mui/icons-material/Logout';
 import { FC } from 'react';
 
 import './styles.css';
-import { UserDetails } from 'utils/user';
-import { useCustomMutation } from 'hooks/useMutation';
-import { LOGOUT } from 'services/mutations/authMutations';
+import { UserDetails } from '@/utils/user';
+import { useCustomMutation } from '@/hooks/useMutation';
+import { LOGOUT } from '@/services/mutations/authMutations';
 
 interface SettingsProps {
   fullName: string;

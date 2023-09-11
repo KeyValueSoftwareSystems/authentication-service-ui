@@ -1,7 +1,7 @@
 import { useLazyQuery, ApolloError } from '@apollo/client';
 import { useSetRecoilState } from 'recoil';
 
-import { apiRequestAtom, toastMessageAtom } from 'states/apiRequestState';
+import { apiRequestAtom, toastMessageAtom } from '@/states/apiRequestState';
 
 export const useCustomLazyQuery = (query: any, onComplete?: any, variables?: any) => {
   const setToastMessage = useSetRecoilState(toastMessageAtom);
