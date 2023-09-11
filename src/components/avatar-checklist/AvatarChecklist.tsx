@@ -42,6 +42,7 @@ export const AvatarChecklistComponent: FC<ChecklistProps> = ({
     <div className='user-checklist'>
       <div className='titlebar'>
         <SearchBar
+          data-testid='search-bar'
           searchLabel={isTabletScreen ? 'Search' : 'Search Members'}
           setItemList={(response) => setItemList(response?.getUsers?.results)}
           searchQuery={searchQuery}
@@ -52,6 +53,7 @@ export const AvatarChecklistComponent: FC<ChecklistProps> = ({
         {!searchValue && (
           <div className='selectall-avatar'>
             <Checkbox
+              data-testid='select-all'
               value={'all'}
               onChange={handleSelectAll}
               checked={selectAll}
@@ -68,6 +70,7 @@ export const AvatarChecklistComponent: FC<ChecklistProps> = ({
             <div className='avatar-wrapper' key={item?.id}>
               <div className='custom-checkbox-item'>
                 <Checkbox
+                  data-testid='indivitual-checkbox'
                   value={item?.id}
                   onChange={(e) => onChange(e, item)}
                   checked={getIsChecked(item)}

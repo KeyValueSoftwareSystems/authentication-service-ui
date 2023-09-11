@@ -28,7 +28,7 @@ const DialogBox: React.FC<DialogProps> = ({ title, children, handleClose }) => {
     >
       <DialogTitle>
         <>{title}</>
-        <CloseIcon style={{ float: 'right', cursor: 'pointer' }} onClick={handleClose} />
+        <CloseIcon data-testid='close-button' style={{ float: 'right', cursor: 'pointer' }} onClick={handleClose} />
       </DialogTitle>
 
       {children}

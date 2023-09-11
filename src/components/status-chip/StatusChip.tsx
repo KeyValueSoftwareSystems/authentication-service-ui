@@ -56,6 +56,7 @@ export const StatusChip: React.FC<StatusChipType> = ({ row }) => {
       <Chip
         label={row.status.charAt(0) + row.status.toLowerCase().slice(1)}
         className={getClassName()}
+        data-testid='chip'
         sx={{
           height: '31px',
           width: '76px',
@@ -70,14 +71,14 @@ export const StatusChip: React.FC<StatusChipType> = ({ row }) => {
             onClick={onRefreshInviteLink}
             sx={{ cursor: 'pointer' }}
           >
-            <RefreshIcon className='refresh-token-icon' />
+            <RefreshIcon data-testid='refresh' className='refresh-token-icon' />
           </Tooltip>
           <Tooltip
             title={isLinkCopied ? 'Copied' : 'Copy Invite Link'}
             onClick={onCopyInviteLink}
             sx={{ cursor: 'pointer' }}
           >
-            <ContentCopyIcon fontSize='small' className='refresh-token-icon' />
+            <ContentCopyIcon data-testid='copy' fontSize='small' className='refresh-token-icon' />
           </Tooltip>
         </>
       )}

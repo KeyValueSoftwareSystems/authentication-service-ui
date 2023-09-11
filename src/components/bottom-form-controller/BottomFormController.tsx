@@ -11,12 +11,19 @@ const BottomFormController = (props: BottomControllerProps) => {
 
   return (
     <div className='bottom-wrapper'>
-      <Button variant='outlined' className='cancel-button' onClick={onCancel} sx={{ textTransform: 'none' }}>
+      <Button
+        variant='outlined'
+        className='cancel-button'
+        data-testid='cancel-button'
+        onClick={onCancel}
+        sx={{ textTransform: 'none' }}
+      >
         {secondaryButtonLabel}
       </Button>
       <div className='submit-button-style'>
         <Button
           variant='contained'
+          data-testid='submit-button'
           className='submit-button'
           onClick={onSubmit}
           form={formId}

@@ -30,6 +30,7 @@ const Toast: React.FC<ToastProps> = ({ isOpen, message, handleClose }) => {
       >
         <Alert
           onClose={handleClose}
+          data-testid='alert'
           severity={apiSuccess === true ? 'success' : 'error'}
           sx={apiSuccess === true ? { backgroundColor: '#D5F2C7' } : { backgroundColor: '#ff000069' }}
         >

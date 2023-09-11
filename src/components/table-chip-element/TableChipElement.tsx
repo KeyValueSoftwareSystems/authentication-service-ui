@@ -66,6 +66,7 @@ const TableChipElement: FC<TableChipElementProps> = ({ rowItems, columnName, def
       )}
       <If condition={openModal}>
         <CustomDialog
+          data-testid='custom-dialog'
           title={columnName.charAt(0).toUpperCase() + columnName.slice(1)}
           handleClose={() => setOpenModal(false)}
         >

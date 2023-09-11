@@ -15,11 +15,11 @@ const DisplayMessage: React.FC<DisplayMessageProps> = ({
 }) => {
   return (
     <div className={className ? `${className}` : 'display-message'} style={containerStyles}>
-      <img src={image} alt={altMessage} id='display-message' style={imageStyles} />
-      <p id='display-message-heading' style={customStyle}>
+      <img src={image} alt={altMessage} id='display-message' data-testid='display-message' style={imageStyles} />
+      <p id='display-message-heading' data-testid='display-message-heading' style={customStyle}>
         {heading}
       </p>
-      <p id='display-message-description' style={customStyle}>
+      <p id='display-message-description' data-testid='display-message-description' style={customStyle}>
         {description}
       </p>
     </div>

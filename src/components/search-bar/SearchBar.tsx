@@ -51,7 +51,7 @@ const SearchBar: FC<SearchBarProps> = ({
           sx={{ width: '87%', ml: '30px', fontFamily: 'Manrope' }}
         />
       </div>
-      <div className='search-icon' style={customIconStyle}>
+      <div className='search-icon' data-testid='search-icon' style={customIconStyle}>
         <SearchIcon id='search-icon' />
       </div>
     </div>

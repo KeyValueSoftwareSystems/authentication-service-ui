@@ -39,6 +39,7 @@ const DialogBox: React.FC<DialogProps> = ({ entity, onConfirm, handleClose }) =>
         <Button
           onClick={handleClose}
           id='delete-button'
+          data-testid='cancel-button'
           sx={{
             textTransform: 'none',
             fontFamily: 'Manrope',
@@ -61,6 +62,7 @@ const DialogBox: React.FC<DialogProps> = ({ entity, onConfirm, handleClose }) =>
             fontFamily: 'Manrope',
             width: '136px'
           }}
+          data-testid='delete-button'
           onClick={onConfirm}
           autoFocus
         >
