@@ -22,6 +22,7 @@ const AvatarList = (avatarList: AvatarListType) => {
       <AvatarGroup max={DEFAULT_SIZE} spacing={22}>
         {row?.users?.map((item: User, index: number) => (
           <Avatar
+            data-testid='avatar'
             {...stringAvatar(`${item.firstName} ${item.lastName}`?.toUpperCase())}
             className='avatar'
             key={`${item?.id}_${index}`}

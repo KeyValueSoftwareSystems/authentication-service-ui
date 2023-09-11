@@ -56,11 +56,12 @@ const RoleCardsChecklist: FC<Props> = ({ roleList, currentCheckedItems, onChange
     <Container>
       <SelectAll>
         <Checkbox
+          data-testid='select-all'
           value={'all'}
           onChange={handleSelectAll}
           checked={selectAll}
-          icon={<UnCheckedIcon />}
-          checkedIcon={<CheckedIcon />}
+          icon={<UnCheckedIcon data-testid='unchecked' />}
+          checkedIcon={<CheckedIcon data-testid='checked' />}
         />
         <span style={{ marginLeft: '5px', fontSize: '14px', lineHeight: '24px' }}>Select all</span>
       </SelectAll>
