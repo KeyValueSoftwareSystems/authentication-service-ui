@@ -149,7 +149,7 @@ const FilterDropdown: FC<FilterDropdownProps> = ({
               <Button id='filter-button-cancel' onClick={handleCancel}>
                 Cancel
               </Button>
-              <Button id='filter-button-apply' onClick={handleSave}>
+              <Button disabled={getFilterCount() === 0} id='filter-button-apply' onClick={handleSave}>
                 Apply
               </Button>
             </MenuItem>

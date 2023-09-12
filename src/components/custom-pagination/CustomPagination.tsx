@@ -19,7 +19,7 @@ const CustomPagination: FC<CustomPaginationProps> = ({ fetchEntities, count }) =
   const [pageCount] = useState(count % 15 > 0 ? Math.floor(count / 15) + 1 : Math.floor(count / 15));
 
   const onClickGo = () => {
-    if (!isNaN(pageValue)) {
+    if (!isNaN(pageValue) && pageCount > 0) {
       if (pageValue > pageCount) setCurrentPage(pageCount);
       else if (pageValue < 1) setCurrentPage(1);
       else setCurrentPage(Number(pageValue));
@@ -48,7 +48,7 @@ const CustomPagination: FC<CustomPaginationProps> = ({ fetchEntities, count }) =
           fetchEntities({ page: value - 1 });
         }}
       />
-      <div className='go-to-page'>
+      <div className={`go-to-page ${pageCount === 0 && 'go-to-page-disabled'}`}>
         <div id='pagination-text'>Go to Page</div>
         <div>
           <TextField

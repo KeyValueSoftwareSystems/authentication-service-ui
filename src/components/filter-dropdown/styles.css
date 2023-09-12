@@ -84,6 +84,9 @@
   color: white;
 }
 
+#filter-button-apply:disabled {
+  opacity: 0.6;
+}
 #clear-all {
   color: #f64040;
   margin-right: -6px;

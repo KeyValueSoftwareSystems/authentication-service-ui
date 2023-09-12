@@ -56,21 +56,19 @@ const PermissionsCard: FC<PermissionCardProps> = ({
   const [groupPermissions, setGroupPermissions] = useState<Permission[]>([]);
   const setSubmitButton = useSetRecoilState(submitAtom);
 
+  const isUserSelectedPermission = (permission) =>
+    rolePermissions.some((rolePermission) => rolePermission.id === permission.id) ||
+    groupPermissions.some((groupPermission) => groupPermission.id === permission.id);
   const onChangePermissions = (e: React.ChangeEvent<HTMLInputElement>, permission: Permission) => {
     if (e.target.checked) {
       setUserSelectedPermissions([...userSelectedPermissions, permission]);
-    } else {
-      const isUserSelectedPermission = !(
-        rolePermissions.some((rolePermission) => rolePermission.id === permission.id) ||
-        groupPermissions.some((groupPermission) => groupPermission.id === permission.id)
+      setSubmitButton(true);
+    } else if (!isUserSelectedPermission(permission)) {
+      setUserSelectedPermissions(
+        userSelectedPermissions.filter((userSelectedPermission) => userSelectedPermission.id !== permission.id)
       );
-
-      if (isUserSelectedPermission)
-        setUserSelectedPermissions(
-          userSelectedPermissions.filter((userSelectedPermission) => userSelectedPermission.id !== permission.id)
-        );
+      setSubmitButton(true);
     }
-    setSubmitButton(true);
   };
 
   useEffect(() => {
@@ -119,6 +117,9 @@ const PermissionsCard: FC<PermissionCardProps> = ({
                 checked={IsChecked(permission.id)}
                 icon={<UnCheckedIcon />}
                 checkedIcon={<CheckedIcon />}
+                sx={{
+                  cursor: (isUserSelectedPermission(permission) && 'default') || 'pointer'
+                }}
               />
               <div>{permission.label ?? permission.name}</div>
             </CheckboxContainer>
