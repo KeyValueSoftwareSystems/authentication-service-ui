@@ -22,13 +22,26 @@ const StyledTextField = styled(TextField)({
   }
 });
 
-const FormInputText = ({ name, label, type, className, defaultText, autoComplete }: FormInputProps) => {
+const FormInputText = ({
+  name,
+  label,
+  type,
+  className,
+  defaultText,
+  autoComplete,
+  endAdornment,
+  showEndAdornment
+}: FormInputProps) => {
   const { control } = useFormContext();
   const setSubmitButton = useSetRecoilState(submitAtom);
 
   useEffect(() => {
     return () => setSubmitButton(false);
   }, []);
+
+  const handleChange = () => {
+    setSubmitButton(true);
+  };
 
   return (
     <Controller
@@ -41,7 +54,7 @@ const FormInputText = ({ name, label, type, className, defaultText, autoComplete
           error={!!error}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             onChange(e);
-            setSubmitButton(true);
+            handleChange();
           }}
           fullWidth
           type={type}
@@ -50,6 +63,11 @@ const FormInputText = ({ name, label, type, className, defaultText, autoComplete
           className={className}
           defaultValue={value ? value : defaultText}
           autoComplete={autoComplete}
+          InputProps={{
+            ...(showEndAdornment && {
+              endAdornment: endAdornment
+            })
+          }}
         />
       )}
     />

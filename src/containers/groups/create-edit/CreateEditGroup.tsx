@@ -143,7 +143,10 @@ const CreateOrEditGroup = () => {
   const removeItem = ({ roleId, userId }: { roleId?: string; userId?: string }) => {
     if (roleId) setRoles(roles.filter((role: Role) => role.id !== roleId));
 
-    if (userId) setUsers(users.filter((user: User) => user.id !== userId));
+    if (userId) {
+      setUsers(users.filter((user: User) => user.id !== userId));
+      setSubmitButton(true);
+    }
   };
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>, item?: Role) => {

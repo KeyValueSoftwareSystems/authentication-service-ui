@@ -25,7 +25,7 @@ const Login: React.FC = () => {
 
   const inviteToken: string | null = searchParams.get('token');
 
-  const [userLogin, { data }] = useCustomMutation(LOGIN);
+  const [userLogin, { data, loading: loginInProgress }] = useCustomMutation(LOGIN);
 
   const [setPassword, { data: passwordCreatedData }] = useCustomMutation(SET_PASSWORD);
 
@@ -77,7 +77,7 @@ const Login: React.FC = () => {
 
   const getInputFields = () => {
     if (inviteToken) return <PasswordConfirmation onSubmitForm={onConfirmPassword} />;
-    else return <LoginPassword onSubmitForm={onLogin} />;
+    else return <LoginPassword onSubmitForm={onLogin} loginInProgress={loginInProgress} />;
   };
 
   const onCloseToast = () => {

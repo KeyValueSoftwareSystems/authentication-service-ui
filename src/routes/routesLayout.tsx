@@ -1,5 +1,6 @@
 import React, { Suspense, lazy } from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
+import CircularProgress from '@mui/material/CircularProgress';
 
 import UserDetails from '@/containers/users/user-details/UserDetails';
 import CreateOrEditRole from '@/containers/roles/create-edit/CreateOrEditRole';
@@ -17,7 +18,13 @@ const Roles = lazy(() => import('../containers/roles'));
 
 const RoutesLayout: React.FC = () => {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense
+      fallback={
+        <div>
+          <CircularProgress sx={{ top: '45%', marginTop: '225px' }} />
+        </div>
+      }
+    >
       <Routes>
         <Route path={RoutePaths.default} element={<Navigate replace to={RoutePaths.login} />} />
         <Route path={RoutePaths.login} element={<Login />} />
