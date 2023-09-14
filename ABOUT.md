@@ -3,7 +3,7 @@
 Upon installation, <b>UMS</b> (User Management System) creates a Super-Admin, who is responsible for creating other admins, employees and groups. Super-Admins are responsible for defining role based access. With <b>UMS</b>, Super-Admin can effortlessly manage the user base of organisation and ensure that the users have the correct access to perform their job effectively.
 
   <p align="center">
-     <img src="./src/assets/readme-images/login_page.jpeg" width="621.5" height="331">
+     <img src="./src/assets/readme-images/login_page.png" width="621.5" height="331">
   </p>
 
 > The User can login to <b>UMS</b> using credentials, username (email) and password
