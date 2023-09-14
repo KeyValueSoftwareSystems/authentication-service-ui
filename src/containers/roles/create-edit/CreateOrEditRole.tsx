@@ -4,6 +4,7 @@ import { useSetRecoilState } from 'recoil';
 import CircularProgress from '@mui/material/CircularProgress';
 import { FieldValues } from 'react-hook-form';
 
+import { ReactComponent as Exclamation } from '@/assets/info-icons/exclamation-circle.svg';
 import { GET_ROLE } from '@/services/queries/roleQueries';
 import { CREATE_ROLE, UPDATE_ROLE, UPDATE_ROLE_PERMISSIONS } from '@/services/mutations/roleMutations';
 import { Permission } from '@/types/user';
@@ -92,7 +93,16 @@ const CreateOrEditRole = () => {
         />
       )}
       <div className='role-permissions'>
-        <div className='permission-header'> Permissions</div>
+        <div className='permission-header'>
+          Permissions
+          <div className='permission-info-icon'>
+            <Exclamation className='info-icon' />
+            <div className='permission-header-tooltip'>
+              On selecting &apos;create&apos;, &apos;edit&apos; or &apos;delete&apos; permission of an entity will
+              select &apos;view&apos; permission of the same
+            </div>
+          </div>
+        </div>
         {!loading ? (
           <div className='permission-cards-cntr'>
             <PermissionCards
