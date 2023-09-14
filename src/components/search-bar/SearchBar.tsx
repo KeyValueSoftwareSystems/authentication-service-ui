@@ -1,11 +1,12 @@
 import { InputBase } from '@mui/material';
-import { FC, useEffect, useState } from 'react';
+import { FC, useContext, useEffect, useState } from 'react';
 import { ReactComponent as SearchIcon } from '@/assets/toolbar-icons/search.svg';
 
 import { useSetRecoilState } from 'recoil';
 import { searchAtom } from '@/states/searchSortFilterStates';
 import { useFetchEntities } from '@/hooks/useFetchEntities';
 import { SearchBarProps } from './types';
+import DataContext from '../table/DataContext';
 import './styles.css';
 
 const SearchBar: FC<SearchBarProps> = ({
@@ -24,9 +25,15 @@ const SearchBar: FC<SearchBarProps> = ({
     else setField('name');
   }, []);
 
-  const { fetch } = useFetchEntities({
+  const { setLoading } = useContext(DataContext);
+
+  const { fetch, loading } = useFetchEntities({
     userParams: { setList: setItemList, query: searchQuery, field: field }
   });
+
+  useEffect(() => {
+    setLoading(loading);
+  }, [loading]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const delayedSearch = (text?: string) => {
