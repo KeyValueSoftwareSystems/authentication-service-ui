@@ -36,7 +36,7 @@ export const useFetchEntities = (usersFetchProps: usersFetchProps) => {
     usersFetchProps.userParams.setList(data);
   };
 
-  const { lazyQuery: filterQuery } = useCustomLazyQuery(usersFetchProps.userParams.query, onCompleted);
+  const { lazyQuery: filterQuery, loading } = useCustomLazyQuery(usersFetchProps.userParams.query, onCompleted);
 
   const fetchEntities = ({ searchText = null, countValue = 0, page = null }: ApiParams) => {
     let search = {};
@@ -109,5 +109,8 @@ export const useFetchEntities = (usersFetchProps: usersFetchProps) => {
     filterQuery({ variables: variables });
   };
 
-  return fetchEntities;
+  return {
+    fetch: fetchEntities,
+    loading: loading
+  };
 };

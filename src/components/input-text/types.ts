@@ -5,4 +5,6 @@ export interface FormInputProps {
   className?: string;
   defaultText?: string;
   autoComplete?: string;
+  endAdornment?: React.ReactNode;
+  showEndAdornment?: boolean;
 }

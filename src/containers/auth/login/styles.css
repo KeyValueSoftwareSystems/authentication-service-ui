@@ -33,7 +33,12 @@
 .logo {
   display: flex;
   justify-content: space-around;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
+}
+
+.logo-img {
+  width:230px;
+  height:48px;
 }
 
 .left {

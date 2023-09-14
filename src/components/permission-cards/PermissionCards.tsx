@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
+import { CircularProgress } from '@mui/material';
 import { useRecoilState } from 'recoil';
 
 import { GET_ENTITIES } from '@/services/queries/entityQueries';
@@ -36,35 +37,41 @@ const PermissionCards: React.FC<PermissionCardsProps> = ({
     setEntities(data?.getEntities);
   };
 
-  useCustomQuery(GET_ENTITIES, onCompleted, null, !isViewEntitiesVerified);
+  const { loading } = useCustomQuery(GET_ENTITIES, onCompleted, null, !isViewEntitiesVerified);
 
   return (
     <Container>
-      {isViewEntitiesVerified ? (
-        <>
-          {entities.map((entity) => (
-            <PermissionsCard
-              entity={entity}
-              roles={roles}
-              groups={groups}
-              userSelectedPermissions={userSelectedPermissions}
-              setUserSelectedPermissions={setUserSelectedPermissions}
-              userPermissions={userPermissions}
-              isViewPage={isViewPage}
-              key={entity?.id}
-            />
-          ))}
-        </>
+      {loading ? (
+        <CircularProgress sx={{ top: '35%', marginTop: '225px' }} />
       ) : (
-        <div style={{ width: '100%' }}>
-          <DisplayMessage
-            customStyle={{ fontSize: 16 }}
-            altMessage={ACCESS_DENIED_MESSAGE}
-            image='./assets/access-denied.png'
-            heading={ACCESS_DENIED_MESSAGE}
-            description={ACCESS_DENIED_DESCRIPTION}
-          />
-        </div>
+        <>
+          {isViewEntitiesVerified ? (
+            <>
+              {entities.map((entity) => (
+                <PermissionsCard
+                  entity={entity}
+                  roles={roles}
+                  groups={groups}
+                  userSelectedPermissions={userSelectedPermissions}
+                  setUserSelectedPermissions={setUserSelectedPermissions}
+                  userPermissions={userPermissions}
+                  isViewPage={isViewPage}
+                  key={entity?.id}
+                />
+              ))}
+            </>
+          ) : (
+            <div style={{ width: '100%' }}>
+              <DisplayMessage
+                customStyle={{ fontSize: 16 }}
+                altMessage={ACCESS_DENIED_MESSAGE}
+                image='./assets/access-denied.png'
+                heading={ACCESS_DENIED_MESSAGE}
+                description={ACCESS_DENIED_DESCRIPTION}
+              />
+            </div>
+          )}
+        </>
       )}
     </Container>
   );

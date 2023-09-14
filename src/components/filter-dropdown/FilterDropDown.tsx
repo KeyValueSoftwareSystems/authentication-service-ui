@@ -47,12 +47,17 @@ const FilterDropdown: FC<FilterDropdownProps> = ({
     else setCheckedItems(checkedItems.filter((x) => x !== name));
   };
 
+  const { fetch } = useFetchEntities({
+    userParams: { setList: setItemList, query: filterQuery, field: field }
+  });
+
   const handleCheckedItems = (item: string, checkedItems: string[]) => {
     if (checkedItems.includes(item)) return true;
     else return false;
   };
 
   const handleClearAll = () => {
+    if (noFiltersApplied) return;
     if (setCheckedFilters)
       setCheckedFilters.forEach((setFilter: SetterOrUpdater<string[]>) => {
         setFilter([]);
@@ -74,13 +79,11 @@ const FilterDropdown: FC<FilterDropdownProps> = ({
 
   const handleSave = () => {
     onApply(getFilterCount());
-    fetchEntities({});
+    fetch({});
     setViewFilter(0);
   };
 
-  const fetchEntities = useFetchEntities({
-    userParams: { setList: setItemList, query: filterQuery, field: field }
-  });
+  const noFiltersApplied = getFilterCount() === 0;
 
   return (
     <Menu
@@ -94,7 +97,8 @@ const FilterDropdown: FC<FilterDropdownProps> = ({
         sx: {
           '&:before': {
             visibility: isPortrait ? 'hidden' : 'visible'
-          }
+          },
+          marginTop: '10px'
         }
       }}
       transformOrigin={{ horizontal: 'right', vertical: 'top' }}
@@ -114,7 +118,13 @@ const FilterDropdown: FC<FilterDropdownProps> = ({
               >
                 {getFilterCount()}
               </Avatar>
-              <div id='clear-all' role='button' tabIndex={0} onClick={handleClearAll}>
+              <div
+                id='clear-all'
+                role='button'
+                tabIndex={0}
+                onClick={handleClearAll}
+                className={noFiltersApplied ? 'disabled' : ''}
+              >
                 Clear All
               </div>
             </MenuItem>

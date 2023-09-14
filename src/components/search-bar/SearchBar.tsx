@@ -24,13 +24,13 @@ const SearchBar: FC<SearchBarProps> = ({
     else setField('name');
   }, []);
 
-  const fetchEntities = useFetchEntities({
+  const { fetch } = useFetchEntities({
     userParams: { setList: setItemList, query: searchQuery, field: field }
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const delayedSearch = (text?: string) => {
-      fetchEntities({ searchText: text });
+      fetch({ searchText: text });
     };
     const delayDebounce = setTimeout(() => {
       setSearchValue(e.target.value);

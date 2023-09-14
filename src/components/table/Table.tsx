@@ -48,7 +48,8 @@ const TableList: FC<TableProps> = ({
   const setSearchValue = useSetRecoilState(searchAtom);
 
   const setCurrentPage = useSetRecoilState(paginationAtom);
-  const fetchEntities = useFetchEntities({
+
+  const { fetch, loading } = useFetchEntities({
     userParams: { setList: setItemList, query: refetchQuery, field: field }
   });
 
@@ -105,7 +106,7 @@ const TableList: FC<TableProps> = ({
               isEditVerified,
               onEdit,
               refetchQuery,
-              fetchEntities
+              fetch
             )}
             sx={{
               borderRadius: '0px 0px 5px 5px',
@@ -115,9 +116,10 @@ const TableList: FC<TableProps> = ({
             onRowClick={handleRowClick}
             disableColumnMenu
             pageSize={15}
+            loading={loading}
             rowsPerPageOptions={[5]}
             components={{
-              Pagination: () => <CustomPagination fetchEntities={fetchEntities} count={count} />,
+              Pagination: () => <CustomPagination fetchEntities={fetch} count={count} />,
               NoRowsOverlay: () => (
                 <Stack height='100%' alignItems='center' justifyContent='center'>
                   No {buttonLabel.slice(3, buttonLabel.length).toLowerCase()}s to show

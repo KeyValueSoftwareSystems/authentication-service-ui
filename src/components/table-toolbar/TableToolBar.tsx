@@ -46,7 +46,7 @@ const TableToolBar: FC<TableToolBarProps> = ({
 
   const isPortrait = useMediaQuery({ query: '(max-width: 980px)' });
 
-  const fetchEntities = useFetchEntities({
+  const { fetch } = useFetchEntities({
     userParams: { setList: setItemList, query: searchQuery, field: field }
   });
 
@@ -54,7 +54,7 @@ const TableToolBar: FC<TableToolBarProps> = ({
     const countValue = count === 0 ? 1 : count === 1 ? 2 : 0;
 
     setCount(countValue);
-    fetchEntities({ countValue: countValue });
+    fetch({ countValue: countValue });
   };
 
   return (
