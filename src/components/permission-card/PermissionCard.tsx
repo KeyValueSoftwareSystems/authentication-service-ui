@@ -56,7 +56,7 @@ const PermissionsCard: FC<PermissionCardProps> = ({
   const [groupPermissions, setGroupPermissions] = useState<Permission[]>([]);
   const setSubmitButton = useSetRecoilState(submitAtom);
 
-  const isUserSelectedPermission = (permission) =>
+  const isUserSelectedPermission = (permission: { id: string }) =>
     rolePermissions.some((rolePermission) => rolePermission.id === permission.id) ||
     groupPermissions.some((groupPermission) => groupPermission.id === permission.id);
   const onChangePermissions = (e: React.ChangeEvent<HTMLInputElement>, permission: Permission) => {
