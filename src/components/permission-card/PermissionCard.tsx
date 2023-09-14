@@ -61,7 +61,11 @@ const PermissionsCard: FC<PermissionCardProps> = ({
     groupPermissions.some((groupPermission) => groupPermission.id === permission.id);
   const onChangePermissions = (e: React.ChangeEvent<HTMLInputElement>, permission: Permission) => {
     if (e.target.checked) {
-      setUserSelectedPermissions([...userSelectedPermissions, permission]);
+      const viewPermission = entity.permissions?.find((permission) => permission.name.indexOf('view-') > -1);
+
+      if (viewPermission && viewPermission?.id !== permission.id)
+        setUserSelectedPermissions([...userSelectedPermissions, permission, viewPermission]);
+      else setUserSelectedPermissions([...userSelectedPermissions, permission]);
       setSubmitButton(true);
     } else if (!isUserSelectedPermission(permission)) {
       setUserSelectedPermissions(

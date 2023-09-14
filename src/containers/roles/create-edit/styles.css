@@ -50,8 +50,32 @@
   font-size: large;
   font-weight: 500;
   margin-bottom: 30px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
 }
 
+.permission-info-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.permission-info-icon:has(.info-icon:hover) .permission-header-tooltip {
+  opacity: 1;
+}
+.permission-header-tooltip {
+  position: absolute;
+  top: -45px;
+  left: -40px;
+  background-color: #00000085;
+  border-radius: 8px;
+  padding: 10px 5px;
+  color: white;
+  font-size: 14px;
+  width: max-content;
+  opacity: 0;
+  transition: all 0.3s;
+}
 .role-permissions {
   margin-top: 40px;
   font-family: 'Manrope';
