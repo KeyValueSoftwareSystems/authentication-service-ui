@@ -34,5 +34,7 @@ Developers can customise this as per their requirement
 - [React Typescript](https://react.dev/learn/typescript)
 - [Material UI](https://mui.com/material-ui/)
 - [Apollo Graphql](https://www.apollographql.com/)
+- [Recoil](https://recoiljs.org/)
+- [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
 
 > For feature details, take a look into [this document](./ABOUT.md)
