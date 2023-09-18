@@ -80,13 +80,13 @@ const UserDetails = () => {
               <div style={{ display: 'flex' }}>
                 {!loading && user && (
                   <CustomAvatar
-                    firstName={user?.firstName || ''}
-                    lastName={user?.lastName || ''}
-                    email={user?.email || ''}
+                    firstName={user.firstName || ''}
+                    lastName={user.lastName || ''}
+                    email={user.email || ''}
                   />
                 )}
                 <Chip
-                  label={user?.status && user?.status.charAt(0) + user?.status.toLowerCase().slice(1)}
+                  label={user?.status?.charAt(0) + user?.status?.toLowerCase().slice(1)}
                   className={getClassName()}
                 />
               </div>

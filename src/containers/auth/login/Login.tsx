@@ -14,7 +14,7 @@ import { VIEW_USER_PERMISSION } from '@/constants/permissions';
 import { RoutePaths } from '@/constants/routes';
 import { LOGIN_URL } from '../../../config';
 import './styles.css';
-import LoginPassword from './loginPassword';
+import LoginPassword from './LoginPassword';
 import PasswordConfirmation from './PasswordConfirmation';
 import { Permission } from '@/types/permission';
 
