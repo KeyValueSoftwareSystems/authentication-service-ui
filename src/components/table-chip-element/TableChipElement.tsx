@@ -2,11 +2,14 @@ import { Chip, Tooltip } from '@mui/material';
 import { FC, useEffect, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 
-import CustomChip from 'components/custom-chip';
-import CustomDialog from 'components/custom-dialog';
-import If from 'components/if';
+import CustomChip from '@/components/custom-chip';
+import CustomDialog from '@/components/custom-dialog';
+import If from '@/components/if';
+import { DialogContent } from '@/components/group-card/GroupCard';
+import { ChipProps } from '@/types/generic';
+
 import './styles.css';
-import { DialogContent } from 'components/group-card/GroupCard';
+
 interface TableChipElementProps {
   rowItems: any;
   columnName: string;
@@ -37,7 +40,7 @@ const TableChipElement: FC<TableChipElementProps> = ({ rowItems, columnName, def
   return (
     <>
       {row[columnName]?.map(
-        (item: any, i: number) =>
+        (item: ChipProps, i: number) =>
           i < defaultSize && (
             <Chip
               label={item?.label ?? item?.name}
@@ -63,11 +66,12 @@ const TableChipElement: FC<TableChipElementProps> = ({ rowItems, columnName, def
       )}
       <If condition={openModal}>
         <CustomDialog
+          data-testid='custom-dialog'
           title={columnName.charAt(0).toUpperCase() + columnName.slice(1)}
           handleClose={() => setOpenModal(false)}
         >
           <DialogContent>
-            {row[columnName]?.map((item: any) => (
+            {row[columnName]?.map((item: ChipProps) => (
               <CustomChip name={item.label ?? item.name} key={item?.id} />
             ))}
           </DialogContent>

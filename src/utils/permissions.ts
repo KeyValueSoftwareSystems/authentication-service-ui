@@ -1,6 +1,6 @@
-import { Group } from 'types/group';
-import { EntityPermissionsDetails, Permission } from 'types/permission';
-import { Role } from 'types/role';
+import { Group } from '@/types/group';
+import { EntityPermissionsDetails, Permission } from '@/types/permission';
+import { Role } from '@/types/role';
 
 export const getOverallPermissions = (permissions: EntityPermissionsDetails[]) => {
   const permissionsList = permissions.reduce((acc: Permission[], cur) => {
@@ -9,7 +9,7 @@ export const getOverallPermissions = (permissions: EntityPermissionsDetails[]) =
     return acc;
   }, []);
 
-  return [...Array.from(new Set(permissionsList.map((permission: any) => permission.name)))];
+  return [...Array.from(new Set(permissionsList.map((permission: Permission) => permission.name)))];
 };
 
 export const getUniquePermissionsFromRoles = (roles: Role[]) => {
@@ -19,7 +19,7 @@ export const getUniquePermissionsFromRoles = (roles: Role[]) => {
     return acc;
   }, []);
 
-  return [...Array.from(new Set(permissionsList?.map((permission: any) => permission)))];
+  return [...Array.from(new Set(permissionsList?.map((permission: Permission) => permission)))];
 };
 
 export const getUniquePermissionsFromGroups = (groups: Group[]) => {
@@ -29,5 +29,5 @@ export const getUniquePermissionsFromGroups = (groups: Group[]) => {
     return acc;
   }, []);
 
-  return [...Array.from(new Set(permissionsList?.map((permission: any) => permission)))];
+  return [...Array.from(new Set(permissionsList?.map((permission: Permission) => permission)))];
 };

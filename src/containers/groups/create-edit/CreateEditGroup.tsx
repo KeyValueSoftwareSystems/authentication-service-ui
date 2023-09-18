@@ -6,35 +6,37 @@ import { useSetRecoilState } from 'recoil';
 import { Box, Tab, Tabs, Grid, Divider } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 
-import { GET_ROLES } from 'services/queries/roleQueries';
+import { GET_ROLES } from '@/services/queries/roleQueries';
 import {
   CREATE_GROUP,
   UPDATE_GROUP,
   UPDATE_GROUP_PERMISSIONS,
   UPDATE_GROUP_ROLES
-} from 'services/mutations/groupMutations';
-import { GET_USERS } from 'services/queries/userQueries';
-import { GET_GROUP, GET_GROUP_PERMISSIONS } from 'services/queries/groupQueries';
-import { IsViewRolesVerifiedAtom, IsViewUsersVerifiedAtom } from 'states/permissionsStates';
-import { apiRequestAtom, toastMessageAtom } from 'states/apiRequestState';
-import { Role } from 'types/role';
-import { Permission, User } from 'types/user';
-import { Group } from 'types/group';
-import { GROUP_CREATE_SUCCESS_MESSAGE, GROUP_UPDATE_SUCCESS_MESSAGE } from 'constants/messages';
-import { RoutePaths } from 'constants/routes';
-import RoleCardsChecklist from 'components/role-cards-checklist';
-import AvatarChecklistComponent from 'components/avatar-checklist';
-import PermissionCards from 'components/permission-cards';
-import CustomAvatar from 'components/custom-avatar';
-import TabPanel from 'components/tab-panel';
-import { ReactComponent as CrossIcon } from 'assets/edit-group-icons/cross-icon.svg';
-import { useCustomQuery } from 'hooks/useQuery';
-import { useCustomMutation } from 'hooks/useMutation';
-import { renderAccessDenied } from 'utils/generic';
-import { useCustomLazyQuery } from 'hooks/useLazyQuery';
+} from '@/services/mutations/groupMutations';
+import { GET_USERS } from '@/services/queries/userQueries';
+import { GET_GROUP, GET_GROUP_PERMISSIONS } from '@/services/queries/groupQueries';
+import { IsViewRolesVerifiedAtom, IsViewUsersVerifiedAtom } from '@/states/permissionsStates';
+import { apiRequestAtom, toastMessageAtom } from '@/states/apiRequestState';
+import { Role } from '@/types/role';
+import { Permission, User } from '@/types/user';
+import { Group } from '@/types/group';
+import { GROUP_CREATE_SUCCESS_MESSAGE, GROUP_UPDATE_SUCCESS_MESSAGE } from '@/constants/messages';
+import { RoutePaths } from '@/constants/routes';
+import RoleCardsChecklist from '@/components/role-cards-checklist';
+import AvatarChecklistComponent from '@/components/avatar-checklist';
+import PermissionCards from '@/components/permission-cards';
+import CustomAvatar from '@/components/custom-avatar';
+import TabPanel from '@/components/tab-panel';
+import { ReactComponent as CrossIcon } from '@/assets/edit-group-icons/cross-icon.svg';
+import { useCustomQuery } from '@/hooks/useQuery';
+import { useCustomMutation } from '@/hooks/useMutation';
+import { selectAllValue } from '@/constants/filters';
+import { renderAccessDenied } from '@/utils/generic';
+import { useCustomLazyQuery } from '@/hooks/useLazyQuery';
 import './styles.css';
 import GroupForm from './GroupForm';
-import { submitAtom } from 'states/submitStates';
+import { submitAtom } from '@/states/submitStates';
+import { GetGroupPermissions, GetGroups, GetRoles, GetUsers } from './types';
 
 const CreateOrEditGroup = () => {
   const { id } = useParams();
@@ -62,23 +64,23 @@ const CreateOrEditGroup = () => {
     setValue(newValue);
   };
 
-  const onGetRolesComplete = (data: any) => {
+  const onGetRolesComplete = (data: GetRoles) => {
     setAllRoles(data?.getRoles?.results);
   };
 
-  const onGetGroupComplete = (data: any) => {
+  const onGetGroupComplete = (data: GetGroups) => {
     setGroup(data?.getGroup);
     setRoles(data?.getGroup?.roles || []);
     setUsers(data?.getGroup?.users || []);
   };
 
-  const onGetGroupPermissionsComplete = (data: any) => {
+  const onGetGroupPermissionsComplete = (data: GetGroupPermissions) => {
     const permissionList = data?.getGroupPermissions;
 
     setUserSelectedPermissions(permissionList);
   };
 
-  const onGetUsersComplete = (data: any) => {
+  const onGetUsersComplete = (data: GetUsers) => {
     setAllUsers(data?.getUsers?.results);
   };
 
@@ -142,7 +144,10 @@ const CreateOrEditGroup = () => {
   const removeItem = ({ roleId, userId }: { roleId?: string; userId?: string }) => {
     if (roleId) setRoles(roles.filter((role: Role) => role.id !== roleId));
 
-    if (userId) setUsers(users.filter((user: User) => user.id !== userId));
+    if (userId) {
+      setUsers(users.filter((user: User) => user.id !== userId));
+      setSubmitButton(true);
+    }
   };
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>, item?: Role) => {
@@ -150,7 +155,7 @@ const CreateOrEditGroup = () => {
     const value = event.target.value;
 
     if (event.target.checked) {
-      if (value === 'all') {
+      if (value === selectAllValue) {
         setRoles(allRoles);
 
         return;
@@ -159,7 +164,7 @@ const CreateOrEditGroup = () => {
         if (roles[0] === null) setRoles([item]);
         else setRoles([...roles, item]);
     } else {
-      if (value === 'all') {
+      if (value === selectAllValue) {
         setRoles([]);
 
         return;
@@ -168,20 +173,22 @@ const CreateOrEditGroup = () => {
     }
   };
 
-  const onChangeUsers = (event: React.ChangeEvent<HTMLInputElement>, item: User) => {
+  const onChangeUsers = (event: React.ChangeEvent<HTMLInputElement>, item?: User | undefined) => {
     const value = event.target.value;
 
     setSubmitButton(true);
     if (event.target.checked) {
-      if (value === 'all') {
+      if (value === selectAllValue) {
         setUsers(allUsers);
 
         return;
       }
-      if (users[0] === null) setUsers([item]);
-      else setUsers([...users, item]);
+
+      if (item)
+        if (users[0] === null) setUsers([item]);
+        else setUsers([...users, item]);
     } else {
-      if (value === 'all') {
+      if (value === selectAllValue) {
         setUsers([]);
 
         return;

@@ -6,23 +6,25 @@ import { Box, Tab, Tabs } from '@mui/material';
 import { yupResolver } from '@hookform/resolvers/yup';
 import CircularProgress from '@mui/material/CircularProgress';
 
-import { IsViewEntitiesVerifiedAtom, IsViewGroupsVerifiedAtom } from 'states/permissionsStates';
-import FormInputText from 'components/input-text';
-import ChecklistComponent from 'components/checklist';
-import TabPanel from 'components/tab-panel';
-import PermissionCards from 'components/permission-cards';
-import BottomFormController from 'components/bottom-form-controller';
-import { GET_USER, GET_USER_PERMISSIONS } from 'services/queries/userQueries';
-import { GET_GROUPS } from 'services/queries/groupQueries';
-import { Permission, User } from 'types/user';
-import { Group } from 'types/group';
-import { AddEntity, UpdateEntity } from 'types/generic';
-import { AddUserformSchema, EditUserformSchema } from 'utils/user';
-import { renderAccessDenied } from 'utils/generic';
-import { useCustomQuery } from 'hooks/useQuery';
-import { RoutePaths } from 'constants/routes';
+import { IsViewEntitiesVerifiedAtom, IsViewGroupsVerifiedAtom } from '@/states/permissionsStates';
+import FormInputText from '@/components/input-text';
+import ChecklistComponent from '@/components/checklist';
+import TabPanel from '@/components/tab-panel';
+import PermissionCards from '@/components/permission-cards';
+import BottomFormController from '@/components/bottom-form-controller';
+import { GET_USER, GET_USER_PERMISSIONS } from '@/services/queries/userQueries';
+import { GET_GROUPS } from '@/services/queries/groupQueries';
+import { GetUser, Permission, User } from '@/types/user';
+import { GetGroups, Group } from '@/types/group';
+import { AddEntity, UpdateEntity } from '@/types/generic';
+import { AddUserformSchema, EditUserformSchema } from '@/utils/user';
+import { renderAccessDenied } from '@/utils/generic';
+import { useCustomQuery } from '@/hooks/useQuery';
+import { selectAllValue } from '@/constants/filters';
+import { RoutePaths } from '@/constants/routes';
+import { submitAtom } from '@/states/submitStates';
 import './styles.css';
-import { submitAtom } from 'states/submitStates';
+import { GetUserPermissions } from '@/types/permission';
 
 interface UserProps {
   isEdit?: boolean;
@@ -45,7 +47,7 @@ const UserForm = (props: UserProps) => {
   const setSubmitButton = useSetRecoilState(submitAtom);
   const [userSelectedPermissions, setUserSelectedPermissions] = useState<Permission[]>([]);
 
-  const onGetGroupsComplete = (data: any) => {
+  const onGetGroupsComplete = (data: GetGroups) => {
     const groups = data?.getGroups?.results?.map((group: Group) => group);
 
     setAllGroups([...groups]);
@@ -58,13 +60,14 @@ const UserForm = (props: UserProps) => {
     !isViewGroupsVerified
   );
 
-  const onGetUserComplete = (data: any) => {
+  const onGetUserComplete = (data: GetUser) => {
     setUser(data?.getUser);
-    setUserGroups(data?.getUser.groups);
+    setUserGroups(data?.getUser?.groups || []);
   };
+
   const { loading } = useCustomQuery(GET_USER, onGetUserComplete, { id: id }, !id);
 
-  const onGetUserPermissionsComplete = (data: any) => {
+  const onGetUserPermissionsComplete = (data: GetUserPermissions) => {
     setUserSelectedPermissions(data?.getUserPermissions);
   };
 
@@ -89,10 +92,10 @@ const UserForm = (props: UserProps) => {
     const value = event.target.value;
 
     if (event.target.checked) {
-      if (value === 'all') setUserGroups(allGroups);
+      if (value === selectAllValue) setUserGroups(allGroups);
       else if (group) setUserGroups([...userGroups, group]);
     } else {
-      if (value === 'all') setUserGroups([]);
+      if (value === selectAllValue) setUserGroups([]);
 
       if (group) removeGroup(group);
     }

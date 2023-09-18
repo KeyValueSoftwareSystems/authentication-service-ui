@@ -4,14 +4,15 @@ import { Checkbox } from '@mui/material';
 import SquareIcon from '@mui/icons-material/Square';
 import { useSetRecoilState } from 'recoil';
 
-import { ReactComponent as UnCheckedIcon } from 'assets/checkbox-icons/uncheckedicon.svg';
-import { ReactComponent as CheckedIcon } from 'assets/checkbox-icons/checkedicon.svg';
-import { Permission } from 'types/permission';
-import { getUniquePermissionsFromGroups, getUniquePermissionsFromRoles } from 'utils/permissions';
+import { ReactComponent as UnCheckedIcon } from '@/assets/checkbox-icons/uncheckedicon.svg';
+import { ReactComponent as CheckedIcon } from '@/assets/checkbox-icons/checkedicon.svg';
+import { Permission } from '@/types/permission';
+import { selectAllValue } from '@/constants/filters';
+import { getUniquePermissionsFromGroups, getUniquePermissionsFromRoles } from '@/utils/permissions';
 import If from '../if';
-import { RemovedPermissions } from 'constants/permissions';
+import { RemovedPermissions } from '@/constants/permissions';
 import { PermissionCardProps } from './types';
-import { submitAtom } from 'states/submitStates';
+import { submitAtom } from '@/states/submitStates';
 
 const Container = styled.div<{ show: boolean }>`
   display: ${(props) => (props.show ? 'flex' : 'none')};
@@ -56,21 +57,23 @@ const PermissionsCard: FC<PermissionCardProps> = ({
   const [groupPermissions, setGroupPermissions] = useState<Permission[]>([]);
   const setSubmitButton = useSetRecoilState(submitAtom);
 
+  const isUserSelectedPermission = (permission: { id: string }) =>
+    rolePermissions.some((rolePermission) => rolePermission.id === permission.id) ||
+    groupPermissions.some((groupPermission) => groupPermission.id === permission.id);
   const onChangePermissions = (e: React.ChangeEvent<HTMLInputElement>, permission: Permission) => {
     if (e.target.checked) {
-      setUserSelectedPermissions([...userSelectedPermissions, permission]);
-    } else {
-      const isUserSelectedPermission = !(
-        rolePermissions.some((rolePermission) => rolePermission.id === permission.id) ||
-        groupPermissions.some((groupPermission) => groupPermission.id === permission.id)
-      );
+      const viewPermission = entity.permissions?.find((permission) => permission.name.indexOf('view-') > -1);
 
-      if (isUserSelectedPermission)
-        setUserSelectedPermissions(
-          userSelectedPermissions.filter((userSelectedPermission) => userSelectedPermission.id !== permission.id)
-        );
+      if (viewPermission && viewPermission?.id !== permission.id)
+        setUserSelectedPermissions([...userSelectedPermissions, permission, viewPermission]);
+      else setUserSelectedPermissions([...userSelectedPermissions, permission]);
+      setSubmitButton(true);
+    } else if (!isUserSelectedPermission(permission)) {
+      setUserSelectedPermissions(
+        userSelectedPermissions.filter((userSelectedPermission) => userSelectedPermission.id !== permission.id)
+      );
+      setSubmitButton(true);
     }
-    setSubmitButton(true);
   };
 
   useEffect(() => {
@@ -102,23 +105,26 @@ const PermissionsCard: FC<PermissionCardProps> = ({
 
   return (
     <Container show={showEntityPermissions()}>
-      <CollectionName>{entity.name}</CollectionName>
+      <CollectionName data-testid='permission-card-entity-name'>{entity.name}</CollectionName>
       {entity.permissions.map((permission) => (
         <If condition={!RemovedPermissions.includes(permission.name)} key={permission?.id}>
           <If condition={isViewPage && IsUserPermission(permission.id)}>
             <CheckboxContainer>
               <SquareIcon sx={{ width: 10, fill: '#2F6FED' }} />
-              <div>{permission.label ?? permission.name}</div>
+              <div data-testid='permission-label-test'>{permission.label ?? permission.name}</div>
             </CheckboxContainer>
           </If>
           <If condition={!isViewPage}>
             <CheckboxContainer>
               <Checkbox
-                value={'all'}
+                value={selectAllValue}
                 onChange={(e) => onChangePermissions(e, permission)}
                 checked={IsChecked(permission.id)}
                 icon={<UnCheckedIcon />}
                 checkedIcon={<CheckedIcon />}
+                sx={{
+                  cursor: (isUserSelectedPermission(permission) && 'default') || 'pointer'
+                }}
               />
               <div>{permission.label ?? permission.name}</div>
             </CheckboxContainer>

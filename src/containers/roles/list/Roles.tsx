@@ -5,17 +5,26 @@ import { useNavigate } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
 
 import './styles.css';
-import { GET_ROLES } from 'services/queries/roleQueries';
-import { DELETE_ROLE } from 'services/mutations/roleMutations';
-import { RolesListAtom } from 'states/roleStates';
-import TableList from 'components/table';
-import { IsViewRolesVerifiedAtom, UserPermissionsAtom } from 'states/permissionsStates';
-import { CREATE_ROLE_PERMISSION, DELETE_ROLE_PERMISSION, UPDATE_ROLE_PERMISSION } from 'constants/permissions';
-import DisplayMessage from 'components/display-message';
-import { AddEntity, SearchEntity } from 'types/generic';
-import { ACCESS_DENIED_DESCRIPTION, ACCESS_DENIED_MESSAGE } from 'constants/messages';
-import { columns } from 'utils/roles';
-import { useCustomLazyQuery } from 'hooks/useLazyQuery';
+import { GET_ROLES } from '@/services/queries/roleQueries';
+import { DELETE_ROLE } from '@/services/mutations/roleMutations';
+import { RolesListAtom } from '@/states/roleStates';
+import TableList from '@/components/table';
+import { IsViewRolesVerifiedAtom, UserPermissionsAtom } from '@/states/permissionsStates';
+import { CREATE_ROLE_PERMISSION, DELETE_ROLE_PERMISSION, UPDATE_ROLE_PERMISSION } from '@/constants/permissions';
+import DisplayMessage from '@/components/display-message';
+import { PAGE_SIZE } from '@/constants/table';
+import { AddEntity, SearchEntity } from '@/types/generic';
+import { ACCESS_DENIED_DESCRIPTION, ACCESS_DENIED_MESSAGE } from '@/constants/messages';
+import { columns } from '@/utils/roles';
+import { useCustomLazyQuery } from '@/hooks/useLazyQuery';
+import { Permission } from '@/types/permission';
+
+interface GetRoles {
+  getRoles: {
+    results: never[];
+    totalCount: number;
+  };
+}
 
 const Roles: React.FC = () => {
   const navigate = useNavigate();
@@ -27,7 +36,7 @@ const Roles: React.FC = () => {
 
   const [roleList, setRoleList] = useRecoilState(RolesListAtom);
 
-  const onGetRolesComplete = (data: any) => {
+  const onGetRolesComplete = (data: GetRoles) => {
     setRoleList(data?.getRoles?.results);
     setRoleCount(data?.getRoles?.totalCount);
   };
@@ -35,15 +44,16 @@ const Roles: React.FC = () => {
   const { lazyQuery: getRoles, loading } = useCustomLazyQuery(GET_ROLES, onGetRolesComplete);
 
   useEffect(() => {
-    if (isViewRolesVerified) getRoles({ variables: { pagination: { limit: 15, offset: 0 } } });
+    if (isViewRolesVerified) getRoles({ variables: { pagination: { limit: PAGE_SIZE, offset: 0 } } });
   }, [isViewRolesVerified, getRoles]);
 
   useEffect(() => {
-    userPermissions.forEach((item: any) => {
+    userPermissions.forEach((item: Permission) => {
       if (item?.name.includes(CREATE_ROLE_PERMISSION)) setAddVerified(true);
     });
   }, [userPermissions]);
-  const setItemList = (data: any) => {
+
+  const setItemList = (data: GetRoles) => {
     setRoleList(data.getRoles?.results);
     setRoleCount(data?.getRoles?.totalCount);
   };

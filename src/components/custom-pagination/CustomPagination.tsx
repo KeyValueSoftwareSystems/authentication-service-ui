@@ -4,8 +4,9 @@ import Pagination from '@mui/material/Pagination';
 import PaginationItem from '@mui/material/PaginationItem';
 import { TextField, Button } from '@mui/material';
 
-import { paginationAtom } from 'states/searchSortFilterStates';
-import { ApiParams } from 'utils/table';
+import { paginationAtom } from '@/states/searchSortFilterStates';
+import { PAGE_SIZE } from '@/constants/table';
+import { ApiParams } from '@/utils/table';
 import './styles.css';
 
 interface CustomPaginationProps {
@@ -15,11 +16,13 @@ interface CustomPaginationProps {
 
 const CustomPagination: FC<CustomPaginationProps> = ({ fetchEntities, count }) => {
   const [currentPage, setCurrentPage] = useRecoilState(paginationAtom);
-
   const [pageValue, setPageValue] = useState(currentPage);
-  const [pageCount] = useState(count % 15 > 0 ? Math.floor(count / 15) + 1 : Math.floor(count / 15));
+  const [pageCount] = useState(
+    count % PAGE_SIZE > 0 ? Math.floor(count / PAGE_SIZE) + 1 : Math.floor(count / PAGE_SIZE)
+  );
+
   const onClickGo = () => {
-    if (!isNaN(pageValue)) {
+    if (!isNaN(pageValue) && pageCount > 0) {
       if (pageValue > pageCount) setCurrentPage(pageCount);
       else if (pageValue < 1) setCurrentPage(1);
       else setCurrentPage(Number(pageValue));
@@ -31,31 +34,31 @@ const CustomPagination: FC<CustomPaginationProps> = ({ fetchEntities, count }) =
 
   return (
     <>
-      <div className='pagination-count'>
+      <div className='pagination-count' data-testid='custom-pagination-count-test'>
         Total {`${count}`} item{count > 1 && `s`}
       </div>
       <Pagination
         color='primary'
         variant='outlined'
         shape='rounded'
+        data-testid='custom-pagination-test'
         page={currentPage}
         count={pageCount}
-        // @ts-expect-error ---
-        renderItem={(props2) => <PaginationItem {...props2} disableRipple />}
+        renderItem={(item) => <PaginationItem {...item} />}
         onChange={(event, value) => {
           setPageValue(value);
           setCurrentPage(value);
           fetchEntities({ page: value - 1 });
         }}
       />
-      <div className='go-to-page'>
+      <div className={`go-to-page ${pageCount === 0 && 'go-to-page-disabled'}`}>
         <div id='pagination-text'>Go to Page</div>
         <div>
           <TextField
             type='number'
             defaultValue={currentPage}
-            onChange={(e: any) => {
-              setPageValue(e.target.value);
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              setPageValue(+e.target.value);
             }}
             inputProps={{
               min: 0,

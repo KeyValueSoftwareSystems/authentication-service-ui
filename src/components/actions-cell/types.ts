@@ -1,6 +1,10 @@
 import { GridRowId, GridRowParams } from '@mui/x-data-grid';
 import { DocumentNode } from 'graphql';
 
+interface fetchEntityParam {
+  page: number;
+}
+
 export interface ActionsCellProps {
   isEditVerified: boolean;
   isDeleteVerified: boolean;
@@ -8,6 +12,6 @@ export interface ActionsCellProps {
   entity: string;
   deleteMutation: DocumentNode;
   refetchQuery: DocumentNode;
-  params: GridRowParams<any>;
-  fetchEntities: any;
+  params: GridRowParams;
+  fetchEntities: (data: fetchEntityParam) => void;
 }

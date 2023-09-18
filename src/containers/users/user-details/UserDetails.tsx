@@ -6,26 +6,27 @@ import { useRecoilState } from 'recoil';
 import { useParams } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
 
-import GroupCard from 'components/group-card';
-import CustomAvatar from 'components/custom-avatar';
-import TabPanel from 'components/tab-panel';
-import PermissionCards from 'components/permission-cards';
-import DisplayMessage from 'components/display-message';
-import If from 'components/if';
-import { IsViewEntitiesVerifiedAtom, IsViewGroupsVerifiedAtom, UserPermissionsAtom } from 'states/permissionsStates';
-import { GET_USER } from 'services/queries/userQueries';
-import { User } from 'types/user';
-import { UPDATE_USER_PERMISSION } from 'constants/permissions';
-import { useCustomQuery } from 'hooks/useQuery';
+import GroupCard from '@/components/group-card';
+import CustomAvatar from '@/components/custom-avatar';
+import TabPanel from '@/components/tab-panel';
+import PermissionCards from '@/components/permission-cards';
+import DisplayMessage from '@/components/display-message';
+import If from '@/components/if';
+import { IsViewEntitiesVerifiedAtom, IsViewGroupsVerifiedAtom, UserPermissionsAtom } from '@/states/permissionsStates';
+import { GET_USER } from '@/services/queries/userQueries';
+import { GetUser, Permission, User } from '@/types/user';
+import { UPDATE_USER_PERMISSION } from '@/constants/permissions';
+import { useCustomQuery } from '@/hooks/useQuery';
 import {
   NO_GROUPS_DESCRIPTION,
   NO_GROUPS_MESSAGE,
   NO_PERMISSIONS_DESCRIPTION,
   NO_PERMISSIONS_MESSAGE
-} from 'constants/messages';
-import { RoutePaths } from 'constants/routes';
-import { renderAccessDenied } from 'utils/generic';
+} from '@/constants/messages';
+import { RoutePaths } from '@/constants/routes';
+import { renderAccessDenied } from '@/utils/generic';
 import './styles.css';
+import { Group } from '@/types/group';
 
 const UserDetails = () => {
   const navigate = useNavigate();
@@ -49,12 +50,12 @@ const UserDetails = () => {
 
   useEffect(() => {
     if (userPermissions)
-      userPermissions.forEach((item: any) => {
+      userPermissions.forEach((item: Permission) => {
         if (item?.name.includes(UPDATE_USER_PERMISSION)) setEditVerified(true);
       });
   }, [userPermissions]);
 
-  const onCompleted = (data: any) => {
+  const onCompleted = (data: GetUser) => {
     setUser(data?.getUser);
   };
 
@@ -73,28 +74,30 @@ const UserDetails = () => {
   return (
     <div className='userdetails-cntr'>
       <div className='personal-details'>
-        <div className='personal-details-inner'>
-          <div className='details'>
-            <div style={{ display: 'flex' }}>
-              {!loading && (
-                <CustomAvatar
-                  firstName={user?.firstName || ''}
-                  lastName={user?.lastName || ''}
-                  email={user?.email || ''}
+        {user && (
+          <div className='personal-details-inner'>
+            <div className='details'>
+              <div style={{ display: 'flex' }}>
+                {!loading && user && (
+                  <CustomAvatar
+                    firstName={user.firstName || ''}
+                    lastName={user.lastName || ''}
+                    email={user.email || ''}
+                  />
+                )}
+                <Chip
+                  label={user?.status?.charAt(0) + user?.status?.toLowerCase().slice(1)}
+                  className={getClassName()}
                 />
-              )}
-              <Chip
-                label={user?.status && user?.status.charAt(0) + user?.status.toLowerCase().slice(1)}
-                className={getClassName()}
-              />
+              </div>
+            </div>
+            <Divider flexItem orientation='vertical' />
+            <div className='contact'>
+              <div className='contact-number'>Contact Number</div>
+              <div>{user?.phone || '-'}</div>
             </div>
           </div>
-          <Divider flexItem orientation='vertical' />
-          <div className='contact'>
-            <div className='contact-number'>Contact Number</div>
-            <div>{user?.phone || '-'}</div>
-          </div>
-        </div>
+        )}
         <div style={{ display: 'flex', marginLeft: 'auto' }}>
           <Button
             variant='outlined'
@@ -144,7 +147,7 @@ const UserDetails = () => {
                 user?.groups && user?.groups?.length > 0 ? (
                   <div className='groups-permissions'>
                     <div className='user-groups'>
-                      {user?.groups?.map((item: any) => {
+                      {user?.groups?.map((item: Group) => {
                         return (
                           <div style={{ marginTop: 15 }} key={item?.id}>
                             <GroupCard group={item} showCheckBox={false} isViewPage />

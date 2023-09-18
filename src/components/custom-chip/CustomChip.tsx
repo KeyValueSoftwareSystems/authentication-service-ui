@@ -20,7 +20,11 @@ const Container = styled.div<{ fontSize: string }>`
 `;
 
 const CustomChip: FC<ChipProps> = ({ name, fontSize = '14px' }) => {
-  return <Container fontSize={fontSize}>{name}</Container>;
+  return (
+    <Container fontSize={fontSize} data-testid='custom-chip'>
+      {name}
+    </Container>
+  );
 };
 
 export default CustomChip;

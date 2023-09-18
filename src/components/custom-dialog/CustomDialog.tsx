@@ -1,6 +1,6 @@
 import React from 'react';
 import { Dialog, DialogTitle, styled } from '@mui/material';
-import { ReactComponent as CloseIcon } from 'assets/dialog-box-icons/closeIcon.svg';
+import { ReactComponent as CloseIcon } from '@/assets/dialog-box-icons/closeIcon.svg';
 
 const StyledDialog = styled(Dialog)`
   .MuiBackdrop-root {
@@ -11,7 +11,7 @@ const StyledDialog = styled(Dialog)`
 type DialogProps = {
   title: string;
   handleClose: () => void;
-  children?: any;
+  children?: React.ReactNode;
 };
 
 const DialogBox: React.FC<DialogProps> = ({ title, children, handleClose }) => {
@@ -28,7 +28,7 @@ const DialogBox: React.FC<DialogProps> = ({ title, children, handleClose }) => {
     >
       <DialogTitle>
         <>{title}</>
-        <CloseIcon style={{ float: 'right', cursor: 'pointer' }} onClick={handleClose} />
+        <CloseIcon data-testid='close-button' style={{ float: 'right', cursor: 'pointer' }} onClick={handleClose} />
       </DialogTitle>
 
       {children}

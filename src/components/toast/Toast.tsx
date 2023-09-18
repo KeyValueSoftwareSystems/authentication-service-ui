@@ -2,7 +2,7 @@ import React from 'react';
 import { Alert, Snackbar } from '@mui/material';
 import { useRecoilState } from 'recoil';
 
-import { apiRequestAtom } from 'states/apiRequestState';
+import { apiRequestAtom } from '@/states/apiRequestState';
 
 type ToastProps = {
   isOpen: boolean;
@@ -30,6 +30,7 @@ const Toast: React.FC<ToastProps> = ({ isOpen, message, handleClose }) => {
       >
         <Alert
           onClose={handleClose}
+          data-testid='alert'
           severity={apiSuccess === true ? 'success' : 'error'}
           sx={apiSuccess === true ? { backgroundColor: '#D5F2C7' } : { backgroundColor: '#ff000069' }}
         >

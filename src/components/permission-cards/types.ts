@@ -1,6 +1,6 @@
-import { Group } from 'types/group';
-import { Permission } from 'types/permission';
-import { Role } from 'types/role';
+import { Group } from '@/types/group';
+import { Permission } from '@/types/permission';
+import { Role } from '@/types/role';
 
 export interface PermissionCardsProps {
   userSelectedPermissions?: Permission[];

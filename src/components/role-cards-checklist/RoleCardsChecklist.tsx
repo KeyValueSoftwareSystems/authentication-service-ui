@@ -2,15 +2,16 @@ import { Checkbox } from '@mui/material';
 import { FC, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 
-import { Role } from 'types/role';
+import { Role } from '@/types/role';
 import RoleCard from '../role-card';
-import { ReactComponent as UnCheckedIcon } from 'assets/checkbox-icons/uncheckedicon.svg';
-import { ReactComponent as CheckedIcon } from 'assets/checkbox-icons/checkedicon.svg';
+import { selectAllValue } from '@/constants/filters';
+import { ReactComponent as UnCheckedIcon } from '@/assets/checkbox-icons/uncheckedicon.svg';
+import { ReactComponent as CheckedIcon } from '@/assets/checkbox-icons/checkedicon.svg';
 
 interface Props {
   roleList: Role[];
   currentCheckedItems: Role[];
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>, item?: any) => void;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>, item?: Role) => void;
 }
 
 const Container = styled.div`
@@ -56,11 +57,12 @@ const RoleCardsChecklist: FC<Props> = ({ roleList, currentCheckedItems, onChange
     <Container>
       <SelectAll>
         <Checkbox
-          value={'all'}
+          data-testid='select-all'
+          value={selectAllValue}
           onChange={handleSelectAll}
           checked={selectAll}
-          icon={<UnCheckedIcon />}
-          checkedIcon={<CheckedIcon />}
+          icon={<UnCheckedIcon data-testid='unchecked' />}
+          checkedIcon={<CheckedIcon data-testid='checked' />}
         />
         <span style={{ marginLeft: '5px', fontSize: '14px', lineHeight: '24px' }}>Select all</span>
       </SelectAll>

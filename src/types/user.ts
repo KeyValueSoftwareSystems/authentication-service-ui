@@ -9,7 +9,11 @@ export interface User {
   lastName: string;
   status: string;
   groups?: Group[];
-  permissions?: Permission[];
+  permissions: Permission[];
+}
+
+export interface GetCurrentUser {
+  getCurrentUser: User;
 }
 
 export interface Permission {
@@ -20,4 +24,8 @@ export interface Permission {
 export interface userPermission {
   name: string;
   __typename: string;
+}
+
+export interface GetUser {
+  getUser: User;
 }

@@ -3,12 +3,12 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate, useParams } from 'react-router-dom';
 import { FieldValues, FormProvider, useForm } from 'react-hook-form';
 
-import BottomFormController from 'components/bottom-form-controller';
-import { RoleFormSchema } from 'utils/roles';
-import FormInputText from 'components/input-text';
-import { RoutePaths } from 'constants/routes';
-import { Role } from 'types/role';
-import { AddEntity, UpdateEntity } from 'types/generic';
+import BottomFormController from '@/components/bottom-form-controller';
+import { RoleFormSchema } from '@/utils/roles';
+import FormInputText from '@/components/input-text';
+import { RoutePaths } from '@/constants/routes';
+import { Role } from '@/types/role';
+import { AddEntity, UpdateEntity } from '@/types/generic';
 import './styles.css';
 
 interface RoleFormProps {

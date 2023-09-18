@@ -2,12 +2,12 @@ import { FC } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FieldValues, FormProvider, useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
-import BottomFormController from 'components/bottom-form-controller';
+import BottomFormController from '@/components/bottom-form-controller';
 
-import { GroupFormSchema } from 'utils/groups';
-import FormInputText from 'components/input-text';
-import { RoutePaths } from 'constants/routes';
-import { AddEntity, UpdateEntity } from 'types/generic';
+import { GroupFormSchema } from '@/utils/groups';
+import FormInputText from '@/components/input-text';
+import { RoutePaths } from '@/constants/routes';
+import { AddEntity, UpdateEntity } from '@/types/generic';
 import './styles.css';
 
 interface GroupFormProps {

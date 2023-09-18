@@ -6,9 +6,9 @@ import { SetterOrUpdater } from 'recoil';
 import { Avatar } from '@mui/material';
 import { useMediaQuery } from 'react-responsive';
 
-import Filter from 'components/filter/Filter';
-import { ReactComponent as LeftArrowIcon } from 'assets/toolbar-icons/arrow-left.svg';
-import { useFetchEntities } from 'hooks/useFetchEntities';
+import Filter from '@/components/filter/Filter';
+import { ReactComponent as LeftArrowIcon } from '@/assets/toolbar-icons/arrow-left.svg';
+import { useFetchEntities } from '@/hooks/useFetchEntities';
 import './styles.css';
 import { FilterDropdownProps } from './types';
 
@@ -20,8 +20,8 @@ const FilterDropdown: FC<FilterDropdownProps> = ({
   anchorEl,
   onApply,
   filterName,
-  currentFilters,
-  filters,
+  appliedFilters,
+  allFilters,
   checkedFilters,
   setCheckedFilters,
   viewFiltersVerified
@@ -31,7 +31,7 @@ const FilterDropdown: FC<FilterDropdownProps> = ({
   const [viewFilter, setViewFilter] = useState<number>(0);
 
   const handleClose = () => {
-    onApply(currentFilters.reduce((sum, filter) => sum + filter.length, 0));
+    onApply(appliedFilters.reduce((sum, allFilters) => sum + allFilters.length, 0));
     setViewFilter(0);
   };
 
@@ -47,12 +47,17 @@ const FilterDropdown: FC<FilterDropdownProps> = ({
     else setCheckedItems(checkedItems.filter((x) => x !== name));
   };
 
+  const { fetch } = useFetchEntities({
+    userParams: { setList: setItemList, query: filterQuery, field: field }
+  });
+
   const handleCheckedItems = (item: string, checkedItems: string[]) => {
     if (checkedItems.includes(item)) return true;
     else return false;
   };
 
   const handleClearAll = () => {
+    if (noFiltersApplied) return;
     if (setCheckedFilters)
       setCheckedFilters.forEach((setFilter: SetterOrUpdater<string[]>) => {
         setFilter([]);
@@ -62,7 +67,7 @@ const FilterDropdown: FC<FilterDropdownProps> = ({
   const handleCancel = () => {
     if (setCheckedFilters)
       setCheckedFilters.forEach((setFilter: SetterOrUpdater<string[]>, index: number) => {
-        setFilter(currentFilters[index]);
+        setFilter(appliedFilters[index]);
       });
 
     handleClose();
@@ -74,13 +79,11 @@ const FilterDropdown: FC<FilterDropdownProps> = ({
 
   const handleSave = () => {
     onApply(getFilterCount());
-    fetchEntities({});
+    fetch({});
     setViewFilter(0);
   };
 
-  const fetchEntities = useFetchEntities({
-    userParams: { setList: setItemList, query: filterQuery, field: field }
-  });
+  const noFiltersApplied = getFilterCount() === 0;
 
   return (
     <Menu
@@ -94,7 +97,8 @@ const FilterDropdown: FC<FilterDropdownProps> = ({
         sx: {
           '&:before': {
             visibility: isPortrait ? 'hidden' : 'visible'
-          }
+          },
+          marginTop: '10px'
         }
       }}
       transformOrigin={{ horizontal: 'right', vertical: 'top' }}
@@ -114,7 +118,13 @@ const FilterDropdown: FC<FilterDropdownProps> = ({
               >
                 {getFilterCount()}
               </Avatar>
-              <div id='clear-all' role='button' tabIndex={0} onClick={handleClearAll}>
+              <div
+                id='clear-all'
+                role='button'
+                tabIndex={0}
+                onClick={handleClearAll}
+                className={noFiltersApplied ? 'disabled' : ''}
+              >
                 Clear All
               </div>
             </MenuItem>
@@ -149,7 +159,7 @@ const FilterDropdown: FC<FilterDropdownProps> = ({
               <Button id='filter-button-cancel' onClick={handleCancel}>
                 Cancel
               </Button>
-              <Button id='filter-button-apply' onClick={handleSave}>
+              <Button disabled={getFilterCount() === 0} id='filter-button-apply' onClick={handleSave}>
                 Apply
               </Button>
             </MenuItem>
@@ -157,7 +167,7 @@ const FilterDropdown: FC<FilterDropdownProps> = ({
         </div>
         <div id='filter-items'>
           <Filter
-            itemList={filters[viewFilter]}
+            itemList={allFilters[viewFilter]}
             checkedItems={checkedFilters[viewFilter]}
             handleCheckedItems={handleCheckedItems}
             setCheckedItems={setCheckedFilters[viewFilter]}

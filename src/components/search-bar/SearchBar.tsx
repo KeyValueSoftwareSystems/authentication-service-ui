@@ -1,11 +1,12 @@
 import { InputBase } from '@mui/material';
-import { FC, useEffect, useState } from 'react';
-import { ReactComponent as SearchIcon } from 'assets/toolbar-icons/search.svg';
+import { FC, useContext, useEffect, useState } from 'react';
+import { ReactComponent as SearchIcon } from '@/assets/toolbar-icons/search.svg';
 
 import { useSetRecoilState } from 'recoil';
-import { searchAtom } from 'states/searchSortFilterStates';
-import { useFetchEntities } from 'hooks/useFetchEntities';
+import { searchAtom } from '@/states/searchSortFilterStates';
+import { useFetchEntities } from '@/hooks/useFetchEntities';
 import { SearchBarProps } from './types';
+import DataContext from '../table/DataContext';
 import './styles.css';
 
 const SearchBar: FC<SearchBarProps> = ({
@@ -24,13 +25,19 @@ const SearchBar: FC<SearchBarProps> = ({
     else setField('name');
   }, []);
 
-  const fetchEntities = useFetchEntities({
+  const { setLoading } = useContext(DataContext);
+
+  const { fetch, loading } = useFetchEntities({
     userParams: { setList: setItemList, query: searchQuery, field: field }
   });
 
+  useEffect(() => {
+    setLoading(loading);
+  }, [loading]);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const delayedSearch = (text?: string) => {
-      fetchEntities({ searchText: text });
+      fetch({ searchText: text });
     };
     const delayDebounce = setTimeout(() => {
       setSearchValue(e.target.value);
@@ -51,7 +58,7 @@ const SearchBar: FC<SearchBarProps> = ({
           sx={{ width: '87%', ml: '30px', fontFamily: 'Manrope' }}
         />
       </div>
-      <div className='search-icon' style={customIconStyle}>
+      <div className='search-icon' data-testid='search-icon' style={customIconStyle}>
         <SearchIcon id='search-icon' />
       </div>
     </div>

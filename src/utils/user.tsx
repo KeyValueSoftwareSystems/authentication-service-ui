@@ -4,9 +4,9 @@ import { Avatar } from '@mui/material';
 import { useMediaQuery } from 'react-responsive';
 import styled from '@emotion/styled';
 
-import TableChipElement from 'components/table-chip-element';
-import StatusChip from 'components/status-chip';
-import { stringAvatar } from 'utils/table';
+import TableChipElement from '@/components/table-chip-element';
+import StatusChip from '@/components/status-chip';
+import { stringAvatar } from '@/utils/table';
 
 export const UserDetails = styled.div<{ desktopScreen: boolean }>`
   margin-left: ${(props) => !props.desktopScreen && '-5px'};
@@ -15,7 +15,11 @@ export const UserDetails = styled.div<{ desktopScreen: boolean }>`
 const phoneRegExp = /^\d{10}$/;
 
 export const AddUserformSchema = yup.object({
-  firstName: yup.string().required('First name cannot be empty').max(40, 'First name must not exceed 40 characters'),
+  firstName: yup
+    .string()
+    .required('First name cannot be empty')
+    .matches(/^[A-Za-z]+$/, 'Must be a name')
+    .max(40, 'First name must not exceed 40 characters'),
   lastName: yup
     .string()
     .required('Last name cannot be empty')
@@ -30,8 +34,16 @@ export const AddUserformSchema = yup.object({
 });
 
 export const EditUserformSchema = yup.object({
-  firstName: yup.string().min(1, 'First name cannot be empty').max(40, 'First name must not exceed 40 characters'),
-  lastName: yup.string().min(1, 'Last name cannot be empty').max(40, 'Last name must not exceed 40 characters')
+  firstName: yup
+    .string()
+    .min(1, 'First name cannot be empty')
+    .matches(/^[A-Za-z]+$/, 'Must be a name')
+    .max(40, 'First name must not exceed 40 characters'),
+  lastName: yup
+    .string()
+    .min(1, 'Last name cannot be empty')
+    .matches(/^[A-Za-z]+$/, 'Must be a name')
+    .max(40, 'Last name must not exceed 40 characters')
 });
 
 export const getFullName = (firstName: string, lastName: string, middleName?: string) => {
@@ -40,7 +52,9 @@ export const getFullName = (firstName: string, lastName: string, middleName?: st
     : `${firstName || ''} ${lastName || ''} `;
 };
 
-const GetFullName = (props: any) => {
+const GetFullName: React.FC<{ row: { firstName: string; lastName: string; email: string; status: string } }> = (
+  props
+) => {
   const { row } = props;
   const isDesktopScreen = useMediaQuery({ query: '(min-height: 980px)' });
 

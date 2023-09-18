@@ -21,3 +21,7 @@ export interface EntityPermissionsDetails {
   name: string;
   permissions: Permission[];
 }
+
+export interface GetUserPermissions {
+  getUserPermissions: Permission[];
+}

@@ -1,8 +1,8 @@
 import * as yup from 'yup';
 import { GridColumns } from '@mui/x-data-grid';
 
-import AvatarList from 'components/avatar-list/AvatarList';
-import TableChipElement from 'components/table-chip-element';
+import AvatarList from '@/components/avatar-list/AvatarList';
+import TableChipElement from '@/components/table-chip-element';
 
 export const columns: GridColumns = [
   {

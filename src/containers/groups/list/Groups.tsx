@@ -6,17 +6,20 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { useMediaQuery } from 'react-responsive';
 
 import './styles.css';
-import { DELETE_GROUP } from 'services/mutations/groupMutations';
-import { GET_GROUPS } from 'services/queries/groupQueries';
-import TableList from 'components/table';
-import { groupListAtom } from 'states/groupStates';
-import { IsViewGroupsVerifiedAtom, UserPermissionsAtom } from 'states/permissionsStates';
-import { CREATE_GROUP_PERMISSION, DELETE_GROUP_PERMISSION, UPDATE_GROUP_PERMISSION } from 'constants/permissions';
-import DisplayMessage from 'components/display-message';
-import { AddEntity, SearchEntity } from 'types/generic';
-import { ACCESS_DENIED_DESCRIPTION, ACCESS_DENIED_MESSAGE } from 'constants/messages';
-import { columns } from 'utils/groups';
-import { useCustomLazyQuery } from 'hooks/useLazyQuery';
+import { DELETE_GROUP } from '@/services/mutations/groupMutations';
+import { GET_GROUPS } from '@/services/queries/groupQueries';
+import TableList from '@/components/table';
+import { groupListAtom } from '@/states/groupStates';
+import { IsViewGroupsVerifiedAtom, UserPermissionsAtom } from '@/states/permissionsStates';
+import { CREATE_GROUP_PERMISSION, DELETE_GROUP_PERMISSION, UPDATE_GROUP_PERMISSION } from '@/constants/permissions';
+import DisplayMessage from '@/components/display-message';
+import { AddEntity, SearchEntity } from '@/types/generic';
+import { ACCESS_DENIED_DESCRIPTION, ACCESS_DENIED_MESSAGE } from '@/constants/messages';
+import { columns } from '@/utils/groups';
+import { PAGE_SIZE } from '@/constants/table';
+import { useCustomLazyQuery } from '@/hooks/useLazyQuery';
+import { Permission } from '@/types/permission';
+import { GetGroups } from '@/types/group';
 
 const GroupList: React.FC = () => {
   const navigate = useNavigate();
@@ -29,7 +32,7 @@ const GroupList: React.FC = () => {
 
   const isPortrait = useMediaQuery({ orientation: 'portrait' });
 
-  const onGetGroupsComplete = (data: any) => {
+  const onGetGroupsComplete = (data: GetGroups) => {
     setGroupList(data?.getGroups?.results);
     setGroupCount(data?.getGroups?.totalCount);
   };
@@ -37,7 +40,7 @@ const GroupList: React.FC = () => {
   const { lazyQuery: getGroups, loading } = useCustomLazyQuery(GET_GROUPS, onGetGroupsComplete);
 
   useEffect(() => {
-    if (isViewGroupsVerified) getGroups({ variables: { pagination: { limit: 15, offset: 0 } } });
+    if (isViewGroupsVerified) getGroups({ variables: { pagination: { limit: PAGE_SIZE, offset: 0 } } });
   }, [isViewGroupsVerified, getGroups]);
 
   const onAddGroup = () => {
@@ -49,7 +52,7 @@ const GroupList: React.FC = () => {
   };
 
   useEffect(() => {
-    userPermissions.forEach((item: any) => {
+    userPermissions.forEach((item: Permission) => {
       if (item?.name.includes(CREATE_GROUP_PERMISSION)) setAddVerified(true);
     });
   }, [userPermissions]);
@@ -59,7 +62,7 @@ const GroupList: React.FC = () => {
     columns[2].flex = isPortrait ? 0.35 : 0.5;
   }, [isPortrait]);
 
-  const setItemList = (data: any) => {
+  const setItemList = (data: GetGroups) => {
     setGroupList(data?.getGroups?.results);
     setGroupCount(data?.getGroups?.totalCount);
   };

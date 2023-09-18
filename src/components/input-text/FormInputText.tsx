@@ -5,7 +5,7 @@ import { useSetRecoilState } from 'recoil';
 import { useEffect } from 'react';
 
 import { FormInputProps } from './types';
-import { submitAtom } from 'states/submitStates';
+import { submitAtom } from '@/states/submitStates';
 
 const StyledTextField = styled(TextField)({
   '& label.Mui-focused': {
@@ -22,13 +22,26 @@ const StyledTextField = styled(TextField)({
   }
 });
 
-const FormInputText = ({ name, label, type, className, defaultText, autoComplete }: FormInputProps) => {
+const FormInputText = ({
+  name,
+  label,
+  type,
+  className,
+  defaultText,
+  autoComplete,
+  endAdornment,
+  showEndAdornment
+}: FormInputProps) => {
   const { control } = useFormContext();
   const setSubmitButton = useSetRecoilState(submitAtom);
 
   useEffect(() => {
     return () => setSubmitButton(false);
   }, []);
+
+  const handleChange = () => {
+    setSubmitButton(true);
+  };
 
   return (
     <Controller
@@ -39,9 +52,9 @@ const FormInputText = ({ name, label, type, className, defaultText, autoComplete
           name={name}
           helperText={error ? error.message : null}
           error={!!error}
-          onChange={(e: any) => {
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             onChange(e);
-            setSubmitButton(true);
+            handleChange();
           }}
           fullWidth
           type={type}
@@ -50,6 +63,11 @@ const FormInputText = ({ name, label, type, className, defaultText, autoComplete
           className={className}
           defaultValue={value ? value : defaultText}
           autoComplete={autoComplete}
+          InputProps={{
+            ...(showEndAdornment && {
+              endAdornment: endAdornment
+            })
+          }}
         />
       )}
     />

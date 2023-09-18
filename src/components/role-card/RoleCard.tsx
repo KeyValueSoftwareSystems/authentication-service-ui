@@ -3,17 +3,17 @@ import { Checkbox, Button } from '@mui/material';
 import { FC, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 
-import { Role } from 'types/role';
-import CustomChip from 'components/custom-chip';
-import { ReactComponent as UnCheckedIcon } from 'assets/checkbox-icons/uncheckedicon.svg';
-import { ReactComponent as CheckedIcon } from 'assets/checkbox-icons/checkedicon.svg';
+import { Role } from '@/types/role';
+import CustomChip from '@/components/custom-chip';
+import { ReactComponent as UnCheckedIcon } from '@/assets/checkbox-icons/uncheckedicon.svg';
+import { ReactComponent as CheckedIcon } from '@/assets/checkbox-icons/checkedicon.svg';
 import If from '../if';
-import CustomDialog from 'components/custom-dialog';
+import CustomDialog from '@/components/custom-dialog';
 
 interface RoleCardProps {
   role: Role;
   checked?: boolean | null;
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>, item?: any) => void;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>, item?: Role) => void;
 }
 
 const Container = styled.div<{ isPortrait: boolean }>`

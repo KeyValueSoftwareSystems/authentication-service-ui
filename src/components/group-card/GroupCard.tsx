@@ -2,24 +2,28 @@ import styled from '@emotion/styled';
 import { Checkbox } from '@mui/material';
 import { FC, useState } from 'react';
 
-import { Role } from 'types/role';
-import { ReactComponent as DownArrowIcon } from 'assets/checkbox-icons/Stroke 1.svg';
-import { getUniquePermissionsFromRoles } from 'utils/permissions';
-import { ReactComponent as UnCheckedIcon } from 'assets/checkbox-icons/uncheckedicon.svg';
-import { ReactComponent as CheckedIcon } from 'assets/checkbox-icons/checkedicon.svg';
-import CustomDialog from 'components/custom-dialog';
-import { Group } from 'types/group';
-import CustomChip from 'components/custom-chip';
-import If from '../if';
+import CustomChip from '@/components/custom-chip';
+import CustomDialog from '@/components/custom-dialog';
+import If from '@/components/if';
+import RoleCard from '@/components/role-card';
+import { Role } from '@/types/role';
+import { ReactComponent as DownArrowIcon } from '@/assets/checkbox-icons/Stroke 1.svg';
+import { getUniquePermissionsFromRoles } from '@/utils/permissions';
+import { ReactComponent as UnCheckedIcon } from '@/assets/checkbox-icons/uncheckedicon.svg';
+import { ReactComponent as CheckedIcon } from '@/assets/checkbox-icons/checkedicon.svg';
+import { Group } from '@/types/group';
+
 import '../checklist/styles.css';
-import RoleCard from '../role-card';
 import './styles.css';
+import { Permission } from '@/types/permission';
+
 interface GroupCardProps {
-  group: any;
+  group: Group;
   currentCheckedItems?: Group[];
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>, item?: any) => void;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>, item?: Group) => void;
   showCheckBox?: Boolean;
   isViewPage?: Boolean;
+  dataTestId?: string;
 }
 
 interface TabProps {
@@ -107,6 +111,7 @@ const GroupCard: FC<GroupCardProps> = ({
               <Checkbox
                 key={group.id}
                 checked={isChecked(group.id)}
+                data-testid='group-card-checkbox-test-id'
                 onChange={(e) => onChange && onChange(e, group)}
                 icon={<UnCheckedIcon />}
                 checkedIcon={<CheckedIcon />}
@@ -117,14 +122,14 @@ const GroupCard: FC<GroupCardProps> = ({
           <div className='roles-permissions-dropdown'>
             <RolesPermissionsTab checked={isChecked(group.id)}>
               {`${group?.roles?.length} Role`}
-              {isManyRoles()} {`& ${getUniquePermissionsFromRoles(group?.roles).length} Permission`}
-              {getUniquePermissionsFromRoles(group?.roles).length !== 1 && 's'}
+              {isManyRoles()} {`& ${getUniquePermissionsFromRoles(group?.roles || []).length} Permission`}
+              {getUniquePermissionsFromRoles(group?.roles || []).length !== 1 && 's'}
             </RolesPermissionsTab>
             <StyledDownArrowIcon
               onClick={() => setShowRoles(!showRoles)}
               roles={showRoles.toString()}
               style={{
-                visibility: group?.permissions.length === 0 && group?.roles.length === 0 ? 'hidden' : 'visible'
+                visibility: group?.permissions.length === 0 && group?.roles?.length === 0 ? 'hidden' : 'visible'
               }}
             />
           </div>
@@ -154,7 +159,7 @@ const GroupCard: FC<GroupCardProps> = ({
       <If condition={openModal}>
         <CustomDialog title='Permissions' handleClose={() => setOpenModal(false)}>
           <DialogContent>
-            {group?.permissions.map((permission: any) => (
+            {group?.permissions.map((permission: Permission) => (
               <CustomChip name={permission.label ?? permission.name} key={permission?.id} />
             ))}
           </DialogContent>

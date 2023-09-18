@@ -1,15 +1,18 @@
-import { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import Checkbox from '@mui/material/Checkbox';
 import { useMediaQuery } from 'react-responsive';
 import { useRecoilValue } from 'recoil';
 
-import { ReactComponent as UnCheckedIcon } from 'assets/checkbox-icons/uncheckedicon.svg';
-import { ReactComponent as CheckedIcon } from 'assets/checkbox-icons/checkedicon.svg';
-import CustomAvatar from 'components/custom-avatar';
+import CustomAvatar from '@/components/custom-avatar';
 import SearchBar from '../search-bar/SearchBar';
+import { ReactComponent as UnCheckedIcon } from '@/assets/checkbox-icons/uncheckedicon.svg';
+import { selectAllValue } from '@/constants/filters';
+import { ReactComponent as CheckedIcon } from '@/assets/checkbox-icons/checkedicon.svg';
 import { ChecklistProps } from './types';
+import { searchAtom } from '@/states/searchSortFilterStates';
+import { User } from '@/types/user';
+
 import './styles.css';
-import { searchAtom } from 'states/searchSortFilterStates';
 
 export const AvatarChecklistComponent: FC<ChecklistProps> = ({
   mapList,
@@ -19,8 +22,8 @@ export const AvatarChecklistComponent: FC<ChecklistProps> = ({
   searchQuery
 }) => {
   const [selectAll, setSelectAll] = useState<boolean>(false);
-  const searchValue = useRecoilValue(searchAtom);
 
+  const searchValue = useRecoilValue(searchAtom);
   const isTabletScreen = useMediaQuery({ query: '(max-width: 940px)' });
 
   const handleSelectAll = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,15 +36,14 @@ export const AvatarChecklistComponent: FC<ChecklistProps> = ({
     if (mapList?.length === currentCheckedItems?.length && mapList.length !== 0) setSelectAll(true);
     else setSelectAll(false);
   }, [mapList, currentCheckedItems]);
-  const getIsChecked = (item: any) => {
-    //@ts-ignore ---
-    return currentCheckedItems?.findIndex((val: any) => val?.id === item?.id) !== -1;
-  };
+
+  const getIsChecked = (item: User) => currentCheckedItems?.findIndex((val: User) => val?.id === item?.id) !== -1;
 
   return (
     <div className='user-checklist'>
       <div className='titlebar'>
         <SearchBar
+          data-testid='search-bar'
           searchLabel={isTabletScreen ? 'Search' : 'Search Members'}
           setItemList={(response) => setItemList(response?.getUsers?.results)}
           searchQuery={searchQuery}
@@ -52,7 +54,8 @@ export const AvatarChecklistComponent: FC<ChecklistProps> = ({
         {!searchValue && (
           <div className='selectall-avatar'>
             <Checkbox
-              value={'all'}
+              data-testid='select-all'
+              value={selectAllValue}
               onChange={handleSelectAll}
               checked={selectAll}
               icon={<UnCheckedIcon />}
@@ -63,11 +66,12 @@ export const AvatarChecklistComponent: FC<ChecklistProps> = ({
         )}
       </div>
       <div className='component'>
-        {mapList?.map((item: any) => {
+        {mapList?.map((item: User) => {
           return (
             <div className='avatar-wrapper' key={item?.id}>
               <div className='custom-checkbox-item'>
                 <Checkbox
+                  data-testid='indivitual-checkbox'
                   value={item?.id}
                   onChange={(e) => onChange(e, item)}
                   checked={getIsChecked(item)}
@@ -76,7 +80,6 @@ export const AvatarChecklistComponent: FC<ChecklistProps> = ({
                   key={item?.id}
                 />
               </div>
-
               <CustomAvatar lastName={item?.lastName} firstName={item?.firstName} email={item?.email} />
             </div>
           );

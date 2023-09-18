@@ -4,16 +4,16 @@ import { FC, useState } from 'react';
 import { Avatar } from '@mui/material';
 import { useMediaQuery } from 'react-responsive';
 
-import { ReactComponent as PlusIcon } from 'assets/button-icons/plus.svg';
-import { ReactComponent as SortIcon } from 'assets/toolbar-icons/sort.svg';
-import { ReactComponent as FilterIcon } from 'assets/toolbar-icons/filter.svg';
-import { sortCountAtom } from 'states/searchSortFilterStates';
-import { useFetchEntities } from 'hooks/useFetchEntities';
-import FilterDropdown from 'components/filter-dropdown';
-import { ADD_FILTER, SORT_BY_NAME } from 'constants/messages';
+import { ReactComponent as PlusIcon } from '@/assets/button-icons/plus.svg';
+import { ReactComponent as SortIcon } from '@/assets/toolbar-icons/sort.svg';
+import { ReactComponent as FilterIcon } from '@/assets/toolbar-icons/filter.svg';
+import { sortCountAtom } from '@/states/searchSortFilterStates';
+import { useFetchEntities } from '@/hooks/useFetchEntities';
+import SearchBar from '@/components/search-bar/SearchBar';
+import FilterDropdown from '@/components/filter-dropdown';
+import { ADD_FILTER, SORT_BY_NAME } from '@/constants/messages';
 import { TableToolBarProps } from './types';
 import './styles.css';
-import SearchBar from '../search-bar/SearchBar';
 
 const TableToolBar: FC<TableToolBarProps> = ({
   field,
@@ -24,8 +24,8 @@ const TableToolBar: FC<TableToolBarProps> = ({
   searchQuery,
   isAddVerified,
   onAdd,
-  currentFilters,
-  filters,
+  appliedFilters,
+  allFilters,
   checkedFilters,
   setCheckedFilters,
   viewFiltersVerified,
@@ -40,13 +40,13 @@ const TableToolBar: FC<TableToolBarProps> = ({
     setAnchorEl(null);
   };
 
-  const handleClick = (event: any) => {
+  const handleClick = (event: React.MouseEvent) => {
     if (handleClickFilter) handleClickFilter(event, setAnchorEl);
   };
 
   const isPortrait = useMediaQuery({ query: '(max-width: 980px)' });
 
-  const fetchEntities = useFetchEntities({
+  const { fetch } = useFetchEntities({
     userParams: { setList: setItemList, query: searchQuery, field: field }
   });
 
@@ -54,7 +54,7 @@ const TableToolBar: FC<TableToolBarProps> = ({
     const countValue = count === 0 ? 1 : count === 1 ? 2 : 0;
 
     setCount(countValue);
-    fetchEntities({ countValue: countValue });
+    fetch({ countValue: countValue });
   };
 
   return (
@@ -93,14 +93,20 @@ const TableToolBar: FC<TableToolBarProps> = ({
         )}
       </div>
       {!isAddVerified && (
-        <div className='toolbar-button'>
-          <Button variant='contained' id='add-button' onClick={onAdd} sx={{ textTransform: 'none' }}>
+        <div className='toolbar-button' data-testid='toolbar-button-test-id'>
+          <Button
+            variant='contained'
+            id='add-button'
+            onClick={onAdd}
+            sx={{ textTransform: 'none' }}
+            data-testid='toolbar-button'
+          >
             <PlusIcon />
             {buttonLabel}
           </Button>
         </div>
       )}
-      {filters && (
+      {allFilters && (
         <FilterDropdown
           field={field}
           filterQuery={searchQuery}
@@ -109,8 +115,8 @@ const TableToolBar: FC<TableToolBarProps> = ({
           anchorEl={anchorEl}
           onApply={onApply}
           filterName={filterName ?? []}
-          filters={filters}
-          currentFilters={currentFilters ?? []}
+          allFilters={allFilters}
+          appliedFilters={appliedFilters ?? []}
           checkedFilters={checkedFilters ?? []}
           setCheckedFilters={setCheckedFilters ?? []}
           viewFiltersVerified={viewFiltersVerified ?? []}

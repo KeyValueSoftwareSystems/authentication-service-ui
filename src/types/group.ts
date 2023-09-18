@@ -10,3 +10,10 @@ export interface Group {
   permissions: Permission[];
   allPermissions: Permission[];
 }
+
+export interface GetGroups {
+  getGroups: {
+    results: never[];
+    totalCount: number;
+  };
+}

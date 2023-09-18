@@ -1,7 +1,7 @@
 import * as yup from 'yup';
 import { GridColumns } from '@mui/x-data-grid';
 
-import TableChipElement from 'components/table-chip-element';
+import TableChipElement from '@/components/table-chip-element';
 
 export const RoleFormSchema = yup.object({
   name: yup

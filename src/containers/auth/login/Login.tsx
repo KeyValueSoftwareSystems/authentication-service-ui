@@ -3,19 +3,20 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { FieldValues } from 'react-hook-form';
 
-import { LOGIN, SET_PASSWORD } from 'services/mutations/authMutations';
-import CustomerAuth from 'services/auth';
-import { apiRequestAtom, toastMessageAtom } from 'states/apiRequestState';
-import { IsViewUsersVerifiedAtom } from 'states/permissionsStates';
-import Toast from 'components/toast';
-import { PASSWORD_SET_MESSAGE } from 'constants/messages';
-import { useCustomMutation } from 'hooks/useMutation';
-import { VIEW_USER_PERMISSION } from 'constants/permissions';
-import { RoutePaths } from 'constants/routes';
+import { LOGIN, SET_PASSWORD } from '@/services/mutations/authMutations';
+import CustomerAuth from '@/services/auth';
+import { apiRequestAtom, toastMessageAtom } from '@/states/apiRequestState';
+import { IsViewUsersVerifiedAtom } from '@/states/permissionsStates';
+import Toast from '@/components/toast';
+import { PASSWORD_SET_MESSAGE } from '@/constants/messages';
+import { useCustomMutation } from '@/hooks/useMutation';
+import { VIEW_USER_PERMISSION } from '@/constants/permissions';
+import { RoutePaths } from '@/constants/routes';
 import { LOGIN_URL } from '../../../config';
 import './styles.css';
-import LoginPassword from './loginPassword';
+import LoginPassword from './LoginPassword';
 import PasswordConfirmation from './PasswordConfirmation';
+import { Permission } from '@/types/permission';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ const Login: React.FC = () => {
 
   const inviteToken: string | null = searchParams.get('token');
 
-  const [userLogin, { data }] = useCustomMutation(LOGIN);
+  const [userLogin, { data, loading: loginInProgress }] = useCustomMutation(LOGIN);
 
   const [setPassword, { data: passwordCreatedData }] = useCustomMutation(SET_PASSWORD);
 
@@ -40,7 +41,7 @@ const Login: React.FC = () => {
         refreshToken: refreshToken
       });
       if (user?.permissions)
-        user?.permissions.forEach((item: any) => {
+        user?.permissions.forEach((item: Permission) => {
           if (item?.name.includes(VIEW_USER_PERMISSION)) setIsViewUsersVerified(true);
         });
 
@@ -76,7 +77,7 @@ const Login: React.FC = () => {
 
   const getInputFields = () => {
     if (inviteToken) return <PasswordConfirmation onSubmitForm={onConfirmPassword} />;
-    else return <LoginPassword onSubmitForm={onLogin} />;
+    else return <LoginPassword onSubmitForm={onLogin} loginInProgress={loginInProgress} />;
   };
 
   const onCloseToast = () => {

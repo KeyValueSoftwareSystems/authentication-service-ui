@@ -2,6 +2,9 @@
   "name": "kv-ums",
   "version": "0.1.0",
   "private": true,
+  "description": "A web application which handles authentication and authorisation",
+  "author": "KeyValue Software Systems",
+  "license": "Apache License 2.0",
   "dependencies": {
     "@apollo/client": "^3.6.9",
     "@craco/craco": "^7.0.0",
@@ -37,9 +40,10 @@
     "build": "craco build",
     "test": "craco test",
     "eject": "craco eject",
-    "lint": "eslint src/**/*.{js,jsx,ts,tsx,json}",
+    "lint": "eslint src/**/*.{ts,tsx}",
     "lint:fix": "eslint --fix 'src/**/*.{js,jsx,ts,tsx,json}'",
-    "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc"
+    "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
+    "type-check": "tsc --noEmit"
   },
   "eslintConfig": {
     "extends": [
@@ -79,10 +83,10 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "lint-staged && npm run lint && npm run type-check"
     }
   },
   "lint-staged": {
-    "*": "prettier --write"
+    "*": "prettier --write ."
   }
 }

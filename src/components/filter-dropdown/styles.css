@@ -41,6 +41,12 @@
   background-color: #f3f5f7;
 }
 
+.disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
 @media screen and (max-width: 687px) {
   #account-menu {
     display: none;
@@ -84,6 +90,9 @@
   color: white;
 }
 
+#filter-button-apply:disabled {
+  opacity: 0.6;
+}
 #clear-all {
   color: #f64040;
   margin-right: -6px;

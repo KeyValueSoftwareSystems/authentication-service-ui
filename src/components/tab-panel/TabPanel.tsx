@@ -1,10 +1,11 @@
 import { Box, Typography } from '@mui/material';
+import { CSSProperties } from 'react';
 
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
   value: number;
-  style?: any;
+  style?: CSSProperties;
 }
 
 const TabPanel = (props: TabPanelProps) => {
@@ -20,7 +21,7 @@ const TabPanel = (props: TabPanelProps) => {
       {...other}
     >
       {value === index && (
-        <Box>
+        <Box data-testid='box'>
           <Typography component={'span'}>{children}</Typography>
         </Box>
       )}

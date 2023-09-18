@@ -1,13 +1,14 @@
 import { DocumentNode } from '@apollo/client';
 import { SetterOrUpdater, useRecoilState, useSetRecoilState } from 'recoil';
-import { FilterConditions, SortDirection } from 'services/constants';
+import { FilterConditions, SortDirection } from '@/services/constants';
+import { PAGE_SIZE } from '@/constants/table';
 import {
   groupFilterAtom,
   searchAtom,
   sortCountAtom,
   statusFilterAtom,
   paginationAtom
-} from 'states/searchSortFilterStates';
+} from '@/states/searchSortFilterStates';
 import { useCustomLazyQuery } from './useLazyQuery';
 
 interface userParamsProps {
@@ -21,9 +22,9 @@ interface usersFetchProps {
 }
 
 interface ApiParams {
-  searchText?: any;
+  searchText?: string | null;
   countValue?: number;
-  page?: any;
+  page?: number | null;
 }
 export const useFetchEntities = (usersFetchProps: usersFetchProps) => {
   const [searchValue] = useRecoilState(searchAtom);
@@ -36,7 +37,7 @@ export const useFetchEntities = (usersFetchProps: usersFetchProps) => {
     usersFetchProps.userParams.setList(data);
   };
 
-  const { lazyQuery: filterQuery } = useCustomLazyQuery(usersFetchProps.userParams.query, onCompleted);
+  const { lazyQuery: filterQuery, loading } = useCustomLazyQuery(usersFetchProps.userParams.query, onCompleted);
 
   const fetchEntities = ({ searchText = null, countValue = 0, page = null }: ApiParams) => {
     let search = {};
@@ -67,7 +68,11 @@ export const useFetchEntities = (usersFetchProps: usersFetchProps) => {
       sort = { ...sort, ...direction };
     }
 
-    const operands = [];
+    const operands: Array<{
+      condition: FilterConditions;
+      field: string;
+      value: string[];
+    }> = [];
 
     if (checkedStatus.length > 0) {
       const status = {
@@ -99,11 +104,14 @@ export const useFetchEntities = (usersFetchProps: usersFetchProps) => {
     if (page === null) setCurrentPage(1);
     variables = {
       ...variables,
-      pagination: { offset: page ? page * 15 : 0, limit: 15 }
+      pagination: { offset: page ? page * PAGE_SIZE : 0, limit: PAGE_SIZE }
     };
 
     filterQuery({ variables: variables });
   };
 
-  return fetchEntities;
+  return {
+    fetch: fetchEntities,
+    loading: loading
+  };
 };

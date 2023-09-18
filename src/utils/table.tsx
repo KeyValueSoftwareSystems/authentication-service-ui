@@ -1,5 +1,5 @@
 import { GridColumns, GridRowId } from '@mui/x-data-grid';
-import ActionsCell from 'components/actions-cell';
+import ActionsCell from '@/components/actions-cell';
 
 import { DocumentNode } from 'graphql';
 
@@ -41,9 +41,9 @@ export function stringSmallAvatar(name: string) {
 }
 
 export interface ApiParams {
-  searchText?: any;
+  searchText?: string | string;
   countValue?: number;
-  page?: any;
+  page?: number;
 }
 
 export function getFinalColumns(

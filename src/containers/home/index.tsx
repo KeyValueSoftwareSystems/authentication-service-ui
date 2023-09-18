@@ -6,11 +6,11 @@ import { useRecoilState } from 'recoil';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useMediaQuery } from 'react-responsive';
 
-import { stringAvatar } from 'utils/table';
-import Toast from 'components/toast';
-import If from 'components/if';
-import SideBar from 'components/side-bar';
-import { toastMessageAtom } from 'states/apiRequestState';
+import { stringAvatar } from '@/utils/table';
+import Toast from '@/components/toast';
+import If from '@/components/if';
+import SideBar from '@/components/side-bar';
+import { toastMessageAtom } from '@/states/apiRequestState';
 import {
   IsViewGroupsVerifiedAtom,
   IsViewPermissionsVerifiedAtom,
@@ -18,30 +18,33 @@ import {
   IsViewUsersVerifiedAtom,
   IsViewEntitiesVerifiedAtom,
   UserPermissionsAtom
-} from 'states/permissionsStates';
-import { groupListAtom } from 'states/groupStates';
-import { currentUserAtom } from 'states/loginStates';
-import { GET_GROUPS } from 'services/queries/groupQueries';
-import CustomerAuth from 'services/auth';
-import { LOGOUT } from 'services/mutations/authMutations';
-import { GET_CURRENT_USER } from 'services/queries/authQueries';
-import { ReactComponent as ArrowIcon } from 'assets/sub-header-icons/arrow.svg';
-import { ReactComponent as SettingsIcon } from 'assets/sidebar-icons/settings.svg';
+} from '@/states/permissionsStates';
+import { groupListAtom } from '@/states/groupStates';
+import { currentUserAtom } from '@/states/loginStates';
+import { GET_GROUPS } from '@/services/queries/groupQueries';
+import CustomerAuth from '@/services/auth';
+import { LOGOUT } from '@/services/mutations/authMutations';
+import { GET_CURRENT_USER } from '@/services/queries/authQueries';
+import { ReactComponent as ArrowIcon } from '@/assets/sub-header-icons/arrow.svg';
+import { ReactComponent as SettingsIcon } from '@/assets/sidebar-icons/settings.svg';
 import {
   VIEW_GROUP_PERMISSION,
   VIEW_ROLE_PERMISSION,
   VIEW_USER_PERMISSION,
   VIEW_ENTITY_PERMISSION,
   VIEW_PERMISSIONS_PERMISSION
-} from 'constants/permissions';
-import { useCustomMutation } from 'hooks/useMutation';
-import { UserActions } from 'types/generic';
-import { getHeader } from 'utils/routes';
-import { RoutePaths } from 'constants/routes';
-import { useCustomLazyQuery } from 'hooks/useLazyQuery';
-import Settings from 'components/settings';
+} from '@/constants/permissions';
+import { useCustomMutation } from '@/hooks/useMutation';
+import { UserActions } from '@/types/generic';
+import { getHeader } from '@/utils/routes';
+import { RoutePaths } from '@/constants/routes';
+import { useCustomLazyQuery } from '@/hooks/useLazyQuery';
+import Settings from '@/components/settings';
 import { LOGO_URL, MINI_LOGO_URL } from '../../config';
 import './styles.css';
+import { Permission } from '@/types/permission';
+import { GetGroups } from '@/types/group';
+import { GetCurrentUser } from '@/types/user';
 
 const HomePage = () => {
   const [currentUserDetails, setCurrentUserDetails] = useRecoilState(currentUserAtom);
@@ -58,10 +61,11 @@ const HomePage = () => {
   const setIsViewRolesVerified = useSetRecoilState(IsViewRolesVerifiedAtom);
   const setIsViewPermissionsVerified = useSetRecoilState(IsViewPermissionsVerifiedAtom);
   const setisViewEntitiesVerified = useSetRecoilState(IsViewEntitiesVerifiedAtom);
-  const onGetGroupsComplete = (data: any) => {
+
+  const onGetGroupsComplete = (data: GetGroups) => {
     setGroupList(data?.getGroups?.results);
   };
-  const onGetCurrentUserCompleted = (data: any) => {
+  const onGetCurrentUserCompleted = (data: GetCurrentUser) => {
     setCurrentUserDetails(data.getCurrentUser);
     setUserPermissions(data.getCurrentUser?.permissions);
   };
@@ -80,7 +84,7 @@ const HomePage = () => {
 
   useEffect(() => {
     if (userPermissions)
-      userPermissions.forEach((item: any) => {
+      userPermissions.forEach((item: Permission) => {
         if (item?.name.includes(VIEW_USER_PERMISSION)) setIsViewUsersVerified(true);
 
         if (item?.name.includes(VIEW_GROUP_PERMISSION)) {
@@ -158,9 +162,10 @@ const HomePage = () => {
     setToastMessage('');
   };
 
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+  const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -197,12 +202,7 @@ const HomePage = () => {
                     </div>
                   ) : (
                     <div className='userdetails-tablet'>
-                      <SettingsIcon
-                        id='settings-icon'
-                        onClick={(e: any) => {
-                          handleClick(e);
-                        }}
-                      />
+                      <SettingsIcon id='settings-icon' onClick={handleClick} />
                       {open && (
                         <Settings
                           initials={stringAvatar(

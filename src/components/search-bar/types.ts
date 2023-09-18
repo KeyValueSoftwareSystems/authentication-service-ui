@@ -1,9 +1,10 @@
 import { DocumentNode } from 'graphql';
+import { CSSProperties } from 'react';
 export interface SearchBarProps {
   searchLabel: string;
   searchQuery: DocumentNode;
   setItemList: (data: any) => void;
-  customSearchStyle?: any;
-  customBarStyle?: any;
-  customIconStyle?: any;
+  customSearchStyle?: CSSProperties;
+  customBarStyle?: CSSProperties;
+  customIconStyle?: CSSProperties;
 }
