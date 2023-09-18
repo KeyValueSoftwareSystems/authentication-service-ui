@@ -6,6 +6,7 @@ import { useRecoilValue } from 'recoil';
 import CustomAvatar from '@/components/custom-avatar';
 import SearchBar from '../search-bar/SearchBar';
 import { ReactComponent as UnCheckedIcon } from '@/assets/checkbox-icons/uncheckedicon.svg';
+import { selectAllValue } from '@/constants/filters';
 import { ReactComponent as CheckedIcon } from '@/assets/checkbox-icons/checkedicon.svg';
 import { ChecklistProps } from './types';
 import { searchAtom } from '@/states/searchSortFilterStates';
@@ -54,7 +55,7 @@ export const AvatarChecklistComponent: FC<ChecklistProps> = ({
           <div className='selectall-avatar'>
             <Checkbox
               data-testid='select-all'
-              value={'all'}
+              value={selectAllValue}
               onChange={handleSelectAll}
               checked={selectAll}
               icon={<UnCheckedIcon />}

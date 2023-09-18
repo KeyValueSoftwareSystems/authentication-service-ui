@@ -4,6 +4,7 @@ import { ApolloProvider } from '@apollo/client';
 import '@testing-library/jest-dom';
 
 import { GET_USERS } from '@/services/queries/userQueries';
+import { selectAllValue } from '@/constants/filters';
 import { AvatarChecklistComponent } from '../AvatarChecklist';
 import client from '@/services/apolloClient';
 
@@ -106,7 +107,7 @@ describe('AvatarChecklistComponent', () => {
     fireEvent.click(selectAllCheckbox);
 
     waitFor(() => {
-      expect(screen.getByTestId('select-all')).toHaveAttribute('value', 'all');
+      expect(screen.getByTestId('select-all')).toHaveAttribute('value', selectAllValue);
       expect(onChangeMock).toHaveBeenCalledTimes(1);
     });
   });

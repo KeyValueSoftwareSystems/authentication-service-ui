@@ -7,6 +7,7 @@ import { useSetRecoilState } from 'recoil';
 import { ReactComponent as UnCheckedIcon } from '@/assets/checkbox-icons/uncheckedicon.svg';
 import { ReactComponent as CheckedIcon } from '@/assets/checkbox-icons/checkedicon.svg';
 import { Permission } from '@/types/permission';
+import { selectAllValue } from '@/constants/filters';
 import { getUniquePermissionsFromGroups, getUniquePermissionsFromRoles } from '@/utils/permissions';
 import If from '../if';
 import { RemovedPermissions } from '@/constants/permissions';
@@ -116,7 +117,7 @@ const PermissionsCard: FC<PermissionCardProps> = ({
           <If condition={!isViewPage}>
             <CheckboxContainer>
               <Checkbox
-                value={'all'}
+                value={selectAllValue}
                 onChange={(e) => onChangePermissions(e, permission)}
                 checked={IsChecked(permission.id)}
                 icon={<UnCheckedIcon />}

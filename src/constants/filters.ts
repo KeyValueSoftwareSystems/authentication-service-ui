@@ -1,3 +1,5 @@
 const statusList = ['ACTIVE', 'INACTIVE', 'INVITED'];
 
-export { statusList };
+const selectAllValue = 'all';
+
+export { statusList, selectAllValue };

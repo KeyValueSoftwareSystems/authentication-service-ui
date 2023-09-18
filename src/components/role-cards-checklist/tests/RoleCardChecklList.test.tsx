@@ -3,6 +3,7 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
 import RoleCardsChecklist from '../RoleCardsChecklist';
+import { selectAllValue } from '@/constants/filters';
 
 const mockRoleList = [
   {
@@ -55,7 +56,7 @@ describe('RoleCardsChecklist Component', () => {
     if (!selectAllCheckbox) throw new Error('Checked icon is not present');
     fireEvent.click(selectAllCheckbox);
 
-    waitFor(() => expect(screen.getByTestId('select-all')).toHaveAttribute('value', 'all'));
+    waitFor(() => expect(screen.getByTestId('select-all')).toHaveAttribute('value', selectAllValue));
   });
 
   test('unchecks "Select all" checkbox when clicked again', () => {

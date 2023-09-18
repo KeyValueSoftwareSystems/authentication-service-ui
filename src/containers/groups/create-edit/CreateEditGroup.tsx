@@ -30,6 +30,7 @@ import TabPanel from '@/components/tab-panel';
 import { ReactComponent as CrossIcon } from '@/assets/edit-group-icons/cross-icon.svg';
 import { useCustomQuery } from '@/hooks/useQuery';
 import { useCustomMutation } from '@/hooks/useMutation';
+import { selectAllValue } from '@/constants/filters';
 import { renderAccessDenied } from '@/utils/generic';
 import { useCustomLazyQuery } from '@/hooks/useLazyQuery';
 import './styles.css';
@@ -154,7 +155,7 @@ const CreateOrEditGroup = () => {
     const value = event.target.value;
 
     if (event.target.checked) {
-      if (value === 'all') {
+      if (value === selectAllValue) {
         setRoles(allRoles);
 
         return;
@@ -163,7 +164,7 @@ const CreateOrEditGroup = () => {
         if (roles[0] === null) setRoles([item]);
         else setRoles([...roles, item]);
     } else {
-      if (value === 'all') {
+      if (value === selectAllValue) {
         setRoles([]);
 
         return;
@@ -177,7 +178,7 @@ const CreateOrEditGroup = () => {
 
     setSubmitButton(true);
     if (event.target.checked) {
-      if (value === 'all') {
+      if (value === selectAllValue) {
         setUsers(allUsers);
 
         return;
@@ -187,7 +188,7 @@ const CreateOrEditGroup = () => {
         if (users[0] === null) setUsers([item]);
         else setUsers([...users, item]);
     } else {
-      if (value === 'all') {
+      if (value === selectAllValue) {
         setUsers([]);
 
         return;

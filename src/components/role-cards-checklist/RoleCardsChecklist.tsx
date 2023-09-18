@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 
 import { Role } from '@/types/role';
 import RoleCard from '../role-card';
+import { selectAllValue } from '@/constants/filters';
 import { ReactComponent as UnCheckedIcon } from '@/assets/checkbox-icons/uncheckedicon.svg';
 import { ReactComponent as CheckedIcon } from '@/assets/checkbox-icons/checkedicon.svg';
 
@@ -57,7 +58,7 @@ const RoleCardsChecklist: FC<Props> = ({ roleList, currentCheckedItems, onChange
       <SelectAll>
         <Checkbox
           data-testid='select-all'
-          value={'all'}
+          value={selectAllValue}
           onChange={handleSelectAll}
           checked={selectAll}
           icon={<UnCheckedIcon data-testid='unchecked' />}

@@ -20,6 +20,7 @@ import { AddEntity, UpdateEntity } from '@/types/generic';
 import { AddUserformSchema, EditUserformSchema } from '@/utils/user';
 import { renderAccessDenied } from '@/utils/generic';
 import { useCustomQuery } from '@/hooks/useQuery';
+import { selectAllValue } from '@/constants/filters';
 import { RoutePaths } from '@/constants/routes';
 import { submitAtom } from '@/states/submitStates';
 import './styles.css';
@@ -91,10 +92,10 @@ const UserForm = (props: UserProps) => {
     const value = event.target.value;
 
     if (event.target.checked) {
-      if (value === 'all') setUserGroups(allGroups);
+      if (value === selectAllValue) setUserGroups(allGroups);
       else if (group) setUserGroups([...userGroups, group]);
     } else {
-      if (value === 'all') setUserGroups([]);
+      if (value === selectAllValue) setUserGroups([]);
 
       if (group) removeGroup(group);
     }

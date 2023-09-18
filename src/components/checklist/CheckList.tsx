@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 
 import { ReactComponent as UnCheckedIcon } from '@/assets/checkbox-icons/uncheckedicon.svg';
 import { ReactComponent as CheckedIcon } from '@/assets/checkbox-icons/checkedicon.svg';
+import { selectAllValue } from '@/constants/filters';
 import { Group } from '@/types/group';
 import './styles.css';
 import GroupCard from '../group-card';
@@ -36,7 +37,7 @@ export const ChecklistComponent: FC<ChecklistProps> = ({ mapList, currentChecked
       <div id='titlebar'>
         <div id='selectall'>
           <Checkbox
-            value={'all'}
+            value={selectAllValue}
             data-testid='checklist-checkbox-test-id'
             onChange={handleSelectAll}
             checked={selectAll}
