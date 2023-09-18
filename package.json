@@ -2,6 +2,9 @@
   "name": "kv-ums",
   "version": "0.1.0",
   "private": true,
+  "description": "A web application which handles authentication and authorisation",
+  "author": "KeyValue Software Systems",
+  "license": "Apache License 2.0",
   "dependencies": {
     "@apollo/client": "^3.6.9",
     "@craco/craco": "^7.0.0",
