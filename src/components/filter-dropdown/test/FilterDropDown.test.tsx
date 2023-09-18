@@ -17,8 +17,8 @@ describe('If Filter dropdown rendered correctly', () => {
     anchorEl: null,
     onApply,
     filterName: [],
-    currentFilters: [[]],
-    filters: [[]],
+    appliedFilters: [[]],
+    allFilters: [[]],
     checkedFilters: [[]],
     setCheckedFilters: [setCheckedFilters],
     viewFiltersVerified: [false]

@@ -5,6 +5,7 @@ import PaginationItem from '@mui/material/PaginationItem';
 import { TextField, Button } from '@mui/material';
 
 import { paginationAtom } from '@/states/searchSortFilterStates';
+import { PAGE_SIZE } from '@/constants/table';
 import { ApiParams } from '@/utils/table';
 import './styles.css';
 
@@ -16,7 +17,9 @@ interface CustomPaginationProps {
 const CustomPagination: FC<CustomPaginationProps> = ({ fetchEntities, count }) => {
   const [currentPage, setCurrentPage] = useRecoilState(paginationAtom);
   const [pageValue, setPageValue] = useState(currentPage);
-  const [pageCount] = useState(count % 15 > 0 ? Math.floor(count / 15) + 1 : Math.floor(count / 15));
+  const [pageCount] = useState(
+    count % PAGE_SIZE > 0 ? Math.floor(count / PAGE_SIZE) + 1 : Math.floor(count / PAGE_SIZE)
+  );
 
   const onClickGo = () => {
     if (!isNaN(pageValue) && pageCount > 0) {

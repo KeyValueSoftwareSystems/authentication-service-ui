@@ -16,6 +16,7 @@ import DisplayMessage from '@/components/display-message';
 import { AddEntity, SearchEntity } from '@/types/generic';
 import { ACCESS_DENIED_DESCRIPTION, ACCESS_DENIED_MESSAGE } from '@/constants/messages';
 import { columns } from '@/utils/groups';
+import { PAGE_SIZE } from '@/constants/table';
 import { useCustomLazyQuery } from '@/hooks/useLazyQuery';
 import { Permission } from '@/types/permission';
 import { GetGroups } from '@/types/group';
@@ -39,7 +40,7 @@ const GroupList: React.FC = () => {
   const { lazyQuery: getGroups, loading } = useCustomLazyQuery(GET_GROUPS, onGetGroupsComplete);
 
   useEffect(() => {
-    if (isViewGroupsVerified) getGroups({ variables: { pagination: { limit: 15, offset: 0 } } });
+    if (isViewGroupsVerified) getGroups({ variables: { pagination: { limit: PAGE_SIZE, offset: 0 } } });
   }, [isViewGroupsVerified, getGroups]);
 
   const onAddGroup = () => {

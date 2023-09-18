@@ -1,6 +1,7 @@
 import { DocumentNode } from '@apollo/client';
 import { SetterOrUpdater, useRecoilState, useSetRecoilState } from 'recoil';
 import { FilterConditions, SortDirection } from '@/services/constants';
+import { PAGE_SIZE } from '@/constants/table';
 import {
   groupFilterAtom,
   searchAtom,
@@ -103,7 +104,7 @@ export const useFetchEntities = (usersFetchProps: usersFetchProps) => {
     if (page === null) setCurrentPage(1);
     variables = {
       ...variables,
-      pagination: { offset: page ? page * 15 : 0, limit: 15 }
+      pagination: { offset: page ? page * PAGE_SIZE : 0, limit: PAGE_SIZE }
     };
 
     filterQuery({ variables: variables });

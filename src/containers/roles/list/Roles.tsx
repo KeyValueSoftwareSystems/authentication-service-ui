@@ -12,6 +12,7 @@ import TableList from '@/components/table';
 import { IsViewRolesVerifiedAtom, UserPermissionsAtom } from '@/states/permissionsStates';
 import { CREATE_ROLE_PERMISSION, DELETE_ROLE_PERMISSION, UPDATE_ROLE_PERMISSION } from '@/constants/permissions';
 import DisplayMessage from '@/components/display-message';
+import { PAGE_SIZE } from '@/constants/table';
 import { AddEntity, SearchEntity } from '@/types/generic';
 import { ACCESS_DENIED_DESCRIPTION, ACCESS_DENIED_MESSAGE } from '@/constants/messages';
 import { columns } from '@/utils/roles';
@@ -43,7 +44,7 @@ const Roles: React.FC = () => {
   const { lazyQuery: getRoles, loading } = useCustomLazyQuery(GET_ROLES, onGetRolesComplete);
 
   useEffect(() => {
-    if (isViewRolesVerified) getRoles({ variables: { pagination: { limit: 15, offset: 0 } } });
+    if (isViewRolesVerified) getRoles({ variables: { pagination: { limit: PAGE_SIZE, offset: 0 } } });
   }, [isViewRolesVerified, getRoles]);
 
   useEffect(() => {

@@ -24,8 +24,8 @@ const TableToolBar: FC<TableToolBarProps> = ({
   searchQuery,
   isAddVerified,
   onAdd,
-  currentFilters,
-  filters,
+  appliedFilters,
+  allFilters,
   checkedFilters,
   setCheckedFilters,
   viewFiltersVerified,
@@ -106,7 +106,7 @@ const TableToolBar: FC<TableToolBarProps> = ({
           </Button>
         </div>
       )}
-      {filters && (
+      {allFilters && (
         <FilterDropdown
           field={field}
           filterQuery={searchQuery}
@@ -115,8 +115,8 @@ const TableToolBar: FC<TableToolBarProps> = ({
           anchorEl={anchorEl}
           onApply={onApply}
           filterName={filterName ?? []}
-          filters={filters}
-          currentFilters={currentFilters ?? []}
+          allFilters={allFilters}
+          appliedFilters={appliedFilters ?? []}
           checkedFilters={checkedFilters ?? []}
           setCheckedFilters={setCheckedFilters ?? []}
           viewFiltersVerified={viewFiltersVerified ?? []}

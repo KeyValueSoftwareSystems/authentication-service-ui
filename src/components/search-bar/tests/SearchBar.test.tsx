@@ -16,55 +16,37 @@ describe('SearchBar Component', () => {
       dummyField
     }
   `;
+  const searchLabel = 'Search something';
+  const setItemList = jest.fn();
+  const customSearchStyle = { backgroundColor: 'red' };
+  const customBarStyle = { border: '2px solid blue' };
+  const customIconStyle = { color: 'green' };
+
+  const SearchBarComponent = () => (
+    <RecoilRoot>
+      <ApolloProvider client={client}>
+        <SearchBar
+          searchLabel={searchLabel}
+          setItemList={setItemList}
+          searchQuery={dummyDocumentNode}
+          customSearchStyle={customSearchStyle}
+          customBarStyle={customBarStyle}
+          customIconStyle={customIconStyle}
+        />
+      </ApolloProvider>
+    </RecoilRoot>
+  );
 
   // Parse the dummy query into a DocumentNode
   const dummyDocumentNode = parse(dummyQuery);
 
   test('snapshot test for SearchBar component', () => {
-    const searchLabel = 'Search something';
-    const setItemList = jest.fn();
-    const customSearchStyle = { backgroundColor: 'red' };
-    const customBarStyle = { border: '2px solid blue' };
-    const customIconStyle = { color: 'green' };
-
-    const component = render(
-      <RecoilRoot>
-        <ApolloProvider client={client}>
-          <SearchBar
-            searchLabel={searchLabel}
-            setItemList={setItemList}
-            searchQuery={dummyDocumentNode}
-            customSearchStyle={customSearchStyle}
-            customBarStyle={customBarStyle}
-            customIconStyle={customIconStyle}
-          />
-        </ApolloProvider>
-      </RecoilRoot>
-    );
+    const component = render(<SearchBarComponent />);
 
     expect(component).toMatchSnapshot();
   });
   test('renders the search bar with placeholder', () => {
-    const searchLabel = 'Search something';
-    const setItemList = jest.fn();
-    const customSearchStyle = { backgroundColor: 'red' };
-    const customBarStyle = { border: '2px solid blue' };
-    const customIconStyle = { color: 'green' };
-
-    render(
-      <RecoilRoot>
-        <ApolloProvider client={client}>
-          <SearchBar
-            searchLabel={searchLabel}
-            setItemList={setItemList}
-            searchQuery={dummyDocumentNode}
-            customSearchStyle={customSearchStyle}
-            customBarStyle={customBarStyle}
-            customIconStyle={customIconStyle}
-          />
-        </ApolloProvider>
-      </RecoilRoot>
-    );
+    render(<SearchBarComponent />);
 
     const searchBar = screen.getByPlaceholderText(searchLabel);
     const searchIcon = screen.getByTestId('search-icon');
@@ -74,26 +56,7 @@ describe('SearchBar Component', () => {
   });
 
   test('handles search input and triggers onChange event', () => {
-    const searchLabel = 'Search something';
-    const setItemList = jest.fn();
-    const customSearchStyle = { backgroundColor: 'red' };
-    const customBarStyle = { border: '2px solid blue' };
-    const customIconStyle = { color: 'green' };
-
-    render(
-      <RecoilRoot>
-        <ApolloProvider client={client}>
-          <SearchBar
-            searchLabel={searchLabel}
-            setItemList={setItemList}
-            searchQuery={dummyDocumentNode}
-            customSearchStyle={customSearchStyle}
-            customBarStyle={customBarStyle}
-            customIconStyle={customIconStyle}
-          />
-        </ApolloProvider>
-      </RecoilRoot>
-    );
+    render(<SearchBarComponent />);
 
     const searchBar = screen.getByPlaceholderText(searchLabel);
 

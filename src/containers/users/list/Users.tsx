@@ -17,6 +17,7 @@ import { CREATE_USER_PERMISSION, DELETE_USER_PERMISSION, UPDATE_USER_PERMISSION 
 import { AddEntity, SearchEntity } from '@/types/generic';
 import { ACCESS_DENIED_DESCRIPTION, ACCESS_DENIED_MESSAGE } from '@/constants/messages';
 import { useCustomLazyQuery } from '@/hooks/useLazyQuery';
+import { PAGE_SIZE } from '@/constants/table';
 import '../create-edit/styles.css';
 import './styles.css';
 import { RoutePaths } from '@/constants/routes';
@@ -56,7 +57,7 @@ const Users: React.FC = () => {
   const { lazyQuery: getUsers, loading } = useCustomLazyQuery(GET_USERS, onComplete);
 
   useEffect(() => {
-    if (isViewUsersVerified) getUsers({ variables: { pagination: { limit: 15, offset: 0 } } });
+    if (isViewUsersVerified) getUsers({ variables: { pagination: { limit: PAGE_SIZE, offset: 0 } } });
   }, [isViewUsersVerified, getUsers]);
 
   useEffect(() => {
@@ -134,8 +135,8 @@ const Users: React.FC = () => {
           field='firstName'
           filterName={['Status', 'Groups']}
           handleClickFilter={handleClickFilter}
-          currentFilters={[currentFirstFilter, currentSecondFilter]}
-          filters={[statusList, groupList]}
+          appliedFilters={[currentFirstFilter, currentSecondFilter]}
+          allFilters={[statusList, groupList]}
           checkedFilters={[checkedStatus, checkedGroups]}
           setCheckedFilters={[setCheckedStatus, setCheckedGroups]}
           viewFiltersVerified={[true, isViewGroupsVerified]}

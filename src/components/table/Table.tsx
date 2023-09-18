@@ -11,6 +11,7 @@ import './styles.css';
 import DisplayMessage from '../display-message';
 import { sortCountAtom, searchAtom, paginationAtom } from '@/states/searchSortFilterStates';
 import { useFetchEntities } from '@/hooks/useFetchEntities';
+import { PAGE_SIZE, ROWS_PER_PAGE_OPTION } from '@/constants/table';
 import { ACCESS_DENIED_DESCRIPTION, ACCESS_DENIED_MESSAGE } from '@/constants/messages';
 import CustomPagination from '@/components/custom-pagination';
 import { getFinalColumns } from '@/utils/table';
@@ -35,8 +36,8 @@ const TableList: FC<TableProps> = ({
   isViewVerified,
   isAddVerified,
   handleRowClick,
-  currentFilters,
-  filters,
+  appliedFilters,
+  allFilters,
   checkedFilters,
   setCheckedFilters,
   viewFiltersVerified,
@@ -89,8 +90,8 @@ const TableList: FC<TableProps> = ({
               field={field}
               filterName={filterName}
               handleClickFilter={handleClickFilter}
-              currentFilters={currentFilters}
-              filters={filters}
+              appliedFilters={appliedFilters}
+              allFilters={allFilters}
               checkedFilters={checkedFilters}
               setCheckedFilters={setCheckedFilters}
               viewFiltersVerified={viewFiltersVerified}
@@ -118,9 +119,9 @@ const TableList: FC<TableProps> = ({
               disableSelectionOnClick
               onRowClick={handleRowClick}
               disableColumnMenu
-              pageSize={15}
+              pageSize={PAGE_SIZE}
               loading={loading}
-              rowsPerPageOptions={[5]}
+              rowsPerPageOptions={ROWS_PER_PAGE_OPTION}
               components={{
                 Pagination: () => <CustomPagination fetchEntities={fetch} count={count} />,
                 NoRowsOverlay: () => (

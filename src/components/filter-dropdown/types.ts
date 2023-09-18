@@ -9,8 +9,8 @@ export interface FilterDropdownProps {
   anchorEl: HTMLElement | null;
   onApply: (count: number) => void;
   filterName: string[];
-  currentFilters: string[][];
-  filters: string[][];
+  appliedFilters: string[][];
+  allFilters: string[][];
   checkedFilters: string[][];
   setCheckedFilters: SetterOrUpdater<string[]>[];
   viewFiltersVerified: boolean[];

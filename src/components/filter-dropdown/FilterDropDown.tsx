@@ -20,8 +20,8 @@ const FilterDropdown: FC<FilterDropdownProps> = ({
   anchorEl,
   onApply,
   filterName,
-  currentFilters,
-  filters,
+  appliedFilters,
+  allFilters,
   checkedFilters,
   setCheckedFilters,
   viewFiltersVerified
@@ -31,7 +31,7 @@ const FilterDropdown: FC<FilterDropdownProps> = ({
   const [viewFilter, setViewFilter] = useState<number>(0);
 
   const handleClose = () => {
-    onApply(currentFilters.reduce((sum, filter) => sum + filter.length, 0));
+    onApply(appliedFilters.reduce((sum, allFilters) => sum + allFilters.length, 0));
     setViewFilter(0);
   };
 
@@ -67,7 +67,7 @@ const FilterDropdown: FC<FilterDropdownProps> = ({
   const handleCancel = () => {
     if (setCheckedFilters)
       setCheckedFilters.forEach((setFilter: SetterOrUpdater<string[]>, index: number) => {
-        setFilter(currentFilters[index]);
+        setFilter(appliedFilters[index]);
       });
 
     handleClose();
@@ -167,7 +167,7 @@ const FilterDropdown: FC<FilterDropdownProps> = ({
         </div>
         <div id='filter-items'>
           <Filter
-            itemList={filters[viewFilter]}
+            itemList={allFilters[viewFilter]}
             checkedItems={checkedFilters[viewFilter]}
             handleCheckedItems={handleCheckedItems}
             setCheckedItems={setCheckedFilters[viewFilter]}

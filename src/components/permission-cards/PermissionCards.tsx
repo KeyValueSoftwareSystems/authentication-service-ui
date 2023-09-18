@@ -47,7 +47,7 @@ const PermissionCards: React.FC<PermissionCardsProps> = ({
         <>
           {isViewEntitiesVerified ? (
             <>
-              {entities.map((entity) => (
+              {entities?.map((entity) => (
                 <PermissionsCard
                   entity={entity}
                   roles={roles}
@@ -56,7 +56,7 @@ const PermissionCards: React.FC<PermissionCardsProps> = ({
                   setUserSelectedPermissions={setUserSelectedPermissions}
                   userPermissions={userPermissions}
                   isViewPage={isViewPage}
-                  key={entity?.id}
+                  key={entity.id}
                 />
               ))}
             </>
