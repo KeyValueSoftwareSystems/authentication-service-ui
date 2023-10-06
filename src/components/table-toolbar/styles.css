@@ -52,6 +52,7 @@
 
 #sort-filter-icon {
   margin-right: 6px;
+  transition-duration: 600ms;
 }
 
 #sort-icon-enabled {
@@ -69,6 +70,11 @@
   margin-right: 18px;
   width: 152px;
   border: 1px solid #2653f1;
+}
+
+.rotate-180 {
+  transform: rotate(180deg);
+  transition-duration: 600ms;
 }
 
 .filter-button {

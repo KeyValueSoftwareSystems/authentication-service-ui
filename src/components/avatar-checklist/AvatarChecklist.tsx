@@ -3,14 +3,15 @@ import Checkbox from '@mui/material/Checkbox';
 import { useMediaQuery } from 'react-responsive';
 import { useRecoilValue } from 'recoil';
 
-import CustomAvatar from '@/components/custom-avatar';
-import SearchBar from '../search-bar/SearchBar';
 import { ReactComponent as UnCheckedIcon } from '@/assets/checkbox-icons/uncheckedicon.svg';
 import { selectAllValue } from '@/constants/filters';
 import { ReactComponent as CheckedIcon } from '@/assets/checkbox-icons/checkedicon.svg';
-import { ChecklistProps } from './types';
+import { ReactComponent as IndetermianteIcon } from '@/assets/checkbox-icons/indeterminate.svg';
 import { searchAtom } from '@/states/searchSortFilterStates';
 import { User } from '@/types/user';
+import { ChecklistProps } from './types';
+import CustomAvatar from '@/components/custom-avatar';
+import SearchBar from '../search-bar/SearchBar';
 
 import './styles.css';
 
@@ -57,6 +58,8 @@ export const AvatarChecklistComponent: FC<ChecklistProps> = ({
               data-testid='select-all'
               value={selectAllValue}
               onChange={handleSelectAll}
+              indeterminate={currentCheckedItems.length > 0 && !selectAll}
+              indeterminateIcon={<IndetermianteIcon />}
               checked={selectAll}
               icon={<UnCheckedIcon />}
               checkedIcon={<CheckedIcon />}

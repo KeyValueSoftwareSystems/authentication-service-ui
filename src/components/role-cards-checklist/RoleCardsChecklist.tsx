@@ -2,11 +2,12 @@ import { Checkbox } from '@mui/material';
 import { FC, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 
-import { Role } from '@/types/role';
-import RoleCard from '../role-card';
-import { selectAllValue } from '@/constants/filters';
 import { ReactComponent as UnCheckedIcon } from '@/assets/checkbox-icons/uncheckedicon.svg';
 import { ReactComponent as CheckedIcon } from '@/assets/checkbox-icons/checkedicon.svg';
+import { ReactComponent as IndetermianteIcon } from '@/assets/checkbox-icons/indeterminate.svg';
+import { selectAllValue } from '@/constants/filters';
+import { Role } from '@/types/role';
+import RoleCard from '../role-card';
 
 interface Props {
   roleList: Role[];
@@ -60,6 +61,8 @@ const RoleCardsChecklist: FC<Props> = ({ roleList, currentCheckedItems, onChange
           data-testid='select-all'
           value={selectAllValue}
           onChange={handleSelectAll}
+          indeterminate={currentCheckedItems.length > 0 && !selectAll}
+          indeterminateIcon={<IndetermianteIcon />}
           checked={selectAll}
           icon={<UnCheckedIcon data-testid='unchecked' />}
           checkedIcon={<CheckedIcon data-testid='checked' />}

@@ -62,7 +62,10 @@ const TableToolBar: FC<TableToolBarProps> = ({
       <div className='search-sort-filter'>
         <SearchBar searchLabel={searchLabel} setItemList={setItemList} searchQuery={searchQuery} />
         <div className={count > 0 ? 'sort-button-enabled' : 'sort-button'} role='button' tabIndex={0} onClick={onSort}>
-          <SortIcon id={count > 0 ? 'sort-icon-enabled' : 'sort-filter-icon'} />
+          <SortIcon
+            id={count > 0 ? 'sort-icon-enabled' : 'sort-filter-icon'}
+            className={count === 2 ? 'rotate-180' : ''}
+          />
           {!isPortrait && SORT_BY_NAME}
         </div>
 
