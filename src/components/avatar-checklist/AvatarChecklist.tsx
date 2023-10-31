@@ -11,7 +11,7 @@ import { searchAtom } from '@/states/searchSortFilterStates';
 import { User } from '@/types/user';
 import { ChecklistProps } from './types';
 import CustomAvatar from '@/components/custom-avatar';
-import SearchBar from '../search-bar/SearchBar';
+import SearchBar from '@/components/search-bar';
 
 import './styles.css';
 

@@ -7,7 +7,7 @@ import { ReactComponent as CheckedIcon } from '@/assets/checkbox-icons/checkedic
 import { ReactComponent as IndetermianteIcon } from '@/assets/checkbox-icons/indeterminate.svg';
 import { selectAllValue } from '@/constants/filters';
 import { Role } from '@/types/role';
-import RoleCard from '../role-card';
+import RoleCard from '@/components/role-card';
 
 interface Props {
   roleList: Role[];
