@@ -27,6 +27,7 @@ const FormInputText = ({
   label,
   type,
   className,
+  isDisabled = false,
   defaultText,
   autoComplete,
   endAdornment,
@@ -68,6 +69,7 @@ const FormInputText = ({
               endAdornment: endAdornment
             })
           }}
+          disabled={isDisabled}
         />
       )}
     />

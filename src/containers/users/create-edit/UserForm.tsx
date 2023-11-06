@@ -119,28 +119,42 @@ const UserForm = (props: UserProps) => {
           <form onSubmit={handleSubmit(onSubmitForm)} id='add-user-form'>
             <div id='inputs'>
               {!loading && (
-                <div id='form-row'>
-                  <FormInputText
-                    name='firstName'
-                    label='First Name*'
-                    type='text'
-                    className='fields three-items-row'
-                    defaultText={user?.firstName}
-                  />
-                  <FormInputText
-                    name='lastName'
-                    label='Last Name*'
-                    type='type'
-                    className='fields three-items-row'
-                    defaultText={user?.lastName}
-                  />
-                </div>
-              )}
-              {!isEdit && (
-                <div id='form-row'>
-                  <FormInputText name='email' label='Email*' type='text' className='fields three-items-row' />
-                  <FormInputText name='phone' label='Phone Number*' type='text' className='fields three-items-row' />
-                </div>
+                <>
+                  <div id='form-row'>
+                    <FormInputText
+                      name='firstName'
+                      label='First Name*'
+                      type='text'
+                      className='fields three-items-row'
+                      defaultText={user?.firstName}
+                    />
+                    <FormInputText
+                      name='lastName'
+                      label='Last Name*'
+                      type='type'
+                      className='fields three-items-row'
+                      defaultText={user?.lastName}
+                    />
+                  </div>
+                  <div id='form-row'>
+                    <FormInputText
+                      name='email'
+                      label='Email*'
+                      type='text'
+                      className='fields three-items-row'
+                      defaultText={user?.email}
+                      isDisabled={isEdit}
+                    />
+                    <FormInputText
+                      name='phone'
+                      label='Phone Number*'
+                      type='text'
+                      className='fields three-items-row'
+                      defaultText={user?.phone}
+                      isDisabled={isEdit}
+                    />
+                  </div>
+                </>
               )}
             </div>
           </form>
